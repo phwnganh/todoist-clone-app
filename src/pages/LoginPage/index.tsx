@@ -3,7 +3,7 @@ import NewFeatureBannerSection from "../../components/LoginComponent/NewFeatureB
 
 const LoginPage = () => {
     return (
-        <main className="flex justify-between">
+        <main className="grid grid-cols-2">
             <LoginFormSection/>
             <NewFeatureBannerSection/>
         </main>
