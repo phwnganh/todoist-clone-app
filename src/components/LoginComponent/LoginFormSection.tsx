@@ -24,7 +24,7 @@ const LoginFormSection = () => {
     ]
   return (
     <section className="min-h-screen flex items-center justify-center pt-8">
-        <div className="max-w-94 mx-auto w-full">
+        <div className="max-w-132.5 mx-auto w-full">
             <img src={TodoistLogo} alt="todoist-logo" className="self-start"/>
             <div className="pt-8 flex flex-col gap-large flex-wrap">
                 {/* <h1 className="text-product-library-display-primary-idle-tint">Welcome back!</h1> */}
@@ -55,7 +55,7 @@ const LoginFormSection = () => {
                             </button>
                         </div>
                     </div>
-                    <button className="text-product-library-actionable-primary-on-idle-tint bg-product-library-actionable-primary-idle-fill rounded-lg h-12 px-4">Log in</button>
+                    <button className="text-product-library-actionable-primary-on-idle-tint bg-product-library-actionable-primary-idle-fill rounded-lg h-12 px-4 font-bold text-large">Log in</button>
                 </form>
                 <Link to="#" className="underline text-product-library-actionable-tertiary-idle-tint text-sm">Forgot your password?</Link>
                 <p className="text-sm text-product-library-display-primary-idle-tint">By continuing with Google, Apple, or Email, you agree to Todoist’s <span className="underline text-product-library-actionable-tertiary-idle-tint">Terms of Service</span> and <span className="underline text-product-library-actionable-tertiary-idle-tint">Privacy Policy</span>.</p>

@@ -260,6 +260,8 @@
   --color-product-library-selectable-tertiary-on-unselected-enabled-fill: #aaa;
   --color-product-library-selectable-tertiary-on-unselected-enabled-tint: #666;
 
+  --color-brand-secondary-light: #fff9f3;
+
   --text-tiny: 8px;
   --text-xsmall: 10px;
   --text-small: 11px;
@@ -318,5 +320,7 @@
   --spacing-large: 16px;
   --spacing-xlarge: 24px;
   --spacing-xxlarge: 32px;
+
+  --radius-large: 10px;
 
 }
