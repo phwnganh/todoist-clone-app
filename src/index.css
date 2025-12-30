@@ -260,14 +260,23 @@
   --color-product-library-selectable-tertiary-on-unselected-enabled-fill: #aaa;
   --color-product-library-selectable-tertiary-on-unselected-enabled-tint: #666;
 
-  --font-size-tiny: 8px;
-  --font-size-xsmall: 10px;
-  --font-size-small: 11px;
-  --font-size-compact: 12px;
-  --font-size-normal: 13px;
-  --font-size-content: 14px;
-  --font-size-content-large: 16px;
-  --font-size-header: 20px;
+  --text-tiny: 8px;
+  --text-xsmall: 10px;
+  --text-small: 11px;
+  --text-compact: 12px;
+  --text-normal: 13px;
+  --text-content: 14px;
+  --text-content-large: 16px;
+  --text-large: 18px;
+  --text-header: 20px;
+  --text-header-large: 24px;
+  --text-header-xlarge: 32px;
+
+
+  --font-weight-regular: 400;
+  --font-weight-x-regular: 500;
+  --font-weight-medium: 600;
+  --font-weight-strong: 700;
 
   --editor-max-width: 800px;
   --editor-top-padding: 48px;
@@ -302,4 +311,12 @@
   --reactist-avatar-size-xlarge: 48px;
   --reactist-avatar-size-xxlarge: 70px;
   --reactist-avatar-size-xxxlarge: 100px;
+
+  --spacing-xsmall: 4px;
+  --spacing-small: 8px;
+  --spacing-medium: 12px;
+  --spacing-large: 16px;
+  --spacing-xlarge: 24px;
+  --spacing-xxlarge: 32px;
+
 }
