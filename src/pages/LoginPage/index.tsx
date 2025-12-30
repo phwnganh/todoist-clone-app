@@ -3,7 +3,7 @@ import NewFeatureBannerSection from "../../components/LoginComponent/NewFeatureB
 
 const LoginPage = () => {
     return (
-        <main className="grid grid-cols-2">
+        <main className="grid grid-cols-1 lg:grid-cols-2">
             <LoginFormSection/>
             <NewFeatureBannerSection/>
         </main>
