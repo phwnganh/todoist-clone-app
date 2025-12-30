@@ -23,7 +23,7 @@ const LoginFormSection = () => {
         }
     ]
   return (
-    <section className="min-h-screen flex items-center justify-center pt-8">
+    <section className="min-h-screen flex items-center justify-center pt-8 px-4 md:px-0">
         <div className="max-w-132.5 mx-auto w-full">
             <img src={TodoistLogo} alt="todoist-logo" className="self-start"/>
             <div className="pt-8 flex flex-col gap-large flex-wrap">
@@ -33,7 +33,7 @@ const LoginFormSection = () => {
                 <p className="text-product-library-display-secondary-idle-tint">You used <span className="font-medium">Google</span> last time.</p>
                 <div className="flex flex-col gap-medium">
                     {OAUTH_BUTTON_ITEMS.map((item, index) => (
-                        <button className="px-4 rounded-lg border border-product-library-border-idle-tint font-bold text-large h-12 flex justify-center items-center gap-4" key={index}>
+                        <button className="px-4 rounded-lg border border-product-library-border-idle-tint font-bold text-sm sm:text-large h-12 flex justify-center items-center gap-4" key={index}>
                             <img src={item.icon} alt={item.key}/>
                             <p>{item.label}</p>
                         </button>
@@ -55,7 +55,7 @@ const LoginFormSection = () => {
                             </button>
                         </div>
                     </div>
-                    <button className="text-product-library-actionable-primary-on-idle-tint bg-product-library-actionable-primary-idle-fill rounded-lg h-12 px-4 font-bold text-large">Log in</button>
+                    <button className="text-product-library-actionable-primary-on-idle-tint bg-product-library-actionable-primary-idle-fill rounded-lg h-12 px-4 font-bold text-sm sm:text-large">Log in</button>
                 </form>
                 <Link to="#" className="underline text-product-library-actionable-tertiary-idle-tint text-sm">Forgot your password?</Link>
                 <p className="text-sm text-product-library-display-primary-idle-tint">By continuing with Google, Apple, or Email, you agree to Todoist’s <span className="underline text-product-library-actionable-tertiary-idle-tint">Terms of Service</span> and <span className="underline text-product-library-actionable-tertiary-idle-tint">Privacy Policy</span>.</p>
