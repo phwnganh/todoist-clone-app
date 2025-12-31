@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 
 const MainLayout = () => {
     const [openSidebar, setOpenSidebar] = useState(false);
-
+    const [isMobile, setIsMobile] = useState(false)
     const handleToggleSidebar = () => {
         setOpenSidebar(prev => !prev)
     }
@@ -14,6 +14,7 @@ const MainLayout = () => {
         const media = window.matchMedia("(max-width: 768px)")
 
         const handleHiddenSidebar = () => {
+            setIsMobile(media.matches)
             // breakpoint thay doi -> responsive md -> auto dong sidebar
             if(media.matches){
                 setOpenSidebar(false)
@@ -24,9 +25,12 @@ const MainLayout = () => {
         return () => media.removeEventListener("change", handleHiddenSidebar)
     }, [])
     return (
-        <main className="flex w-full h-full">
+        <main className="relative flex w-full h-full">
             <Sidebar open={openSidebar} onToggle={handleToggleSidebar}/>
-            <div className="flex flex-col px-3 mt-3">
+            {isMobile && openSidebar && (
+                <div className="fixed inset-0 bg-black/40 z-30" onClick={handleToggleSidebar}></div>
+            )}
+            <div className="flex flex-col px-3 mt-3 flex-1 relative z-0">
                 {!openSidebar &&                 <button className="w-8 h-8 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small" onClick={handleToggleSidebar}>
                     <CollapseSideBarIcon/>
                 </button>}

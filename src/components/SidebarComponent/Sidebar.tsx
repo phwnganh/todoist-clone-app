@@ -144,7 +144,6 @@ const Sidebar = ({open, onToggle}: SidebarProps) => {
                         <QuestionIcon/>
                     </div>
                     <span className="text-sm text-product-library-display-secondary-idle-tint font-medium">Help & resources</span>
-
                 </button>
             </div>
             {openSearchModal && <SearchModalDialog onOpenSearch={() => setOpenSearchModal(false)}/>}
