@@ -13,13 +13,18 @@ import HashtagIcon from "../icons/HashtagIcon.tsx";
 import QuestionIcon from "../icons/QuestionIcon.tsx";
 import {ACTIVITY, FILTERS_LABEL, INBOX, PROJECTS, TODAY, UPCOMING} from "../../constants/routes.constants.ts";
 import SidebarNavItem from "./SidebarNavItem.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import SearchModalDialog from "../SearchModalDialog.tsx";
 import {NavLink} from "react-router-dom";
 import SmallArrowDownIcon from "../icons/SmallArrowDownIcon.tsx";
 import BellIcon from "../icons/BellIcon.tsx";
 import CollapseSideBarIcon from "../icons/CollapseSideBarIcon.tsx";
-const Sidebar = () => {
+
+type SidebarProps = {
+    open: boolean;
+    onToggle: () => void;
+}
+const Sidebar = ({open, onToggle}: SidebarProps) => {
     const [openSearchModal, setOpenSearchModal] = useState(false);
 
     const handleSearchClick = () => {
@@ -62,8 +67,9 @@ const Sidebar = () => {
             getTo: ACTIVITY
         }
     ]
+
     return (
-        <nav className="flex flex-col h-screen bg-product-library-background-base-secondary max-w-70 w-full shrink-0">
+        <nav className={`flex flex-col h-screen bg-product-library-background-base-secondary inset-y-0 left-0 z-40 transition-all duration-300 overflow-hidden ${open ? "w-70" : "w-0"}`}>
             <div className="flex justify-between items-center m-medium pl-2">
                 <button className="flex items-center py-0.75 -ml-0.75 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
                     <div className="rounded-full w-6.5 h-6.5 bg-white -ml-1.5 mr-1.5">
@@ -75,18 +81,18 @@ const Sidebar = () => {
                         <SmallArrowDownIcon/>
                     </span>
                 </button>
-                <button className="flex items-center gap-xsmall">
-                        <div role="button" className="w-8 h-8 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+                <div className="flex items-center gap-xsmall">
+                        <button className="w-8 h-8 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
                             <BellIcon/>
-                        </div>
-                    <div role="button" className="w-8 h-8 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+                        </button>
+                    <button onClick={onToggle} className="w-8 h-8 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
                         <CollapseSideBarIcon/>
-                    </div>
-                </button>
+                    </button>
+                </div>
             </div>
             <div className="mx-medium mb-small"></div>
             <button className="flex items-center px-2.5 py-0.75 text-product-library-actionable-tertiary-idle-tint hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
-                <div className="flex justify-center items-center mr-1.5">
+                <div className="flex justify-center items-center mr-1.5 pl-1.5">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" fillRule="evenodd" d="M12 23c6.075 0 11-4.925 11-11S18.075 1 12 1 1 5.925 1 12s4.925 11 11 11m-.711-16.5a.75.75 0 1 1 1.5 0v4.789H17.5a.75.75 0 0 1 0 1.5h-4.711V17.5a.75.75 0 0 1-1.5 0V12.79H6.5a.75.75 0 1 1 0-1.5h4.789z" clipRule="evenodd"></path></svg>
                 </div>
                 <span className="text-center font-medium text-sm">Add task</span>
