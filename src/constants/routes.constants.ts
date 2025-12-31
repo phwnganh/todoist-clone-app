@@ -1,2 +1,7 @@
 export const LOGIN = "/auth/login"
 export const PROJECTS = "/app/projects"
+export const INBOX = "/app/inbox"
+export const TODAY = "/app/today"
+export const UPCOMING = "/app/upcoming"
+export const FILTERS_LABEL = "/app/filters-labels"
+export const ACTIVITY = "/app/activity"

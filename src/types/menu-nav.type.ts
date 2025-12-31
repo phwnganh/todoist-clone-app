@@ -4,4 +4,5 @@ export type MenuNavItem = {
     key: string;
     label: string;
     icon: ReactNode;
+    getTo?: string;
 }

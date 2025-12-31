@@ -1,13 +1,11 @@
-import Sidebar from "../components/DashboardLayout/Sidebar.tsx";
-import Header from "../components/DashboardLayout/Header.tsx";
+import Sidebar from "../components/SidebarComponent/Sidebar.tsx";
 import {Outlet} from "react-router-dom";
 
 const MainLayout = () => {
     return (
-        <main className="flex h-full">
+        <main className="flex w-full h-full">
             <Sidebar/>
             <div className="flex flex-col">
-                <Header/>
                 <Outlet/>
             </div>
         </main>

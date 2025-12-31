@@ -301,9 +301,9 @@
   --product-library-shadow-raised-3: 0px 16px 50px 0px rgba(0, 0, 0, 0.35),
     0px 4px 7px 0px rgba(0, 0, 0, 0.08);
 
-  --scrollbar-thumb-idle: #c1c1c1;
-  --scrollbar-thumb-hover: #848484;
-  --scrollbar-thumb-track: #fafafa;
+  --color-scrollbar-thumb-idle: #c1c1c1;
+  --color-scrollbar-thumb-hover: #848484;
+  --color-scrollbar-thumb-track: #fafafa;
 
   --reactist-avatar-size-xxsmall: 16px;
   --reactist-avatar-size-xsmall: 20px;
@@ -321,6 +321,7 @@
   --spacing-xlarge: 24px;
   --spacing-xxlarge: 32px;
 
+  --radius-small: 5px;
   --radius-large: 10px;
 
 }
