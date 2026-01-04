@@ -13,7 +13,7 @@ import HashtagIcon from "../icons/HashtagIcon.tsx";
 import QuestionIcon from "../icons/QuestionIcon.tsx";
 import {ACTIVITY, FILTERS_LABEL, INBOX, PROJECTS, TODAY, UPCOMING} from "../../constants/routes.constants.ts";
 import SidebarNavItem from "./SidebarNavItem.tsx";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import SearchModalDialog from "../SearchModalDialog.tsx";
 import {NavLink} from "react-router-dom";
 import SmallArrowDownIcon from "../icons/SmallArrowDownIcon.tsx";

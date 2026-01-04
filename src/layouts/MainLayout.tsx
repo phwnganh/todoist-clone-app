@@ -14,9 +14,11 @@ const MainLayout = () => {
         const media = window.matchMedia("(max-width: 768px)")
 
         const handleHiddenSidebar = () => {
-            setIsMobile(media.matches)
+            const isMobile = media.matches
+            setIsMobile(isMobile);
+            setOpenSidebar(!isMobile);
             // breakpoint thay doi -> responsive md -> auto dong sidebar
-            if(media.matches){
+            if(isMobile){
                 setOpenSidebar(false)
             }
         }
@@ -31,7 +33,8 @@ const MainLayout = () => {
                 <div className="fixed inset-0 bg-black/40 z-30" onClick={handleToggleSidebar}></div>
             )}
             <div className="flex flex-col px-3 mt-3 flex-1 relative z-0">
-                {!openSidebar &&                 <button className="w-8 h-8 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small" onClick={handleToggleSidebar}>
+                {!openSidebar &&
+                    <button className="w-8 h-8 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small" onClick={handleToggleSidebar}>
                     <CollapseSideBarIcon/>
                 </button>}
 
