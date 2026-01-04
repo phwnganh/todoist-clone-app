@@ -1,30 +1,25 @@
 import Sidebar from "../components/SidebarComponent/Sidebar.tsx";
 import {Outlet} from "react-router-dom";
 import CollapseSideBarIcon from "../components/icons/CollapseSideBarIcon.tsx";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 
 const MainLayout = () => {
-    const [openSidebar, setOpenSidebar] = useState(false);
+    const [openSidebar, setOpenSidebar] = useState(true);
     const [isMobile, setIsMobile] = useState(false)
-    const handleToggleSidebar = () => {
+    const handleToggleSidebar = useCallback(() => {
         setOpenSidebar(prev => !prev)
-    }
+    }, [])
 
     useEffect(() => {
         const media = window.matchMedia("(max-width: 768px)")
-
-        const handleHiddenSidebar = () => {
+        const handleMediaChange = () => {
             const isMobile = media.matches
             setIsMobile(isMobile);
             setOpenSidebar(!isMobile);
-            // breakpoint thay doi -> responsive md -> auto dong sidebar
-            if(isMobile){
-                setOpenSidebar(false)
-            }
         }
-        handleHiddenSidebar() // chi chay 1 lan
-        media.addEventListener("change", handleHiddenSidebar)
-        return () => media.removeEventListener("change", handleHiddenSidebar)
+        handleMediaChange() // chi chay 1 lan
+        media.addEventListener("change", handleMediaChange)
+        return () => media.removeEventListener("change", handleMediaChange)
     }, [])
     return (
         <main className="relative flex w-full h-full">

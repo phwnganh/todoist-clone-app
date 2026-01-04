@@ -1,17 +1,18 @@
 import type {MenuNavItem} from "../../types/menu-nav.type.ts";
 import {NavLink} from "react-router-dom";
+import {ICON_MAP} from "../icons/IconMap";
 
 type SidebarNavItemProps = {
     item: MenuNavItem
-    onOpenSearchModalDialog: () => void;
+    onClick?: () => void;
 }
-const SidebarNavItem = ({item, onOpenSearchModalDialog}: SidebarNavItemProps) => {
+const SidebarNavItem = ({item, onClick}: SidebarNavItemProps) => {
     const commonClass = "flex items-center p-1.25"
-
+    const Icon = ICON_MAP[item.icon];
     const renderContent = (isActive?: boolean) => (
         <>
             <div className={`flex justify-center items-center ${isActive ? "text-product-library-actionable-tertiary-idle-tint" : ""}`}>
-                {item.icon}
+                <Icon/>
             </div>
             <span className={`text-sm wrap-break-word py-0.75 pl-1.25 ${isActive ? 'text-product-library-actionable-tertiary-idle-tint' : ''}`}>{item.label}</span>
             <div className="w-6 h-6 flex items-center justify-center ml-auto"></div>
@@ -20,7 +21,7 @@ const SidebarNavItem = ({item, onOpenSearchModalDialog}: SidebarNavItemProps) =>
 
     if(!item.getTo){
         return (
-            <button type="button" onClick={onOpenSearchModalDialog} className={`${commonClass} hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small`}>{renderContent(false)}</button>
+            <button type="button" onClick={onClick} className={`${commonClass} hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small`}>{renderContent(false)}</button>
         )
     }
     return (

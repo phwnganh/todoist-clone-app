@@ -1,17 +1,11 @@
 
 import UserAvatar from '../../assets/User-avatar.png'
-import SearchIcon from "../icons/SearchIcon.tsx";
-import InboxIcon from "../icons/InboxIcon.tsx";
-import CalendarIcon from "../icons/CalendarIcon.tsx";
-import UpcomingCalendarIcon from "../icons/UpcomingCalendarIcon.tsx";
-import FilterIcon from "../icons/FilterIcon.tsx";
-import CompletedIcon from "../icons/CompletedIcon.tsx";
 import type {MenuNavItem} from "../../types/menu-nav.type.ts";
 import AddIcon from "../icons/AddIcon.tsx";
 import ArrowDownIcon from "../icons/ArrowDownIcon.tsx";
 import HashtagIcon from "../icons/HashtagIcon.tsx";
 import QuestionIcon from "../icons/QuestionIcon.tsx";
-import {ACTIVITY, FILTERS_LABEL, INBOX, PROJECTS, TODAY, UPCOMING} from "../../constants/routes.constants.ts";
+import {PROJECTS} from "../../constants/routes.constants.ts";
 import SidebarNavItem from "./SidebarNavItem.tsx";
 import {useState} from "react";
 import SearchModalDialog from "../SearchModalDialog.tsx";
@@ -19,6 +13,7 @@ import {NavLink} from "react-router-dom";
 import SmallArrowDownIcon from "../icons/SmallArrowDownIcon.tsx";
 import BellIcon from "../icons/BellIcon.tsx";
 import CollapseSideBarIcon from "../icons/CollapseSideBarIcon.tsx";
+import {MENU_NAV_ITEMS} from "../../constants/menuNav.constants";
 
 type SidebarProps = {
     open: boolean;
@@ -30,50 +25,15 @@ const Sidebar = ({open, onToggle}: SidebarProps) => {
     const handleSearchClick = () => {
         setOpenSearchModal(true);
     }
-    const MENU_NAV_ITEMS: MenuNavItem[] = [
-        {
-            key: "search",
-            label: "Search",
-            icon: <SearchIcon/>
-        },
-        {
-            key: "inbox",
-            label: "Inbox",
-            icon: <InboxIcon/>,
-            getTo: INBOX
-        },
-        {
-            key: "today",
-            label: "Today",
-            icon: <CalendarIcon/>,
-            getTo: TODAY
-        },
-        {
-            key: "upcoming",
-            label: "Upcoming",
-            icon: <UpcomingCalendarIcon/>,
-            getTo: UPCOMING
-        },
-        {
-            key: "filters",
-            label: "Filters & Labels",
-            icon: <FilterIcon/>,
-            getTo: FILTERS_LABEL
-        },
-        {
-            key: "completed",
-            label: "Completed",
-            icon: <CompletedIcon/>,
-            getTo: ACTIVITY
-        }
-    ]
+
+    const buttonIconClass = "w-8 h-8 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"
 
     return (
         <nav className={`fixed inset-y-0 left-0 w-70 bg-product-library-background-base-secondary z-40 transform transition-transform duration-300 ease-out overflow-hidden ${open ? "translate-x-0" : "-translate-x-full"}`}>
             <div className="flex justify-between items-center m-medium pl-2">
                 <button className="flex items-center py-0.75 -ml-0.75 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
                     <div className="rounded-full w-6.5 h-6.5 bg-white -ml-1.5 mr-1.5">
-                        <img src={UserAvatar} alt="User Avatar" className="" />
+                        <img src={UserAvatar} alt="User Avatar" />
                     </div>
                     <span className="flex items-center">
                         <span
@@ -82,10 +42,10 @@ const Sidebar = ({open, onToggle}: SidebarProps) => {
                     </span>
                 </button>
                 <div className="flex items-center gap-xsmall">
-                        <button className="w-8 h-8 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+                        <button className={buttonIconClass}>
                             <BellIcon/>
                         </button>
-                    <button onClick={onToggle} className="w-8 h-8 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+                    <button onClick={onToggle} className={buttonIconClass}>
                         <CollapseSideBarIcon/>
                     </button>
                 </div>
@@ -99,8 +59,8 @@ const Sidebar = ({open, onToggle}: SidebarProps) => {
             </button>
                 <div className="px-medium py-xsmall flex flex-col gap-large">
                     <ul className="flex flex-col list-none">
-                        {MENU_NAV_ITEMS.map((item: MenuNavItem, index) => (
-                            <SidebarNavItem key={index} item={item} onOpenSearchModalDialog={handleSearchClick}/>
+                        {MENU_NAV_ITEMS.map((item: MenuNavItem) => (
+                            <SidebarNavItem key={item.key} item={item} onClick={item.key === "search" ? handleSearchClick : undefined}/>
                         ))}
                     </ul>
                     <NavLink to={PROJECTS} className={({isActive}) => `group flex items-center hover:rounded-small py-0.75 ${isActive ? "bg-product-library-priorities-p2-secondary-hover-fill rounded-small hover:bg-product-library-priorities-p2-secondary-hover-fill" : "hover:bg-product-library-selectable-secondary-hover-fill"}`}>

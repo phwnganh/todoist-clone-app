@@ -1,8 +1,8 @@
-import type { ReactNode} from "react";
+import {type MenuIconKey} from "../components/icons/IconMap";
 
 export type MenuNavItem = {
-    key: string;
+    key: MenuIconKey;
     label: string;
-    icon: ReactNode;
+    icon: MenuIconKey;
     getTo?: string;
 }
