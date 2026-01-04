@@ -29,34 +29,39 @@ const Sidebar = ({open, onToggle}: SidebarProps) => {
     const buttonIconClass = "w-8 h-8 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"
 
     return (
-        <nav className={`fixed inset-y-0 left-0 w-70 bg-product-library-background-base-secondary z-40 transform transition-transform duration-300 ease-out overflow-hidden ${open ? "translate-x-0" : "-translate-x-full"}`}>
-            <div className="flex justify-between items-center m-medium pl-2">
-                <button className="flex items-center py-0.75 -ml-0.75 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
-                    <div className="rounded-full w-6.5 h-6.5 bg-white -ml-1.5 mr-1.5">
-                        <img src={UserAvatar} alt="User Avatar" />
-                    </div>
-                    <span className="flex items-center">
+        <nav className={`flex flex-col fixed inset-y-0 left-0 w-70 bg-product-library-background-base-secondary z-40 transform transition-transform duration-300 ease-out overflow-hidden ${open ? "translate-x-0" : "-translate-x-full"}`}>
+            <div className="flex flex-col">
+                {/*sidebar header*/}
+                <div className="flex justify-between items-center m-medium pl-2">
+                    <button className="flex items-center py-0.75 -ml-0.75 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+                        <div className="rounded-full w-6.5 h-6.5 bg-white -ml-1.5 mr-1.5">
+                            <img src={UserAvatar} alt="User Avatar" />
+                        </div>
+                        <span className="flex items-center">
                         <span
                             className="whitespace-nowrap text-product-library-display-primary-idle-tint overflow-hidden">Your Name</span>
                         <SmallArrowDownIcon/>
                     </span>
-                </button>
-                <div className="flex items-center gap-xsmall">
+                    </button>
+                    <div className="flex items-center gap-xsmall">
                         <button className={buttonIconClass}>
                             <BellIcon/>
                         </button>
-                    <button onClick={onToggle} className={buttonIconClass}>
-                        <CollapseSideBarIcon/>
-                    </button>
+                        <button onClick={onToggle} className={buttonIconClass}>
+                            <CollapseSideBarIcon/>
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div className="mx-medium mb-small"></div>
-            <button className="flex items-center px-2.5 py-0.75 text-product-library-actionable-tertiary-idle-tint hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
-                <div className="flex justify-center items-center mr-1.5 pl-1.5">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" fillRule="evenodd" d="M12 23c6.075 0 11-4.925 11-11S18.075 1 12 1 1 5.925 1 12s4.925 11 11 11m-.711-16.5a.75.75 0 1 1 1.5 0v4.789H17.5a.75.75 0 0 1 0 1.5h-4.711V17.5a.75.75 0 0 1-1.5 0V12.79H6.5a.75.75 0 1 1 0-1.5h4.789z" clipRule="evenodd"></path></svg>
-                </div>
-                <span className="text-center font-medium text-sm">Add task</span>
-            </button>
+                <div className="mx-medium mb-small"></div>
+                {/*add task modal*/}
+                <button className="flex items-center px-2.5 py-0.75 text-product-library-actionable-tertiary-idle-tint hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+                    <div className="flex justify-center items-center mr-1.5 pl-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" fillRule="evenodd" d="M12 23c6.075 0 11-4.925 11-11S18.075 1 12 1 1 5.925 1 12s4.925 11 11 11m-.711-16.5a.75.75 0 1 1 1.5 0v4.789H17.5a.75.75 0 0 1 0 1.5h-4.711V17.5a.75.75 0 0 1-1.5 0V12.79H6.5a.75.75 0 1 1 0-1.5h4.789z" clipRule="evenodd"></path></svg>
+                    </div>
+                    <span className="text-center font-medium text-sm">Add task</span>
+                </button>
+
+                {/*menu nav item*/}
                 <div className="px-medium py-xsmall flex flex-col gap-large">
                     <ul className="flex flex-col list-none">
                         {MENU_NAV_ITEMS.map((item: MenuNavItem) => (
@@ -92,6 +97,8 @@ const Sidebar = ({open, onToggle}: SidebarProps) => {
                         <div className="w-7 h-7 flex justify-center items-center ml-auto"></div>
                     </div>
                 </div>
+            </div>
+
             <div className="flex flex-col gap-small my-2 px-3 mt-auto">
                 <button className="px-2.5 py-0.75 flex items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
                     <div className="w-6 h-6 flex justify-center items-center mr-1.5 ">
