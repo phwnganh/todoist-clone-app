@@ -69,7 +69,7 @@ const Sidebar = ({open, onToggle}: SidebarProps) => {
     ]
 
     return (
-        <nav className={`flex flex-col h-screen bg-product-library-background-base-secondary inset-y-0 left-0 z-40 transition-all duration-300 overflow-hidden ${open ? "w-70" : "w-0"}`}>
+        <nav className={`fixed inset-y-0 left-0 w-70 bg-product-library-background-base-secondary z-40 transform transition-transform duration-300 ease-out overflow-hidden ${open ? "translate-x-0" : "-translate-x-full"}`}>
             <div className="flex justify-between items-center m-medium pl-2">
                 <button className="flex items-center py-0.75 -ml-0.75 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
                     <div className="rounded-full w-6.5 h-6.5 bg-white -ml-1.5 mr-1.5">
