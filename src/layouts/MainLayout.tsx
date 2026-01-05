@@ -1,6 +1,5 @@
 import Sidebar from "../components/SidebarComponent/Sidebar.tsx";
 import {Outlet} from "react-router-dom";
-import CollapseSideBarIcon from "../components/icons/CollapseSideBarIcon.tsx";
 import {useCallback, useEffect, useState} from "react";
 
 const MainLayout = () => {
@@ -27,12 +26,11 @@ const MainLayout = () => {
             {isMobile && openSidebar && (
                 <div className="fixed inset-0 bg-black/40 z-30" onClick={handleToggleSidebar}></div>
             )}
-            <div className="flex flex-col px-3 mt-3 flex-1 relative z-0">
-                {!openSidebar &&
-                    <button className="w-8 h-8 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small" onClick={handleToggleSidebar}>
-                    <CollapseSideBarIcon/>
-                </button>}
-                <Outlet/>
+            <div className="flex flex-col mt-3 px-3 flex-1 relative z-0">
+                <Outlet context={{
+                    showCollapse: !openSidebar,
+                    onToggleSidebar: handleToggleSidebar,
+                }}/>
             </div>
 
         </main>
