@@ -14,6 +14,7 @@ import SmallArrowDownIcon from "../icons/SmallArrowDownIcon.tsx";
 import BellIcon from "../icons/BellIcon.tsx";
 import CollapseSideBarIcon from "../icons/CollapseSideBarIcon.tsx";
 import {MENU_NAV_ITEMS} from "../../constants/menuNav.constants";
+import RightArrowIcon from "../icons/RightArrowIcon.tsx";
 
 type SidebarProps = {
     open: boolean;
@@ -22,9 +23,13 @@ type SidebarProps = {
 }
 const Sidebar = ({open, onToggle, isMobile}: SidebarProps) => {
     const [openSearchModal, setOpenSearchModal] = useState(false);
-
+    const [isProjectListOpen, setIsProjectListOpen] = useState(false);
     const handleSearchClick = () => {
         setOpenSearchModal(true);
+    }
+
+    const handleToggleProjectList = () => {
+        setIsProjectListOpen(prev => !prev);
     }
 
     const buttonIconClass = "w-8 h-8 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"
@@ -77,8 +82,8 @@ const Sidebar = ({open, onToggle, isMobile}: SidebarProps) => {
                                     <button className="w-7 h-7 hidden group-hover:flex justify-center items-center hover:bg-product-library-border-idle-tint hover:rounded-small">
                                         <AddIcon/>
                                     </button>
-                                    <button className="w-7 h-7 flex justify-center items-center hover:bg-product-library-border-idle-tint hover:rounded-small">
-                                        <ArrowDownIcon/>
+                                    <button onClick={handleToggleProjectList} className="w-7 h-7 flex justify-center items-center hover:bg-product-library-border-idle-tint hover:rounded-small">
+                                        {isProjectListOpen ? <ArrowDownIcon/> : <RightArrowIcon/>}
                                     </button>
                                 </div>
                             </>
@@ -86,17 +91,19 @@ const Sidebar = ({open, onToggle, isMobile}: SidebarProps) => {
 
                     </NavLink>
 
-                    <div className="flex items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
-                        <div className="p-1.25 flex items-center">
-                            <div className="flex justify-center items-center">
-                                <HashtagIcon/>
+                    {!isProjectListOpen && (
+                        <div className="flex items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+                            <div className="p-1.25 flex items-center">
+                                <div className="flex justify-center items-center">
+                                    <HashtagIcon/>
+                                </div>
+                                <div className="py-0.75 pl-1.25 text-sm">
+                                    Getting Started
+                                </div>
                             </div>
-                            <div className="py-0.75 pl-1.25 text-sm">
-                                Getting Started
-                            </div>
+                            <div className="w-7 h-7 flex justify-center items-center ml-auto"></div>
                         </div>
-                        <div className="w-7 h-7 flex justify-center items-center ml-auto"></div>
-                    </div>
+                    )}
                 </div>
             </div>
 
