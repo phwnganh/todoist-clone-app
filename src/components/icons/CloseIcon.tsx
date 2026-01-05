@@ -1,0 +1,8 @@
+
+const CloseIcon = () => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" fillRule="evenodd" d="M15.854 15.854a.5.5 0 0 0 0-.707L12.707 12l3.147-3.147a.5.5 0 0 0-.708-.707L12 11.293 8.854 8.147a.5.5 0 1 0-.708.707l3.147 3.147-3.147 3.146a.5.5 0 1 0 .708.707L12 12.708l3.146 3.146a.5.5 0 0 0 .708 0" clipRule="evenodd"></path></svg>
+    );
+};
+
+export default CloseIcon;
