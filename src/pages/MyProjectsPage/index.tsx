@@ -7,10 +7,18 @@ import PlusIcon from "../../components/icons/PlusIcon.tsx";
 import SmallArrowDownIcon from "../../components/icons/SmallArrowDownIcon.tsx";
 import HashtagIcon from "../../components/icons/HashtagIcon.tsx";
 import CloseIcon from "../../components/icons/CloseIcon.tsx";
+import {useRef, useState} from "react";
 
 const MyProjectsPage = () => {
   const { showCollapse, onToggleSidebar } =
     useOutletContext<HeaderLayoutType>();
+  const [searchValue, setSearchValue] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const handleClearSearch = () => {
+      setSearchValue("");
+      searchInputRef?.current?.focus();
+  }
   return (
     <>
       <HeaderLayout
@@ -42,10 +50,12 @@ const MyProjectsPage = () => {
               <div className="ml-xsmall">
                   <SearchIcon/>
               </div>
-            <input type="text" className="py-1.5 px-2 text-sm w-full outline-none" placeholder="Search projects"/>
-              <button className="flex items-center justify-center mr-1 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
-                    <CloseIcon/>
-              </button>
+            <input type="text" className="py-1.5 px-2 text-sm w-full outline-none" ref={searchInputRef} value={searchValue} onChange={e => setSearchValue(e.target.value)} placeholder="Search projects"/>
+              {searchValue &&
+                  <button onClick={handleClearSearch} className="flex items-center justify-center mr-1 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+                      <CloseIcon/>
+                  </button>}
+
           </div>
             <div className="flex justify-between">
                 <div className="flex items-center">
@@ -78,11 +88,11 @@ const MyProjectsPage = () => {
                     </div>
                     <div className="text-sm font-regular whitespace-nowrap">Getting Started</div>
                 </div>
-                <button className="flex items-center gap-1">
+                <div role="button" className="flex items-center gap-1">
                     <div className="rounded-full w-1.5 h-1.5 border border-product-library-display-primary-idle-tint"></div>
                     <div className="rounded-full w-1.5 h-1.5 border border-product-library-display-primary-idle-tint"></div>
                     <div className="rounded-full w-1.5 h-1.5 border border-product-library-display-primary-idle-tint"></div>
-                </button>
+                </div>
             </button>
         </div>
       </section>
