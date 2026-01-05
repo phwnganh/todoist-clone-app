@@ -17,9 +17,10 @@ import {MENU_NAV_ITEMS} from "../../constants/menuNav.constants";
 
 type SidebarProps = {
     open: boolean;
+    isMobile: boolean;
     onToggle: () => void;
 }
-const Sidebar = ({open, onToggle}: SidebarProps) => {
+const Sidebar = ({open, onToggle, isMobile}: SidebarProps) => {
     const [openSearchModal, setOpenSearchModal] = useState(false);
 
     const handleSearchClick = () => {
@@ -29,7 +30,7 @@ const Sidebar = ({open, onToggle}: SidebarProps) => {
     const buttonIconClass = "w-8 h-8 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"
 
     return (
-        <nav className={`flex flex-col fixed inset-y-0 left-0 w-70 bg-product-library-background-base-secondary z-40 transform transition-transform duration-300 ease-out overflow-hidden ${open ? "translate-x-0" : "-translate-x-full"}`}>
+        <nav className={`flex flex-col bg-product-library-background-base-secondary z-40 transition-all duration-300 ease-out overflow-hidden ${isMobile ? "fixed inset-y-0 left-0" : "relative"} ${open ? "w-70" : isMobile ? "w-70 -translate-x-full" : "w-0"}`}>
             <div className="flex flex-col">
                 {/*sidebar header*/}
                 <div className="flex justify-between items-center m-medium pl-2">

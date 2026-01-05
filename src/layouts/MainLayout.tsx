@@ -22,8 +22,8 @@ const MainLayout = () => {
         return () => media.removeEventListener("change", handleMediaChange)
     }, [])
     return (
-        <main className="relative flex w-full h-full">
-            <Sidebar open={openSidebar} onToggle={handleToggleSidebar}/>
+        <main className="relative flex w-full min-h-screen">
+            <Sidebar open={openSidebar} onToggle={handleToggleSidebar} isMobile={isMobile}/>
             {isMobile && openSidebar && (
                 <div className="fixed inset-0 bg-black/40 z-30" onClick={handleToggleSidebar}></div>
             )}
@@ -32,10 +32,9 @@ const MainLayout = () => {
                     <button className="w-8 h-8 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small" onClick={handleToggleSidebar}>
                     <CollapseSideBarIcon/>
                 </button>}
-
-
                 <Outlet/>
             </div>
+
         </main>
     );
 };
