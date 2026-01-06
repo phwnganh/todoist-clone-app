@@ -1,4 +1,4 @@
-import { useOutletContext } from "react-router-dom";
+import {useOutletContext} from "react-router-dom";
 import { type HeaderLayoutType } from "../../types/headerLayout.type.ts";
 import HeaderLayout from "../../layouts/HeaderLayout.tsx";
 import SettingsIcon from "../../components/icons/SettingsIcon.tsx";
@@ -8,16 +8,22 @@ import SmallArrowDownIcon from "../../components/icons/SmallArrowDownIcon.tsx";
 import HashtagIcon from "../../components/icons/HashtagIcon.tsx";
 import CloseIcon from "../../components/icons/CloseIcon.tsx";
 import {useRef, useState} from "react";
+import MyProjectsDropdown from "../../components/MyProjectsComponent/MyProjectsDropdown.tsx";
 
 const MyProjectsPage = () => {
   const { showCollapse, onToggleSidebar } =
     useOutletContext<HeaderLayoutType>();
   const [searchValue, setSearchValue] = useState("");
+  const [isOpenAddProjectsDropdown, setOpenAddProjectsDropdown] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const handleClearSearch = () => {
       setSearchValue("");
       searchInputRef?.current?.focus();
+  }
+
+  const handleOpenAddProjectsDropdown = () => {
+      setOpenAddProjectsDropdown(prev => !prev);
   }
   return (
     <>
@@ -66,29 +72,33 @@ const MyProjectsPage = () => {
                         <div className="absolute top-0.75 left-0.75 h-3 w-3 rounded-full bg-white peer-checked:translate-x-3.5"></div>
                     </label>
                 </div>
-                <button className="px-3 h-8 flex items-center bg-product-library-actionable-secondary-idle-fill rounded-small hover:bg-product-library-border-hover-tint">
+                <div className="relative">
+                    <button onClick={handleOpenAddProjectsDropdown} className="px-3 h-8 flex items-center bg-product-library-actionable-secondary-idle-fill rounded-small hover:bg-product-library-border-hover-tint">
                         <div className="mr-1.5 flex justify-center items-center">
                             <PlusIcon/>
                         </div>
-                    <span className="text-product-library-actionable-secondary-on-idle-tint overflow-hidden text-sm font-medium">Add</span>
-                    <div className="ml-1.5 flex justify-center items-center">
-                        <SmallArrowDownIcon/>
-                    </div>
-                </button>
+                        <span className="text-product-library-actionable-secondary-on-idle-tint overflow-hidden text-sm font-medium">Add</span>
+                        <div className="ml-1.5 flex justify-center items-center">
+                            <SmallArrowDownIcon/>
+                        </div>
+                    </button>
+                    {isOpenAddProjectsDropdown && <MyProjectsDropdown/>}
+                </div>
+
             </div>
             <div className="pt-xlarge pb-xsmall"></div>
             <div className="mt-medium flex flex-col gap-4">
                 <div className="font-medium text-sm text-product-library-display-primary-idle-tint">2 projects</div>
                 <hr className="border-t border-t-product-library-divider-tertiary"/>
             </div>
-            <button className="pt-3 flex justify-between pr-3 py-3 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+            <button className="group pt-3 flex justify-between pr-3 py-3 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
                 <div className="flex items-center">
                     <div className="mr-small flex justify-center items-center">
                         <HashtagIcon/>
                     </div>
                     <div className="text-sm font-regular whitespace-nowrap">Getting Started</div>
                 </div>
-                <div role="button" className="flex items-center gap-1">
+                <div role="button" className="group-hover:flex items-center hidden gap-1">
                     <div className="rounded-full w-1.5 h-1.5 border border-product-library-display-primary-idle-tint"></div>
                     <div className="rounded-full w-1.5 h-1.5 border border-product-library-display-primary-idle-tint"></div>
                     <div className="rounded-full w-1.5 h-1.5 border border-product-library-display-primary-idle-tint"></div>

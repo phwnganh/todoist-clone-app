@@ -1,5 +1,6 @@
 export const LOGIN = "/auth/login"
 export const PROJECTS = "/app/projects"
+export const PROJECT_DETAILS = "/app/project"
 export const INBOX = "/app/inbox"
 export const TODAY = "/app/today"
 export const UPCOMING = "/app/upcoming"
