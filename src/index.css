@@ -304,6 +304,8 @@
   --color-scrollbar-thumb-idle: #c1c1c1;
   --color-scrollbar-thumb-hover: #848484;
   --color-scrollbar-thumb-track: #fafafa;
+  --color-charcoal: #808080;
+  --color-grey: #999999;
 
   --reactist-avatar-size-xxsmall: 16px;
   --reactist-avatar-size-xsmall: 20px;
@@ -324,4 +326,14 @@
   --radius-small: 5px;
   --radius-large: 10px;
 
+}
+
+@layer utilities{
+  .scrollbar-thin{
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-custom{
+    scrollbar-color: var(--color-scrollbar-thumb-idle) var(--color-scrollbar-thumb-track);
+  }
 }
