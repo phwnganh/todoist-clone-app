@@ -63,7 +63,7 @@ const MyProjectsPage = () => {
                   </button>}
 
           </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between flex-wrap gap-2 sm:gap-0">
                 <div className="flex items-center">
                     <p className="text-product-library-display-secondary-idle-tint text-sm pr-2">Archived projects only</p>
                     <label className="h-4.5 w-8 relative inline-block">
