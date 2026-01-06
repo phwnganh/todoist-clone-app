@@ -9,6 +9,7 @@ import PremiumCalendarIcon from "../icons/PremiumCalendarIcon.tsx";
 import PremiumStarIcon from "../icons/PremiumStarIcon.tsx";
 import {type ChangeEvent, useState} from "react";
 import AddProjectsColorListDropdown from "./AddProjectsColorListDropdown.tsx";
+import {createPortal} from "react-dom";
 
 const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
     const [nameValue, setNameValue] = useState("");
@@ -18,8 +19,8 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
         setIsOpenColorDropdown(prev => !prev);
     }
 
-    return (
-        <div className="fixed inset-0 bg-black/40 z-100 pt-[13vh]">
+    return createPortal(
+        <div className="fixed inset-0 bg-black/40 z-50 pt-[13vh]">
                 <div className="w-120 max-w-full mx-auto rounded-large bg-white transition-all duration-500 ease-in-out">
                         <header className="flex justify-between py-2 pr-2 pl-4">
                             <div className="flex flex-wrap gap-xsmall">
@@ -156,7 +157,8 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                         </form>
 
                 </div>
-        </div>
+        </div>,
+        document.body
     );
 };
 
