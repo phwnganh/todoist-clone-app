@@ -7,8 +7,12 @@ import ListItemIcon from "../icons/ListItemIcon.tsx";
 import BoardItemIcon from "../icons/BoardItemIcon.tsx";
 import PremiumCalendarIcon from "../icons/PremiumCalendarIcon.tsx";
 import PremiumStarIcon from "../icons/PremiumStarIcon.tsx";
+import {useState} from "react";
 
 const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
+    const [nameValue, setNameValue] = useState("");
+
+
     return (
         <div className="fixed inset-0 bg-black/40 z-1000 pt-[13vh]">
                 <div className="w-120 max-w-full mx-auto rounded-large bg-white overflow-hidden transition-all duration-500 ease-in-out">
@@ -29,16 +33,17 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                             {/*name section*/}
                             <div className="">
                                 <label className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5">Name</label>
-                                <div className="border border-product-library-border-idle-tint rounded-small flex items-center justify-between">
-                                    <input name="name" type="text" maxLength={120} className="py-1.5 px-2 w-full outline-none text-sm"/>
-                                    <div className="mr-xsmall -ml-xsmall text-sm text-product-library-display-secondary-idle-tint">0/120</div>
+                                <div className="border border-product-library-border-idle-tint rounded-small flex items-center justify-between hover:border-product-library-border-focus-tint">
+                                    <input name="name" type="text" maxLength={120} className="py-1.5 px-2 w-full outline-none text-sm" onChange={e => setNameValue(e.target.value)} value={nameValue}/>
+                                    {nameValue.length < 120 ?                                     <div className="mr-xsmall -ml-xsmall text-sm text-product-library-display-secondary-idle-tint">{nameValue.length}/120</div>
+                                     :                                     <div className="mr-xsmall -ml-xsmall text-sm text-product-library-actionable-destructive-idle-tint">{nameValue.length}/120</div>}
                                 </div>
                             </div>
 
                             {/*color section*/}
                             <div className="">
                                 <label className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5">Color</label>
-                                <div className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8">
+                                <div className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 hover:border-product-library-border-focus-tint">
                                     <div className="flex items-center justify-center w-6 h-6">
                                         <div className="rounded-xl w-3 h-3 bg-black"></div>
                                     </div>
@@ -57,7 +62,7 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                             {/*workspace section*/}
                             <div className="">
                                 <label className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5">Workspace</label>
-                                <div className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8">
+                                <div className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 hover:border-product-library-border-focus-tint">
                                     <div className="flex items-center justify-center w-4.5 h-4.5 rounded-small">
                                         <img src={UserAvatar} className="object-cover w-full h-full"/>
                                     </div>
@@ -76,7 +81,7 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                             {/*parent project*/}
                             <div className="">
                                 <label className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5">Parent project</label>
-                                <div className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 justify-between">
+                                <div className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 justify-between hover:border-product-library-border-focus-tint">
                                     <input type="hidden" className="whitespace-nowrap overflow-hidden absolute w-full"/>
                                     <div className="text-product-library-display-primary-idle-tint text-sm">No Parent</div>
                                     <button className="flex items-center justify-center">
