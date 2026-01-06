@@ -7,14 +7,14 @@ import ListItemIcon from "../icons/ListItemIcon.tsx";
 import BoardItemIcon from "../icons/BoardItemIcon.tsx";
 import PremiumCalendarIcon from "../icons/PremiumCalendarIcon.tsx";
 import PremiumStarIcon from "../icons/PremiumStarIcon.tsx";
-import {type ChangeEvent, useState} from "react";
+import {type MouseEvent, useState} from "react";
 import AddProjectsColorListDropdown from "./AddProjectsColorListDropdown.tsx";
 import {createPortal} from "react-dom";
 
 const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
     const [nameValue, setNameValue] = useState("");
     const [isOpenColorDropdown, setIsOpenColorDropdown] = useState(false);
-    const handleToggleColorDropdown = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleToggleColorDropdown = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setIsOpenColorDropdown(prev => !prev);
     }
