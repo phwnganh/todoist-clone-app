@@ -12,12 +12,16 @@ import AddProjectsColorListDropdown from "./AddProjectsColorListDropdown.tsx";
 import {createPortal} from "react-dom";
 import type {Color} from "../../types/color.type.ts";
 import AddProjectsWorkspaceListDropdown from "./AddProjectsWorkspaceListDropdown.tsx";
+import AddProjectsParentProjectListDropdown from "./AddProjectsParentProjectListDropdown.tsx";
+import HashtagIcon from "../icons/HashtagIcon.tsx";
 
 const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
     const [nameValue, setNameValue] = useState("");
     const [isOpenColorDropdown, setIsOpenColorDropdown] = useState(false);
     const [isOpenWorkspaceDropdown, setIsOpenWorkspaceDropdown] = useState(false);
+    const [isOpenParentProjectsDropdown, setIsOpenParentProjectsDropdown] = useState(false);
     const [selectedColor, setSelectedColor] = useState<Color | null>(null);
+    const [selectedParentProject, setSelectedParentProject] = useState<string | null>(null);
     const handleToggleColorDropdown = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setIsOpenColorDropdown(prev => !prev);
@@ -28,6 +32,20 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
         setIsOpenWorkspaceDropdown(prev => !prev);
     }
 
+    const handleToggleParentProjectDropdown = (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setIsOpenParentProjectsDropdown(prev => !prev);
+    }
+
+    const handleSelectColor = (color: Color) => {
+        setSelectedColor(color)
+        setIsOpenColorDropdown(false)
+    }
+
+    const handleSelectParentProjects = (parentProject: string) => {
+        setSelectedParentProject(parentProject)
+        setIsOpenParentProjectsDropdown(false)
+    }
     const handleAddMyProjects = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
     }
@@ -77,10 +95,7 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                                             <FormSmallArrowDownIcon/>
                                         </div>
                                     </button>
-                                    {isOpenColorDropdown &&  <AddProjectsColorListDropdown selectedColor={selectedColor} onSelect={(color: Color) => {
-                                        setSelectedColor(color)
-                                        setIsOpenColorDropdown(false)
-                                    }}/>
+                                    {isOpenColorDropdown &&  <AddProjectsColorListDropdown selectedColor={selectedColor} onSelect={(color: Color) => handleSelectColor(color)}/>
                                     }
                                 </div>
 
@@ -106,15 +121,23 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
 
 
                                 {/*parent project*/}
-                                <div className="">
+                                <div className="relative">
                                     <label className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5">Parent project</label>
-                                    <div className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 justify-between hover:border-product-library-border-focus-tint">
-                                        <input type="hidden" className="whitespace-nowrap overflow-hidden absolute w-full"/>
-                                        <div className="text-product-library-display-primary-idle-tint text-sm">No Parent</div>
-                                        <button className="flex items-center justify-center">
+                                    <button onClick={(e) => handleToggleParentProjectDropdown(e)} className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 justify-between hover:border-product-library-border-focus-tint w-full">
+                                        <input type="hidden" className="whitespace-nowrap overflow-hidden absolute"/>
+                                        <div className="flex items-center gap-1.5">
+                                            {selectedParentProject !== "No Parent" &&
+                                                <div className="flex justify-center items-center">
+                                                    <HashtagIcon/>
+                                                </div>}
+
+                                            <div className="text-product-library-display-primary-idle-tint text-sm text-start">{selectedParentProject ?? "No Parent"}</div>
+                                        </div>
+                                        <div className="flex items-center justify-center">
                                             <FormSmallArrowDownIcon/>
-                                        </button>
-                                    </div>
+                                        </div>
+                                    </button>
+                                    {isOpenParentProjectsDropdown && <AddProjectsParentProjectListDropdown selectedProject={selectedParentProject} onSelect={(parentProject: string) => handleSelectParentProjects(parentProject)}/>}
                                 </div>
 
 

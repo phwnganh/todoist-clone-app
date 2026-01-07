@@ -2,10 +2,15 @@ export type Project = {
     id: string;
     name: string;
     description: string;
-    workspace_id: string;
-    is_invite_only: boolean;
-    status: string;
-    is_link_sharing_enabled: boolean;
     color: string;
+    is_archived: boolean;
+    is_deleted: boolean;
+    view_style: string;
+    is_favorite: boolean;
+    parent_id: string;
+}
 
+export type ProjectResponse = {
+    results: Project[];
+    next_cursor: string;
 }
