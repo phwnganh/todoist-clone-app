@@ -7,16 +7,29 @@ import ListItemIcon from "../icons/ListItemIcon.tsx";
 import BoardItemIcon from "../icons/BoardItemIcon.tsx";
 import PremiumCalendarIcon from "../icons/PremiumCalendarIcon.tsx";
 import PremiumStarIcon from "../icons/PremiumStarIcon.tsx";
-import {type MouseEvent, useState} from "react";
+import {type FormEvent, type MouseEvent, useState} from "react";
 import AddProjectsColorListDropdown from "./AddProjectsColorListDropdown.tsx";
 import {createPortal} from "react-dom";
+import type {Color} from "../../types/color.type.ts";
+import AddProjectsWorkspaceListDropdown from "./AddProjectsWorkspaceListDropdown.tsx";
 
 const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
     const [nameValue, setNameValue] = useState("");
     const [isOpenColorDropdown, setIsOpenColorDropdown] = useState(false);
+    const [isOpenWorkspaceDropdown, setIsOpenWorkspaceDropdown] = useState(false);
+    const [selectedColor, setSelectedColor] = useState<Color | null>(null);
     const handleToggleColorDropdown = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setIsOpenColorDropdown(prev => !prev);
+    }
+
+    const handleToggleWorkspaceDropdown = (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setIsOpenWorkspaceDropdown(prev => !prev);
+    }
+
+    const handleAddMyProjects = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
     }
 
     return createPortal(
@@ -34,10 +47,10 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                             </button>
                         </header>
                         <hr className="border-t border-t-product-library-divider-tertiary"/>
-                        <form>
+                        <form onSubmit={(e) => handleAddMyProjects(e)}>
                             <div className="p-4 flex flex-col gap-large">
                                 {/*name section*/}
-                                <div className="">
+                                <div>
                                     <label className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5">Name</label>
                                     <div className="border border-product-library-border-idle-tint rounded-small flex items-center justify-between hover:border-product-library-border-focus-tint">
                                         <input name="name" type="text" maxLength={120} className="py-1.5 px-2 w-full outline-none text-sm" onChange={e => setNameValue(e.target.value)} value={nameValue}/>
@@ -51,40 +64,44 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                                 {/*color section*/}
                                 <div className="relative">
                                     <label className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5">Color</label>
-                                    <div className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 hover:border-product-library-border-focus-tint">
+                                    <button onClick={(e) => handleToggleColorDropdown(e)} className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 hover:border-product-library-border-focus-tint w-full">
                                         <div className="flex items-center justify-center w-6 h-6">
-                                            <div className="rounded-xl w-3 h-3 bg-black"></div>
+                                            <div className={`rounded-xl w-3 h-3 ${selectedColor?.hexadecimal ?? "bg-charcoal"}`}></div>
                                         </div>
                                         <div className="flex-1">
-                                            <input type="hidden" className="whitespace-nowrap overflow-hidden absolute w-full">
+                                            <input type="hidden" className="whitespace-nowrap overflow-hidden absolute">
                                             </input>
-                                            <div className="text-product-library-display-primary-idle-tint text-sm">Grape</div>
+                                            <div className="text-product-library-display-primary-idle-tint text-sm text-start">{selectedColor?.label ?? "Charcoal"}</div>
                                         </div>
-                                        <button className="flex items-center justify-center" onClick={(e) => handleToggleColorDropdown(e)}>
+                                        <div className="flex items-center justify-center">
                                             <FormSmallArrowDownIcon/>
-                                        </button>
-                                    </div>
-                                    {isOpenColorDropdown &&  <AddProjectsColorListDropdown/>
+                                        </div>
+                                    </button>
+                                    {isOpenColorDropdown &&  <AddProjectsColorListDropdown selectedColor={selectedColor} onSelect={(color: Color) => {
+                                        setSelectedColor(color)
+                                        setIsOpenColorDropdown(false)
+                                    }}/>
                                     }
                                 </div>
 
 
                                 {/*workspace section*/}
-                                <div className="">
+                                <div className="relative">
                                     <label className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5">Workspace</label>
-                                    <div className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 hover:border-product-library-border-focus-tint">
+                                    <button onClick={e => handleToggleWorkspaceDropdown(e)} className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 hover:border-product-library-border-focus-tint w-full">
                                         <div className="flex items-center justify-center w-4.5 h-4.5 rounded-small">
-                                            <img src={UserAvatar} className="object-cover w-full h-full"/>
+                                            <img src={UserAvatar} alt="user-avatar" className="object-cover w-full h-full"/>
                                         </div>
                                         <div className="flex-1">
-                                            <input type="hidden" className="whitespace-nowrap overflow-hidden absolute w-full">
+                                            <input type="hidden" className="whitespace-nowrap overflow-hidden absolute">
                                             </input>
-                                            <div className="text-product-library-display-primary-idle-tint text-sm">My Projects</div>
+                                            <div className="text-product-library-display-primary-idle-tint text-sm text-start">My Projects</div>
                                         </div>
-                                        <button className="flex items-center justify-center">
+                                        <div className="flex items-center justify-center">
                                             <FormSmallArrowDownIcon/>
-                                        </button>
-                                    </div>
+                                        </div>
+                                    </button>
+                                    {isOpenWorkspaceDropdown && <AddProjectsWorkspaceListDropdown/>}
                                 </div>
 
 
