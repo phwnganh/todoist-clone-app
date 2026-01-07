@@ -22,6 +22,7 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
     const [isOpenParentProjectsDropdown, setIsOpenParentProjectsDropdown] = useState(false);
     const [selectedColor, setSelectedColor] = useState<Color | null>(null);
     const [selectedParentProject, setSelectedParentProject] = useState<string | null>(null);
+    const [selectedLayout, setSelectedLayout] = useState<string | null>("list");
     const handleToggleColorDropdown = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setIsOpenColorDropdown(prev => !prev);
@@ -46,9 +47,16 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
         setSelectedParentProject(parentProject)
         setIsOpenParentProjectsDropdown(false)
     }
+
+    const handleSelectLayout = (layoutName: string) => {
+        setSelectedLayout(layoutName);
+    }
     const handleAddMyProjects = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
     }
+
+    const layoutItemClass = (layoutName: string) => `
+    pt-xsmall px-xsmall pb-small w-full cursor-pointer ${selectedLayout === layoutName ? "bg-white rounded-large text-product-library-display-primary-idle-tint": "hover:text-product-library-display-primary-idle-tint"}`
 
     return createPortal(
         <div className="fixed inset-0 bg-black/40 z-50 pt-[13vh]">
@@ -148,27 +156,32 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                                     </div>
                                     <div className="text-sm text-product-library-display-primary-idle-tint">Add to favorites</div>
                                 </div>
+
+                                {/*layout*/}
                                 <div>
                                     <label className="text-product-library-selectable-tertiary-on-unselected-enabled-tint text-sm font-strong pb-1.5">Layout</label>
-                                    <div className="flex justify-center border-2 border-product-library-selectable-background gap-0.75 bg-product-library-selectable-background rounded-large text-product-library-selectable-tertiary-on-selected-enabled-tint">
-                                        <label className="pt-xsmall px-xsmall pb-small w-full">
-                                            <input type="radio" className="sr-only"/>
+                                    <div className="flex justify-center border-2 border-product-library-selectable-background gap-0.75 bg-product-library-selectable-background rounded-large text-product-library-display-secondary-idle-tint ">
+                                        <label className={`${layoutItemClass("list")}`}>
+                                            <input type="radio" className="sr-only" value="list" checked={selectedLayout === "list"}
+                                            onChange={() => handleSelectLayout("list")}/>
                                             <span className="flex flex-col gap-xsmall items-center justify-center text-xs">
                                     <ListItemIcon/>
                                     List
                                 </span>
                                         </label>
 
-                                        <label className="pt-xsmall px-xsmall pb-small w-full">
-                                            <input type="radio" className="sr-only"/>
+                                        <label className={`${layoutItemClass("board")}`}>
+                                            <input type="radio" className="sr-only" value="board" checked={selectedLayout === "board"}
+                                                   onChange={() => handleSelectLayout("board")}/>
                                             <span className="flex flex-col gap-xsmall items-center justify-center text-xs">
                                     <BoardItemIcon/>
                                     Board
                                 </span>
                                         </label>
 
-                                        <label className="pt-xsmall px-xsmall pb-small w-full">
-                                            <input type="radio" className="sr-only"/>
+                                        <label className={`${layoutItemClass("calendar")}`}>
+                                            <input type="radio" className="sr-only" value="calendar" checked={selectedLayout === "calendar"}
+                                                   onChange={() => handleSelectLayout("calendar")}/>
                                             <span className="flex flex-col gap-xsmall items-center justify-center text-xs">
                                     <div className="relative">
                                         <PremiumCalendarIcon/>

@@ -29,7 +29,7 @@ const AddProjectsParentProjectListDropdown = ({selectedProject, onSelect}: AddPr
                 {projectsData.map(project => {
                     const isSelected = selectedProject === project.name;
                     return (
-                        <button data-selected={isSelected} onClick={() => onSelect(project.name)}
+                        <button data-selected={isSelected} key={project.id} onClick={() => onSelect(project.name)}
                                 className="group flex items-center gap-1.5 py-1 px-1.5">
                             <div
                                 className="flex justify-center items-center invisible group-data-[selected=true]:visible">
