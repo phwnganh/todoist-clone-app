@@ -58,6 +58,7 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
     const layoutItemClass = (layoutName: string) => `
     pt-xsmall px-xsmall pb-small w-full cursor-pointer ${selectedLayout === layoutName ? "bg-white rounded-large text-product-library-display-primary-idle-tint": "hover:text-product-library-display-primary-idle-tint"}`
 
+    const isAddButtonDisabled = nameValue.trim() === ""
     return createPortal(
         <div className="fixed inset-0 bg-black/40 z-50 pt-[13vh]">
                 <div className="w-120 max-w-full mx-auto rounded-large bg-white transition-all duration-500 ease-in-out">
@@ -203,7 +204,7 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                                 <button type="button" className="px-3 py-1.5 rounded-small bg-product-library-actionable-secondary-idle-fill flex justify-center items-center min-w-17" onClick={onClose}>
                                     <span className="text-sm font-medium text-product-library-actionable-secondary-on-idle-tint">Cancel</span>
                                 </button>
-                                <button type="submit" className="px-3 py-1.5 rounded-small bg-product-library-actionable-primary-idle-fill flex justify-center items-center min-w-17">
+                                <button type="submit" className={`px-3 py-1.5 rounded-small  flex justify-center items-center min-w-17 ${isAddButtonDisabled ? "bg-product-library-actionable-primary-disabled-fill cursor-not-allowed" : "bg-product-library-actionable-primary-idle-fill hover:bg-product-library-actionable-primary-hover-fill"}`} disabled={isAddButtonDisabled}>
                                     <span className="text-sm font-medium text-product-library-actionable-primary-on-idle-tint">Add</span>
                                 </button>
                             </footer>
