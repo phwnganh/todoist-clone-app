@@ -172,7 +172,6 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                                     List
                                 </span>
                                         </label>
-
                                         <label className={`${layoutItemClass("board")}`}>
                                             <input type="radio" className="sr-only" value="board" checked={selectedLayout === "board"}
                                                    onChange={() => handleSelectLayout("board")}/>
@@ -181,7 +180,6 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                                     Board
                                 </span>
                                         </label>
-
                                         <label className={`${layoutItemClass("calendar")}`}>
                                             <input type="radio" className="sr-only" value="calendar" checked={selectedLayout === "calendar"}
                                                    onChange={() => handleSelectLayout("calendar")}/>
@@ -197,10 +195,7 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                                         </label>
                                     </div>
                                 </div>
-
-
                                 <hr className="border-t border-t-product-library-divider-tertiary"/>
-
                             </div>
                             <footer className="flex justify-end px-4 pb-4 gap-2.5">
                                 <button type="button" className="px-3 py-1.5 rounded-small bg-product-library-actionable-secondary-idle-fill flex justify-center items-center min-w-17" onClick={onClose}>
@@ -211,7 +206,6 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                                 </button>
                             </footer>
                         </form>
-
                 </div>
         </div>,
         document.body
