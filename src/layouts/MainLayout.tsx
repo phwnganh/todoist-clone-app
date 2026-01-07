@@ -16,7 +16,7 @@ const MainLayout = () => {
             setIsMobile(isMobile);
             setOpenSidebar(!isMobile);
         }
-        handleMediaChange() // chi chay 1 lan
+        handleMediaChange() // only run 1 time
         media.addEventListener("change", handleMediaChange)
         return () => media.removeEventListener("change", handleMediaChange)
     }, [])

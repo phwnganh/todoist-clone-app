@@ -13,8 +13,8 @@ import {NavLink} from "react-router-dom";
 import SmallArrowDownIcon from "../icons/SmallArrowDownIcon.tsx";
 import BellIcon from "../icons/BellIcon.tsx";
 import CollapseSideBarIcon from "../icons/CollapseSideBarIcon.tsx";
-import {MENU_NAV_ITEMS} from "../../constants/menuNav.constants";
 import RightArrowIcon from "../icons/RightArrowIcon.tsx";
+import {MENU_NAV_ITEMS} from "../../data/menuNavData.ts";
 
 type SidebarProps = {
     open: boolean;

@@ -1,7 +1,6 @@
-import type {MenuNavItem} from "../types/menu-nav.type";
-import {ACTIVITY, FILTERS_LABEL, INBOX, TODAY, UPCOMING} from "./routes.constants";
+import type {MenuNavItem} from "../types/menu-nav.type.ts";
+import {ACTIVITY, FILTERS_LABEL, INBOX, TODAY, UPCOMING} from "../constants/routes.constants.ts";
 
-export type MenuIconKey = "search" | "inbox" | "today" | "upcomingCalendar" | "filter" | "completed"
 export const MENU_NAV_ITEMS: MenuNavItem[] = [
     {
         key: "search",
@@ -39,6 +38,3 @@ export const MENU_NAV_ITEMS: MenuNavItem[] = [
         getTo: ACTIVITY
     }
 ]
-
-
-
