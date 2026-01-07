@@ -3,49 +3,40 @@ import LargeCloseIcon from "../icons/LargeCloseIcon.tsx";
 import FormSmallArrowDownIcon from "../icons/FormSmallArrowDownIcon.tsx";
 import UserAvatar from '../../assets/User-avatar.png'
 import CustomSwitch from "../ui/CustomSwitch.tsx";
-import ListItemIcon from "../icons/ListItemIcon.tsx";
-import BoardItemIcon from "../icons/BoardItemIcon.tsx";
-import PremiumCalendarIcon from "../icons/PremiumCalendarIcon.tsx";
-import PremiumStarIcon from "../icons/PremiumStarIcon.tsx";
-import {type FormEvent, type MouseEvent, useState} from "react";
+import {type ChangeEvent, type FormEvent, Fragment, type MouseEvent, useCallback, useMemo, useState} from "react";
 import AddProjectsColorListDropdown from "./AddProjectsColorListDropdown.tsx";
 import {createPortal} from "react-dom";
 import type {Color} from "../../types/color.type.ts";
 import AddProjectsWorkspaceListDropdown from "./AddProjectsWorkspaceListDropdown.tsx";
 import AddProjectsParentProjectListDropdown from "./AddProjectsParentProjectListDropdown.tsx";
 import HashtagIcon from "../icons/HashtagIcon.tsx";
+import type {OpenDropdown} from "../../types/menu-nav.type.ts";
+import {LAYOUT_ITEMS} from "../../data/menuNavData.ts";
+import {LAYOUT_MAP} from "../icons/IconMap.tsx";
 
 const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
     const [nameValue, setNameValue] = useState("");
-    const [isOpenColorDropdown, setIsOpenColorDropdown] = useState(false);
-    const [isOpenWorkspaceDropdown, setIsOpenWorkspaceDropdown] = useState(false);
-    const [isOpenParentProjectsDropdown, setIsOpenParentProjectsDropdown] = useState(false);
+    const [isOpenDropdown, setIsOpenDropdown] = useState<OpenDropdown>(null)
     const [selectedColor, setSelectedColor] = useState<Color | null>(null);
     const [selectedParentProject, setSelectedParentProject] = useState<string | null>(null);
     const [selectedLayout, setSelectedLayout] = useState<string | null>("list");
-    const handleToggleColorDropdown = (e: MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        setIsOpenColorDropdown(prev => !prev);
-    }
 
-    const handleToggleWorkspaceDropdown = (e: MouseEvent<HTMLButtonElement>) => {
+    const handleNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        setNameValue(e.target.value)
+    }, [])
+    const handleToggleDropdown = (name: OpenDropdown) => (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setIsOpenWorkspaceDropdown(prev => !prev);
-    }
-
-    const handleToggleParentProjectDropdown = (e: MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        setIsOpenParentProjectsDropdown(prev => !prev);
+        setIsOpenDropdown(prev => (prev === name ? null: name));
     }
 
     const handleSelectColor = (color: Color) => {
         setSelectedColor(color)
-        setIsOpenColorDropdown(false)
+        setIsOpenDropdown(null)
     }
 
     const handleSelectParentProjects = (parentProject: string) => {
         setSelectedParentProject(parentProject)
-        setIsOpenParentProjectsDropdown(false)
+        setIsOpenDropdown(null)
     }
 
     const handleSelectLayout = (layoutName: string) => {
@@ -60,7 +51,7 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
     const layoutItemClass = (layoutName: string) => `
     pt-xsmall px-xsmall pb-small w-full cursor-pointer ${selectedLayout === layoutName ? "bg-white rounded-large text-product-library-display-primary-idle-tint": "hover:text-product-library-display-primary-idle-tint"}`
 
-    const isAddButtonDisabled = nameValue.trim() === ""
+    const isAddButtonDisabled = useMemo(() => nameValue.trim() === "", [nameValue])
     return createPortal(
         <div className="fixed inset-0 bg-black/40 z-50 pt-[13vh]">
                 <div className="w-120 max-w-full mx-auto rounded-large bg-white transition-all duration-500 ease-in-out">
@@ -82,7 +73,7 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                                 <div>
                                     <label className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5">Name</label>
                                     <div className="border border-product-library-border-idle-tint rounded-small flex items-center justify-between hover:border-product-library-border-focus-tint">
-                                        <input name="name" type="text" maxLength={120} className="py-1.5 px-2 w-full outline-none text-sm" onChange={e => setNameValue(e.target.value)} value={nameValue}/>
+                                        <input name="name" type="text" maxLength={120} className="py-1.5 px-2 w-full outline-none text-sm" onChange={handleNameChange} value={nameValue}/>
                                         {nameValue.length < 120 ?
                                             <div className="mr-xsmall -ml-xsmall text-sm text-product-library-display-secondary-idle-tint">{nameValue.length}/120</div>
                                             :
@@ -93,7 +84,7 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                                 {/*color section*/}
                                 <div className="relative">
                                     <label className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5">Color</label>
-                                    <button onClick={(e) => handleToggleColorDropdown(e)} className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 hover:border-product-library-border-focus-tint w-full">
+                                    <button onClick={handleToggleDropdown("color")} className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 hover:border-product-library-border-focus-tint w-full">
                                         <div className="flex items-center justify-center w-6 h-6">
                                             <div className={`rounded-xl w-3 h-3 ${selectedColor?.hexadecimal ?? "bg-charcoal"}`}></div>
                                         </div>
@@ -106,7 +97,7 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                                             <FormSmallArrowDownIcon/>
                                         </div>
                                     </button>
-                                    {isOpenColorDropdown &&  <AddProjectsColorListDropdown selectedColor={selectedColor} onSelect={(color: Color) => handleSelectColor(color)}/>
+                                    {isOpenDropdown === "color" &&  <AddProjectsColorListDropdown selectedColor={selectedColor} onSelect={(color: Color) => handleSelectColor(color)}/>
                                     }
                                 </div>
 
@@ -114,7 +105,7 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                                 {/*workspace section*/}
                                 <div className="relative">
                                     <label className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5">Workspace</label>
-                                    <button onClick={e => handleToggleWorkspaceDropdown(e)} className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 hover:border-product-library-border-focus-tint w-full">
+                                    <button onClick={handleToggleDropdown("workspace")} className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 hover:border-product-library-border-focus-tint w-full">
                                         <div className="flex items-center justify-center w-4.5 h-4.5 rounded-small">
                                             <img src={UserAvatar} alt="user-avatar" className="object-cover w-full h-full"/>
                                         </div>
@@ -127,14 +118,14 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                                             <FormSmallArrowDownIcon/>
                                         </div>
                                     </button>
-                                    {isOpenWorkspaceDropdown && <AddProjectsWorkspaceListDropdown/>}
+                                    {isOpenDropdown === "workspace" && <AddProjectsWorkspaceListDropdown/>}
                                 </div>
 
 
                                 {/*parent project*/}
                                 <div className="relative">
                                     <label className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5">Parent project</label>
-                                    <button onClick={(e) => handleToggleParentProjectDropdown(e)} className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 justify-between hover:border-product-library-border-focus-tint w-full">
+                                    <button onClick={handleToggleDropdown("parentProject")} className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 justify-between hover:border-product-library-border-focus-tint w-full">
                                         <input type="hidden" className="whitespace-nowrap overflow-hidden absolute"/>
                                         <div className="flex items-center gap-1.5">
                                             {selectedParentProject !== "No Parent" &&
@@ -148,7 +139,7 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                                             <FormSmallArrowDownIcon/>
                                         </div>
                                     </button>
-                                    {isOpenParentProjectsDropdown && <AddProjectsParentProjectListDropdown selectedProject={selectedParentProject} onSelect={(parentProject: string) => handleSelectParentProjects(parentProject)}/>}
+                                    {isOpenDropdown === "parentProject" && <AddProjectsParentProjectListDropdown selectedProject={selectedParentProject} onSelect={(parentProject: string) => handleSelectParentProjects(parentProject)}/>}
                                 </div>
 
 
@@ -164,35 +155,24 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                                 <div>
                                     <label className="text-product-library-selectable-tertiary-on-unselected-enabled-tint text-sm font-strong pb-1.5">Layout</label>
                                     <div className="flex justify-center border-2 border-product-library-selectable-background gap-0.75 bg-product-library-selectable-background rounded-large text-product-library-display-secondary-idle-tint ">
-                                        <label className={`${layoutItemClass("list")}`}>
-                                            <input type="radio" className="sr-only" value="list" checked={selectedLayout === "list"}
-                                            onChange={() => handleSelectLayout("list")}/>
-                                            <span className="flex flex-col gap-xsmall items-center justify-center text-xs">
-                                    <ListItemIcon/>
-                                    List
+
+                                    {LAYOUT_ITEMS.map(layout => {
+                                        const Icon = LAYOUT_MAP[layout.icon]
+                                        return (
+                                            <Fragment key={layout.key}>
+                                                <label className={`${layoutItemClass(layout.key)}`}>
+                                                    <input type="radio" className="sr-only" value={layout.key}
+                                                           checked={selectedLayout === layout.key}
+                                                           onChange={() => handleSelectLayout(layout.key)}/>
+                                                    <span
+                                                        className="flex flex-col gap-xsmall items-center justify-center text-xs">
+                                    <Icon/>
+                                                        {layout.label}
                                 </span>
-                                        </label>
-                                        <label className={`${layoutItemClass("board")}`}>
-                                            <input type="radio" className="sr-only" value="board" checked={selectedLayout === "board"}
-                                                   onChange={() => handleSelectLayout("board")}/>
-                                            <span className="flex flex-col gap-xsmall items-center justify-center text-xs">
-                                    <BoardItemIcon/>
-                                    Board
-                                </span>
-                                        </label>
-                                        <label className={`${layoutItemClass("calendar")}`}>
-                                            <input type="radio" className="sr-only" value="calendar" checked={selectedLayout === "calendar"}
-                                                   onChange={() => handleSelectLayout("calendar")}/>
-                                            <span className="flex flex-col gap-xsmall items-center justify-center text-xs">
-                                    <div className="relative">
-                                        <PremiumCalendarIcon/>
-                                       <div className="w-3.5 h-3.5 rounded-full absolute -right-0.5 bottom-0 flex justify-center items-center">
-                                           <PremiumStarIcon/>
-                                       </div>
-                                    </div>
-                                    Calendar
-                                </span>
-                                        </label>
+                                                </label>
+                                            </Fragment>
+                                        )
+                                    })}
                                     </div>
                                 </div>
                                 <hr className="border-t border-t-product-library-divider-tertiary"/>

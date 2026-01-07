@@ -1,4 +1,4 @@
-import type {MenuNavItem} from "../types/menu-nav.type.ts";
+import type {LayoutItem, MenuNavItem} from "../types/menu-nav.type.ts";
 import {ACTIVITY, FILTERS_LABEL, INBOX, TODAY, UPCOMING} from "../constants/routes.constants.ts";
 
 export const MENU_NAV_ITEMS: MenuNavItem[] = [
@@ -36,5 +36,23 @@ export const MENU_NAV_ITEMS: MenuNavItem[] = [
         label: "Completed",
         icon: "completed",
         getTo: ACTIVITY
+    }
+]
+
+export const LAYOUT_ITEMS: LayoutItem[] = [
+    {
+        key: "list",
+        label: "List",
+        icon: "list"
+    },
+    {
+        key: "board",
+        label: "Board",
+        icon: "board"
+    },
+    {
+        key: "calendar",
+        label: "Calendar",
+        icon: "calendar"
     }
 ]
