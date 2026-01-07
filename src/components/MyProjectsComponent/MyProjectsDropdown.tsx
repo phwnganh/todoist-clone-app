@@ -15,7 +15,7 @@ const MyProjectsDropdown = () => {
     }
     return (
         <>
-            <div className="overflow-hidden absolute border border-product-library-divider-primary rounded-large shadow-sm right-0 mt-1 p-1.5 min-w-55 flex flex-col gap-1">
+            <div className="absolute border border-product-library-divider-primary rounded-large shadow-sm right-0 mt-1 p-1.5 min-w-55 flex flex-col gap-1 z-50">
                 <button className="flex items-center min-h-8 w-full hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small" onClick={handleOpenAddProjectsModdal}>
                     <div className="flex justify-center items-center mr-2.5 shrink-0">
                         <HashtagIcon/>
