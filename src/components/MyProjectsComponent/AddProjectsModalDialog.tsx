@@ -51,6 +51,8 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
     const handleSelectLayout = (layoutName: string) => {
         setSelectedLayout(layoutName);
     }
+
+
     const handleAddMyProjects = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
     }
