@@ -2,27 +2,41 @@ import VerifiedIcon from "../icons/VerifiedIcon.tsx";
 import UserAvatar from "../../assets/User-avatar.png";
 
 const AddProjectsWorkspaceListDropdown = () => {
-    return (
-        <div className="absolute top-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom max-h-70 w-full mt-1 bg-white p-1.5">
-            <div className="flex flex-col">
-                <button className="flex items-center gap-1.5 py-1 px-1.5 w-full hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
-                    <div className="flex justify-center items-center">
-                        <VerifiedIcon/>
-                    </div>
-                    <span className="flex items-center gap-small">
-                        <div className="flex gap-1.5 overflow-hidden">
-                            <div className="flex justify-center items-center w-4.5 h-4.5 rounded-small bg-white">
-                                <img src={UserAvatar} alt="user-avatar" className="object-cover w-full h-full"/>
-                        </div>
-                        <div className="text-sm">My Projects</div>
-                        </div>
-
-                    </span>
-                </button>
-                <button className="text-center text-sm text-product-library-actionable-tertiary-idle-tint font-medium py-1 px-1.5 w-full hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">Add team workspace</button>
+  return (
+    <div
+      id="workspace-listbox"
+      role="listbox"
+      aria-labelledby="workspace-trigger"
+      className="absolute top-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom max-h-70 w-full mt-1 bg-white p-1.5"
+    >
+      <div className="flex flex-col">
+        <div
+          role="option"
+          tabIndex={-1}
+          className="flex items-center gap-1.5 py-1 px-1.5 w-full hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"
+        >
+          <div className="flex justify-center items-center">
+            <VerifiedIcon />
+          </div>
+          <span className="flex items-center gap-small">
+            <div className="flex gap-1.5 overflow-hidden">
+              <div className="flex justify-center items-center w-4.5 h-4.5 rounded-small bg-white">
+                <img
+                  src={UserAvatar}
+                  alt="user-avatar"
+                  className="object-cover w-full h-full"
+                />
+              </div>
+              <div className="text-sm">My Projects</div>
             </div>
+          </span>
         </div>
-    );
+        <button className="text-center text-sm text-product-library-actionable-tertiary-idle-tint font-medium py-1 px-1.5 w-full hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+          Add team workspace
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default AddProjectsWorkspaceListDropdown;
