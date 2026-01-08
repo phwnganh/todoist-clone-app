@@ -3,12 +3,12 @@ import LargeCloseIcon from "../icons/LargeCloseIcon.tsx";
 import FormSmallArrowDownIcon from "../icons/FormSmallArrowDownIcon.tsx";
 import UserAvatar from '../../assets/User-avatar.png'
 import CustomSwitch from "../ui/CustomSwitch.tsx";
-import {type ChangeEvent, type FormEvent, Fragment, type MouseEvent, useCallback, useMemo, useState} from "react";
+import {type ChangeEvent, type FormEvent, Fragment, type MouseEvent, useState} from "react";
 import AddProjectsColorListDropdown from "./AddProjectsColorListDropdown.tsx";
 import {createPortal} from "react-dom";
 import type {Color} from "../../types/color.type.ts";
 import AddProjectsWorkspaceListDropdown from "./AddProjectsWorkspaceListDropdown.tsx";
-import AddProjectsParentProjectListDropdown from "./AddProjectsParentProjectListDropdown.tsx";
+import AddProjectsParentProjectListDropdown from "./AddProjectsParentProjectListDropdown";
 import HashtagIcon from "../icons/HashtagIcon.tsx";
 import type {OpenDropdown} from "../../types/menu-nav.type.ts";
 import {LAYOUT_ITEMS} from "../../data/menuNavData.ts";
@@ -21,10 +21,10 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
     const [selectedParentProject, setSelectedParentProject] = useState<string | null>(null);
     const [selectedLayout, setSelectedLayout] = useState<string | null>("list");
 
-    const handleNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
         setNameValue(e.target.value)
-    }, [])
-    const handleToggleDropdown = (name: OpenDropdown) => (e: MouseEvent<HTMLButtonElement>) => {
+    }
+    const handleToggleDropdown = (name: OpenDropdown, e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setIsOpenDropdown(prev => (prev === name ? null: name));
     }
@@ -51,7 +51,7 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
     const layoutItemClass = (layoutName: string) => `
     pt-xsmall px-xsmall pb-small w-full cursor-pointer ${selectedLayout === layoutName ? "bg-white rounded-large text-product-library-display-primary-idle-tint": "hover:text-product-library-display-primary-idle-tint"}`
 
-    const isAddButtonDisabled = useMemo(() => nameValue.trim() === "", [nameValue])
+    const isAddButtonDisabled = nameValue.trim() === ""
     return createPortal(
         <div className="fixed inset-0 bg-black/40 z-50 pt-[13vh]">
                 <div className="w-120 max-w-full mx-auto rounded-large bg-white transition-all duration-500 ease-in-out">
@@ -67,7 +67,7 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                             </button>
                         </header>
                         <hr className="border-t border-t-product-library-divider-tertiary"/>
-                        <form onSubmit={(e) => handleAddMyProjects(e)}>
+                        <form onSubmit={handleAddMyProjects}>
                             <div className="p-4 flex flex-col gap-large">
                                 {/*name section*/}
                                 <div>
@@ -84,7 +84,7 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                                 {/*color section*/}
                                 <div className="relative">
                                     <label className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5">Color</label>
-                                    <button onClick={handleToggleDropdown("color")} className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 hover:border-product-library-border-focus-tint w-full">
+                                    <button onClick={(e) => handleToggleDropdown("color", e)} className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 hover:border-product-library-border-focus-tint w-full">
                                         <div className="flex items-center justify-center w-6 h-6">
                                             <div className={`rounded-xl w-3 h-3 ${selectedColor?.hexadecimal ?? "bg-charcoal"}`}></div>
                                         </div>
@@ -105,7 +105,7 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                                 {/*workspace section*/}
                                 <div className="relative">
                                     <label className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5">Workspace</label>
-                                    <button onClick={handleToggleDropdown("workspace")} className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 hover:border-product-library-border-focus-tint w-full">
+                                    <button onClick={(e) => handleToggleDropdown("workspace", e)} className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 hover:border-product-library-border-focus-tint w-full">
                                         <div className="flex items-center justify-center w-4.5 h-4.5 rounded-small">
                                             <img src={UserAvatar} alt="user-avatar" className="object-cover w-full h-full"/>
                                         </div>
@@ -125,7 +125,7 @@ const AddProjectsModalDialog = ({onClose}: {onClose: () => void}) => {
                                 {/*parent project*/}
                                 <div className="relative">
                                     <label className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5">Parent project</label>
-                                    <button onClick={handleToggleDropdown("parentProject")} className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 justify-between hover:border-product-library-border-focus-tint w-full">
+                                    <button onClick={(e) => handleToggleDropdown("parentProject", e)} className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 justify-between hover:border-product-library-border-focus-tint w-full">
                                         <input type="hidden" className="whitespace-nowrap overflow-hidden absolute"/>
                                         <div className="flex items-center gap-1.5">
                                             {selectedParentProject !== "No Parent" &&
