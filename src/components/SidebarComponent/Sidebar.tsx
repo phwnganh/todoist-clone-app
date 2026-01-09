@@ -1,4 +1,3 @@
-import UserAvatar from "../../assets/User-avatar.png";
 import type { MenuNavItem } from "../../types/menu-nav.type.ts";
 import AddIcon from "../icons/AddIcon.tsx";
 import ArrowDownIcon from "../icons/ArrowDownIcon.tsx";
@@ -15,6 +14,7 @@ import RightArrowIcon from "../icons/RightArrowIcon.tsx";
 import { MENU_NAV_ITEMS } from "../../data/menuNavData.ts";
 import SidebarMyProjectsItem from "./SidebarMyProjectsItem.tsx";
 import {useGetAllProjects} from "../../hooks/useProjects.ts";
+import {useGetUserProfile} from "../../hooks/useUserProfile.ts";
 
 type SidebarProps = {
   open: boolean;
@@ -23,6 +23,7 @@ type SidebarProps = {
 };
 const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
   const {data: projects} = useGetAllProjects()
+  const {data: user} = useGetUserProfile()
   const [openSearchModal, setOpenSearchModal] = useState(false);
   const [isProjectListOpen, setIsProjectListOpen] = useState(false);
   const handleSearchClick = () => {
@@ -47,11 +48,11 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
         <div className="flex justify-between items-center m-medium pl-2">
           <button className="flex items-center py-0.75 -ml-0.75 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
             <div className="rounded-full w-6.5 h-6.5 bg-white -ml-1.5 mr-1.5">
-              <img src={UserAvatar} alt="User Avatar" />
+              <img src={user?.avatar_medium} alt={user?.full_name} />
             </div>
             <span className="flex items-center">
               <span className="whitespace-nowrap text-product-library-display-primary-idle-tint overflow-hidden">
-                Your Name
+                {user?.full_name?.trim().split(" ")[0]}
               </span>
               <SmallArrowDownIcon />
             </span>

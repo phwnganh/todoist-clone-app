@@ -24,13 +24,6 @@ const AddProjectsParentProjectListDropdown = ({
 
   const {data: parentProjects, isLoading, isError} = useGetAllProjects();
 
-  if(isLoading){
-    return <LoadingSpin/>
-  }
-
-  if(isError){
-    return <ErrorDisplayed/>
-  }
   const filteredProjects = useMemo(() => {
     if (!hasKeyword) return parentProjects?.results;
     return parentProjects?.results.filter((project) =>
@@ -46,6 +39,14 @@ const AddProjectsParentProjectListDropdown = ({
   useEffect(() => {
     searchInputRef.current?.focus();
   }, []);
+
+  if(isLoading){
+    return <LoadingSpin/>
+  }
+
+  if(isError){
+    return <ErrorDisplayed/>
+  }
 
   return (
     <div
