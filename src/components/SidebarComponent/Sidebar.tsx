@@ -2,11 +2,10 @@ import UserAvatar from "../../assets/User-avatar.png";
 import type { MenuNavItem } from "../../types/menu-nav.type.ts";
 import AddIcon from "../icons/AddIcon.tsx";
 import ArrowDownIcon from "../icons/ArrowDownIcon.tsx";
-import HashtagIcon from "../icons/HashtagIcon.tsx";
 import QuestionIcon from "../icons/QuestionIcon.tsx";
 import { PROJECTS } from "../../constants/routes.constants.ts";
 import SidebarNavItem from "./SidebarNavItem.tsx";
-import { useState } from "react";
+import {Fragment, useState} from "react";
 import SearchModalDialog from "../SearchModalDialog.tsx";
 import { NavLink } from "react-router-dom";
 import SmallArrowDownIcon from "../icons/SmallArrowDownIcon.tsx";
@@ -14,6 +13,8 @@ import BellIcon from "../icons/BellIcon.tsx";
 import CollapseSideBarIcon from "../icons/CollapseSideBarIcon.tsx";
 import RightArrowIcon from "../icons/RightArrowIcon.tsx";
 import { MENU_NAV_ITEMS } from "../../data/menuNavData.ts";
+import SidebarMyProjectsItem from "./SidebarMyProjectsItem.tsx";
+import {useGetAllProjects} from "../../hooks/useProjects.ts";
 
 type SidebarProps = {
   open: boolean;
@@ -21,6 +22,7 @@ type SidebarProps = {
   onToggle: () => void;
 };
 const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
+  const {data: projects} = useGetAllProjects()
   const [openSearchModal, setOpenSearchModal] = useState(false);
   const [isProjectListOpen, setIsProjectListOpen] = useState(false);
   const handleSearchClick = () => {
@@ -132,17 +134,11 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
             )}
           </NavLink>
 
-          {!isProjectListOpen && (
-            <div className="flex items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
-              <div className="p-1.25 flex items-center">
-                <div className="flex justify-center items-center">
-                  <HashtagIcon />
-                </div>
-                <div className="py-0.75 pl-1.25 text-sm">Getting Started</div>
-              </div>
-              <div className="w-7 h-7 flex justify-center items-center ml-auto"></div>
-            </div>
-          )}
+          {!isProjectListOpen && projects?.results.map(project => (
+              <Fragment key={project.id}>
+                <SidebarMyProjectsItem project={project}/>
+              </Fragment>
+          ))}
         </div>
       </div>
 

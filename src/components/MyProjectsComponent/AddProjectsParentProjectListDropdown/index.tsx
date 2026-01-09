@@ -1,9 +1,11 @@
-import { projectsData } from "../../../data/project.mock.data.ts";
 import { useEffect, useMemo, useRef, useState } from "react";
 import SearchInput from "./SearchInput.tsx";
 import NoParentOption from "./NoParentOption.tsx";
 import ParentProjectOptions from "./ParentProjectOptions.tsx";
 import DropdownFooter from "./DropdownFooter.tsx";
+import {useGetAllProjects} from "../../../hooks/useProjects.ts";
+import LoadingSpin from "../../ui/LoadingSpin.tsx";
+import ErrorDisplayed from "../../ui/ErrorDisplayed.tsx";
 
 type AddProjectsParentProjectListProps = {
   selectedProject: string | null;
@@ -20,17 +22,26 @@ const AddProjectsParentProjectListDropdown = ({
   const hasKeyword = trimmedParentProjectValue.length > 0;
   const searchInputRef = useRef<HTMLInputElement>(null);
 
+  const {data: parentProjects, isLoading, isError} = useGetAllProjects();
+
+  if(isLoading){
+    return <LoadingSpin/>
+  }
+
+  if(isError){
+    return <ErrorDisplayed/>
+  }
   const filteredProjects = useMemo(() => {
-    if (!hasKeyword) return projectsData;
-    return projectsData.filter((project) =>
+    if (!hasKeyword) return parentProjects?.results;
+    return parentProjects?.results.filter((project) =>
       project.name.toLowerCase().includes(keyword)
     );
-  }, [keyword, hasKeyword]);
+  }, [keyword, hasKeyword, parentProjects]);
 
   const isNoParentMatched =
     !hasKeyword || NO_PARENT.toLowerCase().includes(keyword);
   const isNotProjectsFound =
-    hasKeyword && !isNoParentMatched && filteredProjects.length === 0;
+    hasKeyword && !isNoParentMatched && filteredProjects?.length === 0;
 
   useEffect(() => {
     searchInputRef.current?.focus();
@@ -63,7 +74,7 @@ const AddProjectsParentProjectListDropdown = ({
             My Projects
           </div>
         )}
-        {filteredProjects.map((project) => (
+        {filteredProjects?.map((project) => (
           <ParentProjectOptions
             key={project.id}
             project={project}
