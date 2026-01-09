@@ -10,7 +10,8 @@ export const projectsData: Project[] = [
         is_deleted: false,
         is_favorite: false,
         parent_id: "",
-        view_style: "list"
+        view_style: "list",
+        is_shared: false
     },
     {
         id: "2",
@@ -21,6 +22,7 @@ export const projectsData: Project[] = [
         is_deleted: false,
         is_favorite: false,
         parent_id: "",
-        view_style: "list"
+        view_style: "list",
+        is_shared: false
     }
 ]

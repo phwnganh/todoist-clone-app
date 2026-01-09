@@ -2,8 +2,14 @@ import HashtagIcon from "../icons/HashtagIcon.tsx";
 import IndicatorDots from "../ui/IndicatorDots.tsx";
 import { useState } from "react";
 import MyProjectsToolbarDropdown from "./MyProjectsToolbarDropdown.tsx";
+import type {Project} from "../../types/project.type.ts";
 
-const MyProjectsItem = () => {
+type MyProjectsItemProps = {
+    project: Project;
+    isLoading: boolean;
+    isError: boolean;
+}
+const MyProjectsItem = ({project, isLoading, isError}: MyProjectsItemProps) => {
   const [isOpenMyProjectsToolbars, setIsOpenMyProjectsToolbars] =
     useState(false);
 
@@ -17,7 +23,7 @@ const MyProjectsItem = () => {
           <HashtagIcon />
         </div>
         <div className="text-sm font-regular whitespace-nowrap">
-          Getting Started
+            {project.name}
         </div>
       </div>
       <div

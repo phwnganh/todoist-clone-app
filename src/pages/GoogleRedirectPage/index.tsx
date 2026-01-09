@@ -1,9 +1,11 @@
 import {useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
 import {PROJECTS} from "../../constants/routes.constants.ts";
+import {useAuthStore} from "../../stores/auth.store.ts";
 
 const GoogleRedirectPage = () => {
     const navigate = useNavigate()
+    const login = useAuthStore(state => state.login)
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const code = params.get("code");
@@ -23,14 +25,14 @@ const GoogleRedirectPage = () => {
                 code,
             })
         }).then(res => res.json()).then(res => {
-            localStorage.setItem("access_token", res.access_token)
+            login(res.access_token)
             navigate(PROJECTS)
         })
     return () => {
         sessionStorage.removeItem("oauth_state");
     }
 
-    }, [navigate])
+    }, [login, navigate])
     return (
         <div>
             Signing in...

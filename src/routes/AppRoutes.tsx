@@ -33,6 +33,7 @@ const AppRoutes = () => {
                    <Route path={UPCOMING} element={<UpcomingPage/>}/>
                    <Route path={FILTERS_LABEL} element={<FiltersPage/>}/>
                    <Route path={ACTIVITY} element={<ActivityPage/>}/>
+                   <Route path="/" element={<MyProjectsPage/>} index/>
                </Route>
                <Route path="/google-redirect" element={<GoogleRedirectPage/>}/>
             </Routes> 

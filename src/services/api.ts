@@ -11,48 +11,31 @@ type ApiOptions<TBody> = {
 }
 
 async function handleError(res: Response): Promise<ApiError>{
-    let errorBody: any = null;
 
-    try {
-        errorBody = await res.json();
-    }catch(err){
-        console.log(err);
-    }
     switch(res.status){
         case 400:
             return {
                 status: 400,
                 code: "BAD_REQUEST",
                 message: "Bad Request",
-                raw: errorBody
-            }
-        case 401:
-            return {
-                status: 401,
-                code: "UNAUTHORIZED",
-                message: "Invalid or missing token",
-                raw: errorBody
             }
         case 403:
             return {
                 status: 403,
                 code: "FORBIDDEN",
                 message: "You do not have permission to access this resource",
-                raw: errorBody
             }
             case 404:
                 return {
                     status: 404,
                     code: "NOT_FOUND",
                     message: "Not Found",
-                    raw: errorBody
                 }
         case 429:
             return {
                 status: 429,
                 code: "RATE_LIMITED",
                 message: "Too many requests",
-                raw: errorBody
             }
         default:
             if(res.status >= 500){
@@ -60,14 +43,12 @@ async function handleError(res: Response): Promise<ApiError>{
                     status: res.status,
                     code: "SERVER_ERROR",
                     message: "Internal Server Error",
-                    raw: errorBody
                 }
             }
         return {
                 status: res.status,
                 code: "UNKNOWN_ERROR",
                 message: "Unexpected Server Error",
-                raw: errorBody
         }
     }
 }
@@ -78,11 +59,11 @@ async function request<TResponse, TBody = undefined>(endpoint: string, options: 
         throw {
             status: 401,
             code: "UNAUTHORIZED",
-            message: "No token provided",
+            message: "Invalid or missing token",
         } satisfies ApiError
     }
 
-    const res = await fetch(`${BASE_URL}/${endpoint}`, {
+    const res = await fetch(`${BASE_URL}${endpoint}`, {
         method: options.method || "GET",
         headers: {
             "Content-Type": "application/json",
