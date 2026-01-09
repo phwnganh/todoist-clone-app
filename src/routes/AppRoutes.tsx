@@ -18,6 +18,7 @@ import UpcomingPage from "../pages/UpcomingPage";
 import FiltersPage from "../pages/FiltersPage";
 import ActivityPage from "../pages/ActivityPage";
 import MyProjectDetailPage from "../pages/MyProjectDetailPage";
+import GoogleRedirectPage from "../pages/GoogleRedirectPage";
 
 const AppRoutes = () => {
     return (
@@ -33,6 +34,7 @@ const AppRoutes = () => {
                    <Route path={FILTERS_LABEL} element={<FiltersPage/>}/>
                    <Route path={ACTIVITY} element={<ActivityPage/>}/>
                </Route>
+               <Route path="/google-redirect" element={<GoogleRedirectPage/>}/>
             </Routes> 
         </>
     );
