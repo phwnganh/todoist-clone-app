@@ -6,10 +6,8 @@ import type {Project} from "../../types/project.type.ts";
 
 type MyProjectsItemProps = {
     project: Project;
-    isLoading: boolean;
-    isError: boolean;
 }
-const MyProjectsItem = ({project, isLoading, isError}: MyProjectsItemProps) => {
+const MyProjectsItem = ({project}: MyProjectsItemProps) => {
   const [isOpenMyProjectsToolbars, setIsOpenMyProjectsToolbars] =
     useState(false);
 

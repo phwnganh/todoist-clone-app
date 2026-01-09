@@ -1,8 +1,17 @@
 import MyProjectsItem from "./MyProjectsItem.tsx";
-import {useProjects} from "../../hooks/useProjects.ts";
+import {useGetAllProjects} from "../../hooks/useProjects.ts";
+import LoadingSpin from "../ui/LoadingSpin.tsx";
+import ErrorDisplayed from "../ui/ErrorDisplayed.tsx";
 
 const MyProjectsList = () => {
-    const {data: projects, isLoading, isError} = useProjects()
+    const {data: projects, isLoading, isError} = useGetAllProjects()
+    if(isLoading){
+        return <LoadingSpin/>
+    }
+
+    if(isError){
+        return <ErrorDisplayed/>
+    }
   return (
     <>
       <div className="mt-medium flex flex-col gap-4">
@@ -13,7 +22,7 @@ const MyProjectsList = () => {
       </div>
         {projects?.results.map(project => (
             <button key={project.id} className="group pt-3 flex justify-between pr-3 py-3 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
-                <MyProjectsItem project={project} isLoading={isLoading} isError={isError} />
+                <MyProjectsItem project={project} />
             </button>
         ))}
 
