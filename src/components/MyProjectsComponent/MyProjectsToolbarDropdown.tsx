@@ -8,7 +8,7 @@ const MyProjectsToolbarDropdown = () => {
         {MY_PROJECTS_MENU_TOOLBAR.map((item, index) => {
           if (item === "divider") {
             return (
-              <hr className="border-t border-t-product-library-divider-tertiary" />
+              <hr key={index} className="border-t border-t-product-library-divider-tertiary" />
             );
           }
 
