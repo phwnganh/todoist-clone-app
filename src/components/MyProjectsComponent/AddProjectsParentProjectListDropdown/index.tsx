@@ -6,6 +6,7 @@ import DropdownFooter from "./DropdownFooter.tsx";
 import {useGetAllProjects} from "../../../hooks/useProjects.ts";
 import LoadingSpin from "../../ui/LoadingSpin.tsx";
 import ErrorDisplayed from "../../ui/ErrorDisplayed.tsx";
+import {useDebounce} from "../../../hooks/useDebounce.ts";
 
 type AddProjectsParentProjectListProps = {
   selectedProject: string | null;
@@ -18,6 +19,8 @@ const AddProjectsParentProjectListDropdown = ({
   const NO_PARENT = "No Parent";
   const [typedParentProject, setTypedParentProject] = useState<string>("");
   const keyword = typedParentProject.trim().toLowerCase();
+  const debounceSearchKeyword = useDebounce(keyword, 500)
+
   const trimmedParentProjectValue = typedParentProject.trim();
   const hasKeyword = trimmedParentProjectValue.length > 0;
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -27,12 +30,12 @@ const AddProjectsParentProjectListDropdown = ({
   const filteredProjects = useMemo(() => {
     if (!hasKeyword) return parentProjects?.results;
     return parentProjects?.results.filter((project) =>
-      project.name.toLowerCase().includes(keyword)
+      project.name.toLowerCase().includes(debounceSearchKeyword)
     );
-  }, [keyword, hasKeyword, parentProjects]);
+  }, [debounceSearchKeyword, hasKeyword, parentProjects]);
 
   const isNoParentMatched =
-    !hasKeyword || NO_PARENT.toLowerCase().includes(keyword);
+    !hasKeyword || NO_PARENT.toLowerCase().includes(debounceSearchKeyword);
   const isNotProjectsFound =
     hasKeyword && !isNoParentMatched && filteredProjects?.length === 0;
 
