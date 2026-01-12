@@ -1,13 +1,15 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import SearchIcon from "../icons/SearchIcon.tsx";
 import CloseIcon from "../icons/CloseIcon.tsx";
-
-const MyProjectsSearchAction = () => {
-  const [searchValue, setSearchValue] = useState("");
+type MyProjectsSearchActionProps = {
+    value: string;
+    onSearchChange: (value: string) => void;
+}
+const MyProjectsSearchAction = ({value, onSearchChange}: MyProjectsSearchActionProps) => {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const handleClearSearch = () => {
-    setSearchValue("");
+    onSearchChange("");
     searchInputRef?.current?.focus();
   };
   return (
@@ -19,11 +21,11 @@ const MyProjectsSearchAction = () => {
         type="text"
         className="py-1.5 px-2 text-sm w-full outline-none"
         ref={searchInputRef}
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
+        value={value}
+        onChange={(e) => onSearchChange(e.target.value)}
         placeholder="Search projects"
       />
-      {searchValue && (
+      {value && (
         <button
           onClick={handleClearSearch}
           className="flex items-center justify-center mr-1 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"

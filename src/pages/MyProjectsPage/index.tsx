@@ -5,11 +5,14 @@ import SettingsIcon from "../../components/icons/SettingsIcon.tsx";
 import MyProjectsSearchAction from "../../components/MyProjectsComponent/MyProjectsSearchAction.tsx";
 import MyProjectsToolbarAction from "../../components/MyProjectsComponent/MyProjectsToolbarAction.tsx";
 import MyProjectsList from "../../components/MyProjectsComponent/MyProjectsList.tsx";
+import {useState} from "react";
+import {useDebounce} from "../../hooks/useDebounce.ts";
 
 const MyProjectsPage = () => {
   const { showCollapse, onToggleSidebar } =
     useOutletContext<HeaderLayoutType>();
-
+    const [searchValue, setSearchValue] = useState("")
+    const debouncedSearch = useDebounce(searchValue, 500);
   return (
     <>
       <HeaderLayout
@@ -37,10 +40,10 @@ const MyProjectsPage = () => {
           </button>
             </div>
 
-            <MyProjectsSearchAction/>
+            <MyProjectsSearchAction value={searchValue} onSearchChange={setSearchValue}/>
             <MyProjectsToolbarAction/>
             <div className="pt-xlarge pb-xsmall"></div>
-            <MyProjectsList/>
+            <MyProjectsList search={debouncedSearch}/>
         </div>
       </section>
     </>
