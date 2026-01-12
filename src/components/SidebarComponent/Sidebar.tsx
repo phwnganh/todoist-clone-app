@@ -4,17 +4,13 @@ import ArrowDownIcon from "../icons/ArrowDownIcon.tsx";
 import QuestionIcon from "../icons/QuestionIcon.tsx";
 import { PROJECTS } from "../../constants/routes.constants.ts";
 import SidebarNavItem from "./SidebarNavItem.tsx";
-import {Fragment, useState} from "react";
+import {useState} from "react";
 import SearchModalDialog from "../SearchModalDialog.tsx";
 import { NavLink } from "react-router-dom";
-import SmallArrowDownIcon from "../icons/SmallArrowDownIcon.tsx";
-import BellIcon from "../icons/BellIcon.tsx";
-import CollapseSideBarIcon from "../icons/CollapseSideBarIcon.tsx";
 import RightArrowIcon from "../icons/RightArrowIcon.tsx";
 import { MENU_NAV_ITEMS } from "../../data/menuNavData.ts";
-import SidebarMyProjectsItem from "./SidebarMyProjectsItem.tsx";
-import {useGetAllProjects} from "../../hooks/useProjects.ts";
-import {useGetUserProfile} from "../../hooks/useUserProfile.ts";
+import SidebarMyProjectList from "./SidebarMyProjectList.tsx";
+import SidebarHeader from "./SidebarHeader.tsx";
 
 type SidebarProps = {
   open: boolean;
@@ -22,8 +18,6 @@ type SidebarProps = {
   onToggle: () => void;
 };
 const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
-  const {data: projects} = useGetAllProjects()
-  const {data: user} = useGetUserProfile()
   const [openSearchModal, setOpenSearchModal] = useState(false);
   const [isProjectListOpen, setIsProjectListOpen] = useState(false);
   const handleSearchClick = () => {
@@ -34,8 +28,7 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
     setIsProjectListOpen((prev) => !prev);
   };
 
-  const buttonIconClass =
-    "w-8 h-8 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small";
+
 
   return (
     <nav
@@ -45,27 +38,7 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
     >
       <div className="flex flex-col">
         {/*sidebar header*/}
-        <div className="flex justify-between items-center m-medium pl-2">
-          <button className="flex items-center py-0.75 -ml-0.75 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
-            <div className="rounded-full w-6.5 h-6.5 bg-white -ml-1.5 mr-1.5">
-              <img src={user?.avatar_medium} alt={user?.full_name} />
-            </div>
-            <span className="flex items-center">
-              <span className="whitespace-nowrap text-product-library-display-primary-idle-tint overflow-hidden">
-                {user?.full_name?.trim().split(" ")[0]}
-              </span>
-              <SmallArrowDownIcon />
-            </span>
-          </button>
-          <div className="flex items-center gap-xsmall">
-            <button className={buttonIconClass}>
-              <BellIcon />
-            </button>
-            <button onClick={onToggle} className={buttonIconClass}>
-              <CollapseSideBarIcon />
-            </button>
-          </div>
-        </div>
+        <SidebarHeader onToggle={onToggle}/>
         <div className="mx-medium mb-small"></div>
         {/*add task modal*/}
         <button className="flex items-center px-2.5 py-0.75 text-product-library-actionable-tertiary-idle-tint hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
@@ -89,7 +62,7 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
         </button>
 
         {/*menu nav item*/}
-        <div className="px-medium py-xsmall flex flex-col gap-large">
+        <div className="px-medium py-xsmall flex flex-col">
           <ul className="flex flex-col list-none">
             {MENU_NAV_ITEMS.map((item: MenuNavItem) => (
               <SidebarNavItem
@@ -135,11 +108,9 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
             )}
           </NavLink>
 
-          {!isProjectListOpen && projects?.results.map(project => (
-              <Fragment key={project.id}>
-                <SidebarMyProjectsItem project={project}/>
-              </Fragment>
-          ))}
+          {!isProjectListOpen &&
+              <SidebarMyProjectList/>
+          }
         </div>
       </div>
 
