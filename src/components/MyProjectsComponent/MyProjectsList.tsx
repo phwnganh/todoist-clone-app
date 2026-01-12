@@ -36,9 +36,9 @@ const MyProjectsList = ({search}: MyProjectsListProps) => {
         <hr className="border-t border-t-product-library-divider-tertiary" />
       </div>
         {filteredProjects.map(project => (
-            <button key={project.id} className="group pt-3 flex justify-between pr-3 py-3 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+            <div role={"button"} key={project.id} className="group pt-3 flex justify-between pr-3 py-3 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
                 <MyProjectsItem project={project} />
-            </button>
+            </div>
         ))}
 
     </>

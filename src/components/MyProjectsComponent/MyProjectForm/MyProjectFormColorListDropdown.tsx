@@ -1,13 +1,13 @@
-import { colorData } from "../../data/colorData.ts";
-import VerifiedIcon from "../icons/VerifiedIcon.tsx";
-import type { Color } from "../../types/color.type.ts";
+import { colorData } from "../../../data/colorData.ts";
+import VerifiedIcon from "../../icons/VerifiedIcon.tsx";
+import type { Color } from "../../../types/color.type.ts";
 
 type AddProjectsColorListDropdownProps = {
   selectedColor: Color | null;
   onSelect: (color: Color) => void;
 };
 
-const AddProjectsColorListDropdown = ({
+const MyProjectFormColorListDropdown = ({
   selectedColor,
   onSelect,
 }: AddProjectsColorListDropdownProps) => {
@@ -52,4 +52,4 @@ const AddProjectsColorListDropdown = ({
   );
 };
 
-export default AddProjectsColorListDropdown;
+export default MyProjectFormColorListDropdown;

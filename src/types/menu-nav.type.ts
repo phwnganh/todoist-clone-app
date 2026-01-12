@@ -14,3 +14,9 @@ export type LayoutItem = {
     label: string;
     icon: LayoutIconKey;
 }
+
+export type MyProjectMenuToolbar = | "divider" | {
+    label: string;
+    danger?: boolean;
+    onClick: () => void;
+}

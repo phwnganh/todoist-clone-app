@@ -3,19 +3,19 @@ import SearchInput from "./SearchInput.tsx";
 import NoParentOption from "./NoParentOption.tsx";
 import ParentProjectOptions from "./ParentProjectOptions.tsx";
 import DropdownFooter from "./DropdownFooter.tsx";
-import {useGetAllProjects} from "../../../hooks/useProjects.ts";
-import LoadingSpin from "../../ui/LoadingSpin.tsx";
-import ErrorDisplayed from "../../ui/ErrorDisplayed.tsx";
-import {useDebounce} from "../../../hooks/useDebounce.ts";
+import {useGetAllProjects} from "../../../../hooks/useProjects.ts";
+import LoadingSpin from "../../../ui/LoadingSpin.tsx";
+import ErrorDisplayed from "../../../ui/ErrorDisplayed.tsx";
+import {useDebounce} from "../../../../hooks/useDebounce.ts";
 
-type AddProjectsParentProjectListProps = {
+type MyProjectFormParentProjectListProps = {
   selectedProject: string | null;
   onSelect: (parentProject: string) => void;
 };
-const AddProjectsParentProjectListDropdown = ({
+const MyProjectFormParentProjectListDropdown = ({
   selectedProject,
   onSelect,
-}: AddProjectsParentProjectListProps) => {
+}: MyProjectFormParentProjectListProps) => {
   const NO_PARENT = "No Parent";
   const [typedParentProject, setTypedParentProject] = useState<string>("");
   const keyword = typedParentProject.trim().toLowerCase();
@@ -97,4 +97,4 @@ const AddProjectsParentProjectListDropdown = ({
   );
 };
 
-export default AddProjectsParentProjectListDropdown;
+export default MyProjectFormParentProjectListDropdown;

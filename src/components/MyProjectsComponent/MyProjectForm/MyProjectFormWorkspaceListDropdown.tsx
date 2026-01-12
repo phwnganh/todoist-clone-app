@@ -1,7 +1,7 @@
-import VerifiedIcon from "../icons/VerifiedIcon.tsx";
-import UserAvatar from "../../assets/User-avatar.png";
+import VerifiedIcon from "../../icons/VerifiedIcon.tsx";
+import UserAvatar from "../../../assets/User-avatar.png";
 
-const AddProjectsWorkspaceListDropdown = () => {
+const MyProjectFormWorkspaceListDropdown = () => {
   return (
     <div
       id="workspace-listbox"
@@ -39,4 +39,4 @@ const AddProjectsWorkspaceListDropdown = () => {
   );
 };
 
-export default AddProjectsWorkspaceListDropdown;
+export default MyProjectFormWorkspaceListDropdown;

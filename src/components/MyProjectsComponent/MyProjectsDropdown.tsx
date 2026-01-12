@@ -1,7 +1,7 @@
 import HashtagIcon from "../icons/HashtagIcon.tsx";
 import TemplateIcon from "../icons/TemplateIcon.tsx";
 import { useState } from "react";
-import AddProjectsModalDialog from "./AddProjectsModalDialog.tsx";
+import AddProjectsModalDialog from "./AddProjectsModalDialog";
 
 const MyProjectsDropdown = () => {
   const [isAddProjectsModalOpen, setIsAddProjectsModalOpen] = useState(false);

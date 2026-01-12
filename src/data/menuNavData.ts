@@ -57,29 +57,3 @@ export const LAYOUT_ITEMS: LayoutItem[] = [
     }
 ]
 
-export const MY_PROJECTS_MENU_TOOLBAR = [
-    "Add project above",
-    "Add project below",
-    "divider",
-
-    "Edit",
-    "Add to favorites",
-    "Duplicate",
-    "divider",
-
-    "Share",
-    "divider",
-
-    "Email tasks to this project",
-    "Project calendar feed",
-    "divider",
-
-    "Add extension...",
-    "divider",
-
-    "Activity log",
-    "divider",
-
-    "Archive",
-    {label: "Delete", danger: true}
-]

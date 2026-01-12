@@ -1,8 +1,61 @@
-import { MY_PROJECTS_MENU_TOOLBAR } from "../../data/menuNavData.ts";
 import MyProjectsMenuButton from "../ui/MyProjectsMenuButton.tsx";
+import type {MyProjectMenuToolbar} from "../../types/menu-nav.type.ts";
 
-const MyProjectsToolbarDropdown = () => {
-  return (
+type MyProjectsToolbarDropdownProps = {
+    handleOpenEditProjectModalDialog: () => void;
+}
+const MyProjectsToolbarDropdown = ({handleOpenEditProjectModalDialog}: MyProjectsToolbarDropdownProps) => {
+
+    const MY_PROJECTS_MENU_TOOLBAR: MyProjectMenuToolbar[] = [
+        {
+            label: "Add project above",
+            onClick: () => {
+
+            }
+        },
+        {
+            label: "Add project below",
+            onClick: () => {
+
+            }
+        },
+        "divider",
+        {
+            label: "Edit",
+            onClick: () => {
+                console.log("edit")
+                handleOpenEditProjectModalDialog()
+            }
+        },
+        {
+            label: "Add to favorites",
+            onClick: () => {
+
+            }
+        },
+        {
+            label: "Duplicate",
+            onClick: () => {
+
+            }
+        },
+        "divider",
+        {
+            label: "Archive",
+            onClick: () => {
+
+            }
+        },
+        {
+            label: "Delete",
+            danger: true,
+            onClick: () => {
+
+            }
+        }
+    ]
+
+    return (
     <div className="border border-product-library-divider-primary rounded-large shadow-sm mt-1 min-w-70 py-1.5 bg-white overflow-hidden">
       <div className="flex flex-col gap-1">
         {MY_PROJECTS_MENU_TOOLBAR.map((item, index) => {
@@ -11,15 +64,12 @@ const MyProjectsToolbarDropdown = () => {
               <hr key={index} className="border-t border-t-product-library-divider-tertiary" />
             );
           }
-
-          if (typeof item === "string") {
-            return <MyProjectsMenuButton key={index} label={item} />;
-          }
           return (
             <MyProjectsMenuButton
               key={item.label}
               label={item.label}
               danger={item.danger}
+              onClick={item.onClick}
             />
           );
         })}

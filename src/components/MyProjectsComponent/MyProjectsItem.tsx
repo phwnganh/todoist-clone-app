@@ -1,8 +1,9 @@
 import HashtagIcon from "../icons/HashtagIcon.tsx";
 import IndicatorDots from "../ui/IndicatorDots.tsx";
-import { useState } from "react";
+import { useState} from "react";
 import MyProjectsToolbarDropdown from "./MyProjectsToolbarDropdown.tsx";
 import type {Project} from "../../types/project.type.ts";
+import EditProjectModalDialog from "./EditProjectModalDialog";
 
 type MyProjectsItemProps = {
     project: Project;
@@ -10,7 +11,13 @@ type MyProjectsItemProps = {
 const MyProjectsItem = ({project}: MyProjectsItemProps) => {
   const [isOpenMyProjectsToolbars, setIsOpenMyProjectsToolbars] =
     useState(false);
-
+    const [isOpenEditProjectModalDialog, setIsOpenEditProjectModalDialog] = useState(false);
+    const handleOpenEditProjectModalDialog = () => {
+        setIsOpenEditProjectModalDialog(true);
+    }
+    const handleCloseEditProjectModalDialog = () => {
+        setIsOpenEditProjectModalDialog(false);
+    }
   const handleToggleMyProjectsToolbars = () => {
     setIsOpenMyProjectsToolbars((prev) => !prev);
   };
@@ -32,10 +39,12 @@ const MyProjectsItem = ({project}: MyProjectsItemProps) => {
         <IndicatorDots />
         {isOpenMyProjectsToolbars && (
           <div className="absolute right-9">
-            <MyProjectsToolbarDropdown />
+            <MyProjectsToolbarDropdown handleOpenEditProjectModalDialog={handleOpenEditProjectModalDialog}/>
           </div>
         )}
       </div>
+        {isOpenEditProjectModalDialog && (<EditProjectModalDialog onClose={handleCloseEditProjectModalDialog}/>)}
+
     </>
   );
 };
