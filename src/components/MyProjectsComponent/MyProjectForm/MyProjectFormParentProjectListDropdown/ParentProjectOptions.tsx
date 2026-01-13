@@ -19,7 +19,10 @@ const ParentProjectOptions = ({
       tabIndex={-1}
       data-selected={isParentProjectsSelected}
       key={project.id}
-      onClick={() => onParentProjectsSelected(project.name)}
+      onMouseDown={(e) => {
+        e.preventDefault();
+        onParentProjectsSelected(project.name)
+      }}
       className="group flex items-center gap-1.5 py-1 px-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"
     >
       <div className="flex justify-center items-center invisible group-data-[selected=true]:visible">

@@ -32,7 +32,10 @@ type MyProjectFormProps = {
 }
 const MyProjectForm = ({title, onClose, onSubmit, submitLabel, values, onChange}: MyProjectFormProps) => {
     const [isOpenDropdown, setIsOpenDropdown] = useState<OpenDropdown>(null);
-    const dropdownRef = useRef<HTMLDivElement | null>(null);
+    const colorRef = useRef<HTMLDivElement | null>(null)
+    const workspaceRef = useRef<HTMLDivElement | null>(null)
+    const parentProjectRef = useRef<HTMLDivElement | null>(null)
+    const dummyRef = useRef<HTMLDivElement | null>(null)
     const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
         onChange(updateMyProjectField(values, "name", e.target.value));
     }
@@ -55,7 +58,7 @@ const MyProjectForm = ({title, onClose, onSubmit, submitLabel, values, onChange}
     };
 
     useClickOutside({
-        ref: dropdownRef,
+        ref: isOpenDropdown === "color" ? colorRef : isOpenDropdown === "workspace" ? workspaceRef : isOpenDropdown === "parentProject" ? parentProjectRef : dummyRef,
         handler: () => setIsOpenDropdown(null),
         enabled: isOpenDropdown !== null
     })
@@ -130,7 +133,7 @@ const MyProjectForm = ({title, onClose, onSubmit, submitLabel, values, onChange}
                         </div>
 
                         {/*color section*/}
-                        <div className="relative" ref={dropdownRef}>
+                        <div className="relative" ref={colorRef}>
                             <label
                                 htmlFor="project-color"
                                 className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5"
@@ -171,7 +174,7 @@ const MyProjectForm = ({title, onClose, onSubmit, submitLabel, values, onChange}
                         </div>
 
                         {/*workspace section*/}
-                        <div className="relative" ref={dropdownRef}>
+                        <div className="relative" ref={workspaceRef}>
                             <label
                                 htmlFor="project-workspace"
                                 className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5"
@@ -208,7 +211,7 @@ const MyProjectForm = ({title, onClose, onSubmit, submitLabel, values, onChange}
                         </div>
 
                         {/*parent project*/}
-                        <div className="relative" ref={dropdownRef}>
+                        <div className="relative" ref={parentProjectRef}>
                             <label
                                 htmlFor="parent-project"
                                 className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5"

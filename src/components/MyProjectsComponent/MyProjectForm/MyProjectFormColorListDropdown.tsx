@@ -27,7 +27,10 @@ const MyProjectFormColorListDropdown = ({
             data-selected={isSelected}
             className="group flex flex-col py-1 px-1.5 flex-1 w-full hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"
             key={color.id}
-            onClick={() => onSelect(color)}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              onSelect(color)
+            }}
           >
             <div className="flex items-center gap-1.5">
               <div className="flex justify-center items-center invisible group-data-[selected=true]:visible">
