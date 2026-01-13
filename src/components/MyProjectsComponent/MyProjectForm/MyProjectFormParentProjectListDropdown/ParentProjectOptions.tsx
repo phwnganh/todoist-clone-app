@@ -1,6 +1,6 @@
 import type { Project } from "../../../../types/project.type.ts";
-import VerifiedIcon from "../../../icons/VerifiedIcon.tsx";
-import HashtagIcon from "../../../icons/HashtagIcon.tsx";
+import VerifiedIcon from "../../../../assets/verified-icon.svg";
+import HashtagIcon from "../../../../assets/hashtag-icon.svg";
 
 type ParentProjectOptionsProps = {
   project: Project;
@@ -30,7 +30,7 @@ const ParentProjectOptions = ({
       </div>
       <span className="flex items-center gap-1.5">
         <div className="flex justify-center items-center">
-          <HashtagIcon />
+          <img src={HashtagIcon} alt={"hastag-icon"}/>
         </div>
         <div className="text-sm ">{project.name}</div>
       </span>

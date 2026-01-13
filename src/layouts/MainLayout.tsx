@@ -28,7 +28,7 @@ const MainLayout = () => {
                 {isMobile && openSidebar && (
                     <div className="fixed inset-0 bg-black/40 z-30" onClick={handleToggleSidebar}></div>
                 )}
-                <div className="flex flex-col mt-3 px-3 flex-1 relative z-0">
+                <div className="flex flex-col mt-2.5 px-3 flex-1 relative z-0">
                     <Outlet context={{
                         showCollapse: !openSidebar,
                         onToggleSidebar: handleToggleSidebar,

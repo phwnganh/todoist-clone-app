@@ -1,7 +1,7 @@
 import {useOutletContext} from "react-router-dom";
 import { type HeaderLayoutType } from "../../types/headerLayout.type.ts";
 import HeaderLayout from "../../layouts/HeaderLayout.tsx";
-import SettingsIcon from "../../components/icons/SettingsIcon.tsx";
+import SettingsIcon from "../../assets/settings-icon.svg";
 import MyProjectsSearchAction from "../../components/MyProjectsComponent/MyProjectsSearchAction.tsx";
 import MyProjectsToolbarAction from "../../components/MyProjectsComponent/MyProjectsToolbarAction.tsx";
 import MyProjectsList from "../../components/MyProjectsComponent/MyProjectsList.tsx";
@@ -21,7 +21,7 @@ const MyProjectsPage = () => {
         right={
           <button className="flex items-center justify-center p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
             <div className="mr-1.5">
-              <SettingsIcon />
+              <img src={SettingsIcon} alt={"settings-icon"}/>
             </div>
             <span className="text-product-library-actionable-quaternary-idle-tint text-sm font-medium">
               Settings

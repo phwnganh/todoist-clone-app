@@ -1,40 +1,49 @@
 import type {LayoutItem, MenuNavItem} from "../types/menu-nav.type.ts";
 import {ACTIVITY, FILTERS_LABEL, INBOX, TODAY, UPCOMING} from "../constants/routes.constants.ts";
+import SearchIcon from '../assets/search-icon.svg'
+import InboxIcon from '../assets/inbox-icon.svg'
+import CalendarIcon from '../assets/calendar-icon.svg'
+import UpcomingCalendarIcon from '../assets/upcoming-calendar-icon.svg'
+import FilterIcon from '../assets/filter-icon.svg'
+import CompletedIcon from '../assets/completed-icon.svg'
 
+import ListItemIcon from '../assets/list-item-icon.svg'
+import BoardItemIcon from '../assets/board-item-icon.svg'
+import PremiumCalendarIcon from '../assets/premium-calendar-icon.svg'
 export const MENU_NAV_ITEMS: MenuNavItem[] = [
     {
         key: "search",
         label: "Search",
-        icon: "search"
+        icon: SearchIcon
     },
     {
         key: "inbox",
         label: "Inbox",
-        icon: "inbox",
+        icon: InboxIcon,
         getTo: INBOX
     },
     {
         key: "today",
         label: "Today",
-        icon: "today",
+        icon: CalendarIcon,
         getTo: TODAY
     },
     {
         key: "upcomingCalendar",
         label: "Upcoming",
-        icon: "upcomingCalendar",
+        icon: UpcomingCalendarIcon,
         getTo: UPCOMING
     },
     {
         key: "filter",
         label: "Filters & Labels",
-        icon: "filter",
+        icon: FilterIcon,
         getTo: FILTERS_LABEL
     },
     {
         key: "completed",
         label: "Completed",
-        icon: "completed",
+        icon: CompletedIcon,
         getTo: ACTIVITY
     }
 ]
@@ -43,17 +52,17 @@ export const LAYOUT_ITEMS: LayoutItem[] = [
     {
         key: "list",
         label: "List",
-        icon: "list"
+        icon: ListItemIcon
     },
     {
         key: "board",
         label: "Board",
-        icon: "board"
+        icon: BoardItemIcon
     },
     {
         key: "calendar",
         label: "Calendar",
-        icon: "calendar"
+        icon: PremiumCalendarIcon
     }
 ]
 

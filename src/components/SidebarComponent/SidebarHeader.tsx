@@ -1,5 +1,5 @@
-import BellIcon from "../icons/BellIcon.tsx";
-import CollapseSideBarIcon from "../icons/CollapseSideBarIcon.tsx";
+import BellIcon from "../../assets/bell-icon.svg";
+import CollapseSideBarIcon from "../../assets/collapse-sidebar-icon.svg";
 import UserInfoHeader from "./UserInfoHeader.tsx";
 
 const SidebarHeader = ({onToggle}: {onToggle: () => void}) => {
@@ -11,10 +11,10 @@ const SidebarHeader = ({onToggle}: {onToggle: () => void}) => {
             <UserInfoHeader/>
             <div className="flex items-center gap-xsmall">
                 <button className={buttonIconClass}>
-                    <BellIcon />
+                    <img src={BellIcon} alt={"bell-icon"}/>
                 </button>
                 <button onClick={onToggle} className={buttonIconClass}>
-                    <CollapseSideBarIcon />
+                    <img src={CollapseSideBarIcon} alt={"collapse-side-bar-icon"}/>
                 </button>
             </div>
         </div>

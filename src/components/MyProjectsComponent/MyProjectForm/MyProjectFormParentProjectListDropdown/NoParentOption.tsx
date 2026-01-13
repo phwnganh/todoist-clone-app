@@ -1,4 +1,4 @@
-import VerifiedIcon from "../../../icons/VerifiedIcon.tsx";
+import VerifiedIcon from "../../../../assets/verified-icon.svg";
 
 type NoParentOptionProps = {
   isNoParentSelected: boolean;

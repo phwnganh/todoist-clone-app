@@ -1,5 +1,5 @@
 import LoginBanner from "../../assets/login-banner.svg";
-import QRIcon from "../icons/QRIcon.tsx";
+import QRIcon from "../../assets/qr-icon.svg";
 const NewFeatureBannerSection = () => {
   return (
     <section className="p-3">
@@ -23,7 +23,7 @@ const NewFeatureBannerSection = () => {
             </p>
           </div>
           <div className="max-w-full h-auto">
-            <QRIcon />
+            <img src={QRIcon} alt={"qr-icon"}/>
           </div>
         </div>
       </div>

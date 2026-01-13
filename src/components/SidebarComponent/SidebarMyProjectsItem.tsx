@@ -1,4 +1,4 @@
-import HashtagIcon from "../icons/HashtagIcon.tsx";
+import HashtagIcon from "../../assets/hashtag-icon.svg";
 import type {Project} from "../../types/project.type.ts";
 
 const SidebarMyProjectsItem = ({project}: {project: Project}) => {
@@ -6,7 +6,7 @@ const SidebarMyProjectsItem = ({project}: {project: Project}) => {
         <div className="flex items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
             <div className="p-1.25 flex items-center">
                 <div className="flex justify-center items-center">
-                    <HashtagIcon />
+                    <img src={HashtagIcon} alt={"hastag-icon"}/>
                 </div>
                 <div className="py-0.75 pl-1.25 text-sm">{project.name}</div>
             </div>

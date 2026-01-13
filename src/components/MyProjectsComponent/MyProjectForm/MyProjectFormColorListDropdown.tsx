@@ -1,5 +1,5 @@
 import { colorData } from "../../../data/colorData.ts";
-import VerifiedIcon from "../../icons/VerifiedIcon.tsx";
+import VerifiedIcon from "../../../assets/verified-icon.svg";
 import type { Color } from "../../../types/color.type.ts";
 
 type AddProjectsColorListDropdownProps = {

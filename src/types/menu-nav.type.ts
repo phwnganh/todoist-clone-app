@@ -1,18 +1,17 @@
-import {type LayoutIconKey, type MenuIconKey} from "../components/icons/IconMap";
 
 export type MenuNavItem = {
-    key: MenuIconKey;
+    key: string;
     label: string;
-    icon: MenuIconKey;
+    icon: string;
     getTo?: string;
 }
 
 export type OpenDropdown = "color" | "workspace" | "parentProject" | null;
 
 export type LayoutItem = {
-    key: LayoutIconKey;
+    key: string;
     label: string;
-    icon: LayoutIconKey;
+    icon: string;
 }
 
 export type MyProjectMenuToolbar = | "divider" | {

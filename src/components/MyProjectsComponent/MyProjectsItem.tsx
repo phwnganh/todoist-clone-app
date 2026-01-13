@@ -1,4 +1,4 @@
-import HashtagIcon from "../icons/HashtagIcon.tsx";
+import HashtagIcon from "../../assets/hashtag-icon.svg";
 import IndicatorDots from "../ui/IndicatorDots.tsx";
 import {useRef, useState} from "react";
 import MyProjectsToolbarDropdown from "./MyProjectsToolbarDropdown.tsx";
@@ -32,7 +32,7 @@ const MyProjectsItem = ({project, isOpenProjectDetailToolbar, onCloseProjectDeta
     <>
       <div className="flex items-center">
         <div className="mr-small flex justify-center items-center">
-          <HashtagIcon />
+          <img src={HashtagIcon} alt={"hashtag-icon"}/>
         </div>
         <div className="text-sm font-regular whitespace-nowrap">
             {project.name}

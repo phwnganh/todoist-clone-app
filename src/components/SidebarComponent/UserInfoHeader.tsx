@@ -1,4 +1,4 @@
-import SmallArrowDownIcon from "../icons/SmallArrowDownIcon.tsx";
+import SmallArrowDownIcon from "../../assets/small-arrow-down-icon.svg";
 import LoadingSpin from "../ui/LoadingSpin.tsx";
 import ErrorDisplayed from "../ui/ErrorDisplayed.tsx";
 import {useGetUserProfile} from "../../hooks/useUserProfile.ts";
@@ -22,7 +22,7 @@ const UserInfoHeader = () => {
               <span className="whitespace-nowrap text-product-library-display-primary-idle-tint overflow-hidden">
                 {user?.full_name?.trim().split(" ")[0]}
               </span>
-              <SmallArrowDownIcon />
+              <img src={SmallArrowDownIcon} alt={"small-arrow-down-icon"}/>
             </span>
         </button>
     );

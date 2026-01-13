@@ -5,12 +5,15 @@ import ErrorDisplayed from "../ui/ErrorDisplayed.tsx";
 import {useMemo, useState} from "react";
 import EmptyList from "../ui/EmptyList.tsx";
 import EditProjectModalDialog from "./EditProjectModalDialog";
+import {useNavigate} from "react-router-dom";
+import {PROJECT_DETAILS} from "../../constants/routes.constants.ts";
 
 type MyProjectsListProps = {
     search: string;
 }
 const MyProjectsList = ({search}: MyProjectsListProps) => {
     const {data: projects, isLoading, isError} = useGetAllProjects()
+    const navigate = useNavigate();
     const [openProjectDetailToolbar, setOpenProjectDetailToolbar] = useState<string | null>(null)
     const [editProjectDetail, setEditProjectDetail] = useState<string | null>(null)
     const handleOpenProjectDetailToolbar = (id: string) => {
@@ -57,7 +60,7 @@ const MyProjectsList = ({search}: MyProjectsListProps) => {
       </div>
         {filteredProjects?.length > 0 ? (
             filteredProjects.map(project => (
-                    <div role={"button"} key={project.id} className="group pt-3 flex justify-between pr-3 py-3 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+                    <div role={"button"} key={project.id} onClick={() => navigate(`${PROJECT_DETAILS}/${project.id}`)} className="group pt-3 flex justify-between pr-3 py-3 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
                         <MyProjectsItem project={project} isOpenProjectDetailToolbar={openProjectDetailToolbar === project.id} onOpenProjectDetailToolbar={() => handleOpenProjectDetailToolbar(project.id)} onCloseProjectDetailToolbar={handleCloseProjectDetailToolbar} onEditProjectDetail={() => handleEditProjectDetail(project.id)}/>
                     </div>
                 ))

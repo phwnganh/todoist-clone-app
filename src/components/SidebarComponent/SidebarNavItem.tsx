@@ -1,6 +1,5 @@
 import type { MenuNavItem } from "../../types/menu-nav.type.ts";
 import { NavLink } from "react-router-dom";
-import { ICON_MAP } from "../icons/IconMap";
 
 type SidebarNavItemProps = {
   item: MenuNavItem;
@@ -8,7 +7,6 @@ type SidebarNavItemProps = {
 };
 const SidebarNavItem = ({ item, onClick }: SidebarNavItemProps) => {
   const commonClass = "flex items-center p-1.25";
-  const Icon = ICON_MAP[item.icon];
   const renderContent = (isActive?: boolean) => (
     <>
       <div
@@ -16,7 +14,7 @@ const SidebarNavItem = ({ item, onClick }: SidebarNavItemProps) => {
           isActive ? "text-product-library-actionable-tertiary-idle-tint" : ""
         }`}
       >
-        <Icon />
+          <img src={item.icon} alt={item.label} />
       </div>
       <span
         className={`text-sm wrap-break-word py-0.75 pl-1.25 ${

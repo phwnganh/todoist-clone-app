@@ -1,4 +1,4 @@
-import VerifiedIcon from "../../icons/VerifiedIcon.tsx";
+import VerifiedIcon from "../../../assets/verified-icon.svg";
 import UserAvatar from "../../../assets/User-avatar.png";
 
 const MyProjectFormWorkspaceListDropdown = () => {

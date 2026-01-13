@@ -1,12 +1,12 @@
-import PremiumCalendarIcon from "./PremiumCalendarIcon.tsx";
-import PremiumStarIcon from "./PremiumStarIcon.tsx";
+import PremiumCalendarIcon from "../../assets/premium-calendar-icon.svg";
+import PremiumStarIcon from "../../assets/premium-star-icon.svg";
 
 const CalendarLayoutIcon = () => {
     return (
         <div className="relative">
-            <PremiumCalendarIcon/>
+            <img src={PremiumCalendarIcon} alt={"premium-calendar-icon"} />
             <div className="w-3.5 h-3.5 rounded-full absolute -right-0.5 bottom-0 flex justify-center items-center">
-                <PremiumStarIcon/>
+                <img src={PremiumStarIcon} alt={"premium-star-icon"} />
             </div>
         </div>
     )

@@ -1,16 +1,15 @@
 import {createPortal} from "react-dom";
-import QuestionIcon from "../../icons/QuestionIcon.tsx";
-import LargeCloseIcon from "../../icons/LargeCloseIcon.tsx";
-import FormSmallArrowDownIcon from "../../icons/FormSmallArrowDownIcon.tsx";
+import QuestionIcon from "../../../assets/question-icon.svg";
+import LargeCloseIcon from "../../../assets/large-close-icon.svg";
+import FormSmallArrowDownIcon from "../../../assets/form-small-arrow-down-icon.svg";
 import MyProjectFormColorListDropdown from "./MyProjectFormColorListDropdown.tsx";
 import type {Color} from "../../../types/color.type.ts";
 import UserAvatar from "../../../assets/User-avatar.png";
 import MyProjectFormWorkspaceListDropdown from "./MyProjectFormWorkspaceListDropdown.tsx";
-import HashtagIcon from "../../icons/HashtagIcon.tsx";
+import HashtagIcon from "../../../assets/hashtag-icon.svg";
 import AddProjectsParentProjectListDropdown from "./MyProjectFormParentProjectListDropdown";
 import CustomSwitch from "../../ui/CustomSwitch.tsx";
 import {LAYOUT_ITEMS} from "../../../data/menuNavData.ts";
-import {LAYOUT_MAP} from "../../icons/IconMap.tsx";
 import {type FormEvent, Fragment, useState, type ChangeEvent, useRef} from "react";
 import type {OpenDropdown} from "../../../types/menu-nav.type.ts";
 import {updateMyProjectField} from "../../../helpers/updateMyProjectField.ts";
@@ -88,7 +87,7 @@ const MyProjectForm = ({title, onClose, onSubmit, submitLabel, values, onChange}
                             {title}
                         </h1>
                         <div className="flex justify-center items-center">
-                            <QuestionIcon />
+                            <img src={QuestionIcon} alt={"question-icon"}/>
                         </div>
                     </div>
                     <button
@@ -96,7 +95,7 @@ const MyProjectForm = ({title, onClose, onSubmit, submitLabel, values, onChange}
                         className="flex justify-center items-center"
                         onClick={onClose}
                     >
-                        <LargeCloseIcon />
+                        <img src={LargeCloseIcon} alt={"large-close-icon"}/>
                     </button>
                 </header>
                 <hr className="border-t border-t-product-library-divider-tertiary" />
@@ -162,7 +161,7 @@ const MyProjectForm = ({title, onClose, onSubmit, submitLabel, values, onChange}
                                     </div>
                                 </div>
                                 <div className="flex items-center justify-center">
-                                    <FormSmallArrowDownIcon />
+                                    <img src={FormSmallArrowDownIcon} alt={"form-small-arrow-down-icon"}/>
                                 </div>
                             </button>
                             {isOpenDropdown === "color" && (
@@ -229,7 +228,7 @@ const MyProjectForm = ({title, onClose, onSubmit, submitLabel, values, onChange}
                                 <div className="flex items-center gap-1.5">
                                     {values.parentProject !== "No Parent" && (
                                         <div className="flex justify-center items-center">
-                                            <HashtagIcon />
+                                            <img src={HashtagIcon} alt={"hashtag-icon"}/>
                                         </div>
                                     )}
 
@@ -272,7 +271,6 @@ const MyProjectForm = ({title, onClose, onSubmit, submitLabel, values, onChange}
                             </label>
                             <div className="flex justify-center border-2 border-product-library-selectable-background gap-0.75 bg-product-library-selectable-background rounded-large text-product-library-display-secondary-idle-tint ">
                                 {LAYOUT_ITEMS.map((layout) => {
-                                    const Icon = LAYOUT_MAP[layout.icon];
                                     return (
                                         <Fragment key={layout.key}>
                                             <label className={`${layoutItemClass(layout.key)}`}>
@@ -284,7 +282,7 @@ const MyProjectForm = ({title, onClose, onSubmit, submitLabel, values, onChange}
                                                     onChange={() => handleSelectLayout(layout.key)}
                                                 />
                                                 <span className="flex flex-col gap-xsmall items-center justify-center text-xs">
-                          <Icon />
+                          <img src={layout.icon} alt={layout.key}/>
                                                     {layout.label}
                         </span>
                                             </label>
