@@ -1,24 +1,14 @@
 import HashtagIcon from "../icons/HashtagIcon.tsx";
 import TemplateIcon from "../icons/TemplateIcon.tsx";
-import { useState } from "react";
-import AddProjectsModalDialog from "./AddProjectsModalDialog";
 
-const MyProjectsDropdown = () => {
-  const [isAddProjectsModalOpen, setIsAddProjectsModalOpen] = useState(false);
+const MyProjectsDropdown = ({onOpenAddProjectModal}: {onOpenAddProjectModal: () => void}) => {
 
-  const handleOpenAddProjectsModal = () => {
-    setIsAddProjectsModalOpen(true);
-  };
-
-  const handleCloseAddProjectsModal = () => {
-    setIsAddProjectsModalOpen(false);
-  };
   return (
     <>
       <div className="absolute border border-product-library-divider-primary rounded-large shadow-sm right-0 mt-1 p-1.5 min-w-55 flex flex-col gap-1 z-50">
         <button
           className="flex items-center min-h-8 w-full hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"
-          onClick={handleOpenAddProjectsModal}
+          onClick={onOpenAddProjectModal}
         >
           <div className="flex justify-center items-center mr-2.5 shrink-0">
             <HashtagIcon />
@@ -37,9 +27,7 @@ const MyProjectsDropdown = () => {
           </div>
         </button>
       </div>
-      {isAddProjectsModalOpen && (
-        <AddProjectsModalDialog onClose={handleCloseAddProjectsModal} />
-      )}
+
     </>
   );
 };

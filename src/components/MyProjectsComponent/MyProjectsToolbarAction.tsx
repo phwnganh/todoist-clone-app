@@ -1,15 +1,34 @@
 import PlusIcon from "../icons/PlusIcon.tsx";
 import SmallArrowDownIcon from "../icons/SmallArrowDownIcon.tsx";
 import MyProjectsDropdown from "./MyProjectsDropdown.tsx";
-import { useState } from "react";
+import {useRef, useState} from "react";
 import CustomSwitch from "../ui/CustomSwitch.tsx";
+import {useClickOutside} from "../../hooks/useClickOutside.ts";
+import AddProjectsModalDialog from "./AddProjectsModalDialog";
 
 const MyProjectsToolbarAction = () => {
   const [isOpenAddProjectsDropdown, setOpenAddProjectsDropdown] =
     useState(false);
+  const [isAddProjectsModalOpen, setIsAddProjectsModalOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null)
   const handleOpenAddProjectsDropdown = () => {
     setOpenAddProjectsDropdown((prev) => !prev);
   };
+
+  const handleOpenAddProjectsModal = () => {
+    setOpenAddProjectsDropdown(false)
+    setIsAddProjectsModalOpen(true);
+  };
+
+  const handleCloseAddProjectsModal = () => {
+    setIsAddProjectsModalOpen(false);
+  };
+
+  useClickOutside({
+    ref: dropdownRef,
+    handler: () => setOpenAddProjectsDropdown(false),
+    enabled: isOpenAddProjectsDropdown
+  })
   return (
     <div className="flex justify-between flex-wrap gap-2 sm:gap-0">
       <div className="flex items-center">
@@ -18,7 +37,7 @@ const MyProjectsToolbarAction = () => {
         </p>
         <CustomSwitch />
       </div>
-      <div className="relative">
+      <div className="relative" ref={dropdownRef}>
         <button
           onClick={handleOpenAddProjectsDropdown}
           className="px-3 h-8 flex items-center bg-product-library-actionable-secondary-idle-fill rounded-small hover:bg-product-library-border-hover-tint"
@@ -33,7 +52,10 @@ const MyProjectsToolbarAction = () => {
             <SmallArrowDownIcon />
           </div>
         </button>
-        {isOpenAddProjectsDropdown && <MyProjectsDropdown />}
+        {isOpenAddProjectsDropdown && <MyProjectsDropdown onOpenAddProjectModal={handleOpenAddProjectsModal}/>}
+        {isAddProjectsModalOpen && (
+            <AddProjectsModalDialog onClose={handleCloseAddProjectsModal} />
+        )}
       </div>
     </div>
   );
