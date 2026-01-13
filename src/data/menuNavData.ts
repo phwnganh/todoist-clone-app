@@ -2,7 +2,7 @@ import type {LayoutItem, MenuNavItem} from "../types/menu-nav.type.ts";
 import {ACTIVITY, FILTERS_LABEL, INBOX, TODAY, UPCOMING} from "../constants/routes.constants.ts";
 import SearchIcon from '../assets/search-icon.svg'
 import InboxIcon from '../assets/inbox-icon.svg'
-import CalendarIcon from '../assets/calendar-icon.svg'
+import CalendarIcon from '../components/icons/CalendarIcon.tsx'
 import UpcomingCalendarIcon from '../assets/upcoming-calendar-icon.svg'
 import FilterIcon from '../assets/filter-icon.svg'
 import CompletedIcon from '../assets/completed-icon.svg'

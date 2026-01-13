@@ -1,8 +1,9 @@
+import type {ComponentType, SVGProps} from "react";
 
 export type MenuNavItem = {
     key: string;
     label: string;
-    icon: string;
+    icon: string | ComponentType<SVGProps<SVGSVGElement>>;
     getTo?: string;
 }
 
