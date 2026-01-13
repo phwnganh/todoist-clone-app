@@ -3,6 +3,7 @@ import {useGetAllProjects} from "../../hooks/useProjects.ts";
 import LoadingSpin from "../ui/LoadingSpin.tsx";
 import ErrorDisplayed from "../ui/ErrorDisplayed.tsx";
 import {useMemo} from "react";
+import EmptyList from "../ui/EmptyList.tsx";
 
 type MyProjectsListProps = {
     search: string;
@@ -37,12 +38,15 @@ const MyProjectsList = ({search}: MyProjectsListProps) => {
         </div>
         <hr className="border-t border-t-product-library-divider-tertiary" />
       </div>
-        {filteredProjects.map(project => (
-            <div role={"button"} key={project.id} className="group pt-3 flex justify-between pr-3 py-3 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
-                <MyProjectsItem project={project} />
-            </div>
-        ))}
-
+        {filteredProjects?.length > 0 ? (
+            filteredProjects.map(project => (
+                    <div role={"button"} key={project.id} className="group pt-3 flex justify-between pr-3 py-3 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+                        <MyProjectsItem project={project} />
+                    </div>
+                ))
+        ) : (
+            <EmptyList/>
+        )}
     </>
   );
 };
