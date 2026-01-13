@@ -7,7 +7,8 @@ import ErrorDisplayed from "../ui/ErrorDisplayed.tsx";
 const SidebarMyProjectList = () => {
     const {data: projects, isLoading, isError} = useGetAllProjects()
     if(isLoading){
-        return <LoadingSpin/>
+        return (<div className={"mt-medium"}>
+            <LoadingSpin/></div>)
     }
 
     if(isError){

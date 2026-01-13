@@ -44,7 +44,10 @@ const MyProjectFormParentProjectListDropdown = ({
   }, []);
 
   if(isLoading){
-    return <LoadingSpin/>
+    return (
+        <div className={"mt-medium"}>
+          <LoadingSpin/>
+        </div>)
   }
 
   if(isError){
