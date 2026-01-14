@@ -5,10 +5,10 @@ import {
     apiGetAllProjects,
     apiUpdateMyProject
 } from "../services/project.service.ts";
-import type {Project, ProjectPayload, ProjectResponse} from "../types/project.type.ts";
+import type {Project, ProjectPayload, ProjectResponse, UpdateProjectPayload} from "../types/project.type.ts";
 import type {ApiError, SyncResponse} from "../types/api.type.ts";
 import {
-    optimisticAddProject,
+    optimisticAddProject, optimisticUpdateProject,
     type OptimisticUpdatesContext,
     rollbackOptimisticUpdates
 } from "../helpers/optimisticUpdates.ts";
@@ -74,28 +74,28 @@ export const useAddProject = () => {
 
 export const useUpdateProject = () => {
     const queryClient = useQueryClient()
-    return useMutation<Project, ApiError, {payload: ProjectPayload, projectId: string}, OptimisticUpdatesContext<Project>>({
-        mutationFn: ({payload, projectId}) => apiUpdateMyProject(payload, projectId),
-        onMutate: async ({payload, projectId}) => {
-            return optimisticUpdateItem<Project>({
+    return useMutation<SyncResponse, ApiError, UpdateProjectPayload, OptimisticUpdatesContext>({
+        mutationFn: (updatingProject) => apiUpdateMyProject(updatingProject),
+        onMutate: async (updatingProject) => {
+            return optimisticUpdateProject({
                 queryClient,
                 queryKey: ["projects"],
-                updatedItem: {
-                    id: projectId,
-                    name: payload.name,
+                optimisticProject: {
+                    id: updatingProject.id,
+                    name: updatingProject.payload.name,
                     description: '',
-                    color: payload.color ?? 'charcoal',
+                    color: updatingProject.payload.color ?? 'charcoal',
                     is_archived: false,
                     is_shared: false,
                     is_deleted: false,
-                    is_favorite: payload.is_favorite ?? false,
-                    view_style: payload.view_style ?? 'list',
-                    parent_id: payload.parent_id ?? ''
+                    is_favorite: updatingProject.payload.is_favorite ?? false,
+                    view_style: updatingProject.payload.view_style ?? 'list',
+                    parent_id: updatingProject.payload.parent_id ?? ''
                 }
             })
         },
         onError: (_, __, context) => {
-            rollbackOptimisticUpdates<Project>({
+            rollbackOptimisticUpdates({
                 queryClient,
                 queryKey: ["projects"],
                 context
