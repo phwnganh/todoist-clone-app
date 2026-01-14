@@ -121,8 +121,8 @@ export const useUpdateProject = () => {
 export const useDeleteProject = () => {
     const queryClient = useQueryClient()
     return useMutation<SyncResponse, ApiError, {projectId: string}, OptimisticUpdatesContext>({
-        mutationFn: (projectId: string) => apiDeleteMyProject(projectId),
-        onMutate: async (projectId: string) => {
+        mutationFn: ({projectId}) => apiDeleteMyProject(projectId),
+        onMutate: async ({projectId}) => {
             return optimisticDeleteProject({
                 queryClient,
                 queryKey: ["projects"],

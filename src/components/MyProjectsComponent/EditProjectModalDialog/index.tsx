@@ -46,7 +46,7 @@ const EditProjectModalDialog = ({ onClose, projectId }: { onClose: () => void, p
                        values={values}
                        onChange={setValues}
                        isPending={isPending}
-                       errorMessage={error?.message}
+                       errorMessage={isError ? error?.message : null}
         />
     );
 };
