@@ -26,10 +26,13 @@ type MyProjectFormProps = {
     onClose: () => void;
     onSubmit: (e: FormEvent<HTMLFormElement>) => void;
     submitLabel: string;
+    submittingLabel: string;
     values: MyProjectFormValues;
     onChange: (values: MyProjectFormValues) => void;
+    isPending?: boolean;
+    errorMessage?: string | null;
 }
-const MyProjectForm = ({title, onClose, onSubmit, submitLabel, values, onChange}: MyProjectFormProps) => {
+const MyProjectForm = ({title, onClose, onSubmit, submitLabel, values, onChange, isPending, errorMessage, submittingLabel}: MyProjectFormProps) => {
     const [isOpenDropdown, setIsOpenDropdown] = useState<OpenDropdown>(null);
     const colorRef = useRef<HTMLDivElement | null>(null)
     const workspaceRef = useRef<HTMLDivElement | null>(null)
@@ -69,7 +72,7 @@ const MyProjectForm = ({title, onClose, onSubmit, submitLabel, values, onChange}
             : "hover:text-product-library-display-primary-idle-tint"
     }`;
 
-    const isAddButtonDisabled = values.name.trim() === "";
+    const isAddButtonDisabled = values.name.trim() === "" || isPending;
     return createPortal(
         <div
             role="dialog"
@@ -293,6 +296,9 @@ const MyProjectForm = ({title, onClose, onSubmit, submitLabel, values, onChange}
                         </div>
                         <hr className="border-t border-t-product-library-divider-tertiary" />
                     </div>
+                    {errorMessage && (
+                        <div className={"text-sm text-product-library-actionable-destructive-idle-tint"} role={"alert"}>{errorMessage}</div>
+                    )}
                     <footer className="flex justify-end px-4 pb-4 gap-2.5">
                         <button
                             type="button"
@@ -313,7 +319,7 @@ const MyProjectForm = ({title, onClose, onSubmit, submitLabel, values, onChange}
                             disabled={isAddButtonDisabled}
                         >
               <span className="text-sm font-medium text-product-library-actionable-primary-on-idle-tint">
-                {submitLabel}
+                {isPending ? submittingLabel : submitLabel}
               </span>
                         </button>
                     </footer>

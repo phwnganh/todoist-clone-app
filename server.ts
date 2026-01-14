@@ -30,7 +30,7 @@ app.post('/oauth/access-token', async (req: Request<{code: string}>, res: Respon
                 },
                 body: new URLSearchParams({
                     client_id: "99176cc6e6af4dee9508f6422eb3216f",
-                    client_secret: "37e90dfb1c1d4e5286180e9452fe5d30",
+                    client_secret: "f0d689fdb4034352a30507e54bab608e",
                     redirect_uri: "http://localhost:5173/google-redirect",
                     code: code
                 }),

@@ -14,6 +14,7 @@ const EditProjectModalDialog = ({ onClose }: { onClose: () => void }) => {
     return (
         <MyProjectForm title={"Edit"} onClose={onClose} onSubmit={handleEditMyProject}
                        submitLabel={"Save"}
+                       submittingLabel={"Saving..."}
                        values={values}
                        onChange={setValues}
         />

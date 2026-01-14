@@ -24,3 +24,8 @@ export type ProjectPayload = {
     view_style?: string;
     workspace_id?: string;
 }
+
+export type UpdateProjectPayload = {
+    id: string;
+    payload: ProjectPayload;
+}

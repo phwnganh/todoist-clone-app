@@ -8,7 +8,7 @@ import { type FormEvent } from "react";
 const LoginFormSection = () => {
 
   const CLIENT_ID = "99176cc6e6af4dee9508f6422eb3216f"
-  const SCOPE = "data:read,data:delete"
+  const SCOPE = "data:read_write,data:delete"
   const REDIRECT_URI = "http://localhost:5173/google-redirect"
 
   const handleOAuthLogin = () => {

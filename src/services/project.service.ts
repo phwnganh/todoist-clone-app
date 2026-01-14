@@ -1,5 +1,6 @@
 import {api} from "./api.ts";
-import type {Project, ProjectPayload, ProjectResponse} from "../types/project.type.ts";
+import type {Project, ProjectPayload, ProjectResponse, UpdateProjectPayload} from "../types/project.type.ts";
+import type {SyncResponse} from "../types/api.type.ts";
 
 export const apiGetAllProjects =  () => {
     return api.get<ProjectResponse>(`/projects`);
@@ -9,14 +10,37 @@ export const apiGetAProject = async (projectId: string) => {
     return api.get<Project>(`/projects/${projectId}`);
 }
 
-export const apiCreateMyProject = async (payload: ProjectPayload) => {
-    return api.post<Project, ProjectPayload>(`/projects`, payload);
+export const apiCreateMyProject = async (payload: ProjectPayload):Promise<SyncResponse> => {
+    const uuid = crypto.randomUUID()
+    const tempId = `temp-project-${uuid}`;
+    return api.sync<SyncResponse, ProjectPayload>([
+        {
+            type: "project_add",
+            uuid,
+            temp_id: tempId,
+            args: payload
+        }
+    ]);
 }
 
-export const apiUpdateMyProject = async (payload: ProjectPayload, projectId: string) => {
-    return api.post<Project, ProjectPayload>(`/projects/${projectId}`, payload);
+export const apiUpdateMyProject = async (payload: UpdateProjectPayload) => {
+    const uuid = crypto.randomUUID()
+    return api.sync<SyncResponse, UpdateProjectPayload>([
+        {
+            type: "project_update",
+            uuid,
+            args: payload
+        }
+    ]);
 }
 
 export const apiDeleteMyProject = async (projectId: string) => {
-    return api.delete<unknown>(`/projects/${projectId}`);
+    const uuid = crypto.randomUUID()
+    return api.sync<SyncResponse, unknown>([{
+        type: 'project_delete',
+        uuid,
+        args: {
+            id: projectId
+        }
+    }]);
 }

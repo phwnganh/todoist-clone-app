@@ -1,14 +1,6 @@
 import {useAuthStore} from "../stores/auth.store.ts";
-import {BASE_URL} from "../constants/api.constants.ts";
-import type {ApiError} from "../types/api.type.ts";
-
-type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE"
-
-type ApiOptions<TBody> = {
-    method?: HttpMethod;
-    body?: TBody;
-    headers?: HeadersInit;
-}
+import {BASE_URL, BASE_URL_SYNC} from "../constants/api.constants.ts";
+import type {ApiError, ApiOptions, SyncCommand, SyncPayload} from "../types/api.type.ts";
 
 async function handleError(res: Response): Promise<ApiError>{
 
@@ -83,25 +75,39 @@ async function request<TResponse, TBody = undefined>(endpoint: string, options: 
     return res.json();
 }
 
+async function syncRequest<TResponse, TArgs>(commands: SyncCommand<TArgs>[]): Promise<TResponse>{
+    const token = useAuthStore.getState().token;
+    if (!token) {
+        throw {
+            status: 401,
+            code: "UNAUTHORIZED",
+            message: "Invalid or missing token",
+        } satisfies ApiError
+    }
+
+    const body: SyncPayload<TArgs> = {
+        sync_token: "*",
+        commands
+    }
+
+    const res = await fetch(BASE_URL_SYNC, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+    })
+    if(!res.ok){
+        throw await handleError(res)
+    }
+    return res.json();
+}
 export const api = {
     get<T>(endpoint: string){
         return request<T>(endpoint)
     },
-    post<T, B>(endpoint: string, body: B){
-        return request<T, B>(endpoint, {
-            method: "POST",
-            body
-        })
-    },
-    put<T, B>(endpoint: string, body: B){
-        return request<T, B>(endpoint, {
-            method: "PUT",
-            body
-        })
-    },
-    delete<T>(endpoint: string){
-        return request<T>(endpoint, {
-            method: "DELETE",
-        })
+    sync<TResponse, TArgs>(commands: SyncCommand<TArgs>[]){
+        return syncRequest<TResponse, TArgs>(commands)
     }
 }
