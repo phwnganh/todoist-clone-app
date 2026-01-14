@@ -4,12 +4,13 @@ import {useRef, useState} from "react";
 import MyProjectsToolbarDropdown from "./MyProjectsToolbarDropdown.tsx";
 import type {Project} from "../../types/project.type.ts";
 import {useClickOutside} from "../../hooks/useClickOutside.ts";
+import {type MouseEvent} from "react";
 
 type MyProjectsItemProps = {
     project: Project;
     isOpenProjectDetailToolbar: boolean;
     onCloseProjectDetailToolbar: () => void;
-    onOpenProjectDetailToolbar: () => void;
+    onOpenProjectDetailToolbar: (e: MouseEvent<HTMLDivElement>) => void;
     onEditProjectDetail: () => void;
 }
 const MyProjectsItem = ({project, isOpenProjectDetailToolbar, onCloseProjectDetailToolbar, onOpenProjectDetailToolbar, onEditProjectDetail}: MyProjectsItemProps) => {
@@ -55,7 +56,7 @@ const MyProjectsItem = ({project, isOpenProjectDetailToolbar, onCloseProjectDeta
                 </div>
             )}
             {isOpenProjectDetailToolbar && (
-                <div className="absolute right-9">
+                <div className="absolute right-9" onClick={(e) => e.stopPropagation()}>
                     <MyProjectsToolbarDropdown handleOpenEditProjectModalDialog={handleOpenProjectDetailToolbar}/>
                 </div>
             )}

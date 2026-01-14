@@ -7,6 +7,7 @@ import EmptyList from "../ui/EmptyList.tsx";
 import EditProjectModalDialog from "./EditProjectModalDialog";
 import {useNavigate} from "react-router-dom";
 import {PROJECT_DETAILS} from "../../constants/routes.constants.ts";
+import {type MouseEvent} from "react";
 
 type MyProjectsListProps = {
     search: string;
@@ -16,7 +17,8 @@ const MyProjectsList = ({search}: MyProjectsListProps) => {
     const navigate = useNavigate();
     const [openProjectDetailToolbar, setOpenProjectDetailToolbar] = useState<string | null>(null)
     const [editProjectDetail, setEditProjectDetail] = useState<string | null>(null)
-    const handleOpenProjectDetailToolbar = (id: string) => {
+    const handleOpenProjectDetailToolbar = (id: string, e: MouseEvent<HTMLDivElement>) => {
+        e.stopPropagation()
         setOpenProjectDetailToolbar(id)
     }
 
@@ -61,13 +63,13 @@ const MyProjectsList = ({search}: MyProjectsListProps) => {
         {filteredProjects?.length > 0 ? (
             filteredProjects.map(project => (
                     <div role={"button"} key={project.id} onClick={() => navigate(`${PROJECT_DETAILS}/${project.id}`)} className="group pt-3 flex justify-between pr-3 py-3 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
-                        <MyProjectsItem project={project} isOpenProjectDetailToolbar={openProjectDetailToolbar === project.id} onOpenProjectDetailToolbar={() => handleOpenProjectDetailToolbar(project.id)} onCloseProjectDetailToolbar={handleCloseProjectDetailToolbar} onEditProjectDetail={() => handleEditProjectDetail(project.id)}/>
+                        <MyProjectsItem project={project} isOpenProjectDetailToolbar={openProjectDetailToolbar === project.id} onOpenProjectDetailToolbar={(e: MouseEvent<HTMLDivElement>) => handleOpenProjectDetailToolbar(project.id, e)} onCloseProjectDetailToolbar={handleCloseProjectDetailToolbar} onEditProjectDetail={() => handleEditProjectDetail(project.id)}/>
                     </div>
                 ))
         ) : (
             <EmptyList/>
         )}
-        {editProjectDetail && (<EditProjectModalDialog onClose={handleCloseEditProjectDetail}/>)}
+        {editProjectDetail && (<EditProjectModalDialog onClose={handleCloseEditProjectDetail} projectId={editProjectDetail}/>)}
 
     </>
   );

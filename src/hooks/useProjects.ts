@@ -2,13 +2,13 @@ import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {
     apiCreateMyProject,
     apiDeleteMyProject,
-    apiGetAllProjects,
+    apiGetAllProjects, apiGetAProject,
     apiUpdateMyProject
 } from "../services/project.service.ts";
 import type {Project, ProjectPayload, ProjectResponse, UpdateProjectPayload} from "../types/project.type.ts";
 import type {ApiError, SyncResponse} from "../types/api.type.ts";
 import {
-    optimisticAddProject, optimisticUpdateProject,
+    optimisticAddProject, optimisticDeleteProject, optimisticUpdateProject,
     type OptimisticUpdatesContext,
     rollbackOptimisticUpdates
 } from "../helpers/optimisticUpdates.ts";
@@ -17,6 +17,13 @@ export const useGetAllProjects = () => {
     return useQuery<ProjectResponse>({
         queryKey: ['projects'],
         queryFn: apiGetAllProjects
+    })
+}
+
+export const useGetAProject = (projectId: string) => {
+    return useQuery<Project>({
+        queryKey: ['projects', projectId],
+        queryFn: () => apiGetAProject(projectId)
     })
 }
 
@@ -77,11 +84,13 @@ export const useUpdateProject = () => {
     return useMutation<SyncResponse, ApiError, UpdateProjectPayload, OptimisticUpdatesContext>({
         mutationFn: (updatingProject) => apiUpdateMyProject(updatingProject),
         onMutate: async (updatingProject) => {
+            const tempId = `temp-project-${crypto.randomUUID()}`
             return optimisticUpdateProject({
                 queryClient,
                 queryKey: ["projects"],
+                projectId: updatingProject.id,
                 optimisticProject: {
-                    id: updatingProject.id,
+                    id: tempId,
                     name: updatingProject.payload.name,
                     description: '',
                     color: updatingProject.payload.color ?? 'charcoal',
@@ -111,17 +120,17 @@ export const useUpdateProject = () => {
 
 export const useDeleteProject = () => {
     const queryClient = useQueryClient()
-    return useMutation<void, ApiError, {projectId: string}, OptimisticUpdatesContext<Project>>({
-        mutationFn: ({projectId}) => apiDeleteMyProject(projectId),
-        onMutate: async ({projectId}) => {
-            return optimisticDeleteItem<Project>({
+    return useMutation<SyncResponse, ApiError, {projectId: string}, OptimisticUpdatesContext>({
+        mutationFn: (projectId: string) => apiDeleteMyProject(projectId),
+        onMutate: async (projectId: string) => {
+            return optimisticDeleteProject({
                 queryClient,
                 queryKey: ["projects"],
-                id: projectId
+                projectId: projectId
             })
         },
         onError: (_, __, context) => {
-            rollbackOptimisticUpdates<Project>({
+            rollbackOptimisticUpdates({
                 queryClient,
                 queryKey: ["projects"],
                 context
