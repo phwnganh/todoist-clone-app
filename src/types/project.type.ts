@@ -27,5 +27,10 @@ export type ProjectPayload = {
 
 export type UpdateProjectPayload = {
     id: string;
-    payload: ProjectPayload;
+    name: string;
+    parent_id?: string;
+    color?: string;
+    is_favorite?: boolean;
+    view_style?: string;
+    workspace_id?: string;
 }

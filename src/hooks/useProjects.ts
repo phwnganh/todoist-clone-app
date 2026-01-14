@@ -91,15 +91,15 @@ export const useUpdateProject = () => {
                 projectId: updatingProject.id,
                 optimisticProject: {
                     id: tempId,
-                    name: updatingProject.payload.name,
+                    name: updatingProject.name,
                     description: '',
-                    color: updatingProject.payload.color ?? 'charcoal',
+                    color: updatingProject.color ?? 'charcoal',
                     is_archived: false,
                     is_shared: false,
                     is_deleted: false,
-                    is_favorite: updatingProject.payload.is_favorite ?? false,
-                    view_style: updatingProject.payload.view_style ?? 'list',
-                    parent_id: updatingProject.payload.parent_id ?? ''
+                    is_favorite: updatingProject.is_favorite ?? false,
+                    view_style: updatingProject.view_style ?? 'list',
+                    parent_id: updatingProject.parent_id ?? ''
                 }
             })
         },
