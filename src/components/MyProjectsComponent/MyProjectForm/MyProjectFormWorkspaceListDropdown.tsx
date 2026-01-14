@@ -16,7 +16,7 @@ const MyProjectFormWorkspaceListDropdown = () => {
           className="flex items-center gap-1.5 py-1 px-1.5 w-full hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"
         >
           <div className="flex justify-center items-center">
-            <VerifiedIcon />
+            <img src={VerifiedIcon} alt={"verified-icon"} />
           </div>
           <span className="flex items-center gap-small">
             <div className="flex gap-1.5 overflow-hidden">

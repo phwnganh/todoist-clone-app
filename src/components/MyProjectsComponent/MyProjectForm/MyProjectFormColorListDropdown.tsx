@@ -34,7 +34,7 @@ const MyProjectFormColorListDropdown = ({
           >
             <div className="flex items-center gap-1.5">
               <div className="flex justify-center items-center invisible group-data-[selected=true]:visible">
-                <VerifiedIcon />
+                <img src={VerifiedIcon} alt={"verified-icon"} />
               </div>
               <span className="flex items-center gap-small">
                 <div className="w-4 h-4 flex justify-center items-center shrink-0"></div>

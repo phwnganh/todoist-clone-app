@@ -201,7 +201,7 @@ const MyProjectForm = ({title, onClose, onSubmit, submitLabel, values, onChange}
                                     </div>
                                 </div>
                                 <div className="flex items-center justify-center">
-                                    <FormSmallArrowDownIcon />
+                                    <img src={FormSmallArrowDownIcon} alt={"form-small-arrow-down-icon"}/>
                                 </div>
                             </button>
                             {isOpenDropdown === "workspace" && (
@@ -237,7 +237,7 @@ const MyProjectForm = ({title, onClose, onSubmit, submitLabel, values, onChange}
                                     </div>
                                 </div>
                                 <div className="flex items-center justify-center">
-                                    <FormSmallArrowDownIcon />
+                                    <img src={FormSmallArrowDownIcon} alt={"form-small-arrow-down-icon"}/>
                                 </div>
                             </button>
                             {isOpenDropdown === "parentProject" && (
