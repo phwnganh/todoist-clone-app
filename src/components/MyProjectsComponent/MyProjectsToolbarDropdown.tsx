@@ -3,8 +3,9 @@ import type {MyProjectMenuToolbar} from "../../types/menu-nav.type.ts";
 
 type MyProjectsToolbarDropdownProps = {
     handleOpenEditProjectModalDialog: () => void;
+    handleOpenDeleteProjectDetail: () => void;
 }
-const MyProjectsToolbarDropdown = ({handleOpenEditProjectModalDialog}: MyProjectsToolbarDropdownProps) => {
+const MyProjectsToolbarDropdown = ({handleOpenEditProjectModalDialog, handleOpenDeleteProjectDetail}: MyProjectsToolbarDropdownProps) => {
 
     const MY_PROJECTS_MENU_TOOLBAR: MyProjectMenuToolbar[] = [
         {
@@ -50,7 +51,7 @@ const MyProjectsToolbarDropdown = ({handleOpenEditProjectModalDialog}: MyProject
             label: "Delete",
             danger: true,
             onClick: () => {
-
+                handleOpenDeleteProjectDetail()
             }
         }
     ]

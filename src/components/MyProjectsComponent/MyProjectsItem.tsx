@@ -12,8 +12,9 @@ type MyProjectsItemProps = {
     onCloseProjectDetailToolbar: () => void;
     onOpenProjectDetailToolbar: (e: MouseEvent<HTMLDivElement>) => void;
     onEditProjectDetail: () => void;
+    onDeleteProjectDetail: () => void;
 }
-const MyProjectsItem = ({project, isOpenProjectDetailToolbar, onCloseProjectDetailToolbar, onOpenProjectDetailToolbar, onEditProjectDetail}: MyProjectsItemProps) => {
+const MyProjectsItem = ({project, isOpenProjectDetailToolbar, onCloseProjectDetailToolbar, onOpenProjectDetailToolbar, onEditProjectDetail, onDeleteProjectDetail}: MyProjectsItemProps) => {
     const dropdownRef = useRef<HTMLDivElement | null>(null);
     const [isHovered, setIsHovered] = useState(false)
     useClickOutside({
@@ -25,9 +26,14 @@ const MyProjectsItem = ({project, isOpenProjectDetailToolbar, onCloseProjectDeta
         enabled: isOpenProjectDetailToolbar,
     })
 
-    const handleOpenProjectDetailToolbar = () => {
+    const handleOpenEditProjectDetailToolbar = () => {
         onCloseProjectDetailToolbar();
         onEditProjectDetail()
+    }
+
+    const handleOpenDeleteProjectDetail = () => {
+        onCloseProjectDetailToolbar()
+        onDeleteProjectDetail()
     }
   return (
     <>
@@ -57,7 +63,7 @@ const MyProjectsItem = ({project, isOpenProjectDetailToolbar, onCloseProjectDeta
             )}
             {isOpenProjectDetailToolbar && (
                 <div className="absolute right-9" onClick={(e) => e.stopPropagation()}>
-                    <MyProjectsToolbarDropdown handleOpenEditProjectModalDialog={handleOpenProjectDetailToolbar}/>
+                    <MyProjectsToolbarDropdown handleOpenEditProjectModalDialog={handleOpenEditProjectDetailToolbar} handleOpenDeleteProjectDetail={handleOpenDeleteProjectDetail}/>
                 </div>
             )}
         </div>
