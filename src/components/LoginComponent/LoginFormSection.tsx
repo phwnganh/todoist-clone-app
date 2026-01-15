@@ -6,16 +6,17 @@ import HiddenEyeIcon from "../../assets/hidden-eye-icon.svg";
 import { Link } from "react-router-dom";
 import { type FormEvent } from "react";
 const LoginFormSection = () => {
-
-  const CLIENT_ID = "99176cc6e6af4dee9508f6422eb3216f"
-  const SCOPE = "data:read_write,data:delete"
-  const REDIRECT_URI = "http://localhost:5173/google-redirect"
+  const CLIENT_ID = "99176cc6e6af4dee9508f6422eb3216f";
+  const SCOPE = "data:read_write,data:delete";
+  const REDIRECT_URI = "http://localhost:5173/google-redirect";
 
   const handleOAuthLogin = () => {
     const state = `${crypto.randomUUID()}`;
     sessionStorage.setItem("oauth_state", state);
-    window.location.href = `https://todoist.com/oauth/authorize?client_id=${CLIENT_ID}&scope=${encodeURIComponent(SCOPE)}&state=${state}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`
-  }
+    window.location.href = `https://todoist.com/oauth/authorize?client_id=${CLIENT_ID}&scope=${encodeURIComponent(
+      SCOPE
+    )}&state=${state}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
+  };
   const handleLogin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
@@ -34,23 +35,23 @@ const LoginFormSection = () => {
           </p>
           <div className="flex flex-col gap-medium">
             <button
-                type="button"
-                onClick={handleOAuthLogin}
-                className="px-4 rounded-lg border border-product-library-border-idle-tint font-bold text-sm sm:text-large h-12 flex justify-center items-center gap-4"
+              type="button"
+              onClick={handleOAuthLogin}
+              className="px-4 rounded-lg border border-product-library-border-idle-tint font-bold text-sm sm:text-large h-12 flex justify-center items-center gap-4"
             >
               <img src={GoogleIcon} alt="google" />
               <p>Continue with Google</p>
             </button>
             <button
-                type="button"
-                className="px-4 rounded-lg border border-product-library-border-idle-tint font-bold text-sm sm:text-large h-12 flex justify-center items-center gap-4"
+              type="button"
+              className="px-4 rounded-lg border border-product-library-border-idle-tint font-bold text-sm sm:text-large h-12 flex justify-center items-center gap-4"
             >
               <img src={FacebookIcon} alt="facebook" />
               <p>Continue with Facebook</p>
             </button>
             <button
-                type="button"
-                className="px-4 rounded-lg border border-product-library-border-idle-tint font-bold text-sm sm:text-large h-12 flex justify-center items-center gap-4"
+              type="button"
+              className="px-4 rounded-lg border border-product-library-border-idle-tint font-bold text-sm sm:text-large h-12 flex justify-center items-center gap-4"
             >
               <img src={AppleIcon} alt="apple" />
               <p>Continue with Apple</p>

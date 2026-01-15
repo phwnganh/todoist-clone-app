@@ -1,10 +1,10 @@
 import type { MenuNavItem } from "../../types/menu-nav.type.ts";
-import AddIcon from "../../assets/add-icon.svg"
+import AddIcon from "../../assets/add-icon.svg";
 import ArrowDownIcon from "../../assets/arrow-down-icon.svg";
 import QuestionIcon from "../../assets/question-icon.svg";
 import { PROJECTS } from "../../constants/routes.constants.ts";
 import SidebarNavItem from "./SidebarNavItem.tsx";
-import {useState} from "react";
+import { useState } from "react";
 import SearchModalDialog from "../SearchModalDialog.tsx";
 import { NavLink } from "react-router-dom";
 import RightArrowIcon from "../../assets/right-arrow-icon.svg";
@@ -28,8 +28,6 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
     setIsProjectListOpen((prev) => !prev);
   };
 
-
-
   return (
     <nav
       className={`flex flex-col bg-product-library-background-base-secondary z-40 transition-all duration-300 ease-out overflow-hidden ${
@@ -38,7 +36,7 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
     >
       <div className="flex flex-col">
         {/*sidebar header*/}
-        <SidebarHeader onToggle={onToggle}/>
+        <SidebarHeader onToggle={onToggle} />
         <div className="mx-medium mb-small"></div>
         {/*add task modal*/}
         <button className="flex items-center px-2.5 py-0.75 text-product-library-actionable-tertiary-idle-tint hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
@@ -95,29 +93,31 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
                 </p>
                 <div className="flex items-center ml-auto shrink-0">
                   <button className="w-7 h-7 hidden group-hover:flex justify-center items-center hover:bg-product-library-border-idle-tint hover:rounded-small">
-                    <img src={AddIcon} alt={"add-icon"}/>
+                    <img src={AddIcon} alt={"add-icon"} />
                   </button>
                   <button
                     onClick={handleToggleProjectList}
                     className="w-7 h-7 flex justify-center items-center hover:bg-product-library-border-idle-tint hover:rounded-small"
                   >
-                    {isProjectListOpen ? <img src={ArrowDownIcon} alt={"arrow-down-icon"}/> : <img src={RightArrowIcon} alt={"right-arrow-icon"}/>}
+                    {isProjectListOpen ? (
+                      <img src={ArrowDownIcon} alt={"arrow-down-icon"} />
+                    ) : (
+                      <img src={RightArrowIcon} alt={"right-arrow-icon"} />
+                    )}
                   </button>
                 </div>
               </>
             )}
           </NavLink>
 
-          {!isProjectListOpen &&
-              <SidebarMyProjectList/>
-          }
+          {!isProjectListOpen && <SidebarMyProjectList />}
         </div>
       </div>
 
       <div className="flex flex-col gap-small my-2 px-3 mt-auto">
         <button className="px-2.5 py-0.75 flex items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
           <div className="w-6 h-6 flex justify-center items-center mr-1.5 ">
-            <img src={AddIcon} alt={"add-icon"}/>
+            <img src={AddIcon} alt={"add-icon"} />
           </div>
           <span className="text-sm text-product-library-display-secondary-idle-tint font-medium">
             Add a team
@@ -125,7 +125,7 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
         </button>
         <button className="px-2.5 py-0.75 flex items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
           <div className="w-6 h-6 flex justify-center items-center mr-1.5">
-            <img src={QuestionIcon} alt={"question-icon"}/>
+            <img src={QuestionIcon} alt={"question-icon"} />
           </div>
           <span className="text-sm text-product-library-display-secondary-idle-tint font-medium">
             Help & resources

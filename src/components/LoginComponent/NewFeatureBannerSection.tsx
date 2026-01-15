@@ -23,7 +23,7 @@ const NewFeatureBannerSection = () => {
             </p>
           </div>
           <div className="max-w-full h-auto">
-            <img src={QRIcon} alt={"qr-icon"}/>
+            <img src={QRIcon} alt={"qr-icon"} />
           </div>
         </div>
       </div>

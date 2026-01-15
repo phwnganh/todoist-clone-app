@@ -3,10 +3,10 @@ import SearchInput from "./SearchInput.tsx";
 import NoParentOption from "./NoParentOption.tsx";
 import ParentProjectOptions from "./ParentProjectOptions.tsx";
 import DropdownFooter from "./DropdownFooter.tsx";
-import {useGetAllProjects} from "../../../../hooks/useProjects.ts";
+import { useGetAllProjects } from "../../../../hooks/useProjects.ts";
 import LoadingSpin from "../../../ui/LoadingSpin.tsx";
 import ErrorDisplayed from "../../../ui/ErrorDisplayed.tsx";
-import {useDebounce} from "../../../../hooks/useDebounce.ts";
+import { useDebounce } from "../../../../hooks/useDebounce.ts";
 
 type MyProjectFormParentProjectListProps = {
   selectedProject: string | null;
@@ -19,13 +19,13 @@ const MyProjectFormParentProjectListDropdown = ({
   const NO_PARENT = "No Parent";
   const [typedParentProject, setTypedParentProject] = useState<string>("");
   const keyword = typedParentProject.trim().toLowerCase();
-  const debounceSearchKeyword = useDebounce(keyword, 500)
+  const debounceSearchKeyword = useDebounce(keyword, 500);
 
   const trimmedParentProjectValue = typedParentProject.trim();
   const hasKeyword = trimmedParentProjectValue.length > 0;
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const {data: parentProjects, isLoading, isError} = useGetAllProjects();
+  const { data: parentProjects, isLoading, isError } = useGetAllProjects();
 
   const filteredProjects = useMemo(() => {
     if (!hasKeyword) return parentProjects?.results;
@@ -43,15 +43,16 @@ const MyProjectFormParentProjectListDropdown = ({
     searchInputRef.current?.focus();
   }, []);
 
-  if(isLoading){
+  if (isLoading) {
     return (
-        <div className={"mt-medium"}>
-          <LoadingSpin/>
-        </div>)
+      <div className={"mt-medium"}>
+        <LoadingSpin />
+      </div>
+    );
   }
 
-  if(isError){
-    return <ErrorDisplayed/>
+  if (isError) {
+    return <ErrorDisplayed />;
   }
 
   return (

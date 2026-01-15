@@ -29,7 +29,7 @@ const MyProjectFormColorListDropdown = ({
             key={color.id}
             onMouseDown={(e) => {
               e.preventDefault();
-              onSelect(color)
+              onSelect(color);
             }}
           >
             <div className="flex items-center gap-1.5">

@@ -21,7 +21,7 @@ const ParentProjectOptions = ({
       key={project.id}
       onMouseDown={(e) => {
         e.preventDefault();
-        onParentProjectsSelected(project.name)
+        onParentProjectsSelected(project.name);
       }}
       className="group flex items-center gap-1.5 py-1 px-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"
     >
@@ -30,7 +30,7 @@ const ParentProjectOptions = ({
       </div>
       <span className="flex items-center gap-1.5">
         <div className="flex justify-center items-center">
-          <img src={HashtagIcon} alt={"hashtag-icon"}/>
+          <img src={HashtagIcon} alt={"hashtag-icon"} />
         </div>
         <div className="text-sm ">{project.name}</div>
       </span>

@@ -1,75 +1,91 @@
 import HashtagIcon from "../icons/HashtagIcon.tsx";
 import IndicatorDots from "../ui/IndicatorDots.tsx";
-import {useRef, useState} from "react";
+import { useRef, useState } from "react";
 import MyProjectsToolbarDropdown from "./MyProjectsToolbarDropdown.tsx";
-import type {Project} from "../../types/project.type.ts";
-import {useClickOutside} from "../../hooks/useClickOutside.ts";
-import {type MouseEvent} from "react";
-import {getProjectColorClass} from "../../helpers/getProjectColorClass.ts";
+import type { Project } from "../../types/project.type.ts";
+import { useClickOutside } from "../../hooks/useClickOutside.ts";
+import { type MouseEvent } from "react";
+import { getProjectColorClass } from "../../helpers/getProjectColorClass.ts";
 
 type MyProjectsItemProps = {
-    project: Project;
-    isOpenProjectDetailToolbar: boolean;
-    onCloseProjectDetailToolbar: () => void;
-    onOpenProjectDetailToolbar: (e: MouseEvent<HTMLDivElement>) => void;
-    onEditProjectDetail: () => void;
-    onDeleteProjectDetail: () => void;
-}
-const MyProjectsItem = ({project, isOpenProjectDetailToolbar, onCloseProjectDetailToolbar, onOpenProjectDetailToolbar, onEditProjectDetail, onDeleteProjectDetail}: MyProjectsItemProps) => {
-    const dropdownRef = useRef<HTMLDivElement | null>(null);
-    const [isHovered, setIsHovered] = useState(false)
-    useClickOutside({
-        ref: dropdownRef,
-        handler: () => {
-            onCloseProjectDetailToolbar()
-            setIsHovered(false)
-        },
-        enabled: isOpenProjectDetailToolbar,
-    })
+  project: Project;
+  isOpenProjectDetailToolbar: boolean;
+  onCloseProjectDetailToolbar: () => void;
+  onOpenProjectDetailToolbar: (e: MouseEvent<HTMLDivElement>) => void;
+  onEditProjectDetail: () => void;
+  onDeleteProjectDetail: () => void;
+};
+const MyProjectsItem = ({
+  project,
+  isOpenProjectDetailToolbar,
+  onCloseProjectDetailToolbar,
+  onOpenProjectDetailToolbar,
+  onEditProjectDetail,
+  onDeleteProjectDetail,
+}: MyProjectsItemProps) => {
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  useClickOutside({
+    ref: dropdownRef,
+    handler: () => {
+      onCloseProjectDetailToolbar();
+      setIsHovered(false);
+    },
+    enabled: isOpenProjectDetailToolbar,
+  });
 
-    const handleOpenEditProjectDetailToolbar = () => {
-        onCloseProjectDetailToolbar();
-        onEditProjectDetail()
-    }
+  const handleOpenEditProjectDetailToolbar = () => {
+    onCloseProjectDetailToolbar();
+    onEditProjectDetail();
+  };
 
-    const handleOpenDeleteProjectDetail = () => {
-        onCloseProjectDetailToolbar()
-        onDeleteProjectDetail()
-    }
+  const handleOpenDeleteProjectDetail = () => {
+    onCloseProjectDetailToolbar();
+    onDeleteProjectDetail();
+  };
   return (
     <>
       <div className="flex items-center">
         <div className={`mr-small flex justify-center items-center`}>
-          <HashtagIcon className={`${getProjectColorClass(project.color)}`}/>
+          <HashtagIcon className={`${getProjectColorClass(project.color)}`} />
         </div>
         <div className="text-sm font-regular whitespace-nowrap">
-            {project.name}
+          {project.name}
         </div>
       </div>
-        <div className="flex items-center relative w-6 h-6" ref={dropdownRef}
-                     onMouseEnter={() => setIsHovered(true)}
-                     onMouseLeave={() => {
-                         if(!isOpenProjectDetailToolbar) {
-                             setIsHovered(false)
-                         }
-                     }}>
-            {(isHovered || isOpenProjectDetailToolbar) && (
-                <div
-                    role="button"
-                    onClick={onOpenProjectDetailToolbar}
-                    className={"flex justify-center items-center gap-1"}
-                >
-                    <IndicatorDots />
-                </div>
-            )}
-            {isOpenProjectDetailToolbar && (
-                <div className="absolute right-9" onClick={(e) => e.stopPropagation()}>
-                    <MyProjectsToolbarDropdown handleOpenEditProjectModalDialog={handleOpenEditProjectDetailToolbar} handleOpenDeleteProjectDetail={handleOpenDeleteProjectDetail}/>
-                </div>
-            )}
-        </div>
-
-
+      <div
+        className="flex items-center relative w-6 h-6"
+        ref={dropdownRef}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => {
+          if (!isOpenProjectDetailToolbar) {
+            setIsHovered(false);
+          }
+        }}
+      >
+        {(isHovered || isOpenProjectDetailToolbar) && (
+          <div
+            role="button"
+            onClick={onOpenProjectDetailToolbar}
+            className={"flex justify-center items-center gap-1"}
+          >
+            <IndicatorDots />
+          </div>
+        )}
+        {isOpenProjectDetailToolbar && (
+          <div
+            className="absolute right-9"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <MyProjectsToolbarDropdown
+              handleOpenEditProjectModalDialog={
+                handleOpenEditProjectDetailToolbar
+              }
+              handleOpenDeleteProjectDetail={handleOpenDeleteProjectDetail}
+            />
+          </div>
+        )}
+      </div>
     </>
   );
 };

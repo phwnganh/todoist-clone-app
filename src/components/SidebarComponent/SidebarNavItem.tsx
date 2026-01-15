@@ -14,9 +14,11 @@ const SidebarNavItem = ({ item, onClick }: SidebarNavItemProps) => {
           isActive ? "text-product-library-actionable-tertiary-idle-tint" : ""
         }`}
       >
-          {typeof item.icon === "string" ? (
-              <img src={item.icon} alt={item.label} />
-          ) : <item.icon/>}
+        {typeof item.icon === "string" ? (
+          <img src={item.icon} alt={item.label} />
+        ) : (
+          <item.icon />
+        )}
       </div>
       <span
         className={`text-sm wrap-break-word py-0.75 pl-1.25 ${
