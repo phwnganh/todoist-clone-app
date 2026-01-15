@@ -6,7 +6,8 @@ import CommentIcon from '../../assets/comment-icon.svg'
 import ThreeDotsIcon from '../../assets/three-dots-icon.svg'
 import type {HeaderLayoutType} from "../../types/headerLayout.type.ts";
 import {PROJECTS} from "../../constants/routes.constants.ts";
-import {useGetAProject} from "../../hooks/useProjects.ts";
+import MyTasksList from "../../components/MyTasksComponent/MyTasksList.tsx";
+import MyTaskTitle from "../../components/MyTasksComponent/MyTaskTitle.tsx";
 
 const MyProjectDetailPage = () => {
     const {projectId} = useParams();
@@ -14,7 +15,6 @@ const MyProjectDetailPage = () => {
     const {showCollapse, onToggleSidebar} = useOutletContext<HeaderLayoutType>()
     const navigate = useNavigate()
 
-    const {data: projectDetail, isLoading} = useGetAProject(projectId)
 
     return (
         <>
@@ -40,6 +40,12 @@ const MyProjectDetailPage = () => {
                 <button className={"px-1 text-product-library-actionable-quaternary-idle-tint text-sm font-medium hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small p-1.5"} onClick={() => navigate(PROJECTS)}>My Projects</button>
                 <div className={"text-sm text-product-library-display-secondary-idle-tint"}>/</div>
             </div>}></HeaderLayout>
+            <section className={"max-w-200 mx-auto w-full"}>
+                <div className={"flex flex-col gap-small"}>
+                    <MyTaskTitle projectId={projectId}/>
+                    <MyTasksList projectId={projectId} />
+                </div>
+            </section>
         </>
     );
 };
