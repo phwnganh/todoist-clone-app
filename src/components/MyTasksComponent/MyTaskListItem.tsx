@@ -4,6 +4,7 @@ import EditIcon from '../icons/EditIcon.tsx'
 import DueDateIcon from "../icons/DueDateIcon.tsx";
 import CommentIcon from "../icons/CommentIcon.tsx";
 import MenuIcon from "../icons/MenuIcon.tsx";
+import MyTaskContent from "./MyTaskContent";
 type MyTaskListItemProps = {
     task: Task
 }
@@ -17,7 +18,9 @@ const MyTaskListItem = ({task}: MyTaskListItemProps) => {
                 </button>
                 {/*task list item*/}
                 <div className={"py-2 mr-7.5 flex flex-col"}>
-                    <div className={"mb-0.75 text-sm text-product-library-display-primary-idle-tint"}>{task.content}</div>
+                    <div className={"mb-0.75 text-sm"}>
+                        <MyTaskContent content={task.content}/>
+                    </div>
                     <button type={"button"}>
                         <span className={"flex gap-0.5 text-xs text-product-library-actionable-primary-idle-fill"}>
                                 <img src={SmallCalendarIcon} alt={"small-calendar-icon"}/>

@@ -38,6 +38,7 @@ export type Duration = {
 export type Due = {
     date: string,
     timezone: null,
+    string: string,
     is_recurring: boolean,
 }
 
