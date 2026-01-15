@@ -11,7 +11,7 @@ import RightArrowIcon from "../../assets/right-arrow-icon.svg";
 import { MENU_NAV_ITEMS } from "../../data/menuNavData.ts";
 import SidebarMyProjectList from "./SidebarMyProjectList.tsx";
 import SidebarHeader from "./SidebarHeader.tsx";
-
+import PlusAddIcon from "../icons/PlusAddIcon.tsx";
 type SidebarProps = {
   open: boolean;
   isMobile: boolean;
@@ -41,20 +41,7 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
         {/*add task modal*/}
         <button className="flex items-center px-2.5 py-0.75 text-product-library-actionable-tertiary-idle-tint hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
           <div className="flex justify-center items-center mr-1.5 pl-1.5">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fill="currentColor"
-                fillRule="evenodd"
-                d="M12 23c6.075 0 11-4.925 11-11S18.075 1 12 1 1 5.925 1 12s4.925 11 11 11m-.711-16.5a.75.75 0 1 1 1.5 0v4.789H17.5a.75.75 0 0 1 0 1.5h-4.711V17.5a.75.75 0 0 1-1.5 0V12.79H6.5a.75.75 0 1 1 0-1.5h4.789z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
+            <PlusAddIcon/>
           </div>
           <span className="text-center font-medium text-sm">Add task</span>
         </button>
