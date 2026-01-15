@@ -8,13 +8,17 @@ import type {HeaderLayoutType} from "../../types/headerLayout.type.ts";
 import {PROJECTS} from "../../constants/routes.constants.ts";
 import MyTasksList from "../../components/MyTasksComponent/MyTasksList.tsx";
 import MyTaskTitle from "../../components/MyTasksComponent/MyTaskTitle.tsx";
+import LoadingSpin from "../../components/ui/LoadingSpin.tsx";
 
 const MyProjectDetailPage = () => {
-    const {projectId} = useParams();
+    const {projectId} = useParams<{projectId: string}>();
 
     const {showCollapse, onToggleSidebar} = useOutletContext<HeaderLayoutType>()
     const navigate = useNavigate()
 
+    if(!projectId){
+        return <LoadingSpin/>
+    }
 
     return (
         <>
