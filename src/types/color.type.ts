@@ -4,3 +4,8 @@ export type Color = {
     label: string;
     hexadecimal: string;
 }
+
+export type HashtagColor = {
+    value: string;
+    colorVar: string;
+}

@@ -1,4 +1,4 @@
-import type {Color} from "../types/color.type.ts";
+import type {Color, HashtagColor} from "../types/color.type.ts";
 
 export const colorData: Color[] = [
     {
@@ -120,5 +120,88 @@ export const colorData: Color[] = [
         value: "taupe",
         label: "Taupe",
         hexadecimal: "bg-product-library-meta-taupe-tint"
+    }
+]
+
+export const hashtagColors: HashtagColor[] = [
+    {
+        value: "berry_red",
+        colorVar: "text-product-library-meta-berry-fill"
+    },
+    {
+        value: "red",
+        colorVar: "text-product-library-meta-red-fill"
+    },
+    {
+        value: "orange",
+        colorVar: "text-product-library-meta-orange-tint"
+    },
+    {
+        value: "yellow",
+        colorVar: "text-product-library-meta-yellow-tint"
+    },
+    {
+        value: "olive_green",
+        colorVar: "text-product-library-meta-olive-green-tint"
+    },
+    {
+        value: "lime_green",
+        colorVar: "text-product-library-meta-lime-green-tint"
+    },
+    {
+        value: "green",
+        colorVar: "text-product-library-meta-green-fill"
+    },
+    {
+        value: "mint_green",
+        colorVar: "text-product-library-meta-mint-green-tint"
+    },
+    {
+        value: "teal",
+        colorVar: "text-product-library-meta-teal-fill"
+    },
+    {
+        value: "sky_blue",
+        colorVar: "text-product-library-meta-sky-blue-tint"
+    },
+    {
+        value: "light_blue",
+        colorVar: "text-product-library-meta-light-blue-tint"
+    },
+    {
+        value: "blue",
+        colorVar: "text-product-library-info-neutral-primary-on-dark-idle-fill"
+    },
+    {
+        value: "grape",
+        colorVar: "text-product-library-meta-grape-fill"
+    },
+    {
+        value: "violet",
+        colorVar: "text-product-library-meta-violet-tint"
+    },
+    {
+        value: "lavender",
+        colorVar: "text-product-library-meta-lavender-tint"
+    },
+    {
+        value: "magenta",
+        colorVar: "text-product-library-meta-magenta-fill"
+    },
+    {
+        value: "salmon",
+        colorVar: "text-product-library-meta-salmon-fill"
+    },
+    {
+        value: "charcoal",
+        colorVar: "text-charcoal"
+    },
+    {
+        value: "grey",
+        colorVar: "grey"
+    },
+    {
+        value: "taupe",
+        colorVar: "text-product-library-meta-taupe-tint"
     }
 ]

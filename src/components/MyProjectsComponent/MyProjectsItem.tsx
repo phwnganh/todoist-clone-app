@@ -1,10 +1,11 @@
-import HashtagIcon from "../../assets/hashtag-icon.svg";
+import HashtagIcon from "../icons/HashtagIcon.tsx";
 import IndicatorDots from "../ui/IndicatorDots.tsx";
 import {useRef, useState} from "react";
 import MyProjectsToolbarDropdown from "./MyProjectsToolbarDropdown.tsx";
 import type {Project} from "../../types/project.type.ts";
 import {useClickOutside} from "../../hooks/useClickOutside.ts";
 import {type MouseEvent} from "react";
+import {getProjectColorClass} from "../../helpers/getProjectColorClass.ts";
 
 type MyProjectsItemProps = {
     project: Project;
@@ -38,8 +39,8 @@ const MyProjectsItem = ({project, isOpenProjectDetailToolbar, onCloseProjectDeta
   return (
     <>
       <div className="flex items-center">
-        <div className="mr-small flex justify-center items-center">
-          <img src={HashtagIcon} alt={"hashtag-icon"}/>
+        <div className={`mr-small flex justify-center items-center`}>
+          <HashtagIcon className={`${getProjectColorClass(project.color)}`}/>
         </div>
         <div className="text-sm font-regular whitespace-nowrap">
             {project.name}

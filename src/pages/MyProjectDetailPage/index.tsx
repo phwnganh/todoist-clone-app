@@ -1,14 +1,21 @@
-import {useOutletContext, useParams} from "react-router-dom";
+import {useNavigate, useOutletContext, useParams} from "react-router-dom";
 import HeaderLayout from "../../layouts/HeaderLayout.tsx";
 import UserAdded from '../../assets/user-added-icon.svg'
 import SmallListIcon from '../../assets/small-list-icon.svg'
 import CommentIcon from '../../assets/comment-icon.svg'
 import ThreeDotsIcon from '../../assets/three-dots-icon.svg'
 import type {HeaderLayoutType} from "../../types/headerLayout.type.ts";
+import {PROJECTS} from "../../constants/routes.constants.ts";
+import {useGetAProject} from "../../hooks/useProjects.ts";
 
 const MyProjectDetailPage = () => {
     const {projectId} = useParams();
+
     const {showCollapse, onToggleSidebar} = useOutletContext<HeaderLayoutType>()
+    const navigate = useNavigate()
+
+    const {data: projectDetail, isLoading} = useGetAProject(projectId)
+
     return (
         <>
             <HeaderLayout showCollapse={showCollapse} onToggleSidebar={onToggleSidebar} right={
@@ -30,7 +37,7 @@ const MyProjectDetailPage = () => {
                     </button>
                 </div>
             } left={<div className={"flex items-center mr-auto"}>
-                <button className={"px-1 text-product-library-actionable-quaternary-idle-tint text-sm font-medium hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small p-1.5"}>My Projects</button>
+                <button className={"px-1 text-product-library-actionable-quaternary-idle-tint text-sm font-medium hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small p-1.5"} onClick={() => navigate(PROJECTS)}>My Projects</button>
                 <div className={"text-sm text-product-library-display-secondary-idle-tint"}>/</div>
             </div>}></HeaderLayout>
         </>
