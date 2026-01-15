@@ -18,7 +18,6 @@ const MyTaskTitle = ({projectId}: {projectId: string}) => {
     useEffect(() => {
         if(isEditing){
             textareaRef.current?.focus()
-            textareaRef.current?.select()
         }
     }, [isEditing])
 
