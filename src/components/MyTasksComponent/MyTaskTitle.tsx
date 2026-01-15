@@ -5,8 +5,15 @@ import {useEffect, useRef, useState} from "react";
 const MyTaskTitle = ({projectId}: {projectId: string}) => {
     const {data: projectDetail, isLoading} = useGetAProject(projectId)
     const [isEditing, setEditing] = useState(false)
-    const [title, setTitle] = useState(projectDetail?.name ?? "")
+    const [title, setTitle] = useState("")
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const commonClass = `w-full p-1 font-strong text-product-library-display-primary-idle-tint text-header-large flex rounded-small
+  min-h-[40px]`
+    useEffect(() => {
+        if(projectDetail?.name){
+            setTitle(projectDetail.name);
+        }
+    }, [projectDetail]);
 
     useEffect(() => {
         if(isEditing){
@@ -14,6 +21,14 @@ const MyTaskTitle = ({projectId}: {projectId: string}) => {
             textareaRef.current?.select()
         }
     }, [isEditing])
+
+    const handleBlurTitle = () => {
+        if(!title.trim()){
+            setTitle(projectDetail?.name ?? "")
+        }
+        setEditing(false)
+    }
+
     if (isLoading) {
         return (
             <div className={"mt-medium"}>
@@ -21,23 +36,12 @@ const MyTaskTitle = ({projectId}: {projectId: string}) => {
             </div>
         );
     }
-    return (
-        <div className={"w-full"}>
-            {!isEditing && (            <h1 className={"p-1 font-strong text-product-library-display-primary-idle-tint text-header-large"} onClick={() => setEditing(true)}>{title}</h1>
-            )}
 
-            {isEditing && (
-                <textarea ref={textareaRef} aria-label={"edit title"} maxLength={120} spellCheck={false} value={title} onChange={e => setTitle(e.target.value)} onBlur={() => setEditing(false)} onKeyDown={e => {
-                    if(e.key === "Enter" && !e.shiftKey){
-                        e.preventDefault()
-                        setEditing(false)
-                    }
-                    if(e.key === "Escape"){
-                        setEditing(false)
-                    }
-                }} className="w-full p-1 font-strong text-header-large resize-none border border-neutral-300 rounded-small focus:outline-none focus:ring-2 focus:ring-neutral-500"
-                          rows={1}/>
-            )}
+    return (
+        <div className={"relative"} >
+            <h1 className={`absolute inset-0 hover:outline hover:outline-product-library-border-hover-tint ${commonClass} ${!isEditing ? "opacity-100" : "opacity-0"}`} onClick={() => setEditing(true)}>{title}</h1>
+            <textarea ref={textareaRef} className={`${commonClass} resize-none outline-product-library-border-focus-tint
+    border-none bg-transparent ${isEditing ? "opacity-100" : "opacity-0 pointer-events-none"}`} spellCheck={false} value={title} maxLength={120} onChange={e => setTitle(e.target.value)} onBlur={handleBlurTitle}></textarea>
         </div>
 
     );
