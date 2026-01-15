@@ -35,12 +35,5 @@ export const apiUpdateMyProject = async (payload: UpdateProjectPayload) => {
 }
 
 export const apiDeleteMyProject = async (projectId: string) => {
-    const uuid = crypto.randomUUID()
-    return api.sync<SyncResponse, unknown>([{
-        type: 'project_delete',
-        uuid,
-        args: {
-            id: projectId
-        }
-    }]);
+    return api.delete<null>(`/projects/${projectId}`);
 }

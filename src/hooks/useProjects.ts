@@ -22,7 +22,7 @@ export const useGetAllProjects = () => {
 
 export const useGetAProject = (projectId: string) => {
     return useQuery<Project>({
-        queryKey: ['projects', projectId],
+        queryKey: ['project-detail', projectId],
         queryFn: () => apiGetAProject(projectId)
     })
 }
@@ -112,7 +112,7 @@ export const useUpdateProject = () => {
         },
         onSettled: () => {
             void queryClient.invalidateQueries({
-                queryKey: ["projects"]
+                queryKey: ["projects"],
             })
         }
     })
@@ -120,7 +120,7 @@ export const useUpdateProject = () => {
 
 export const useDeleteProject = () => {
     const queryClient = useQueryClient()
-    return useMutation<SyncResponse, ApiError, {projectId: string}, OptimisticUpdatesContext>({
+    return useMutation<null, ApiError, {projectId: string}, OptimisticUpdatesContext>({
         mutationFn: ({projectId}) => apiDeleteMyProject(projectId),
         onMutate: async ({projectId}) => {
             return optimisticDeleteProject({

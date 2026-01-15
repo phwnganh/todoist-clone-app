@@ -56,7 +56,7 @@ async function request<TResponse, TBody = undefined>(endpoint: string, options: 
     }
 
     const res = await fetch(`${BASE_URL}${endpoint}`, {
-        method: options.method || "GET",
+        method: options.method || 'GET',
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`,
@@ -106,6 +106,12 @@ async function syncRequest<TResponse, TArgs>(commands: SyncCommand<TArgs>[]): Pr
 export const api = {
     get<T>(endpoint: string){
         return request<T>(endpoint)
+    },
+    delete<T>(endpoint: string){
+        return request<T>(endpoint, {
+            method: "DELETE",
+
+        })
     },
     sync<TResponse, TArgs>(commands: SyncCommand<TArgs>[]){
         return syncRequest<TResponse, TArgs>(commands)
