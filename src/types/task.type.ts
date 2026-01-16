@@ -46,3 +46,8 @@ export type TaskResponse = {
     results: Task[],
     next_cursor: string
 }
+
+export type TaskNode = {
+    task: Task,
+    children: TaskNode[]
+}

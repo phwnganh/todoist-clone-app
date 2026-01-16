@@ -326,6 +326,11 @@
   --radius-small: 5px;
   --radius-large: 10px;
 
+  --spacing-level-0: 8px;
+  --spacing-level-1: 32px;
+  --spacing-level-2: 56px;
+  --spacing-level-3: 80px;
+  --spacing-level-4: 104px;
 }
 
 @layer utilities{
