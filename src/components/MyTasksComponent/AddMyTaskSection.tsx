@@ -1,8 +1,12 @@
 import SmallPlusAddIcon from '../icons/SmallPlusAddIcon.tsx'
-const AddMyTaskSection = () => {
+
+type AddMyTaskSectionProps = {
+    onOpenAddMyTask:() => void;
+}
+const AddMyTaskSection = ({onOpenAddMyTask}: AddMyTaskSectionProps) => {
     return (
         <li className={"pr-5 pl-px"}>
-            <button type={"button"} className={"px-2 mt-2 flex items-center w-full group"}>
+            <button type={"button"} className={"px-2 mt-2 flex items-center w-full group"} onClick={onOpenAddMyTask}>
                 <div className={"w-4 h-4 flex justify-center items-center rounded-full text-product-library-display-accent-primary-tint mr-3 group-hover:bg-product-library-display-accent-primary-fill group-hover:text-white"}>
                     <SmallPlusAddIcon/>
                 </div>

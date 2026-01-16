@@ -1,6 +1,7 @@
 import type { Project } from "../../../../types/project.type.ts";
 import VerifiedIcon from "../../../../assets/verified-icon.svg";
-import HashtagIcon from "../../../../assets/hashtag-icon.svg";
+import HashtagIcon from "../../../icons/HashtagIcon.tsx";
+import {getProjectColorClass} from "../../../../helpers/getProjectColorClass.ts";
 
 type ParentProjectOptionsProps = {
   project: Project;
@@ -30,7 +31,7 @@ const ParentProjectOptions = ({
       </div>
       <span className="flex items-center gap-1.5">
         <div className="flex justify-center items-center">
-          <img src={HashtagIcon} alt={"hashtag-icon"} />
+          <HashtagIcon className={getProjectColorClass(project.color)}/>
         </div>
         <div className="text-sm ">{project.name}</div>
       </span>

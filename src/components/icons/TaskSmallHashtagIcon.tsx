@@ -1,0 +1,13 @@
+
+const TaskSmallHashtagIcon = () => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"
+             className="Fego6xD">
+            <path fill="currentColor" fillRule="evenodd"
+                  d="M6.555 3.003a.5.5 0 0 1 .442.552L6.781 5.5h2.994l.228-2.055a.5.5 0 0 1 .994.11L10.781 5.5H12.5a.5.5 0 0 1 0 1h-1.83l-.334 3H12a.5.5 0 0 1 0 1h-1.775l-.228 2.055a.5.5 0 1 1-.994-.11L9.22 10.5H6.225l-.228 2.055a.5.5 0 1 1-.994-.11L5.22 10.5H3.5a.5.5 0 1 1 0-1h1.83l.334-3H4a.5.5 0 0 1 0-1h1.775l.228-2.055a.5.5 0 0 1 .552-.442M9.33 9.5l.334-3H6.67l-.334 3z"
+                  clipRule="evenodd"/>
+        </svg>
+    );
+};
+
+export default TaskSmallHashtagIcon;

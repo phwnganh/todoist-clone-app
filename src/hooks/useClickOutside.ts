@@ -6,7 +6,7 @@ type UseClickOutsideParams<T extends HTMLElement> = {
     enabled?: boolean;
 }
 
-export function useClickOutside<T extends HTMLDivElement>({ref, handler, enabled = true}: UseClickOutsideParams<T>) {
+export function useClickOutside<T extends HTMLDivElement | HTMLButtonElement>({ref, handler, enabled = true}: UseClickOutsideParams<T>) {
     useEffect(() => {
         if(!enabled) return;
 

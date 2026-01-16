@@ -77,7 +77,7 @@ const MyProjectFormParentProjectListDropdown = ({
             onNoParentSelected={() => onSelect(NO_PARENT)}
           />
         )}
-        {typedParentProject.trim().length === 0 && (
+        {trimmedParentProjectValue.length === 0 && (
           <div className="py-1.5 px-2.5 font-medium text-sm text-product-library-display-secondary-idle-tint">
             My Projects
           </div>

@@ -1,16 +1,26 @@
 import MyTaskListItem from "./MyTaskListItem.tsx";
 import {useGetAllTasks} from "../../hooks/useTasks.ts";
-import {Fragment} from "react";
+import {Fragment, useState} from "react";
 import AddMyTaskSection from "./AddMyTaskSection.tsx";
 import LoadingSpin from "../ui/LoadingSpin.tsx";
 import {useTaskTreeMultiLevel} from "../../hooks/useTaskTreeMultiLevel.ts";
+import AddMyTaskForm from "./AddMyTaskComponent/AddMyTaskForm.tsx";
 
 type MyTaskListProps = {
     projectId: string;
 }
 const MyTasksList = ({projectId}: MyTaskListProps) => {
     const {data: tasks, isLoading} = useGetAllTasks()
+    const [openAddMyTask, setOpenAddMyTask] = useState(false);
     const taskTree = useTaskTreeMultiLevel(tasks?.results, projectId)
+
+    const handleOpenAddMyTask = () => {
+        setOpenAddMyTask(true)
+    }
+
+    const handleCloseAddMyTask = () => {
+        setOpenAddMyTask(false)
+    }
     if (isLoading) {
         return (
             <div className={"mt-medium"}>
@@ -25,7 +35,10 @@ const MyTasksList = ({projectId}: MyTaskListProps) => {
                     <MyTaskListItem taskNode={taskNode} level={0}/>
                 </Fragment>
             ))}
-            <AddMyTaskSection/>
+            {openAddMyTask ? (
+                <AddMyTaskForm onCloseAddMyTask={handleCloseAddMyTask}/>
+            ) : (<AddMyTaskSection onOpenAddMyTask={handleOpenAddMyTask}/>
+            )}
         </ul>
     );
 };
