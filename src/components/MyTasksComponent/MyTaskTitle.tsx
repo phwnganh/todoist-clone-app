@@ -1,12 +1,14 @@
-import {useGetAProject} from "../../hooks/useProjects.ts";
+import {useGetAProject, useUpdateProject} from "../../hooks/useProjects.ts";
 import LoadingSpin from "../ui/LoadingSpin.tsx";
 import {useEffect, useRef, useState} from "react";
 
 const MyTaskTitle = ({projectId}: {projectId: string}) => {
     const {data: projectDetail, isLoading} = useGetAProject(projectId)
+    const {mutate, isPending} = useUpdateProject()
     const [isEditing, setEditing] = useState(false)
     const [title, setTitle] = useState("")
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const originalTitleRef = useRef<string>("")
     const commonClass = `w-full p-1 font-strong text-product-library-display-primary-idle-tint text-header-large flex rounded-small
   min-h-[40px]`
     useEffect(() => {
@@ -22,10 +24,27 @@ const MyTaskTitle = ({projectId}: {projectId: string}) => {
     }, [isEditing])
 
     const handleBlurTitle = () => {
-        if(!title.trim()){
-            setTitle(projectDetail?.name ?? "")
+        const newTitle = title.trim()
+        const oldTitle = originalTitleRef.current
+
+        if(!newTitle){
+            setTitle(oldTitle);
+            setEditing(false);
+            return;
         }
-        setEditing(false)
+        if(newTitle === oldTitle){
+            setEditing(false);
+            return;
+        }
+
+        mutate({
+            id: projectId,
+            name: newTitle,
+        }, {
+            onSuccess: () => {
+                originalTitleRef.current = newTitle;
+            }
+        })
     }
 
     if (isLoading) {
