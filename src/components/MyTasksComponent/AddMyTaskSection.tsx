@@ -4,6 +4,7 @@ type AddMyTaskSectionProps = {
     onOpenAddMyTask:() => void;
 }
 const AddMyTaskSection = ({onOpenAddMyTask}: AddMyTaskSectionProps) => {
+
     return (
         <li className={"pr-5 pl-px"}>
             <button type={"button"} className={"px-2 mt-2 flex items-center w-full group"} onClick={onOpenAddMyTask}>

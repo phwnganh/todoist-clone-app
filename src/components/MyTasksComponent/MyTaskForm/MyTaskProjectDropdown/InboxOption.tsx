@@ -11,7 +11,7 @@ const InboxOption = ({isInboxSelected, onInboxSelected}: InboxOptionProps) => {
             e.preventDefault()
             onInboxSelected()
         }}
-        className={"group flex items-center gap-small justify-between py-1 px-1.5 w-full hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"}>
+        className={"group flex items-center gap-small justify-between py-1 px-1.5 w-full data-[selected=true]:bg-product-library-selectable-secondary-hover-fill hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}>
             <div className={"flex items-center gap-1.5"}>
                 <div className={"flex items-center justify-center"}>
                     <img src={InboxIcon} alt={"inbox-icon"} />

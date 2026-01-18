@@ -9,11 +9,11 @@ const ProjectDropdownFooter = ({hasKeyword, keyword, showNotFound}: ProjectDropd
     return (
         <>
             {showNotFound && (
-                <p className="text-sm text-product-library-display-secondary-idle-tint px-2.5">
+                <p className="text-sm text-product-library-display-secondary-idle-tint px-2.5 py-1">
                     Project not found
                 </p>
             )}
-            <button className={"flex items-center gap-1.5"}>
+            <button className={"flex items-center gap-1.5 py-1 px-2"}>
                 <div className={"flex items-center justify-center"}>
                     <img src={PlusIcon} alt="plus-icon" />
                 </div>

@@ -15,7 +15,7 @@ const ProjectOptions = ({project, isProjectsSelected, onProjectsSelected}: Proje
         onMouseDown={e => {
             e.preventDefault()
             onProjectsSelected(project.name)
-        }} className={"group flex items-center gap-1.5 py-1 px-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"}>
+        }} className={"group flex items-center gap-1.5 py-1 px-1.5 justify-between data-[selected=true]:bg-product-library-selectable-secondary-hover-fill hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}>
             <div className={"flex items-center gap-1.5"}>
                 <div className={"flex justify-center items-center"}>
                     <HashtagIcon className={getProjectColorClass(project.color)}/>

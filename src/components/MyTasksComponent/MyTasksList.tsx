@@ -4,7 +4,7 @@ import {Fragment, useState} from "react";
 import AddMyTaskSection from "./AddMyTaskSection.tsx";
 import LoadingSpin from "../ui/LoadingSpin.tsx";
 import {useTaskTreeMultiLevel} from "../../hooks/useTaskTreeMultiLevel.ts";
-import AddMyTaskForm from "./AddMyTaskComponent/AddMyTaskForm.tsx";
+import AddMyTaskModalDialog from "./AddMyTaskComponent";
 
 type MyTaskListProps = {
     projectId: string;
@@ -13,7 +13,6 @@ const MyTasksList = ({projectId}: MyTaskListProps) => {
     const {data: tasks, isLoading} = useGetAllTasks()
     const [openAddMyTask, setOpenAddMyTask] = useState(false);
     const taskTree = useTaskTreeMultiLevel(tasks?.results, projectId)
-
     const handleOpenAddMyTask = () => {
         setOpenAddMyTask(true)
     }
@@ -36,7 +35,7 @@ const MyTasksList = ({projectId}: MyTaskListProps) => {
                 </Fragment>
             ))}
             {openAddMyTask ? (
-                <AddMyTaskForm onCloseAddMyTask={handleCloseAddMyTask}/>
+                <AddMyTaskModalDialog onCloseAddMyTask={handleCloseAddMyTask}/>
             ) : (<AddMyTaskSection onOpenAddMyTask={handleOpenAddMyTask}/>
             )}
         </ul>

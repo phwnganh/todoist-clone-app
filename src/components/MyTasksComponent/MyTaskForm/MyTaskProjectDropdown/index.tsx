@@ -44,7 +44,7 @@ const AddMyTaskProjectDropdown = ({selectedProject, onSelect}: AddMyTaskProjectD
         );
     }
     return (
-        <div className={"absolute top-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom max-h-70 w-full mt-1 bg-white"} id={"project-listbox"} role={"listbox"} aria-labelledby={"project-trigger"}>
+        <div className={"absolute bottom-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom max-h-70 w-75 mt-1 bg-white"} id={"project-listbox"} role={"listbox"} aria-labelledby={"project-trigger"}>
             <ProjectSearchInput projectValue={typedProject} onProjectsSearched={setTypedProject} inputRef={searchInputRef}/>
             <hr className="border-t border-t-product-library-divider-tertiary" />
             <div className={"p-1.5 flex flex-col"}>
