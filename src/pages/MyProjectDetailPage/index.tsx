@@ -42,13 +42,12 @@ const MyProjectDetailPage = () => {
                         </div>
                         <span className="text-product-library-actionable-quaternary-idle-tint text-sm font-medium">Share</span>
                     </button>
-                    <div className={"relative"}>
+                        <div className={"relative"}>
                         <button type={"button"} className={"flex items-center justify-center w-8 h-8 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"} onClick={handleOpenLayoutDropdown}>
                             <img src={SmallListIcon} alt={"small-list-icon"}/>
                         </button>
                         {openLayoutDropdown && (<MyTaskLayoutFiltersDropdown onSelectLayout={handleSelectLayout} layoutTitle={layoutName}/>)}
-                    </div>
-
+                        </div>
                     <button type={"button"} className={"flex items-center justify-center w-8 h-8 p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"}>
                         <img src={CommentIcon} alt={"comment-icon"}/>
                     </button>
@@ -60,7 +59,7 @@ const MyProjectDetailPage = () => {
                 <button className={"px-1 text-product-library-actionable-quaternary-idle-tint text-sm font-medium hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small p-1.5"} onClick={() => navigate(PROJECTS)}>My Projects</button>
                 <div className={"text-sm text-product-library-display-secondary-idle-tint"}>/</div>
             </div>}></HeaderLayout>
-            <section className={"max-w-200 mx-auto w-full"}>
+            <section className={"max-w-200 mx-auto w-full relative z-10"}>
                 <div className={"flex flex-col gap-small"}>
                     <MyTaskTitle projectId={projectId}/>
                     {layoutName === "list" ? (

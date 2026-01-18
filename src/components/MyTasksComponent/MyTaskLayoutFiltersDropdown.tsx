@@ -17,7 +17,7 @@ const MyTaskLayoutFiltersDropdown = ({onSelectLayout, layoutTitle}: MyTaskLayout
             : "hover:text-product-library-display-primary-idle-tint"
     }`;
     return (
-        <div className={"absolute top-full right-0 z-1000 rounded-large w-75 shadow-product-library-shadow-raised-1 border border-product-library-divider-primary"}>
+        <div className={"absolute top-full right-0 z-50 rounded-large w-75 shadow-product-library-shadow-raised-1 border border-product-library-divider-primary bg-white"}>
             <div className={"flex flex-col gap-1.5"}>
                 <div className={"p-1.5 flex flex-col gap-1.5"}>
                     <div className={"px-1.5 flex justify-between items-center"}>
@@ -102,7 +102,6 @@ const MyTaskLayoutFiltersDropdown = ({onSelectLayout, layoutTitle}: MyTaskLayout
                                 <TaskSmallArrowDownIcon/>
                             </div>
                         </div>
-
                     </div>
 
                     <div className={"py-0.5 px-1 flex items-center gap-small"}>
