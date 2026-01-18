@@ -4,7 +4,7 @@ import {useEffect, useRef, useState} from "react";
 
 const MyTaskTitle = ({projectId}: {projectId: string}) => {
     const {data: projectDetail, isLoading} = useGetAProject(projectId)
-    const {mutate, isPending} = useUpdateProject()
+    const {mutate} = useUpdateProject()
     const [isEditing, setEditing] = useState(false)
     const [title, setTitle] = useState("")
     const textareaRef = useRef<HTMLTextAreaElement>(null);

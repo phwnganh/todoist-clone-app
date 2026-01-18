@@ -260,6 +260,10 @@
   --color-product-library-selectable-tertiary-on-unselected-enabled-fill: #aaa;
   --color-product-library-selectable-tertiary-on-unselected-enabled-tint: #666;
 
+
+  --color-product-library-shadow-raised-1: 0px 4px 10px 0px rgba(0, 0, 0, .1), 0px 8px 18px 4px rgba(0, 0, 0, .05);
+  --color-product-library-shadow-raised-2: 0px 8px 32px 2px rgba(0, 0, 0, .14), 0px 4px 7px 6px rgba(0, 0, 0, .09);
+  --color-product-library-shadow-raised-3: 0px 16px 50px 0px rgba(0, 0, 0, .35), 0px 4px 7px 0px rgba(0, 0, 0, .08);
   --color-brand-secondary-light: #fff9f3;
 
   --text-tiny: 8px;

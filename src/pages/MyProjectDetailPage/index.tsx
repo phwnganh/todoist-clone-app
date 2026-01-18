@@ -9,10 +9,22 @@ import {PROJECTS} from "../../constants/routes.constants.ts";
 import MyTasksList from "../../components/MyTasksComponent/MyTasksList.tsx";
 import MyTaskTitle from "../../components/MyTasksComponent/MyTaskTitle.tsx";
 import LoadingSpin from "../../components/ui/LoadingSpin.tsx";
+import {useState} from "react";
+import MyTaskLayoutFiltersDropdown from "../../components/MyTasksComponent/MyTaskLayoutFiltersDropdown";
+import MyTasksBoard from "../../components/MyTasksComponent/MyTasksBoard";
 
 const MyProjectDetailPage = () => {
     const {projectId} = useParams<{projectId: string}>();
+    const [openLayoutDropdown, setOpenLayoutDropdown] = useState(false);
+    const [layoutName, setLayoutName] = useState("list");
+    const handleOpenLayoutDropdown = () => {
+        setOpenLayoutDropdown(prev => !prev);
+    }
 
+
+    const handleSelectLayout = (layoutName: string) => {
+            setLayoutName(layoutName);
+    }
     const {showCollapse, onToggleSidebar} = useOutletContext<HeaderLayoutType>()
     const navigate = useNavigate()
 
@@ -24,19 +36,23 @@ const MyProjectDetailPage = () => {
         <>
             <HeaderLayout showCollapse={showCollapse} onToggleSidebar={onToggleSidebar} right={
                 <div className={"flex justify-end items-center"}>
-                    <button className="flex items-center justify-center p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+                    <button type={"button"} className="flex items-center justify-center p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
                         <div className={"mr-1.5"}>
                             <img src={UserAdded} alt={"user-added-icon"}/>
                         </div>
                         <span className="text-product-library-actionable-quaternary-idle-tint text-sm font-medium">Share</span>
                     </button>
-                    <button className={"flex items-center justify-center w-8 h-8 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"}>
-                        <img src={SmallListIcon} alt={"small-list-icon"}/>
-                    </button>
-                    <button className={"flex items-center justify-center w-8 h-8 p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"}>
+                    <div className={"relative"}>
+                        <button type={"button"} className={"flex items-center justify-center w-8 h-8 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"} onClick={handleOpenLayoutDropdown}>
+                            <img src={SmallListIcon} alt={"small-list-icon"}/>
+                        </button>
+                        {openLayoutDropdown && (<MyTaskLayoutFiltersDropdown onSelectLayout={handleSelectLayout} layoutTitle={layoutName}/>)}
+                    </div>
+
+                    <button type={"button"} className={"flex items-center justify-center w-8 h-8 p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"}>
                         <img src={CommentIcon} alt={"comment-icon"}/>
                     </button>
-                    <button className={"flex items-center justify-center w-8 h-8 p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"}>
+                    <button type={"button"} className={"flex items-center justify-center w-8 h-8 p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"}>
                         <img src={ThreeDotsIcon} alt={"three-dots-icon"}/>
                     </button>
                 </div>
@@ -47,7 +63,9 @@ const MyProjectDetailPage = () => {
             <section className={"max-w-200 mx-auto w-full"}>
                 <div className={"flex flex-col gap-small"}>
                     <MyTaskTitle projectId={projectId}/>
-                    <MyTasksList projectId={projectId} />
+                    {layoutName === "list" ? (
+                        <MyTasksList projectId={projectId} />
+                    ) : (<MyTasksBoard/>)}
                 </div>
             </section>
         </>
