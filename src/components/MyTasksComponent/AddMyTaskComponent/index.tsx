@@ -10,7 +10,7 @@ const AddMyTaskModalDialog = ({onCloseAddMyTask}: AddMyTaskModalDialogProps) => 
         description: "",
         due_date: "",
         priority: 0,
-        project_id: ""
+        project: ""
     })
 
     const handleAddMyTask = (e: FormEvent<HTMLFormElement>)=> {

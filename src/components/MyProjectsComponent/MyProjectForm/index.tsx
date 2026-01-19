@@ -9,7 +9,7 @@ import MyProjectFormWorkspaceListDropdown from "./MyProjectFormWorkspaceListDrop
 import HashtagIcon from "../../../assets/hashtag-icon.svg";
 import AddProjectsParentProjectListDropdown from "./MyProjectFormParentProjectListDropdown";
 import CustomSwitch from "../../ui/CustomSwitch.tsx";
-import { LAYOUT_ITEMS } from "../../../data/menuNavData.ts";
+import { LAYOUT_ITEMS } from "../../../data/menuNav.data.ts";
 import {
   type FormEvent,
   Fragment,

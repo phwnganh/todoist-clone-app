@@ -1,4 +1,4 @@
-import { colorData } from "../../../data/colorData.ts";
+import { colorData } from "../../../data/color.data.ts";
 import VerifiedIcon from "../../../assets/verified-icon.svg";
 import type { Color } from "../../../types/color.type.ts";
 
@@ -25,7 +25,7 @@ const MyProjectFormColorListDropdown = ({
             role="option"
             tabIndex={-1}
             data-selected={isSelected}
-            className="group flex flex-col py-1 px-1.5 flex-1 w-full hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"
+            className="group flex flex-col py-1 px-1.5 flex-1 w-full hover:bg-product-library-selectable-secondary-hover-fill rounded-small"
             key={color.id}
             onMouseDown={(e) => {
               e.preventDefault();
