@@ -8,6 +8,8 @@ import {type ChangeEvent, type FormEvent, useRef, useState} from "react";
 import type {OpenMyTaskFormDropdown} from "../../../types/menu-nav.type.ts";
 import {useClickOutside} from "../../../hooks/useClickOutside.ts";
 import MyTaskProjectDropdown from "./MyTaskProjectDropdown";
+import {updateMyTaskField} from "../../../helpers/updateMyTaskField.ts";
+import MyTaskPriorityDropdown from "./MyTaskPriorityDropdown.tsx";
 
 export type MyTaskFormValues = {
     content: string;
@@ -30,13 +32,18 @@ const MyTaskForm = ({onCloseAddMyTask, onSubmit, values, onChange, submitLabel, 
     const [isOpenAddMyTaskDropdown, setIsOpenAddMyTaskDropdown] = useState<OpenMyTaskFormDropdown>(null)
     const dateRef = useRef<HTMLDivElement | null>(null)
     const priorityRef = useRef<HTMLDivElement | null>(null)
-    const remindersRef = useRef<HTMLDivElement | null>(null)
     const projectRef = useRef<HTMLDivElement | null>(null)
     const dummyRef = useRef<HTMLDivElement | null>(null)
 
     const handleToggleDropdown = (name: OpenMyTaskFormDropdown) => {
         setIsOpenAddMyTaskDropdown(prev => (prev === name ? null: name))
     }
+
+    const handleSelectPriority = (priority: number) => {
+        onChange(updateMyTaskField(values, "priority", priority))
+        setIsOpenAddMyTaskDropdown(null)
+    }
+
     const handleSelectProject = (project: string) => {
         onChange({
             ...values,
@@ -71,7 +78,7 @@ const MyTaskForm = ({onCloseAddMyTask, onSubmit, values, onChange, submitLabel, 
     }
 
     useClickOutside({
-        ref: isOpenAddMyTaskDropdown === "date" ? dateRef : isOpenAddMyTaskDropdown === "priority" ? priorityRef : isOpenAddMyTaskDropdown === "reminders" ? remindersRef : isOpenAddMyTaskDropdown === "project" ? projectRef : dummyRef,
+        ref: isOpenAddMyTaskDropdown === "date" ? dateRef : isOpenAddMyTaskDropdown === "priority" ? priorityRef : isOpenAddMyTaskDropdown === "project" ? projectRef : dummyRef,
         handler: () => setIsOpenAddMyTaskDropdown(null),
         enabled: isOpenAddMyTaskDropdown !== null
     })
@@ -85,7 +92,7 @@ const MyTaskForm = ({onCloseAddMyTask, onSubmit, values, onChange, submitLabel, 
                         <input type={"text"} className={"text-xs leading-tight text-product-library-display-primary-idle-tint my-0.5 outline-none"} placeholder={"Description"}/>
                         <div className={"mb-small flex gap-small"}>
                             {/*date*/}
-                            <div role={"button"} className={"px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill"}
+                            <div role={"button"} className={"px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"}
                             >
                                 <div className={"flex items-center"}>
                                     <div className={"flex justify-center items-center"}>
@@ -96,17 +103,22 @@ const MyTaskForm = ({onCloseAddMyTask, onSubmit, values, onChange, submitLabel, 
                             </div>
 
                             {/*priority*/}
-                            <div role={"button"} className={"px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill"}>
-                                <div className={"flex items-center"}>
-                                    <div className={"flex justify-center items-center"}>
-                                        <img src={TaskFlagIcon} alt={"flag-icon"} />
+                            <div className={"relative"} ref={priorityRef}>
+                                <div role={"button"} onClick={() => handleToggleDropdown("priority")} className={"px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"}>
+                                    <div className={"flex items-center"}>
+                                        <div className={"flex justify-center items-center"}>
+                                            <img src={TaskFlagIcon} alt={"flag-icon"} />
+                                        </div>
+                                        <div className={"ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"}>Priority</div>
                                     </div>
-                                    <div className={"ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"}>Priority</div>
                                 </div>
+                                {isOpenAddMyTaskDropdown === "priority" && (
+                                    <MyTaskPriorityDropdown/>
+                                )}
                             </div>
 
                             {/*reminders*/}
-                            <div role={"button"} className={"px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill"}>
+                            <div role={"button"} className={"px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"}>
                                 <div className={"flex items-center"}>
                                     <div className={"flex justify-center items-center"}>
                                         <img src={TaskClockIcon} alt={"clock-icon"} />
@@ -115,7 +127,7 @@ const MyTaskForm = ({onCloseAddMyTask, onSubmit, values, onChange, submitLabel, 
                                 </div>
                             </div>
 
-                            <button className={"px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill"}>
+                            <button className={"px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"}>
                                 <div className={"flex justify-center items-center"}>
                                     <TaskSmallThreeDotsIcon/>
                                 </div>
