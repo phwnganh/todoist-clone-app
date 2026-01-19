@@ -5,12 +5,11 @@ import AddMyTaskSection from "./AddMyTaskSection.tsx";
 import LoadingSpin from "../ui/LoadingSpin.tsx";
 import {useTaskTreeMultiLevel} from "../../hooks/useTaskTreeMultiLevel.ts";
 import AddMyTaskModalDialog from "./AddMyTaskComponent";
+import {useProjectStore} from "../../stores/project.store.ts";
 
-type MyTaskListProps = {
-    projectId: string;
-}
-const MyTasksList = ({projectId}: MyTaskListProps) => {
+const MyTasksList = () => {
     const {data: tasks, isLoading} = useGetAllTasks()
+    const projectId = useProjectStore(state => state.projectId)
     const [openAddMyTask, setOpenAddMyTask] = useState(false);
     const taskTree = useTaskTreeMultiLevel(tasks?.results, projectId)
     const handleOpenAddMyTask = () => {

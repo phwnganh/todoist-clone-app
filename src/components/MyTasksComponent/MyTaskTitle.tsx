@@ -1,8 +1,10 @@
 import {useGetAProject, useUpdateProject} from "../../hooks/useProjects.ts";
 import LoadingSpin from "../ui/LoadingSpin.tsx";
 import {useEffect, useRef, useState} from "react";
+import {useProjectStore} from "../../stores/project.store.ts";
 
-const MyTaskTitle = ({projectId}: {projectId: string}) => {
+const MyTaskTitle = () => {
+    const projectId = useProjectStore(state => state.projectId)
     const {data: projectDetail, isLoading} = useGetAProject(projectId)
     const {mutate} = useUpdateProject()
     const [isEditing, setEditing] = useState(false)

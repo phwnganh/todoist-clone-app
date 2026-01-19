@@ -9,12 +9,20 @@ import {PROJECTS} from "../../constants/routes.constants.ts";
 import MyTasksList from "../../components/MyTasksComponent/MyTasksList.tsx";
 import MyTaskTitle from "../../components/MyTasksComponent/MyTaskTitle.tsx";
 import LoadingSpin from "../../components/ui/LoadingSpin.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import MyTaskLayoutFiltersDropdown from "../../components/MyTasksComponent/MyTaskLayoutFiltersDropdown";
 import MyTasksBoard from "../../components/MyTasksComponent/MyTasksBoard";
+import {useProjectStore} from "../../stores/project.store.ts";
 
 const MyProjectDetailPage = () => {
     const {projectId} = useParams<{projectId: string}>();
+    const setProjectId = useProjectStore(state => state.setProjectId);
+
+    useEffect(() => {
+        if(projectId){
+            setProjectId(projectId);
+        }
+    }, [projectId, setProjectId]);
     const [openLayoutDropdown, setOpenLayoutDropdown] = useState(false);
     const [layoutName, setLayoutName] = useState("list");
     const handleOpenLayoutDropdown = () => {
@@ -61,9 +69,9 @@ const MyProjectDetailPage = () => {
             </div>}></HeaderLayout>
             <section className={"max-w-200 mx-auto w-full relative z-10"}>
                 <div className={"flex flex-col gap-small"}>
-                    <MyTaskTitle projectId={projectId}/>
+                    <MyTaskTitle/>
                     {layoutName === "list" ? (
-                        <MyTasksList projectId={projectId} />
+                        <MyTasksList/>
                     ) : (<MyTasksBoard/>)}
                 </div>
             </section>

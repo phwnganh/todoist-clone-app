@@ -3,14 +3,14 @@ import {create} from "zustand/react";
 
 type ProjectState = {
     projects: Project[];
-    createMyProject: (project: Project) => void;
+    projectId: string;
+    setProjectId: (id: string) => void;
     reset: () => void;
 }
 
 export const useProjectStore = create<ProjectState>(set => ({
     projects: [],
-    createMyProject: (payload) => set((state) => ({
-        projects: [...state.projects, payload],
-    })),
+    projectId: "",
+    setProjectId: (projectId) => set({projectId: projectId}),
     reset: () => set({projects: []})
 }))
