@@ -17,7 +17,7 @@ const AddMyTaskModalDialog = ({onCloseAddMyTask}: AddMyTaskModalDialogProps) => 
         e.preventDefault();
     }
     return (
-        <MyTaskForm values={values} onCloseAddMyTask={onCloseAddMyTask} onChange={setValues} onSubmit={handleAddMyTask} submitLabel={"Add task"} submittingLabel={"Adding..."}/>
+        <MyTaskForm values={values} onCloseMyTaskForm={onCloseAddMyTask} onChange={setValues} onSubmit={handleAddMyTask} submitLabel={"Add task"} submittingLabel={"Adding..."}/>
 
     );
 };

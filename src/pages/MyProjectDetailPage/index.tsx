@@ -50,9 +50,13 @@ const MyProjectDetailPage = () => {
                         </div>
                         <span className="text-product-library-actionable-quaternary-idle-tint text-sm font-medium">Share</span>
                     </button>
-                        <div className={"relative"}>
-                        <button type={"button"} className={"flex items-center justify-center w-8 h-8 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"} onClick={handleOpenLayoutDropdown}>
-                            <img src={SmallListIcon} alt={"small-list-icon"}/>
+                        <div className={"relative p-2.5"}>
+                        <button type={"button"} className={"flex items-center px-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"} onClick={handleOpenLayoutDropdown}>
+                            <div className={"flex items-center justify-center w-8 h-8"}>
+                                <img src={SmallListIcon} alt={"small-list-icon"}/>
+                            </div>
+                            <span className="text-product-library-actionable-quaternary-idle-tint text-sm font-medium">Display</span>
+
                         </button>
                         {openLayoutDropdown && (<MyTaskLayoutFiltersDropdown onSelectLayout={handleSelectLayout} layoutTitle={layoutName}/>)}
                         </div>

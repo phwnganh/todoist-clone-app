@@ -22,7 +22,7 @@ export type MyTaskFormValues = {
     project: string | null;
 }
 type MyTaskFormProps = {
-    onCloseAddMyTask: () => void;
+    onCloseMyTaskForm: () => void;
     onSubmit: (e: FormEvent<HTMLFormElement>) => void;
     submitLabel: string;
     submittingLabel: string;
@@ -31,7 +31,7 @@ type MyTaskFormProps = {
     isPending?: boolean;
     errorMessage?: string | null
 }
-const MyTaskForm = ({onCloseAddMyTask, onSubmit, values, onChange, submitLabel, submittingLabel, isPending, errorMessage}: MyTaskFormProps) => {
+const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel, submittingLabel, isPending, errorMessage}: MyTaskFormProps) => {
     const [isOpenAddMyTaskDropdown, setIsOpenAddMyTaskDropdown] = useState<OpenMyTaskFormDropdown>(null)
     const dateRef = useRef<HTMLDivElement | null>(null)
     const priorityRef = useRef<HTMLDivElement | null>(null)
@@ -161,7 +161,7 @@ const MyTaskForm = ({onCloseAddMyTask, onSubmit, values, onChange, submitLabel, 
                         <button
                             type="button"
                             className="px-3 py-1.5 rounded-small bg-product-library-actionable-secondary-idle-fill flex justify-center items-center min-w-17"
-                            onClick={onCloseAddMyTask}
+                            onClick={onCloseMyTaskForm}
                         >
               <span className="text-sm font-medium text-product-library-actionable-secondary-on-idle-tint">
                 Cancel
