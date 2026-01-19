@@ -1,4 +1,3 @@
-import PriorityIcon from "../components/icons/PriorityIcon.tsx";
 
 export const groupingFilterData = [
     {

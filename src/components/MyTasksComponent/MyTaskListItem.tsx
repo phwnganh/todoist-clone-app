@@ -38,6 +38,7 @@ const MyTaskListItem = ({taskNode, level}: MyTaskListItemProps) => {
                         <div className={"mb-0.75 text-sm"}>
                             <MyTaskContent content={task.content}/>
                         </div>
+                        <p className={"text-xs mb-0.5 text-product-library-display-secondary-idle-tint line-clamp-1"}>{task.description}</p>
                         <button type={"button"}>
                         <span className={"flex gap-0.5 text-xs text-product-library-actionable-primary-idle-fill"}>
                                 <img src={SmallCalendarIcon} alt={"small-calendar-icon"}/>
