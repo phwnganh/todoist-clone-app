@@ -32,9 +32,8 @@ type MyTaskFormProps = {
     onChange: (values: MyTaskFormValues) => void;
     isPending?: boolean;
     errorMessage?: string | null;
-    hideProjectContentTag?: boolean;
 }
-const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel, hideProjectContentTag, submittingLabel, isPending, errorMessage}: MyTaskFormProps) => {
+const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel, submittingLabel, isPending, errorMessage}: MyTaskFormProps) => {
     const [isOpenAddMyTaskDropdown, setIsOpenAddMyTaskDropdown] = useState<OpenMyTaskFormDropdown>(null)
     const dateRef = useRef<HTMLDivElement | null>(null)
     const priorityRef = useRef<HTMLDivElement | null>(null)

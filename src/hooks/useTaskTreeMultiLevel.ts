@@ -1,11 +1,11 @@
 import type {Task, TaskNode} from "../types/task.type.ts";
 import {useMemo} from "react";
 
-export const useTaskTreeMultiLevel = (tasks: Task[] | undefined, projectId: string): TaskNode[] => {
+export const useTaskTreeMultiLevel = (tasks: Task[] | undefined, projectId: string, sectionId?: string | null): TaskNode[] => {
     return useMemo(() => {
         if(!tasks) return []
         // filter tasks by project
-        const projectTasks = tasks.filter(task => task.project_id === projectId)
+        const projectTasks = tasks.filter(task => task.project_id === projectId && (sectionId ? task.section_id === sectionId : true))
 
         // map id to node
         const myTaskNodeMap = new Map<string, TaskNode>()
@@ -32,13 +32,16 @@ export const useTaskTreeMultiLevel = (tasks: Task[] | undefined, projectId: stri
 
         // sort tree
         const sortTree = (nodes: TaskNode[]) => {
-            if(nodes.length > 0 && nodes[0].task.parent_id){
-                nodes.sort((a, b) => (a.task.child_order ?? 0) - (b.task.child_order ?? 0))
-            }
+            nodes.sort((a, b) => {
+                if(!a.task.parent_id && !b.task.parent_id){
+                    return (a.task.day_order ?? 0) - (b.task.day_order ?? 0)
+                }
+                return (a.task.child_order ?? 0) - (b.task.child_order ?? 0)
+            })
             nodes.forEach(node => sortTree(node.children))
         }
 
         sortTree(myTaskRoots)
         return myTaskRoots;
-    }, [tasks, projectId]);
+    }, [tasks, projectId, sectionId]);
 }

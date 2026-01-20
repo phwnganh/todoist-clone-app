@@ -23,7 +23,7 @@ const EditMyTaskModalDialog = ({onCloseEditMyTask, task}: EditMyTaskModalDialogP
         e.preventDefault()
     }
     return (
-        <MyTaskForm values={values} onCloseMyTaskForm={onCloseEditMyTask} onChange={setValues} onSubmit={handleUpdateMyTask} submitLabel={"Save"} submittingLabel={"Saving..."} hideProjectContentTag={true}/>
+        <MyTaskForm values={values} onCloseMyTaskForm={onCloseEditMyTask} onChange={setValues} onSubmit={handleUpdateMyTask} submitLabel={"Save"} submittingLabel={"Saving..."}/>
     );
 };
 
