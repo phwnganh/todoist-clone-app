@@ -93,7 +93,7 @@ const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel,
                     <div className={"max-h-50 mb-small flex flex-col gap-xsmall"}>
                         <input type={"text"} className={"mr-7 leading-tight font-medium text-sm text-product-library-display-primary-idle-tint outline-none"} placeholder={"Content"} value={values.project
                             ? `#${values.project} ${values.content}` : values.content} onChange={handleAppendProjectTagToContent}></input>
-                        <input type={"text"} className={"text-xs leading-tight text-product-library-display-primary-idle-tint my-0.5 outline-none"} placeholder={"Description"}/>
+                        <input type={"text"} className={"text-xs leading-tight text-product-library-display-primary-idle-tint my-0.5 outline-none"} placeholder={"Description"} value={values.description}/>
                         <div className={"mb-small flex gap-small"}>
                             {/*date*/}
                             <div role={"button"} className={"px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"}

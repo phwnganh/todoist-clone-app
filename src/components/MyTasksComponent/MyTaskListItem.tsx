@@ -10,6 +10,7 @@ import {useState} from "react";
 import TaskSmallArrowRightIcon from "../icons/TaskSmallArrowRightIcon.tsx";
 import {getTaskIndentClass} from "../../helpers/getTaskIndentClass.ts";
 import EditMyTaskModalDialog from "./EditMyTaskComponent";
+import {useTaskStore} from "../../stores/task.store.ts";
 type MyTaskListItemProps = {
     taskNode: TaskNode
     level: number
@@ -17,20 +18,16 @@ type MyTaskListItemProps = {
 const MyTaskListItem = ({taskNode, level}: MyTaskListItemProps) => {
     const {task, children} = taskNode
     const [isExpanded, setIsExpanded] = useState(true);
-    const [openEditMyTaskForm, setOpenEditMyTaskForm] = useState(false)
+    const {editingTaskId, onOpenEditTask, onCloseEditTask} = useTaskStore()
 
-    const handleOpenEditMyTask = (taskId: string) => {
-        setOpenEditMyTaskForm(true)
-    }
-
-    const handleCloseEditMyTask = () => {
-        setOpenEditMyTaskForm(false)
-    }
-
+    const isEditing = editingTaskId === task.id
     const hasChildren = children.length > 0
+
+
     return (
         <>
-            {openEditMyTaskForm ? (<EditMyTaskModalDialog onCloseEditMyTask={handleCloseEditMyTask}/>) : (            <li className={`px-2 border-b border-b-product-library-divider-primary flex justify-between items-start group relative ${getTaskIndentClass(level)}`}>
+            {isEditing ? (<EditMyTaskModalDialog task={task} onCloseEditMyTask={onCloseEditTask}/>) : (
+                <li className={`px-2 border-b border-b-product-library-divider-primary flex justify-between items-start group relative ${getTaskIndentClass(level)}`}>
                     <div role={"button"} className={"flex items-start"}>
                         {hasChildren && (
                             <button type={"button"}
@@ -59,7 +56,7 @@ const MyTaskListItem = ({taskNode, level}: MyTaskListItemProps) => {
                         </div>
                     </div>
                     <div className={"group-hover:flex hidden mt-2 pl-4 gap-small"}>
-                        <button type={"button"} onClick={() => handleOpenEditMyTask(task.id)} aria-label={"edit"} className={"rounded-small hover:bg-product-library-selectable-secondary-hover-fill"}>
+                        <button type={"button"} onClick={() => onOpenEditTask(task.id)} aria-label={"edit"} className={"rounded-small hover:bg-product-library-selectable-secondary-hover-fill"}>
                             <EditIcon/>
                         </button>
                         <button type={"button"} aria-label={"due-date"} className={"rounded-small hover:bg-product-library-selectable-secondary-hover-fill"}>

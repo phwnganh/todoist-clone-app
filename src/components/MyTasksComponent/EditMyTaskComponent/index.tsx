@@ -1,16 +1,18 @@
 import {type FormEvent, useState} from 'react';
 import MyTaskForm, {type MyTaskFormValues} from "../MyTaskForm";
+import type {Task} from "../../../types/task.type.ts";
 
 type EditMyTaskModalDialogProps = {
     onCloseEditMyTask: () => void;
+    task: Task
 }
-const EditMyTaskModalDialog = ({onCloseEditMyTask}: EditMyTaskModalDialogProps) => {
+const EditMyTaskModalDialog = ({onCloseEditMyTask, task}: EditMyTaskModalDialogProps) => {
     const [values, setValues] = useState<MyTaskFormValues>({
-        content: "",
-        description: "",
+        content: task.content,
+        description: task.description,
         due_date: "",
-        priority: 0,
-        project: ""
+        priority: task.priority,
+        project: task.project_id
     })
 
     const handleUpdateMyTask = (e: FormEvent<HTMLFormElement>)=> {
