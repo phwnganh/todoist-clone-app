@@ -11,6 +11,7 @@ import TaskSmallArrowRightIcon from "../icons/TaskSmallArrowRightIcon.tsx";
 import {getTaskIndentClass} from "../../helpers/getTaskIndentClass.ts";
 import EditMyTaskModalDialog from "./EditMyTaskComponent";
 import {useTaskStore} from "../../stores/task.store.ts";
+import VerifiedIcon from "../icons/VerifiedIcon.tsx";
 type MyTaskListItemProps = {
     taskNode: TaskNode
     level: number
@@ -38,8 +39,11 @@ const MyTaskListItem = ({taskNode, level}: MyTaskListItemProps) => {
                         )}
 
                         {/*btn toggle checked complete the task*/}
-                        <button type={"button"} aria-checked={"false"} aria-label={"Mark task as complete"} className={"mt-2 mr-1.5 -ml-0.75"}>
+                        <button type={"button"} aria-checked={"false"} aria-label={"Mark task as complete"} className={"mt-2 mr-1.5 -ml-0.75 relative group/check"}>
                             <div className={"h-5 w-5 rounded-full border-2 border-product-library-priorities-p4-primary-idle-fill"}></div>
+                            <div className={"inset-0 absolute group-hover/check:flex justify-center items-center hidden"}>
+                                <VerifiedIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
+                            </div>
                         </button>
                         {/*task list item*/}
                         <div className={"py-2 mr-7.5 flex flex-col"}>
