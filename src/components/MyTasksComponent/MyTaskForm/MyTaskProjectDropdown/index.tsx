@@ -3,17 +3,16 @@ import {useDebounce} from "../../../../hooks/useDebounce.ts";
 import {useGetAllProjects} from "../../../../hooks/useProjects.ts";
 import LoadingSpin from "../../../ui/LoadingSpin.tsx";
 import ProjectSearchInput from "./ProjectSearchInput.tsx";
-import InboxOption from "./InboxOption.tsx";
 import UserAvatar from '../../../../assets/User-avatar.png'
 import ProjectOptions from "./ProjectOptions.tsx";
 import ProjectDropdownFooter from "./ProjectDropdownFooter.tsx";
+import type {Project} from "../../../../types/project.type.ts";
 
 type AddMyTaskProjectDropdownProps = {
-    selectedProject: string | null;
-    onSelect: (project: string) => void;
+    selectedProject: Project | null;
+    onSelect: (project: Project) => void;
 }
-const AddMyTaskProjectDropdown = ({selectedProject, onSelect}: AddMyTaskProjectDropdownProps) => {
-    const INBOX = "Inbox"
+const MyTaskFormProjectDropdown = ({selectedProject, onSelect}: AddMyTaskProjectDropdownProps) => {
     const [typedProject, setTypedProject] = useState<string>("");
     const keyword = typedProject.trim().toLowerCase();
     const debounceSearchKeyword = useDebounce(keyword, 500);
@@ -29,8 +28,7 @@ const AddMyTaskProjectDropdown = ({selectedProject, onSelect}: AddMyTaskProjectD
         return projects?.results.filter(project => project.name.toLowerCase().includes(debounceSearchKeyword))
     }, [debounceSearchKeyword, hasKeyword, projects])
 
-    const isNoInboxMatched = !hasKeyword || INBOX.toLowerCase().includes(debounceSearchKeyword)
-    const isNoProjectsFound = hasKeyword && !isNoInboxMatched && filteredProjects?.length === 0;
+    const isNoProjectsFound = hasKeyword && filteredProjects?.length === 0;
 
     useEffect(() => {
         searchInputRef.current?.focus()
@@ -48,9 +46,6 @@ const AddMyTaskProjectDropdown = ({selectedProject, onSelect}: AddMyTaskProjectD
             <ProjectSearchInput projectValue={typedProject} onProjectsSearched={setTypedProject} inputRef={searchInputRef}/>
             <hr className="border-t border-t-product-library-divider-tertiary" />
             <div className={"p-1.5 flex flex-col"}>
-                {isNoInboxMatched && (
-                    <InboxOption isInboxSelected={selectedProject === INBOX} onInboxSelected={() => onSelect(INBOX)}/>
-                )}
                 {trimmedProjectValue.length === 0 && (
                     <div className={"py-1.5 px-2.5 flex items-center gap-1.5"}>
                         <div className={"flex justify-center items-center w-4 h-4"}>
@@ -62,7 +57,7 @@ const AddMyTaskProjectDropdown = ({selectedProject, onSelect}: AddMyTaskProjectD
                     </div>
                 )}
                 {filteredProjects?.map(project => (
-                    <ProjectOptions key={project.id} project={project} isProjectsSelected={selectedProject === project.name} onProjectsSelected={onSelect}/>
+                    <ProjectOptions key={project.id} project={project} isProjectsSelected={selectedProject?.name === project.name} onProjectsSelected={onSelect}/>
                 ))}
 
                 <ProjectDropdownFooter hasKeyword={hasKeyword} keyword={trimmedProjectValue} showNotFound={isNoProjectsFound}/>
@@ -71,4 +66,4 @@ const AddMyTaskProjectDropdown = ({selectedProject, onSelect}: AddMyTaskProjectD
     );
 };
 
-export default AddMyTaskProjectDropdown;
+export default MyTaskFormProjectDropdown;

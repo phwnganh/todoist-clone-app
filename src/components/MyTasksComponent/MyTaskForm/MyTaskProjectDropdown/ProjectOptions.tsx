@@ -6,7 +6,7 @@ import VerifiedIcon from "../../../icons/VerifiedIcon.tsx";
 type ProjectOptionsProps = {
     project: Project
     isProjectsSelected: boolean
-    onProjectsSelected: (project: string) => void;
+    onProjectsSelected: (project: Project) => void;
 }
 const ProjectOptions = ({project, isProjectsSelected, onProjectsSelected}: ProjectOptionsProps) => {
     return (
@@ -14,7 +14,7 @@ const ProjectOptions = ({project, isProjectsSelected, onProjectsSelected}: Proje
         data-selected={isProjectsSelected} key={project.id}
         onMouseDown={e => {
             e.preventDefault()
-            onProjectsSelected(project.name)
+            onProjectsSelected(project)
         }} className={"group flex items-center gap-1.5 py-1 px-1.5 justify-between data-[selected=true]:bg-product-library-selectable-secondary-hover-fill hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}>
             <div className={"flex items-center gap-1.5"}>
                 <div className={"flex justify-center items-center"}>

@@ -9,17 +9,19 @@ import MyTaskProjectDropdown from "./MyTaskProjectDropdown";
 import {updateMyTaskField} from "../../../helpers/updateMyTaskField.ts";
 import MyTaskPriorityDropdown from "./MyTaskPriorityDropdown.tsx";
 import LabelIcon from '../../../assets/label-icon.svg'
-import {useGetAProject} from "../../../hooks/useProjects.ts";
 import HashtagIcon from "../../icons/HashtagIcon.tsx";
 import {getProjectColorClass} from "../../../helpers/getProjectColorClass.ts";
+import type {Project} from "../../../types/project.type.ts";
 import {useProjectStore} from "../../../stores/project.store.ts";
+import {useGetAProject} from "../../../hooks/useProjects.ts";
+import {replaceProjectHashtagFromContent} from "../../../helpers/replaceProjectHashtagFromContent.ts";
 
 export type MyTaskFormValues = {
     content: string;
     description: string;
     due_date: string;
     priority: number;
-    project: string | null;
+    project: Project | null;
 }
 type MyTaskFormProps = {
     onCloseMyTaskForm: () => void;
@@ -29,9 +31,10 @@ type MyTaskFormProps = {
     values: MyTaskFormValues;
     onChange: (values: MyTaskFormValues) => void;
     isPending?: boolean;
-    errorMessage?: string | null
+    errorMessage?: string | null;
+    hideProjectContentTag?: boolean;
 }
-const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel, submittingLabel, isPending, errorMessage}: MyTaskFormProps) => {
+const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel, hideProjectContentTag, submittingLabel, isPending, errorMessage}: MyTaskFormProps) => {
     const [isOpenAddMyTaskDropdown, setIsOpenAddMyTaskDropdown] = useState<OpenMyTaskFormDropdown>(null)
     const dateRef = useRef<HTMLDivElement | null>(null)
     const priorityRef = useRef<HTMLDivElement | null>(null)
@@ -48,37 +51,23 @@ const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel,
         setIsOpenAddMyTaskDropdown(null)
     }
 
-    const handleSelectProject = (project: string) => {
+    const handleSelectProject = (project: Project) => {
+        const hashtag = `#${project.name}`
+        const replacedContent = replaceProjectHashtagFromContent(values.content, values.project)
+
         onChange({
             ...values,
-            project: project,
+            project,
+            content: replacedContent ? `${replacedContent} ${hashtag} ` : `${hashtag} `,
         })
         setIsOpenAddMyTaskDropdown(null)
     }
 
-    const handleAppendProjectTagToContent = (e: ChangeEvent<HTMLInputElement>) => {
-        const rawValue = e.target.value;
-
-        if(values.project){
-            const prefix = `#${values.project} `
-            if(rawValue.startsWith(prefix)){
-                onChange({
-                    ...values,
-                    content: rawValue.slice(prefix.length)
-                })
-            }else{
-                onChange({
-                    ...values,
-                    project: null,
-                    content: rawValue
-                })
-            }
-        }else {
-            onChange({
-                ...values,
-                content: rawValue
-            })
-        }
+    const handleContentChange = (e: ChangeEvent<HTMLInputElement>) => {
+        onChange({
+            ...values,
+            content: e.target.value,
+        })
     }
 
     useClickOutside({
@@ -91,9 +80,8 @@ const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel,
             <form className={"border border-product-library-border-idle-tint rounded-large"} onSubmit={onSubmit}>
                 <div className={"pt-small px-small rounded-large"}>
                     <div className={"max-h-50 mb-small flex flex-col gap-xsmall"}>
-                        <input type={"text"} className={"mr-7 leading-tight font-medium text-sm text-product-library-display-primary-idle-tint outline-none"} placeholder={"Content"} value={values.project
-                            ? `#${values.project} ${values.content}` : values.content} onChange={handleAppendProjectTagToContent}></input>
-                        <input type={"text"} className={"text-xs leading-tight text-product-library-display-primary-idle-tint my-0.5 outline-none"} placeholder={"Description"} value={values.description}/>
+                        <input type={"text"} className={"mr-7 leading-tight font-medium text-sm text-product-library-display-primary-idle-tint outline-none"} placeholder={"Content"} value={values.content} onChange={handleContentChange}></input>
+                        <input type={"text"} className={"text-xs leading-tight text-product-library-display-primary-idle-tint my-0.5 outline-none"} placeholder={"Description"} value={values.description} onChange={e => onChange(updateMyTaskField(values, "description", e.target.value))} />
                         <div className={"mb-small flex gap-small"}>
                             {/*date*/}
                             <div role={"button"} className={"px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"}
@@ -145,7 +133,7 @@ const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel,
                         <button type={"button"} aria-haspopup={"listbox"} aria-expanded={isOpenAddMyTaskDropdown === "project"} aria-controls={"project-listbox"} onClick={() => handleToggleDropdown("project")}
                         className={"mr-small pl-xsmall pr-small py-1.5 flex items-center gap-xsmall text-sm hover:bg-product-library-selectable-secondary-hover-fill rounded-small cursor-pointer"}>
                             <div className={"flex justify-center items-center w-4 h-4"}>
-                                <HashtagIcon className={`${getProjectColorClass(projectDetail?.color)}}`}/>
+                                <HashtagIcon className={getProjectColorClass(projectDetail?.color)}/>
                             </div>
                             <span className={"text-product-library-display-secondary-idle-tint font-medium"}>{projectDetail?.name}</span>
                             <div className={"flex justify-center items-center"}>
@@ -153,7 +141,7 @@ const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel,
                             </div>
                         </button>
                         {isOpenAddMyTaskDropdown === "project" && (
-                            <MyTaskProjectDropdown selectedProject={values.project} onSelect={(project_id: string) => handleSelectProject(project_id)}/>
+                            <MyTaskProjectDropdown selectedProject={values.project} onSelect={(project: Project) => handleSelectProject(project)}/>
                         )}
                     </div>
 
