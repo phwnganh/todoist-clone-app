@@ -12,6 +12,7 @@ import {getTaskIndentClass} from "../../helpers/getTaskIndentClass.ts";
 import EditMyTaskModalDialog from "./EditMyTaskComponent";
 import {useTaskStore} from "../../stores/task.store.ts";
 import VerifiedIcon from "../icons/VerifiedIcon.tsx";
+import ChildrenIcon from '../../assets/children-icon.svg'
 type MyTaskListItemProps = {
     taskNode: TaskNode
     level: number
@@ -51,12 +52,20 @@ const MyTaskListItem = ({taskNode, level}: MyTaskListItemProps) => {
                                 <MyTaskContent content={task.content}/>
                             </div>
                             <p className={"text-xs mb-0.5 text-product-library-display-secondary-idle-tint line-clamp-1"}>{task.description}</p>
-                            <button type={"button"}>
-                        <span className={"flex gap-0.5 text-xs text-product-library-actionable-primary-idle-fill"}>
+                            <div className={"flex gap-small items-center"}>
+                                {hasChildren &&
+                                    <div className={"flex gap-0.5 text-xs text-product-library-display-secondary-idle-tint"}>
+                                        <img src={ChildrenIcon} alt={"children-icon"}/>
+                                        <span>0/{children.length}</span>
+                                    </div>
+                                }
+
+                        <button type={"button"} className={"flex gap-0.5 text-xs text-product-library-actionable-primary-idle-fill"}>
                                 <img src={SmallCalendarIcon} alt={"small-calendar-icon"}/>
                                 <span>Tomorrow</span>
-                        </span>
-                            </button>
+                        </button>
+
+                            </div>
                         </div>
                     </div>
                     <div className={"group-hover:flex hidden mt-2 pl-4 gap-small"}>
