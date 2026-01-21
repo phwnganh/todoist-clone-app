@@ -1,5 +1,5 @@
 export type Section = {
-    id: string;
+    id: string | null;
     user_id: string;
     project_id: string;
     added_at: string;

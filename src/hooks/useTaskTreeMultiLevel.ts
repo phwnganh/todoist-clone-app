@@ -5,7 +5,17 @@ export const useTaskTreeMultiLevel = (tasks: Task[] | undefined, projectId: stri
     return useMemo(() => {
         if(!tasks) return []
         // filter tasks by project
-        const projectTasks = tasks.filter(task => task.project_id === projectId && (sectionId ? task.section_id === sectionId : true))
+        const projectTasks = tasks.filter(task => {
+            if(task.project_id !== projectId) return false;
+
+            if(sectionId === null){
+                return task.section_id === null;
+            }
+            if(sectionId){
+                return task.section_id === sectionId;
+            }
+            return true;
+        })
 
         // map id to node
         const myTaskNodeMap = new Map<string, TaskNode>()
