@@ -1,6 +1,6 @@
 import MyProjectForm, { type MyProjectFormValues } from "../MyProjectForm";
 import { type FormEvent, useEffect, useState } from "react";
-import { useGetAProject, useUpdateProject } from "../../../hooks/useProjects";
+import { useGetAProject, useUpdateProject } from "../../../hooks/useQueryHook/useProjects.ts";
 import { getValuesByMappingDataType } from "../../../helpers/updateMyProjectField";
 import LoadingSpin from "../../ui/LoadingSpin";
 const EditProjectModalDialog = ({

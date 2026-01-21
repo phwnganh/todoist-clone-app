@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import SidebarMyProjectsItem from "./SidebarMyProjectsItem.tsx";
-import { useGetAllProjects } from "../../hooks/useProjects.ts";
+import { useGetAllProjects } from "../../hooks/useQueryHook/useProjects.ts";
 import LoadingSpin from "../ui/LoadingSpin.tsx";
 import ErrorDisplayed from "../ui/ErrorDisplayed.tsx";
 

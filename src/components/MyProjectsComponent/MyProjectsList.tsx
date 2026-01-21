@@ -1,14 +1,15 @@
 import MyProjectsItem from "./MyProjectsItem.tsx";
-import { useGetAllProjects } from "../../hooks/useProjects.ts";
+import { useGetAllProjects } from "../../hooks/useQueryHook/useProjects.ts";
 import LoadingSpin from "../ui/LoadingSpin.tsx";
 import ErrorDisplayed from "../ui/ErrorDisplayed.tsx";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import EmptyList from "../ui/EmptyList.tsx";
 import EditProjectModalDialog from "./EditProjectModalDialog";
 import { useNavigate } from "react-router-dom";
 import { PROJECT_DETAILS } from "../../constants/routes.constants.ts";
 import { type MouseEvent } from "react";
 import DeleteProjectsModalDialog from "./DeleteProjectsModalDialog";
+import {useProjectStore} from "../../stores/project.store.ts";
 
 type MyProjectsListProps = {
   search: string;
@@ -16,41 +17,13 @@ type MyProjectsListProps = {
 const MyProjectsList = ({ search }: MyProjectsListProps) => {
   const { data: projects, isLoading, isError } = useGetAllProjects();
   const navigate = useNavigate();
-  const [openProjectDetailToolbar, setOpenProjectDetailToolbar] = useState<
-    string | null
-  >(null);
-  const [editProjectDetail, setEditProjectDetail] = useState<string | null>(
-    null
-  );
-  const [deleteProjectDetail, setDeleteProjectDetail] = useState<string | null>(
-    null
-  );
+  const {openProjectDetailToolbar, editProjectDetail, deleteProjectDetail, onOpenProjectDetailToolbar, onEditProjectDetail, onCloseEditProjectDetail, onCloseProjectDetailToolbar, onDeleteProjectDetail, onCloseDeleteProjectDetail} = useProjectStore()
   const handleOpenProjectDetailToolbar = (
     id: string,
     e: MouseEvent<HTMLDivElement>
   ) => {
     e.stopPropagation();
-    setOpenProjectDetailToolbar(id);
-  };
-
-  const handleCloseProjectDetailToolbar = () => {
-    setOpenProjectDetailToolbar(null);
-  };
-
-  const handleEditProjectDetail = (id: string) => {
-    setEditProjectDetail(id);
-  };
-
-  const handleCloseEditProjectDetail = () => {
-    setEditProjectDetail(null);
-  };
-
-  const handleDeleteProjectDetail = (id: string) => {
-    setDeleteProjectDetail(id);
-  };
-
-  const handleCloseDeleteProjectDetail = () => {
-    setDeleteProjectDetail(null);
+    onOpenProjectDetailToolbar(id);
   };
   const filteredProjects = useMemo(() => {
     if (!projects?.results) {
@@ -99,10 +72,10 @@ const MyProjectsList = ({ search }: MyProjectsListProps) => {
               onOpenProjectDetailToolbar={(e: MouseEvent<HTMLDivElement>) =>
                 handleOpenProjectDetailToolbar(project.id, e)
               }
-              onCloseProjectDetailToolbar={handleCloseProjectDetailToolbar}
-              onEditProjectDetail={() => handleEditProjectDetail(project.id)}
+              onCloseProjectDetailToolbar={onCloseProjectDetailToolbar}
+              onEditProjectDetail={() => onEditProjectDetail(project.id)}
               onDeleteProjectDetail={() =>
-                handleDeleteProjectDetail(project.id)
+                onDeleteProjectDetail(project.id)
               }
             />
           </div>
@@ -112,13 +85,13 @@ const MyProjectsList = ({ search }: MyProjectsListProps) => {
       )}
       {editProjectDetail && (
         <EditProjectModalDialog
-          onClose={handleCloseEditProjectDetail}
+          onClose={onCloseEditProjectDetail}
           projectId={editProjectDetail}
         />
       )}
       {deleteProjectDetail && (
         <DeleteProjectsModalDialog
-          onClose={handleCloseDeleteProjectDetail}
+          onClose={onCloseDeleteProjectDetail}
           projectId={deleteProjectDetail}
         />
       )}

@@ -1,4 +1,4 @@
-import {useGetAProject, useUpdateProject} from "../../hooks/useProjects.ts";
+import {useGetAProject, useUpdateProject} from "../../hooks/useQueryHook/useProjects.ts";
 import LoadingSpin from "../ui/LoadingSpin.tsx";
 import {useEffect, useRef, useState} from "react";
 import {useProjectStore} from "../../stores/project.store.ts";

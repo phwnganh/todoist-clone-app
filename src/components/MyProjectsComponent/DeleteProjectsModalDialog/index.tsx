@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import { useDeleteProject, useGetAProject } from "../../../hooks/useProjects";
+import { useDeleteProject, useGetAProject } from "../../../hooks/useQueryHook/useProjects.ts";
 import { type MouseEvent } from "react";
 import LoadingSpin from "../../ui/LoadingSpin";
 

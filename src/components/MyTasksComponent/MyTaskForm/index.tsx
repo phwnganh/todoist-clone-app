@@ -13,7 +13,7 @@ import HashtagIcon from "../../icons/HashtagIcon.tsx";
 import {getProjectColorClass} from "../../../helpers/getProjectColorClass.ts";
 import type {Project} from "../../../types/project.type.ts";
 import {useProjectStore} from "../../../stores/project.store.ts";
-import {useGetAProject} from "../../../hooks/useProjects.ts";
+import {useGetAProject} from "../../../hooks/useQueryHook/useProjects.ts";
 import {replaceProjectHashtagFromContent} from "../../../helpers/replaceProjectHashtagFromContent.ts";
 
 export type MyTaskFormValues = {

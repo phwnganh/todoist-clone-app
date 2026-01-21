@@ -1,5 +1,5 @@
 import MyTaskSection from "../MyTaskSectionComponent/MyTaskSection.tsx";
-import {useGetAllSections} from "../../hooks/useSections.ts";
+import {useGetAllSections} from "../../hooks/useQueryHook/useSections.ts";
 import {useProjectStore} from "../../stores/project.store.ts";
 import type {Section} from "../../types/section.type.ts";
 import {useMemo} from "react";

@@ -1,7 +1,7 @@
 import {type FormEvent, useState} from 'react';
 import MyTaskForm, {type MyTaskFormValues} from "../MyTaskForm";
 import type {Task} from "../../../types/task.type.ts";
-import {useGetAProject} from "../../../hooks/useProjects.ts";
+import {useGetAProject} from "../../../hooks/useQueryHook/useProjects.ts";
 import {useProjectStore} from "../../../stores/project.store.ts";
 
 type EditMyTaskModalDialogProps = {

@@ -1,6 +1,6 @@
 import { type FormEvent, useState } from "react";
 import MyProjectForm, { type MyProjectFormValues } from "../MyProjectForm";
-import { useAddProject } from "../../../hooks/useProjects.ts";
+import { useAddProject } from "../../../hooks/useQueryHook/useProjects.ts";
 import type { ProjectPayload } from "../../../types/project.type.ts";
 
 const AddProjectsModalDialog = ({ onClose }: { onClose: () => void }) => {

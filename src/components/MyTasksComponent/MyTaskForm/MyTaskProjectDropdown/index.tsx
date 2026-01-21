@@ -1,6 +1,6 @@
 import {useEffect, useMemo, useRef, useState} from "react";
 import {useDebounce} from "../../../../hooks/useDebounce.ts";
-import {useGetAllProjects} from "../../../../hooks/useProjects.ts";
+import {useGetAllProjects} from "../../../../hooks/useQueryHook/useProjects.ts";
 import LoadingSpin from "../../../ui/LoadingSpin.tsx";
 import ProjectSearchInput from "./ProjectSearchInput.tsx";
 import UserAvatar from '../../../../assets/User-avatar.png'

@@ -1,7 +1,7 @@
 import SmallArrowDownIcon from "../../assets/small-arrow-down-icon.svg";
 import LoadingSpin from "../ui/LoadingSpin.tsx";
 import ErrorDisplayed from "../ui/ErrorDisplayed.tsx";
-import { useGetUserProfile } from "../../hooks/useUserProfile.ts";
+import { useGetUserProfile } from "../../hooks/useQueryHook/useUserProfile.ts";
 
 const UserInfoHeader = () => {
   const { data: user, isLoading, isError } = useGetUserProfile();

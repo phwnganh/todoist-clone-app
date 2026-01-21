@@ -1,4 +1,4 @@
-import {useGetAllTasks} from "../../hooks/useTasks.ts";
+import {useGetAllTasks} from "../../hooks/useQueryHook/useTasks.ts";
 import {Fragment, useMemo} from "react";
 import MyTaskListItem from "../MyTasksComponent/MyTaskListItem.tsx";
 import AddMyTaskModalDialog from "../MyTasksComponent/AddMyTaskComponent";
