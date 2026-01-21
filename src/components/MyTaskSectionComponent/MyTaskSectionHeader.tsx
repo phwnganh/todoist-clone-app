@@ -8,17 +8,18 @@ type MyTaskSectionHeaderProps = {
     onExpanded: () => void;
     name: string;
     tasks: Task[] | undefined | null;
+    onOpenEditMyTaskSection: () => void;
 }
 
-const MyTaskSectionHeader = ({isExpanded, onExpanded, name, tasks}: MyTaskSectionHeaderProps) => {
+const MyTaskSectionHeader = ({isExpanded, onExpanded, name, tasks, onOpenEditMyTaskSection}: MyTaskSectionHeaderProps) => {
     return (
-        <div className={"px-4 border-b border-b-product-library-divider-primary flex justify-between items-start relative"}>
-            <div role={"button"} className={"flex items-start"} onClick={onExpanded}>
-                <button type={"button"} className={"absolute pr-0.75 top-0.5 -left-4 flex justify-center items-center rounded-small hover:bg-product-library-selectable-secondary-hover-fill"}>
+        <div className={"flex justify-between items-start px-4"}>
+            <div role={"button"} className={"flex items-start"}>
+                <button type={"button"} className={"absolute pr-0.75 top-1.5 -left-4 flex justify-center items-center rounded-small hover:bg-product-library-selectable-secondary-hover-fill"} onClick={onExpanded}>
                     {isExpanded ? <TaskSmallArrowDownIcon/> : <TaskSmallArrowRightIcon/>}
                 </button>
                 <div className={"flex items-center"}>
-                    <span className={"font-bold text-sm pt-1.5 pr-1.5 pb-1.25"}>{name}</span>
+                    <div role={"button"} onClick={onOpenEditMyTaskSection} className={"font-bold text-sm pt-1.5 pr-1.5 pb-1.25"}>{name}</div>
                     <span className={"text-sm text-product-library-display-secondary-idle-tint"}>{tasks?.length}</span>
                 </div>
 

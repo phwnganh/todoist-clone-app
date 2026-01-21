@@ -13,7 +13,10 @@ const AddMyTaskSection = ({onCancelAddMyTaskSection}: AddMyTaskSectionProps) => 
         e.preventDefault()
     }
     return (
-        <MyTaskSectionForm values={values} onCancel={onCancelAddMyTaskSection} onChange={setValues} onSubmit={handleAddMyTaskSection} submitLabel={"Add section"} submittingLabel={"Adding..."}/>
+        <div className={"mt-5"}>
+            <MyTaskSectionForm values={values} onCancel={onCancelAddMyTaskSection} onChange={setValues} onSubmit={handleAddMyTaskSection} submitLabel={"Add section"} submittingLabel={"Adding..."}/>
+
+        </div>
     );
 };
 

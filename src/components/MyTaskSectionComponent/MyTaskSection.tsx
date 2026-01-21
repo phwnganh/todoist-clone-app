@@ -12,6 +12,7 @@ import MyTaskSectionHeader from "./MyTaskSectionHeader.tsx";
 import MyTaskSectionFooter from "./MyTaskSectionFooter.tsx";
 import {useSectionStore} from "../../stores/section.store.ts";
 import AddMyTaskSectionComponent from "./AddMyTaskSectionComponent";
+import EditMyTaskSectionComponent from "./EditMyTaskSectionComponent";
 
 type MyTaskSectionProps = {
     section: Section
@@ -22,14 +23,13 @@ const MyTaskSection = ({section}: MyTaskSectionProps) => {
     const [openAddMyTask, setOpenAddMyTask] = useState(false);
     const {isExpanded, handleExpanded} = useSectionExpand(true)
     const taskTree = useTaskTreeMultiLevel(tasks?.results, projectId, section.id)
+    const {editingSectionId, onOpenEditSection, onCloseEditSection} = useSectionStore()
 
     const filteredTasks = tasks?.results.filter(task => task.project_id === projectId && task.section_id === section.id)
     const handleOpenAddMyTask = () => {
         setOpenAddMyTask(true)
     }
-
-    const addSectionId = useSectionStore(state => state.addSectionId)
-    const setAddSectionId = useSectionStore(state => state.setAddSectionId)
+    const {addSectionId, setAddSectionId} = useSectionStore()
     const handleCloseAddMyTask = () => {
         setOpenAddMyTask(false)
     }
@@ -43,8 +43,7 @@ const MyTaskSection = ({section}: MyTaskSectionProps) => {
     }
 
     const isSectionAdding = addSectionId === section.id
-
-    console.log("is section adding: ", isSectionAdding)
+    const isEditing = editingSectionId === section.id
     if (isLoading) {
         return (
             <div className={"mt-medium"}>
@@ -55,7 +54,12 @@ const MyTaskSection = ({section}: MyTaskSectionProps) => {
     return (
         <section className={"pb-4.5"}>
             {section.id !== null &&
-                <MyTaskSectionHeader isExpanded={isExpanded} onExpanded={handleExpanded} name={section.name} tasks={filteredTasks}/>
+                <div className={"border-b border-b-product-library-divider-primary relative"}>
+                    {/*click to edit section here*/}
+                    {isEditing ? (<EditMyTaskSectionComponent onCancelEditMyTaskSection={onCloseEditSection} section={section}/>) : (
+                        <MyTaskSectionHeader onOpenEditMyTaskSection={() => onOpenEditSection(section.id)} isExpanded={isExpanded} onExpanded={handleExpanded} name={section.name} tasks={filteredTasks}/>
+                        )}
+                </div>
             }
 
             {isExpanded && (
