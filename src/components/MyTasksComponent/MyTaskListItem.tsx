@@ -6,20 +6,20 @@ import CommentIcon from "../icons/CommentIcon.tsx";
 import MenuIcon from "../icons/MenuIcon.tsx";
 import MyTaskContent from "./MyTaskContent";
 import TaskSmallArrowDownIcon from '../icons/TaskSmallArrowDownIcon.tsx'
-import {useState} from "react";
 import TaskSmallArrowRightIcon from "../icons/TaskSmallArrowRightIcon.tsx";
 import {getTaskIndentClass} from "../../helpers/getTaskIndentClass.ts";
 import EditMyTaskModalDialog from "./EditMyTaskComponent";
 import {useTaskStore} from "../../stores/task.store.ts";
 import VerifiedIcon from "../icons/VerifiedIcon.tsx";
 import ChildrenIcon from '../../assets/children-icon.svg'
+import {useExpanded} from "../../hooks/useExpanded.ts";
 type MyTaskListItemProps = {
     taskNode: TaskNode
     level: number
 }
 const MyTaskListItem = ({taskNode, level}: MyTaskListItemProps) => {
     const {task, children} = taskNode
-    const [isExpanded, setIsExpanded] = useState(true);
+    const {isExpanded, handleExpanded} = useExpanded(true)
     const {editingTaskId, onOpenEditTask, onCloseEditTask} = useTaskStore()
 
     const isEditing = editingTaskId === task.id
@@ -33,7 +33,7 @@ const MyTaskListItem = ({taskNode, level}: MyTaskListItemProps) => {
                     <div role={"button"} className={"flex items-start"}>
                         {hasChildren && (
                             <button type={"button"}
-                                    onClick={() => setIsExpanded(prev => !prev)}
+                                    onClick={handleExpanded}
                                     className={"absolute pr-0.75 top-2 -left-4 flex justify-center items-center rounded-small hover:bg-product-library-selectable-secondary-hover-fill"}>
                                 {isExpanded ? <TaskSmallArrowDownIcon/> : <TaskSmallArrowRightIcon/>}
                             </button>

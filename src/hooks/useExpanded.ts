@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-export const useSectionExpand = (defaultOpen = true) => {
+export const useExpanded = (defaultOpen = true) => {
     const [isExpanded, setIsExpanded] = useState(defaultOpen)
     const handleExpanded = () => {
         setIsExpanded(prev => !prev)

@@ -51,8 +51,3 @@ export type TaskNode = {
     task: Task,
     children: TaskNode[]
 }
-
-export type TasksBySection = {
-    section_id: string,
-    tasks: Task[],
-}

@@ -2,16 +2,18 @@ import {create} from "zustand/react";
 
 type SectionStore = {
     addSectionId: string | null | undefined;
-    setAddSectionId: (sectionId: string | null | undefined) => void;
     editingSectionId: string | null;
+    onOpenAddSectionForm: (id: string | null) => void;
+    onCloseAddSectionForm: () => void;
     onOpenEditSection: (sectionId: string | null) => void;
     onCloseEditSection: () => void;
 }
 
 export const useSectionStore = create<SectionStore>(set => ({
     addSectionId: undefined,
-    setAddSectionId: (sectionId) => set({addSectionId: sectionId}),
     editingSectionId: null,
+    onOpenAddSectionForm: (sectionId) => set({addSectionId: sectionId}),
+    onCloseAddSectionForm: () => set({addSectionId: undefined}),
     onOpenEditSection: (sectionId) => set({editingSectionId: sectionId}),
     onCloseEditSection: () => set({editingSectionId: null})
 }))
