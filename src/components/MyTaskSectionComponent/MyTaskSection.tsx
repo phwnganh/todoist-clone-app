@@ -56,7 +56,6 @@ const MyTaskSection = ({section}: MyTaskSectionProps) => {
                     )}
                 </ul>
             )}
-
             <MyTaskSectionFooter />
         </section>
 
