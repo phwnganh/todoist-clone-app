@@ -12,6 +12,7 @@ const MyTasksList = () => {
         name: "(No section)",
         project_id: projectId
     } as Section
+
     return (
         <>
             <MyTaskSection section={NO_SECTION}/>

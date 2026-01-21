@@ -2,7 +2,7 @@ import {useGetAllTasks} from "../../hooks/useTasks.ts";
 import {Fragment, useState} from "react";
 import MyTaskListItem from "../MyTasksComponent/MyTaskListItem.tsx";
 import AddMyTaskModalDialog from "../MyTasksComponent/AddMyTaskComponent";
-import AddMyTaskSection from "../MyTasksComponent/AddMyTaskSection.tsx";
+import AddMyTaskButtonSection from "../MyTasksComponent/AddMyTaskButtonSection.tsx";
 import {useTaskTreeMultiLevel} from "../../hooks/useTaskTreeMultiLevel.ts";
 import {useProjectStore} from "../../stores/project.store.ts";
 import LoadingSpin from "../ui/LoadingSpin.tsx";
@@ -10,6 +10,8 @@ import type {Section} from "../../types/section.type.ts";
 import {useSectionExpand} from "../../hooks/useSectionExpand.ts";
 import MyTaskSectionHeader from "./MyTaskSectionHeader.tsx";
 import MyTaskSectionFooter from "./MyTaskSectionFooter.tsx";
+import {useSectionStore} from "../../stores/section.store.ts";
+import AddMyTaskSectionComponent from "./AddMyTaskSectionComponent";
 
 type MyTaskSectionProps = {
     section: Section
@@ -26,10 +28,23 @@ const MyTaskSection = ({section}: MyTaskSectionProps) => {
         setOpenAddMyTask(true)
     }
 
+    const addSectionId = useSectionStore(state => state.addSectionId)
+    const setAddSectionId = useSectionStore(state => state.setAddSectionId)
     const handleCloseAddMyTask = () => {
         setOpenAddMyTask(false)
     }
 
+    const handleOpenAddSectionForm = (id: string | null) => {
+        setAddSectionId(id)
+    }
+
+    const handleCloseAddSectionForm = () => {
+        setAddSectionId(undefined)
+    }
+
+    const isSectionAdding = addSectionId === section.id
+
+    console.log("is section adding: ", isSectionAdding)
     if (isLoading) {
         return (
             <div className={"mt-medium"}>
@@ -52,11 +67,15 @@ const MyTaskSection = ({section}: MyTaskSectionProps) => {
                     ))}
                     {openAddMyTask ? (
                         <AddMyTaskModalDialog onCloseAddMyTask={handleCloseAddMyTask}/>
-                    ) : (<AddMyTaskSection onOpenAddMyTask={handleOpenAddMyTask}/>
+                    ) : (<AddMyTaskButtonSection onOpenAddMyTask={handleOpenAddMyTask}/>
                     )}
                 </ul>
             )}
-            <MyTaskSectionFooter />
+            {isSectionAdding ? (
+                <AddMyTaskSectionComponent onCancelAddMyTaskSection={handleCloseAddSectionForm}/>
+            ) : (
+                <MyTaskSectionFooter onAddMyTaskForm={() => handleOpenAddSectionForm(section.id)}/>
+            )}
         </section>
 
     );

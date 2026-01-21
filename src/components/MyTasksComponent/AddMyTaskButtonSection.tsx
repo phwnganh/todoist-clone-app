@@ -3,7 +3,7 @@ import SmallPlusAddIcon from '../icons/SmallPlusAddIcon.tsx'
 type AddMyTaskSectionProps = {
     onOpenAddMyTask:() => void;
 }
-const AddMyTaskSection = ({onOpenAddMyTask}: AddMyTaskSectionProps) => {
+const AddMyTaskButtonSection = ({onOpenAddMyTask}: AddMyTaskSectionProps) => {
 
     return (
         <li className={"pr-5 pl-px"}>
@@ -17,4 +17,4 @@ const AddMyTaskSection = ({onOpenAddMyTask}: AddMyTaskSectionProps) => {
     );
 };
 
-export default AddMyTaskSection;
+export default AddMyTaskButtonSection;

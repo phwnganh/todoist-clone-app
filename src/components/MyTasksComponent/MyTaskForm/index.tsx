@@ -63,10 +63,7 @@ const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel,
     }
 
     const handleContentChange = (e: ChangeEvent<HTMLInputElement>) => {
-        onChange({
-            ...values,
-            content: e.target.value,
-        })
+        onChange(updateMyTaskField(values, "content", e.target.value))
     }
 
     useClickOutside({
@@ -74,6 +71,8 @@ const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel,
         handler: () => setIsOpenAddMyTaskDropdown(null),
         enabled: isOpenAddMyTaskDropdown !== null
     })
+
+    const isAddButtonDisabled = values.content.trim() === "" || isPending
     return (
         <li>
             <form className={"border border-product-library-border-idle-tint rounded-large"} onSubmit={onSubmit}>
@@ -156,9 +155,12 @@ const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel,
                         </button>
                         <button
                             type="submit"
-                            className={`px-3 py-1.5 rounded-small flex justify-center items-center min-w-17 bg-product-library-actionable-primary-idle-fill hover:bg-product-library-actionable-primary-hover-fill
+                            className={`px-3 py-1.5 rounded-small flex justify-center items-center min-w-17 ${
+                                isAddButtonDisabled ? "bg-product-library-actionable-primary-disabled-fill cursor-not-allowed" : 
+                                    "bg-product-library-actionable-primary-idle-fill hover:bg-product-library-actionable-primary-hover-fill"
+                            }
                             `}
-                            // disabled={isAddButtonDisabled}
+                            disabled={isAddButtonDisabled}
                         >
               <span className="text-sm font-medium text-product-library-actionable-primary-on-idle-tint">
                 {/*{isPending ? submittingLabel : submitLabel}*/}{submitLabel}
