@@ -19,16 +19,11 @@ const MyTaskBoardSection = ({section}: MyTaskBoardSectionProps) => {
     const {editingSectionId, onOpenEditSection, onCloseEditSection} = useSectionStore()
     const {openAddMyTask, onOpenAddMyTask, onCloseAddMyTask} = useTaskStore()
 
-    const filteredTasks = useMemo(() => {
-        return tasks?.results.filter(task => task.project_id === projectId && task.section_id === section.id)
-    }, [projectId, section.id, tasks?.results])
-
     const filteredTasksNoParent = useMemo(() => {
         return tasks?.results.filter(task => task.project_id === projectId && task.section_id === section.id && task.parent_id === null)
     }, [projectId, section.id, tasks?.results])
 
     const isEditing = editingSectionId === section.id
-
     if (isLoading) {
         return (
             <div className={"mt-medium"}>
@@ -42,18 +37,20 @@ const MyTaskBoardSection = ({section}: MyTaskBoardSectionProps) => {
                 {section.id !== null ? <div className={"relative"}>
                     {/*click to edit section here*/}
                     {isEditing ? (<EditMyTaskSectionComponent onCancelEditMyTaskSection={onCloseEditSection} section={section}/>) : (
-                        <MyTaskBoardSectionHeader onOpenEditMyTaskSection={() => onOpenEditSection(section.id)} name={section.name} tasks={filteredTasks}/>
+                        <MyTaskBoardSectionHeader onOpenEditMyTaskSection={() => onOpenEditSection(section.id)} name={section.name} tasks={filteredTasksNoParent}/>
                     )}
                 </div> : (<div className={"flex items-center"}>
                     <div role={"button"} className={"font-bold text-sm pt-1.5 pr-1.5 pb-1.25"}>{section.name}</div>
-                    <span className={"text-sm text-product-library-display-secondary-idle-tint"}>{filteredTasks?.length}</span>
+                    <span className={"text-sm text-product-library-display-secondary-idle-tint"}>{filteredTasksNoParent?.length}</span>
                 </div>)}
 
-                {filteredTasksNoParent?.map(task => (
-                    <Fragment key={task.id}>
-                        <MyTaskBoardItem task={task}/>
-                    </Fragment>
-                ))}
+                {filteredTasksNoParent?.map(task => {
+                    return (
+                        <Fragment key={task.id}>
+                            <MyTaskBoardItem task={task}/>
+                        </Fragment>
+                    )
+                })}
 
                 {openAddMyTask ? (
                     <AddMyTaskModalDialog onCloseAddMyTask={onCloseAddMyTask}/>
