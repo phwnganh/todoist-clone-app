@@ -15,7 +15,8 @@ import type {Project} from "../../../types/project.type.ts";
 import {useProjectStore} from "../../../stores/project.store.ts";
 import {useGetAProject} from "../../../hooks/useQueryHook/useProjects.ts";
 import {replaceProjectHashtagFromContent} from "../../../helpers/replaceProjectHashtagFromContent.ts";
-
+import CloseIcon from '../../../assets/close-icon.svg'
+import SubmitIcon from '../../icons/SubmitIcon.tsx'
 export type MyTaskFormValues = {
     content: string;
     description: string;
@@ -32,8 +33,9 @@ type MyTaskFormProps = {
     onChange: (values: MyTaskFormValues) => void;
     isPending?: boolean;
     errorMessage?: string | null;
+    variant?: string;
 }
-const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel, submittingLabel, isPending, errorMessage}: MyTaskFormProps) => {
+const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel, submittingLabel, isPending, errorMessage, variant}: MyTaskFormProps) => {
     const [isOpenAddMyTaskDropdown, setIsOpenAddMyTaskDropdown] = useState<OpenMyTaskFormDropdown>(null)
     const dateRef = useRef<HTMLDivElement | null>(null)
     const priorityRef = useRef<HTMLDivElement | null>(null)
@@ -84,10 +86,12 @@ const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel,
                             <div role={"button"} className={"px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"}
                             >
                                 <div className={"flex items-center"}>
-                                    <div className={"flex justify-center items-center"}>
+                                    <div className={"w-4 h-4 flex justify-center items-center"}>
                                         <img src={TaskSmallCalendarIcon} alt={"calendar"} />
                                     </div>
-                                    <div className={"ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"}>Date</div>
+                                    {variant === "list" &&
+                                        <div className={"ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"}>Date</div>
+                                    }
                                 </div>
                             </div>
 
@@ -95,10 +99,12 @@ const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel,
                             <div className={"relative"} ref={priorityRef}>
                                 <div role={"button"} onClick={() => handleToggleDropdown("priority")} className={"px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"}>
                                     <div className={"flex items-center"}>
-                                        <div className={"flex justify-center items-center"}>
+                                        <div className={"w-4 h-4 flex justify-center items-center"}>
                                             <img src={TaskFlagIcon} alt={"flag-icon"} />
                                         </div>
-                                        <div className={"ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"}>Priority</div>
+                                        {variant === "list" &&
+                                            <div className={"ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"}>Priority</div>
+                                        }
                                     </div>
                                 </div>
                                 {isOpenAddMyTaskDropdown === "priority" && (
@@ -109,18 +115,22 @@ const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel,
                             {/*reminders*/}
                             <div role={"button"} className={"px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"}>
                                 <div className={"flex items-center"}>
-                                    <div className={"flex justify-center items-center"}>
+                                    <div className={"w-4 h-4 flex justify-center items-center"}>
                                         <img src={TaskClockIcon} alt={"clock-icon"} />
                                     </div>
-                                    <div className={"ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"}>Reminders</div>
+                                    {variant === "list" &&
+                                        <div className={"ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"}>Reminders</div>
+                                }
                                 </div>
                             </div>
 
                             <button className={"px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"}>
-                                <div className={"flex justify-center items-center mr-2.5"}>
+                                <div className={"w-4 h-4 flex justify-center items-center"}>
                                    <img src={LabelIcon} alt={"label-icon"} />
                                 </div>
-                                <p className={"text-sm text-product-library-display-secondary-idle-tint"}>Labels</p>
+                                {variant === "list" &&
+                                    <p className={"text-sm text-product-library-display-secondary-idle-tint"}>Labels</p>
+                                }
                             </button>
                         </div>
                     </div>
@@ -145,25 +155,32 @@ const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel,
                     <div className={"flex gap-2.5"}>
                         <button
                             type="button"
-                            className="px-3 py-1.5 rounded-small bg-product-library-actionable-secondary-idle-fill flex justify-center items-center min-w-17"
+                            className={`${variant === "list" ? "px-3 py-1.5 min-w-17" : "w-8 h-8"} flex justify-center items-center rounded-small bg-product-library-actionable-secondary-idle-fill`}
                             onClick={onCloseMyTaskForm}
                         >
-              <span className="text-sm font-medium text-product-library-actionable-secondary-on-idle-tint">
+                            {variant === "list" ?
+                                <span className="text-sm font-medium text-product-library-actionable-secondary-on-idle-tint">
                 Cancel
-              </span>
+              </span> : <span className={"w-6 h-6 flex justify-center items-center"}>
+                                    <img src={CloseIcon} alt={"close-icon"}/>
+                                </span>}
+
                         </button>
                         <button
                             type="submit"
-                            className={`px-3 py-1.5 rounded-small flex justify-center items-center min-w-17 ${
+                            className={`${variant === "list" ? "px-3 py-1.5 min-w-17" : "w-8 h-8"} rounded-small flex justify-center items-center  ${
                                 isAddButtonDisabled ? "bg-product-library-actionable-primary-disabled-fill cursor-not-allowed" : 
                                     "bg-product-library-actionable-primary-idle-fill hover:bg-product-library-actionable-primary-hover-fill"
                             }
                             `}
                             disabled={isAddButtonDisabled}
                         >
-              <span className="text-sm font-medium text-product-library-actionable-primary-on-idle-tint">
+                            {variant === "list" ?               <span className="text-sm font-medium text-product-library-actionable-primary-on-idle-tint">
                 {/*{isPending ? submittingLabel : submitLabel}*/}{submitLabel}
-              </span>
+              </span> : <span className={"w-6 h-6 flex justify-center items-center"}>
+                                <SubmitIcon className={"text-white"}/>
+                            </span>
+                            }
                         </button>
                     </div>
                 </div>

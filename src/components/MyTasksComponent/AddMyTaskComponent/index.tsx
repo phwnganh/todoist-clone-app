@@ -3,8 +3,9 @@ import MyTaskForm, {type MyTaskFormValues} from "../MyTaskForm";
 
 type AddMyTaskModalDialogProps = {
     onCloseAddMyTask: () => void;
+    variant?: "board" | "list";
 }
-const AddMyTaskModalDialog = ({onCloseAddMyTask}: AddMyTaskModalDialogProps) => {
+const AddMyTaskModalDialog = ({onCloseAddMyTask, variant}: AddMyTaskModalDialogProps) => {
     const [values, setValues] = useState<MyTaskFormValues>({
         content: "",
         description: "",
@@ -17,7 +18,7 @@ const AddMyTaskModalDialog = ({onCloseAddMyTask}: AddMyTaskModalDialogProps) => 
         e.preventDefault();
     }
     return (
-        <MyTaskForm values={values} onCloseMyTaskForm={onCloseAddMyTask} onChange={setValues} onSubmit={handleAddMyTask} submitLabel={"Add task"} submittingLabel={"Adding..."}/>
+        <MyTaskForm variant={variant} values={values} onCloseMyTaskForm={onCloseAddMyTask} onChange={setValues} onSubmit={handleAddMyTask} submitLabel={"Add task"} submittingLabel={"Adding..."}/>
 
     );
 };

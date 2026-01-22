@@ -54,7 +54,7 @@ const MyTaskBoardSection = ({section}: MyTaskBoardSectionProps) => {
                 })}
 
                 {isAddingTask ? (
-                    <AddMyTaskModalDialog onCloseAddMyTask={onCloseAddMyTask}/>
+                    <AddMyTaskModalDialog variant={"board"} onCloseAddMyTask={onCloseAddMyTask}/>
                 ) : (
                     <AddMyTaskButtonSection onOpenAddMyTask={() => onOpenAddMyTask(section.id)}/>
                 )}

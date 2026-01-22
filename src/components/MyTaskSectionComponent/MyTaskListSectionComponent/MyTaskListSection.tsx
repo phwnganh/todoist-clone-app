@@ -59,7 +59,7 @@ const MyTaskListSection = ({section}: MyTaskSectionProps) => {
                     ))}
                     {isAddingTask ? (
                         <li>
-                            <AddMyTaskModalDialog onCloseAddMyTask={onCloseAddMyTask}/>
+                            <AddMyTaskModalDialog variant={"list"} onCloseAddMyTask={onCloseAddMyTask}/>
                         </li>
                     ) : (
                         <li className={"pr-5 pl-px"}>
