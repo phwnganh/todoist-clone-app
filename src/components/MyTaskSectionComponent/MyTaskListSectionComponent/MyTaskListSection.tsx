@@ -1,24 +1,24 @@
-import {useGetAllTasks} from "../../hooks/useQueryHook/useTasks.ts";
+import {useGetAllTasks} from "../../../hooks/useQueryHook/useTasks.ts";
 import {Fragment, useMemo} from "react";
-import MyTaskListItem from "../MyTasksComponent/MyTaskListItem.tsx";
-import AddMyTaskModalDialog from "../MyTasksComponent/AddMyTaskComponent";
-import AddMyTaskButtonSection from "../MyTasksComponent/AddMyTaskButtonSection.tsx";
-import {useTaskTreeMultiLevel} from "../../hooks/useTaskTreeMultiLevel.ts";
-import {useProjectStore} from "../../stores/project.store.ts";
-import LoadingSpin from "../ui/LoadingSpin.tsx";
-import type {Section} from "../../types/section.type.ts";
-import {useExpanded} from "../../hooks/useExpanded.ts";
-import MyTaskSectionHeader from "./MyTaskSectionHeader.tsx";
-import MyTaskSectionFooter from "./MyTaskSectionFooter.tsx";
-import {useSectionStore} from "../../stores/section.store.ts";
-import AddMyTaskSectionComponent from "./AddMyTaskSectionComponent";
-import EditMyTaskSectionComponent from "./EditMyTaskSectionComponent";
-import {useTaskStore} from "../../stores/task.store.ts";
+import MyTaskListItem from "../../MyTasksComponent/MyTaskListItem.tsx";
+import AddMyTaskModalDialog from "../../MyTasksComponent/AddMyTaskComponent";
+import AddMyTaskButtonSection from "../../MyTasksComponent/AddMyTaskButtonSection.tsx";
+import {useTaskTreeMultiLevel} from "../../../hooks/useTaskTreeMultiLevel.ts";
+import {useProjectStore} from "../../../stores/project.store.ts";
+import LoadingSpin from "../../ui/LoadingSpin.tsx";
+import type {Section} from "../../../types/section.type.ts";
+import {useExpanded} from "../../../hooks/useExpanded.ts";
+import MyTaskListSectionHeader from "./MyTaskListSectionHeader.tsx";
+import MyTaskListSectionFooter from "./MyTaskListSectionFooter.tsx";
+import {useSectionStore} from "../../../stores/section.store.ts";
+import AddMyTaskSectionComponent from "../AddMyTaskSectionComponent";
+import EditMyTaskSectionComponent from "../EditMyTaskSectionComponent";
+import {useTaskStore} from "../../../stores/task.store.ts";
 
 type MyTaskSectionProps = {
     section: Section
 }
-const MyTaskSection = ({section}: MyTaskSectionProps) => {
+const MyTaskListSection = ({section}: MyTaskSectionProps) => {
     const {data: tasks, isLoading} = useGetAllTasks()
     const projectId = useProjectStore(state => state.projectId)
     const {isExpanded, handleExpanded} = useExpanded(true)
@@ -44,7 +44,7 @@ const MyTaskSection = ({section}: MyTaskSectionProps) => {
                 <div className={"border-b border-b-product-library-divider-primary relative"}>
                     {/*click to edit section here*/}
                     {isEditing ? (<EditMyTaskSectionComponent onCancelEditMyTaskSection={onCloseEditSection} section={section}/>) : (
-                        <MyTaskSectionHeader onOpenEditMyTaskSection={() => onOpenEditSection(section.id)} isExpanded={isExpanded} onExpanded={handleExpanded} name={section.name} tasks={filteredTasks}/>
+                        <MyTaskListSectionHeader onOpenEditMyTaskSection={() => onOpenEditSection(section.id)} isExpanded={isExpanded} onExpanded={handleExpanded} name={section.name} tasks={filteredTasks}/>
                         )}
                 </div>
             }
@@ -57,19 +57,24 @@ const MyTaskSection = ({section}: MyTaskSectionProps) => {
                         </Fragment>
                     ))}
                     {openAddMyTask ? (
-                        <AddMyTaskModalDialog onCloseAddMyTask={onCloseAddMyTask}/>
-                    ) : (<AddMyTaskButtonSection onOpenAddMyTask={onOpenAddMyTask}/>
+                        <li>
+                            <AddMyTaskModalDialog onCloseAddMyTask={onCloseAddMyTask}/>
+                        </li>
+                    ) : (
+                        <li className={"pr-5 pl-px"}>
+                        <AddMyTaskButtonSection onOpenAddMyTask={onOpenAddMyTask}/>
+                    </li>
                     )}
                 </ul>
             )}
             {isSectionAdding ? (
                 <AddMyTaskSectionComponent onCancelAddMyTaskSection={onCloseAddSectionForm}/>
             ) : (
-                <MyTaskSectionFooter onAddMyTaskForm={() => onOpenAddSectionForm(section.id)}/>
+                <MyTaskListSectionFooter onAddMyTaskSectionForm={() => onOpenAddSectionForm(section.id)}/>
             )}
         </section>
 
     );
 };
 
-export default MyTaskSection;
+export default MyTaskListSection;

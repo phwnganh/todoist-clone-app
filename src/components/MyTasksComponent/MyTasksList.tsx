@@ -1,16 +1,12 @@
-import MyTaskSection from "../MyTaskSectionComponent/MyTaskSection.tsx";
-import {useGetAllSections} from "../../hooks/useQueryHook/useSections.ts";
+import MyTaskListSection from "../MyTaskSectionComponent/MyTaskListSectionComponent/MyTaskListSection.tsx";
 import {useProjectStore} from "../../stores/project.store.ts";
 import type {Section} from "../../types/section.type.ts";
-import {useMemo} from "react";
 
-const MyTasksList = () => {
-    const {data: sections} = useGetAllSections()
+type MyTasksListProps = {
+    filteredSectionsByProject: Section[] | undefined;
+}
+const MyTasksList = ({filteredSectionsByProject}: MyTasksListProps) => {
     const projectId = useProjectStore(state => state.projectId)
-
-    const filteredSectionsByProject = useMemo(() => {
-        return sections?.results?.filter(section => section.project_id === projectId)
-    }, [sections?.results, projectId])
 
     const NO_SECTION = {
         id: null,
@@ -20,9 +16,9 @@ const MyTasksList = () => {
 
     return (
         <>
-            <MyTaskSection section={NO_SECTION}/>
+            <MyTaskListSection section={NO_SECTION}/>
             {filteredSectionsByProject?.map(section =>
-                <MyTaskSection key={section.id} section={section}/>
+                <MyTaskListSection key={section.id} section={section}/>
             )
             }
 

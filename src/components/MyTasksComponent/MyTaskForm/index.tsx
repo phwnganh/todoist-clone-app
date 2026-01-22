@@ -74,7 +74,6 @@ const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel,
 
     const isAddButtonDisabled = values.content.trim() === "" || isPending
     return (
-        <li>
             <form className={"border border-product-library-border-idle-tint rounded-large"} onSubmit={onSubmit}>
                 <div className={"pt-small px-small rounded-large"}>
                     <div className={"max-h-50 mb-small flex flex-col gap-xsmall"}>
@@ -169,7 +168,7 @@ const MyTaskForm = ({onCloseMyTaskForm, onSubmit, values, onChange, submitLabel,
                     </div>
                 </div>
             </form>
-        </li>
+
     );
 };
 

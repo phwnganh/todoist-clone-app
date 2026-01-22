@@ -7,7 +7,6 @@ type TaskStore = {
     onCloseEditTask: () => void;
     onOpenAddMyTask: () => void;
     onCloseAddMyTask: () => void;
-
 }
 export const useTaskStore = create<TaskStore>(set => ({
     editingTaskId: null,
@@ -15,5 +14,5 @@ export const useTaskStore = create<TaskStore>(set => ({
     onOpenEditTask: (taskId) => set({editingTaskId: taskId}),
     onCloseEditTask: () => set({editingTaskId: null}),
     onOpenAddMyTask: () => set({openAddMyTask: true}),
-    onCloseAddMyTask: () => set({openAddMyTask: false})
+    onCloseAddMyTask: () => set({openAddMyTask: false}),
 }))

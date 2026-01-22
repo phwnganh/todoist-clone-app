@@ -9,10 +9,11 @@ import {PROJECTS} from "../../constants/routes.constants.ts";
 import MyTasksList from "../../components/MyTasksComponent/MyTasksList.tsx";
 import MyTaskTitle from "../../components/MyTasksComponent/MyTaskTitle.tsx";
 import LoadingSpin from "../../components/ui/LoadingSpin.tsx";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import MyTaskLayoutFiltersDropdown from "../../components/MyTasksComponent/MyTaskLayoutFiltersDropdown";
 import MyTasksBoard from "../../components/MyTasksComponent/MyTasksBoard";
 import {useProjectStore} from "../../stores/project.store.ts";
+import {useGetAllSections} from "../../hooks/useQueryHook/useSections.ts";
 
 const MyProjectDetailPage = () => {
     const {projectId} = useParams<{projectId: string}>();
@@ -23,13 +24,15 @@ const MyProjectDetailPage = () => {
             setProjectId(projectId);
         }
     }, [projectId, setProjectId]);
+    const {data: sections} = useGetAllSections();
+    const filteredSectionsByProject = useMemo(() => {
+        return sections?.results?.filter(section => section.project_id === projectId);
+    }, [sections?.results, projectId]);
     const [openLayoutDropdown, setOpenLayoutDropdown] = useState(false);
     const [layoutName, setLayoutName] = useState("list");
     const handleOpenLayoutDropdown = () => {
         setOpenLayoutDropdown(prev => !prev);
     }
-
-
     const handleSelectLayout = (layoutName: string) => {
             setLayoutName(layoutName);
     }
@@ -71,14 +74,21 @@ const MyProjectDetailPage = () => {
                 <button className={"px-1 text-product-library-actionable-quaternary-idle-tint text-sm font-medium hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small p-1.5"} onClick={() => navigate(PROJECTS)}>My Projects</button>
                 <div className={"text-sm text-product-library-display-secondary-idle-tint"}>/</div>
             </div>}></HeaderLayout>
-            <section className={"max-w-200 mx-auto w-full relative z-10"}>
-                <div className={"flex flex-col gap-small"}>
-                    <MyTaskTitle/>
-                    {layoutName === "list" ? (
-                        <MyTasksList/>
-                    ) : (<MyTasksBoard/>)}
-                </div>
-            </section>
+            {layoutName === "list" ? (
+                <section className={"max-w-200 mx-auto w-full relative z-10"}>
+                    <div className={"flex flex-col gap-small"}>
+                        <MyTaskTitle/>
+                        <MyTasksList filteredSectionsByProject={filteredSectionsByProject}/>
+                    </div>
+                </section>
+            ) : (
+                <section className={"px-10"}>
+                    <div className={"flex flex-col gap-small"}>
+                        <MyTaskTitle/>
+                        <MyTasksBoard filteredSectionsByProject={filteredSectionsByProject}/>
+                    </div>
+                </section>
+            )}
         </>
     );
 };

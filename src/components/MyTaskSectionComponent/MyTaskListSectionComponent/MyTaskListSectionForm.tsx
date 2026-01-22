@@ -1,5 +1,5 @@
 import {type ChangeEvent, type FormEvent} from "react";
-import {updateMyTaskSectionField} from "../../helpers/updateMyTaskField.ts";
+import {updateMyTaskSectionField} from "../../../helpers/updateMyTaskField.ts";
 
 export type MyTaskSectionFormValues = {
     name: string;
@@ -12,7 +12,7 @@ type MyTaskSectionFormProps = {
     values: MyTaskSectionFormValues,
     onChange: (values: MyTaskSectionFormValues) => void,
 }
-const MyTaskSectionForm = ({onCancel, values, onChange, onSubmit, submitLabel, submittingLabel}: MyTaskSectionFormProps) => {
+const MyTaskListSectionForm = ({onCancel, values, onChange, onSubmit, submitLabel, submittingLabel}: MyTaskSectionFormProps) => {
     const isAddButtonDisabled = values.name.trim() === ""
 
     const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,4 +32,4 @@ const MyTaskSectionForm = ({onCancel, values, onChange, onSubmit, submitLabel, s
     );
 };
 
-export default MyTaskSectionForm;
+export default MyTaskListSectionForm;

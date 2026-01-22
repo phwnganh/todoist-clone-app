@@ -1,6 +1,6 @@
 import {type Section} from "../../../types/section.type.ts";
 import {type FormEvent, useState} from "react";
-import MyTaskSectionForm, {type MyTaskSectionFormValues} from "../MyTaskSectionForm.tsx";
+import MyTaskListSectionForm, {type MyTaskSectionFormValues} from "../MyTaskListSectionComponent/MyTaskListSectionForm.tsx";
 
 type EditMyTaskSectionProps = {
     onCancelEditMyTaskSection: () => void,
@@ -15,7 +15,7 @@ const EditMyTaskSection = ({section, onCancelEditMyTaskSection}: EditMyTaskSecti
         e.preventDefault();
     }
     return (
-        <MyTaskSectionForm values={values} onCancel={onCancelEditMyTaskSection} onSubmit={handleUpdateMyTaskSection} submitLabel={"Save"} submittingLabel={"Saving..."} onChange={setValues}/>
+        <MyTaskListSectionForm values={values} onCancel={onCancelEditMyTaskSection} onSubmit={handleUpdateMyTaskSection} submitLabel={"Save"} submittingLabel={"Saving..."} onChange={setValues}/>
     );
 };
 

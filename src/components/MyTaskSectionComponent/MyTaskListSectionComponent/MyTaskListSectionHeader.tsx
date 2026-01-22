@@ -1,7 +1,7 @@
-import TaskSmallArrowDownIcon from "../icons/TaskSmallArrowDownIcon.tsx";
-import TaskSmallArrowRightIcon from "../icons/TaskSmallArrowRightIcon.tsx";
-import MenuIcon from "../icons/MenuIcon.tsx";
-import type {Task} from "../../types/task.type.ts";
+import TaskSmallArrowDownIcon from "../../icons/TaskSmallArrowDownIcon.tsx";
+import TaskSmallArrowRightIcon from "../../icons/TaskSmallArrowRightIcon.tsx";
+import MenuIcon from "../../icons/MenuIcon.tsx";
+import type {Task} from "../../../types/task.type.ts";
 
 type MyTaskSectionHeaderProps = {
     isExpanded: boolean;
@@ -11,7 +11,7 @@ type MyTaskSectionHeaderProps = {
     onOpenEditMyTaskSection: () => void;
 }
 
-const MyTaskSectionHeader = ({isExpanded, onExpanded, name, tasks, onOpenEditMyTaskSection}: MyTaskSectionHeaderProps) => {
+const MyTaskListSectionHeader = ({isExpanded, onExpanded, name, tasks, onOpenEditMyTaskSection}: MyTaskSectionHeaderProps) => {
     return (
         <div className={"flex justify-between items-start px-4"}>
             <div role={"button"} className={"flex items-start"}>
@@ -31,4 +31,4 @@ const MyTaskSectionHeader = ({isExpanded, onExpanded, name, tasks, onOpenEditMyT
     );
 };
 
-export default MyTaskSectionHeader;
+export default MyTaskListSectionHeader;

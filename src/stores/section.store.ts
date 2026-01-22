@@ -15,5 +15,5 @@ export const useSectionStore = create<SectionStore>(set => ({
     onOpenAddSectionForm: (sectionId) => set({addSectionId: sectionId}),
     onCloseAddSectionForm: () => set({addSectionId: undefined}),
     onOpenEditSection: (sectionId) => set({editingSectionId: sectionId}),
-    onCloseEditSection: () => set({editingSectionId: null})
+    onCloseEditSection: () => set({editingSectionId: null}),
 }))
