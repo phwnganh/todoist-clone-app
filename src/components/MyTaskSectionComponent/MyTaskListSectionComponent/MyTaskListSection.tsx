@@ -24,13 +24,14 @@ const MyTaskListSection = ({section}: MyTaskSectionProps) => {
     const {isExpanded, handleExpanded} = useExpanded(true)
     const taskTree = useTaskTreeMultiLevel(tasks?.results, projectId, section.id)
     const {editingSectionId, onOpenEditSection, onCloseEditSection, addSectionId, onOpenAddSectionForm, onCloseAddSectionForm} = useSectionStore()
-    const {openAddMyTask, onOpenAddMyTask, onCloseAddMyTask} = useTaskStore()
+    const {addingTaskId, onOpenAddMyTask, onCloseAddMyTask} = useTaskStore()
     const filteredTasks = useMemo(() => {
         return tasks?.results.filter(task => task.project_id === projectId && task.section_id === section.id)
     }, [projectId, section.id, tasks?.results])
 
     const isSectionAdding = addSectionId === section.id
     const isEditing = editingSectionId === section.id
+    const isAddingTask = addingTaskId === section.id;
     if (isLoading) {
         return (
             <div className={"mt-medium"}>
@@ -56,13 +57,13 @@ const MyTaskListSection = ({section}: MyTaskSectionProps) => {
                             <MyTaskListItem taskNode={taskNode} level={0}/>
                         </Fragment>
                     ))}
-                    {openAddMyTask ? (
+                    {isAddingTask ? (
                         <li>
                             <AddMyTaskModalDialog onCloseAddMyTask={onCloseAddMyTask}/>
                         </li>
                     ) : (
                         <li className={"pr-5 pl-px"}>
-                        <AddMyTaskButtonSection onOpenAddMyTask={onOpenAddMyTask}/>
+                        <AddMyTaskButtonSection onOpenAddMyTask={() => onOpenAddMyTask(section.id)}/>
                     </li>
                     )}
                 </ul>
