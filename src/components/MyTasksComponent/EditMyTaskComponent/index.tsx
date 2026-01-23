@@ -7,8 +7,9 @@ import {useProjectStore} from "../../../stores/project.store.ts";
 type EditMyTaskModalDialogProps = {
     onCloseEditMyTask: () => void;
     task: Task
+    variant?: "board" | "list"
 }
-const EditMyTaskModalDialog = ({onCloseEditMyTask, task}: EditMyTaskModalDialogProps) => {
+const EditMyTaskModalDialog = ({onCloseEditMyTask, task, variant}: EditMyTaskModalDialogProps) => {
     const projectId = useProjectStore(state => state.projectId)
     const {data: projectDetail} = useGetAProject(projectId)
     const [values, setValues] = useState<MyTaskFormValues>({
@@ -23,7 +24,7 @@ const EditMyTaskModalDialog = ({onCloseEditMyTask, task}: EditMyTaskModalDialogP
         e.preventDefault()
     }
     return (
-        <MyTaskForm values={values} onCloseMyTaskForm={onCloseEditMyTask} onChange={setValues} onSubmit={handleUpdateMyTask} submitLabel={"Save"} submittingLabel={"Saving..."}/>
+        <MyTaskForm variant={variant} values={values} onCloseMyTaskForm={onCloseEditMyTask} onChange={setValues} onSubmit={handleUpdateMyTask} submitLabel={"Save"} submittingLabel={"Saving..."}/>
     );
 };
 

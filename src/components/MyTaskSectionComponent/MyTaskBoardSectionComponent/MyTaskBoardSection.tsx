@@ -3,7 +3,7 @@ import {useProjectStore} from "../../../stores/project.store.ts";
 import {useSectionStore} from "../../../stores/section.store.ts";
 import {useTaskStore} from "../../../stores/task.store.ts";
 import type {Section} from "../../../types/section.type.ts";
-import {Fragment, useMemo} from "react";
+import {Fragment, useMemo, type MouseEvent} from "react";
 import LoadingSpin from "../../ui/LoadingSpin.tsx";
 import EditMyTaskSectionComponent from "../EditMyTaskSectionComponent";
 import MyTaskBoardSectionHeader from "./MyTaskBoardSectionHeader.tsx";
@@ -17,7 +17,7 @@ const MyTaskBoardSection = ({section}: MyTaskBoardSectionProps) => {
     const {data: tasks, isLoading} = useGetAllTasks()
     const projectId = useProjectStore(state => state.projectId)
     const {editingSectionId, onOpenEditSection, onCloseEditSection} = useSectionStore()
-    const {addingTaskId, onOpenAddMyTask, onCloseAddMyTask} = useTaskStore()
+    const {addingTaskId, onOpenAddMyTask, onCloseAddMyTask, openTaskDetailToolbar, onOpenTaskDetailToolbar} = useTaskStore()
 
     const filteredTasksNoParent = useMemo(() => {
         return tasks?.results.filter(task => task.project_id === projectId && task.section_id === section.id && task.parent_id === null)
@@ -25,6 +25,11 @@ const MyTaskBoardSection = ({section}: MyTaskBoardSectionProps) => {
 
     const isEditing = editingSectionId === section.id
     const isAddingTask = addingTaskId === section.id
+
+    const handleOpenTaskDetailToolbar = (id: string, e: MouseEvent<HTMLButtonElement>)=> {
+        e.stopPropagation()
+        onOpenTaskDetailToolbar(id)
+    }
     if (isLoading) {
         return (
             <div className={"mt-medium"}>
@@ -48,7 +53,9 @@ const MyTaskBoardSection = ({section}: MyTaskBoardSectionProps) => {
                 {filteredTasksNoParent?.map(task => {
                     return (
                         <Fragment key={task.id}>
-                            <MyTaskBoardItem task={task}/>
+                            <MyTaskBoardItem task={task} isOpenTaskDetailToolbar={openTaskDetailToolbar === task.id} onOpenTaskDetailToolbar={e => {
+                                handleOpenTaskDetailToolbar(task.id, e)
+                            }}/>
                         </Fragment>
                     )
                 })}

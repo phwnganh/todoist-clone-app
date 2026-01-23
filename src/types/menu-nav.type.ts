@@ -1,4 +1,4 @@
-import type {ComponentType, SVGProps} from "react";
+import type {ComponentType, ReactNode, SVGProps} from "react";
 
 export type MenuNavItem = {
     key: string;
@@ -22,4 +22,11 @@ export type MyProjectMenuToolbar = | "divider" | {
     label: string;
     danger?: boolean;
     onClick: () => void;
+}
+
+export type MyTaskMenuToolbar = | "divider" | {
+    label: string;
+    danger?: boolean;
+    onClick: () => void;
+    icon: ReactNode;
 }

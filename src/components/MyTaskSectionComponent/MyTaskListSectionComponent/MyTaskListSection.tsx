@@ -14,6 +14,7 @@ import {useSectionStore} from "../../../stores/section.store.ts";
 import AddMyTaskSectionComponent from "../AddMyTaskSectionComponent";
 import EditMyTaskSectionComponent from "../EditMyTaskSectionComponent";
 import {useTaskStore} from "../../../stores/task.store.ts";
+import {type MouseEvent} from "react";
 
 type MyTaskSectionProps = {
     section: Section
@@ -24,7 +25,7 @@ const MyTaskListSection = ({section}: MyTaskSectionProps) => {
     const {isExpanded, handleExpanded} = useExpanded(true)
     const taskTree = useTaskTreeMultiLevel(tasks?.results, projectId, section.id)
     const {editingSectionId, onOpenEditSection, onCloseEditSection, addSectionId, onOpenAddSectionForm, onCloseAddSectionForm} = useSectionStore()
-    const {addingTaskId, onOpenAddMyTask, onCloseAddMyTask} = useTaskStore()
+    const {addingTaskId, onOpenAddMyTask, onCloseAddMyTask, openTaskDetailToolbar, onOpenTaskDetailToolbar, onCloseTaskDetailToolbar} = useTaskStore()
     const filteredTasks = useMemo(() => {
         return tasks?.results.filter(task => task.project_id === projectId && task.section_id === section.id)
     }, [projectId, section.id, tasks?.results])
@@ -32,6 +33,11 @@ const MyTaskListSection = ({section}: MyTaskSectionProps) => {
     const isSectionAdding = addSectionId === section.id
     const isEditing = editingSectionId === section.id
     const isAddingTask = addingTaskId === section.id;
+    const handleOpenTaskDetailToolbar = (id: string, e: MouseEvent<HTMLButtonElement>)=> {
+        e.stopPropagation();
+        onOpenTaskDetailToolbar(id)
+    }
+
     if (isLoading) {
         return (
             <div className={"mt-medium"}>
@@ -54,7 +60,9 @@ const MyTaskListSection = ({section}: MyTaskSectionProps) => {
                 <ul className={"mt-1.25 flex flex-col flex-wrap"}>
                     {taskTree.map(taskNode => (
                         <Fragment key={taskNode.task.id}>
-                            <MyTaskListItem taskNode={taskNode} level={0}/>
+                            <MyTaskListItem taskNode={taskNode} level={0} isOpenTaskDetailToolbar={openTaskDetailToolbar === taskNode.task.id} onOpenTaskDetailToolbar={(e) => {
+                                handleOpenTaskDetailToolbar(taskNode.task.id, e)
+                            }} onCloseTaskDetailToolbar={onCloseTaskDetailToolbar}/>
                         </Fragment>
                     ))}
                     {isAddingTask ? (

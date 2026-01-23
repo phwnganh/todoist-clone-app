@@ -4,45 +4,61 @@ import MyTaskContent from "./MyTaskContent.tsx";
 import ChildrenIcon from "../../assets/children-icon.svg";
 import SmallCalendarIcon from "../../assets/small-calendar-icon.svg";
 import MenuIcon from "../icons/MenuIcon.tsx";
+import type {MouseEvent} from "react";
+import MyTasksToolbarDropdown from "./MyTasksToolbarDropdown.tsx";
+import {useTaskStore} from "../../stores/task.store.ts";
+import EditMyTaskModalDialog from "./EditMyTaskComponent";
 
 type MyTaskBoardItemProps = {
     task: Task;
+    isOpenTaskDetailToolbar: boolean
+    onOpenTaskDetailToolbar: (e: MouseEvent<HTMLButtonElement>) => void
 
 }
-const MyTaskBoardItem = ({task}: MyTaskBoardItemProps) => {
-
+const MyTaskBoardItem = ({task, isOpenTaskDetailToolbar, onOpenTaskDetailToolbar}: MyTaskBoardItemProps) => {
+const {editingTaskId, onCloseEditTask} = useTaskStore()
+const isEditing = editingTaskId === task.id
     return (
-        <div className={"flex items-start outline outline-border-idle hover:outline-border-hover shadow-sm rounded-large p-2.5 group relative"}>
-            <button type={"button"} aria-checked={"false"} aria-label={"Mark task as complete"} className={"mt-2 mr-1.5 -ml-0.75 relative group/check"}>
-                <div className={"h-5 w-5 rounded-full border-2 border-product-library-priorities-p4-primary-idle-fill"}></div>
-                <div className={"inset-0 absolute group-hover/check:flex justify-center items-center hidden"}>
-                    <VerifiedIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
-                </div>
-            </button>
+        <>
+            {isEditing ? (<EditMyTaskModalDialog variant={"board"} task={task} onCloseEditMyTask={onCloseEditTask}/>) :
+                <div className={"flex items-start outline outline-border-idle hover:outline-border-hover shadow-sm rounded-large p-2.5 group relative"}>
+                <button type={"button"} aria-checked={"false"} aria-label={"Mark task as complete"} className={"mt-2 mr-1.5 -ml-0.75 relative group/check"}>
+                    <div className={"h-5 w-5 rounded-full border-2 border-product-library-priorities-p4-primary-idle-fill"}></div>
+                    <div className={"inset-0 absolute group-hover/check:flex justify-center items-center hidden"}>
+                        <VerifiedIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
+                    </div>
+                </button>
 
-            <div className={"py-2 flex flex-col min-w-0 mr-3"}>
-                <div className={"mb-0.75 text-sm"}>
-                    <MyTaskContent content={task.content}/>
-                </div>
-                <p className={"text-xs mb-0.5 text-product-library-display-secondary-idle-tint line-clamp-1"}>{task.description}</p>
-                <div className={"flex gap-small items-center"}>
-                    {/*{hasChildren &&*/}
-                    {/*    <div className={"flex gap-0.5 text-xs text-product-library-display-secondary-idle-tint"}>*/}
-                    {/*        <img src={ChildrenIcon} alt={"children-icon"}/>*/}
-                    {/*        <span>0/{children.length}</span>*/}
-                    {/*    </div>*/}
-                    {/*}*/}
+                <div className={"py-2 flex flex-col min-w-0 mr-3"}>
+                    <div className={"mb-0.75 text-sm"}>
+                        <MyTaskContent content={task.content}/>
+                    </div>
+                    <p className={"text-xs mb-0.5 text-product-library-display-secondary-idle-tint line-clamp-1"}>{task.description}</p>
+                    <div className={"flex gap-small items-center"}>
+                        {/*{hasChildren &&*/}
+                        {/*    <div className={"flex gap-0.5 text-xs text-product-library-display-secondary-idle-tint"}>*/}
+                        {/*        <img src={ChildrenIcon} alt={"children-icon"}/>*/}
+                        {/*        <span>0/{children.length}</span>*/}
+                        {/*    </div>*/}
+                        {/*}*/}
 
-                    <button type={"button"} className={"flex gap-0.5 text-xs text-product-library-actionable-primary-idle-fill"}>
-                        <img src={SmallCalendarIcon} alt={"small-calendar-icon"}/>
-                        <span>Tomorrow</span>
-                    </button>
+                        <button type={"button"} className={"flex gap-0.5 text-xs text-product-library-actionable-primary-idle-fill"}>
+                            <img src={SmallCalendarIcon} alt={"small-calendar-icon"}/>
+                            <span>Tomorrow</span>
+                        </button>
+                    </div>
                 </div>
+                <button onClick={onOpenTaskDetailToolbar} type={"button"} aria-label={"menu"} className={"absolute right-2 top-2 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto rounded-small hover:bg-product-library-selectable-secondary-hover-fill"}>
+                    <MenuIcon/>
+                </button>
+                {isOpenTaskDetailToolbar && (
+                    <div className={"absolute top-9 right-9 left-6 z-50"} onClick={e => e.stopPropagation()}>
+                        <MyTasksToolbarDropdown taskId={task.id}/>
+                    </div>
+                )}
             </div>
-            <button type={"button"} aria-label={"menu"} className={"absolute right-2 top-2 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto rounded-small hover:bg-product-library-selectable-secondary-hover-fill"}>
-                <MenuIcon/>
-            </button>
-        </div>
+            }
+        </>
     );
 };
 
