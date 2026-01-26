@@ -1,5 +1,5 @@
 import ReactMarkdown from "react-markdown";
-const MyTaskContent = ({ content }: { content: string }) => {
+const MyTaskContent = ({ content }: { content: string | undefined }) => {
   return (
     <ReactMarkdown
       components={{

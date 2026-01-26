@@ -118,6 +118,7 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
           ) : (
             <li className={"pr-5 pl-px"}>
               <AddMyTaskButtonSection
+                  taskType={"task"}
                 onOpenAddMyTask={() => onOpenAddMyTask(section.id)}
               />
             </li>

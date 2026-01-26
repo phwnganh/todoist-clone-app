@@ -2,8 +2,9 @@ import SmallPlusAddIcon from "../icons/SmallPlusAddIcon.tsx";
 
 type AddMyTaskSectionProps = {
   onOpenAddMyTask: () => void;
+  taskType?: string
 };
-const AddMyTaskButtonSection = ({ onOpenAddMyTask }: AddMyTaskSectionProps) => {
+const AddMyTaskButtonSection = ({ onOpenAddMyTask, taskType }: AddMyTaskSectionProps) => {
   return (
     <button
       type={"button"}
@@ -22,7 +23,7 @@ const AddMyTaskButtonSection = ({ onOpenAddMyTask }: AddMyTaskSectionProps) => {
           "text-sm text-gray-500 group-hover:text-product-library-display-accent-primary-tint"
         }
       >
-        Add task
+        Add {taskType}
       </p>
     </button>
   );

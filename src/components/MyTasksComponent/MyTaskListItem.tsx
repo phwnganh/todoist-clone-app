@@ -15,6 +15,7 @@ import ChildrenIcon from "../../assets/children-icon.svg";
 import { useExpanded } from "../../hooks/useExpanded.ts";
 import { type MouseEvent } from "react";
 import MyTasksToolbarDropdown from "./MyTasksToolbarDropdown.tsx";
+import MyTaskDetailModalDialog from "./MyTaskDetailModalDialog";
 
 type MyTaskListItemProps = {
   taskNode: TaskNode;
@@ -32,8 +33,9 @@ const MyTaskListItem = ({
 }: MyTaskListItemProps) => {
   const { task, children } = taskNode;
   const { isExpanded, handleExpanded } = useExpanded(true);
-  const { editingTaskId, onOpenEditTask, onCloseEditTask } = useTaskStore();
+  const { editingTaskId, onOpenEditTask, onCloseEditTask, taskDetailId, onOpenTaskDetail, onCloseTaskDetail } = useTaskStore();
   const isEditing = editingTaskId === task.id;
+  const isOpenTaskDetail = taskDetailId === task.id;
   const hasChildren = children.length > 0;
 
   return (
@@ -90,7 +92,8 @@ const MyTaskListItem = ({
               </div>
             </button>
             {/*task list item*/}
-            <div className={"py-2 mr-7.5 flex flex-col"}>
+            <div role={"button"} className={"py-2 mr-7.5 flex flex-col cursor-pointer"}
+            onClick={() => onOpenTaskDetail(task.id)}>
               <div className={"mb-0.75 text-sm"}>
                 <MyTaskContent content={task.content} />
               </div>
@@ -194,6 +197,9 @@ const MyTaskListItem = ({
           </>
         }
 
+      {isOpenTaskDetail && (
+          <MyTaskDetailModalDialog onCloseTaskDetail={onCloseTaskDetail} />
+      )}
 
     </>
   );

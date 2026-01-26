@@ -115,6 +115,7 @@ const MyTaskBoardSection = ({ section }: MyTaskBoardSectionProps) => {
           />
         ) : (
           <AddMyTaskButtonSection
+              taskType={"task"}
             onOpenAddMyTask={() => onOpenAddMyTask(section.id)}
           />
         )}
