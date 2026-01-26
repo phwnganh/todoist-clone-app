@@ -36,17 +36,16 @@ const MyTasksBoard = ({ filteredSectionsByProject }: MyTasksBoardProps) => {
         "flex items-start overflow-x-auto scrollbar-thin scrollbar-custom"
       }
     >
-      <div className={"relative"}></div>
       <MyTaskBoardSection section={NO_SECTION} />
       <AddMyTaskBoardSectionSlot addedSectionId={NO_SECTION.id} />
-      {filteredSectionsByProject?.map((section) => {
-        return (
-          <Fragment key={section.id}>
-            <MyTaskBoardSection section={section} />
-            <AddMyTaskBoardSectionSlot addedSectionId={section.id} />
-          </Fragment>
-        );
-      })}
+        {filteredSectionsByProject?.map((section) => {
+          return (
+              <Fragment key={section.id}>
+                <MyTaskBoardSection section={section} />
+                <AddMyTaskBoardSectionSlot addedSectionId={section.id} />
+              </Fragment>
+          );
+        })}
       {openAddNewTaskSectionFormModalDialog ? (
         <AddMyTaskSection
           onCancelAddMyTaskSection={handleCloseAddNewTaskSectionFormModalDialog}

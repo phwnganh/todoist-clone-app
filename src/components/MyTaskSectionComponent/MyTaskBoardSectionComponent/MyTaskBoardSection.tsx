@@ -56,7 +56,7 @@ const MyTaskBoardSection = ({ section }: MyTaskBoardSectionProps) => {
     <div className={"relative mr-2"}>
       <div
         className={
-          "rounded-large outline outline-transparent hover:outline-border-hover py-2 px-4 shrink-0 w-70 flex flex-col gap-small"
+          "rounded-large ring ring-transparent hover:ring-border-hover py-2 px-4 shrink-0 w-70 flex flex-col gap-small"
         }
       >
         {section.id !== null ? (
@@ -92,21 +92,21 @@ const MyTaskBoardSection = ({ section }: MyTaskBoardSectionProps) => {
             </span>
           </div>
         )}
+          {filteredTasksNoParent?.map((task) => {
+            return (
+                <Fragment key={task.id}>
+                  <MyTaskBoardItem
+                      task={task}
+                      isOpenTaskDetailToolbar={openTaskDetailToolbar === task.id}
+                      onOpenTaskDetailToolbar={(e) => {
+                        handleOpenTaskDetailToolbar(task.id, e);
+                      }}
+                      tasks={tasks?.results || []}
+                  />
+                </Fragment>
+            );
+          })}
 
-        {filteredTasksNoParent?.map((task) => {
-          return (
-            <Fragment key={task.id}>
-              <MyTaskBoardItem
-                task={task}
-                isOpenTaskDetailToolbar={openTaskDetailToolbar === task.id}
-                onOpenTaskDetailToolbar={(e) => {
-                  handleOpenTaskDetailToolbar(task.id, e);
-                }}
-                tasks={tasks?.results || []}
-              />
-            </Fragment>
-          );
-        })}
 
         {isAddingTask ? (
           <AddMyTaskModalDialog

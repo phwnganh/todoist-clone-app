@@ -1,7 +1,6 @@
 import MyTaskListSection from "../MyTaskSectionComponent/MyTaskListSectionComponent/MyTaskListSection.tsx";
 import { useProjectStore } from "../../stores/project.store.ts";
 import type { Section } from "../../types/section.type.ts";
-
 type MyTasksListProps = {
   filteredSectionsByProject: Section[] | undefined;
 };

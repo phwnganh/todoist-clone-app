@@ -42,12 +42,7 @@ export const useTaskTreeMultiLevel = (tasks: Task[] | undefined, projectId: stri
 
         // sort tree
         const sortTree = (nodes: TaskNode[]) => {
-            nodes.sort((a, b) => {
-                if(!a.task.parent_id && !b.task.parent_id){
-                    return (a.task.day_order ?? 0) - (b.task.day_order ?? 0)
-                }
-                return (a.task.child_order ?? 0) - (b.task.child_order ?? 0)
-            })
+            nodes.sort((a, b) => (a.task.child_order ?? 0) - (b.task.child_order ?? 0))
             nodes.forEach(node => sortTree(node.children))
         }
 

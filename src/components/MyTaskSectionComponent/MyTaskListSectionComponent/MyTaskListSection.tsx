@@ -92,21 +92,22 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
 
       {isExpanded && (
         <ul className={"mt-1.25 flex flex-col flex-wrap"}>
-          {taskTree.map((taskNode) => (
-            <Fragment key={taskNode.task.id}>
-              <MyTaskListItem
-                taskNode={taskNode}
-                level={0}
-                isOpenTaskDetailToolbar={
-                  openTaskDetailToolbar === taskNode.task.id
-                }
-                onOpenTaskDetailToolbar={(e) => {
-                  handleOpenTaskDetailToolbar(taskNode.task.id, e);
-                }}
-                onCloseTaskDetailToolbar={onCloseTaskDetailToolbar}
-              />
-            </Fragment>
-          ))}
+            {taskTree.map((taskNode) => (
+                <Fragment key={taskNode.task.id}>
+                  <MyTaskListItem
+                      taskNode={taskNode}
+                      level={0}
+                      isOpenTaskDetailToolbar={
+                          openTaskDetailToolbar === taskNode.task.id
+                      }
+                      onOpenTaskDetailToolbar={(e) => {
+                        handleOpenTaskDetailToolbar(taskNode.task.id, e);
+                      }}
+                      onCloseTaskDetailToolbar={onCloseTaskDetailToolbar}
+                  />
+                </Fragment>
+            ))}
+
           {isAddingTask ? (
             <li>
               <AddMyTaskModalDialog

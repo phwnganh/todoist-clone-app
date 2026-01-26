@@ -14,6 +14,9 @@ import MyTaskLayoutFiltersDropdown from "../../components/MyTasksComponent/MyTas
 import MyTasksBoard from "../../components/MyTasksComponent/MyTasksBoard";
 import {useProjectStore} from "../../stores/project.store.ts";
 import {useGetAllSections} from "../../hooks/useQueryHook/useSections.ts";
+import {DndContext, type DragEndEvent} from "@dnd-kit/core";
+import {useGetAllTasks} from "../../hooks/useQueryHook/useTasks.ts";
+import {findTaskByIdToOrder, getSiblings, handleReorder} from "../../helpers/dragDropMyTasks.ts";
 
 const MyProjectDetailPage = () => {
     const {projectId} = useParams<{projectId: string}>();
@@ -25,6 +28,7 @@ const MyProjectDetailPage = () => {
         }
     }, [projectId, setProjectId]);
     const {data: sections} = useGetAllSections();
+    const {data: allTasks} = useGetAllTasks()
     const filteredSectionsByProject = useMemo(() => {
         return sections?.results?.filter(section => section.project_id === projectId);
     }, [sections?.results, projectId]);
@@ -39,6 +43,40 @@ const MyProjectDetailPage = () => {
     const {showCollapse, onToggleSidebar} = useOutletContext<HeaderLayoutType>()
     const navigate = useNavigate()
 
+    const handleDragEndList = (e: DragEndEvent) => {
+        const {active, over} = e;
+        if(!over || active.id === over.id) return;
+        const tasks = allTasks?.results
+        if(!tasks) return;
+
+        const activeTask = findTaskByIdToOrder(tasks, active.id as string)
+        const overTask = findTaskByIdToOrder(tasks, over.id as string)
+        if(!activeTask || !overTask) return;
+
+        handleReorder(tasks, activeTask, overTask, {
+            parent: true,
+            section: true
+        })
+
+    }
+
+    const handleDragEndBoard = (e: DragEndEvent) => {
+        const {active, over} = e;
+        if(!over || active.id === over.id) return;
+
+        const tasks = allTasks?.results;
+        if(!tasks) return;
+        const activeTask = findTaskByIdToOrder(tasks, active.id as string)
+        const overTask = findTaskByIdToOrder(tasks, over.id as string)
+
+        if(!activeTask || !overTask) return;
+        handleReorder(tasks, activeTask, overTask, {
+            parent: false,
+            section: true
+        })
+
+
+    }
     if(!projectId){
         return <LoadingSpin/>
     }
@@ -74,21 +112,24 @@ const MyProjectDetailPage = () => {
                 <button className={"px-1 text-product-library-actionable-quaternary-idle-tint text-sm font-medium hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small p-1.5"} onClick={() => navigate(PROJECTS)}>My Projects</button>
                 <div className={"text-sm text-product-library-display-secondary-idle-tint"}>/</div>
             </div>}></HeaderLayout>
-            {layoutName === "list" ? (
-                <section className={"max-w-200 mx-auto w-full relative z-10"}>
-                    <div className={"flex flex-col gap-small"}>
-                        <MyTaskTitle/>
-                        <MyTasksList filteredSectionsByProject={filteredSectionsByProject}/>
-                    </div>
-                </section>
-            ) : (
-                <section className={"px-10"}>
-                    <div className={"flex flex-col gap-small"}>
-                        <MyTaskTitle/>
-                        <MyTasksBoard filteredSectionsByProject={filteredSectionsByProject}/>
-                    </div>
-                </section>
-            )}
+            <DndContext onDragEnd={layoutName === "list" ? handleDragEndList : handleDragEndBoard}>
+                {layoutName === "list" ? (
+                    <section className={"max-w-200 mx-auto w-full relative z-10"}>
+                        <div className={"flex flex-col gap-small"}>
+                            <MyTaskTitle/>
+                            <MyTasksList filteredSectionsByProject={filteredSectionsByProject}/>
+                        </div>
+                    </section>
+                ) : (
+                    <section className={"px-10"}>
+                        <div className={"flex flex-col gap-small"}>
+                            <MyTaskTitle/>
+                            <MyTasksBoard filteredSectionsByProject={filteredSectionsByProject}/>
+                        </div>
+                    </section>
+                )}
+            </DndContext>
+
         </>
     );
 };

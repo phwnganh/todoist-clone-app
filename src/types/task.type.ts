@@ -51,3 +51,8 @@ export type TaskNode = {
     task: Task,
     children: TaskNode[]
 }
+
+export type DragMeta = {
+    parent: boolean
+    section: boolean
+}
