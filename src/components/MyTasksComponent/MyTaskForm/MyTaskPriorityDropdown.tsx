@@ -1,8 +1,13 @@
 import { priorityFilterData } from "../../../data/myTaskFilter.data.ts";
 import PriorityIcon from "../../icons/PriorityIcon.tsx";
 import VerifiedIcon from "../../icons/VerifiedIcon.tsx";
+import type {Priority} from "../../../types/task.type.ts";
 
-const MyTaskPriorityDropdown = () => {
+type MyTaskPriorityDropdownProps = {
+    selectedPriority: Priority | null;
+    onSelect: (priority: Priority) => void;
+}
+const MyTaskPriorityDropdown = ({selectedPriority, onSelect}: MyTaskPriorityDropdownProps) => {
   return (
     <div
       id={"priority-listbox"}
@@ -13,14 +18,20 @@ const MyTaskPriorityDropdown = () => {
       }
     >
       {priorityFilterData.map((priority) => {
+          const isSelected = selectedPriority === priority;
         return (
           <div
             key={priority.key}
             role={"option"}
             tabIndex={-1}
+            data-selected={isSelected}
             className={
-              "group flex flex-col py-1 px-1.5 flex-1 w-full hover:bg-product-library-selectable-secondary-hover-fill rounded-small cursor-pointer"
+              "group flex flex-col py-1 px-1.5 flex-1 w-full hover:bg-product-library-selectable-secondary-hover-fill data-[selected=true]:bg-product-library-selectable-secondary-hover-fill rounded-small cursor-pointer"
             }
+            onMouseDown={e => {
+                e.preventDefault()
+                onSelect(priority);
+            }}
           >
             <div className={"flex items-center gap-1.5"}>
               <div className="w-6 h-6 flex justify-center items-center shrink-0">
@@ -28,7 +39,7 @@ const MyTaskPriorityDropdown = () => {
               </div>
               <div className={"flex items-center gap-1.5"}>
                 <div className="text-sm mx-2.5">{priority.label}</div>
-                <div className={"flex justify-center items-center"}>
+                <div className={"flex justify-center items-center invisible group-data-[selected=true]:visible"}>
                   <VerifiedIcon
                     className={
                       "text-product-library-actionable-destructive-idle-tint"

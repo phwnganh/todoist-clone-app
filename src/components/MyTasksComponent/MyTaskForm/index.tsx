@@ -17,11 +17,12 @@ import { useGetAProject } from "../../../hooks/useQueryHook/useProjects.ts";
 import { replaceProjectHashtagFromContent } from "../../../helpers/replaceProjectHashtagFromContent.ts";
 import CloseIcon from "../../../assets/close-icon.svg";
 import SubmitIcon from "../../icons/SubmitIcon.tsx";
+import type {Priority} from "../../../types/task.type.ts";
 export type MyTaskFormValues = {
   content: string;
   description: string;
   due_date: string;
-  priority: number;
+  priority: Priority | null;
   project: Project | null;
 };
 type MyTaskFormProps = {
@@ -58,8 +59,9 @@ const MyTaskForm = ({
     setIsOpenAddMyTaskDropdown((prev) => (prev === name ? null : name));
   };
 
-  const handleSelectPriority = (priority: number) => {
+  const handleSelectPriority = (priority: Priority) => {
     onChange(updateMyTaskField(values, "priority", priority));
+    console.log("select priority: ", priority);
     setIsOpenAddMyTaskDropdown(null);
   };
 
@@ -174,7 +176,7 @@ const MyTaskForm = ({
                 </div>
               </div>
               {isOpenAddMyTaskDropdown === "priority" && (
-                <MyTaskPriorityDropdown />
+                <MyTaskPriorityDropdown selectedPriority={values.priority} onSelect={(priority: Priority) => handleSelectPriority(priority)}/>
               )}
             </div>
 

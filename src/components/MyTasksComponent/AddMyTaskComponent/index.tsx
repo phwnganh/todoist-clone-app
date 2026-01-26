@@ -1,5 +1,6 @@
 import { type FormEvent, useState } from "react";
 import MyTaskForm, { type MyTaskFormValues } from "../MyTaskForm";
+import {priorityFilterData} from "../../../data/myTaskFilter.data.ts";
 
 type AddMyTaskModalDialogProps = {
   onCloseAddMyTask: () => void;
@@ -13,7 +14,7 @@ const AddMyTaskModalDialog = ({
     content: "",
     description: "",
     due_date: "",
-    priority: 0,
+    priority: priorityFilterData.find(p => p.value === 1) ?? null,
     project: null,
   });
 

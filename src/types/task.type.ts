@@ -56,3 +56,10 @@ export type DragMeta = {
     parent: boolean
     section: boolean
 }
+
+export type Priority = {
+    key: string;
+    label: string;
+    value: number;
+    color: string;
+}
