@@ -7,6 +7,7 @@ import UserAvatar from "../../../../assets/User-avatar.png";
 import ProjectOptions from "./ProjectOptions.tsx";
 import ProjectDropdownFooter from "./ProjectDropdownFooter.tsx";
 import type { Project } from "../../../../types/project.type.ts";
+import {useGetAllSections} from "../../../../hooks/useQueryHook/useSections.ts";
 
 type AddMyTaskProjectDropdownProps = {
   selectedProject: Project | null;
@@ -25,13 +26,18 @@ const MyTaskFormProjectDropdown = ({
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const { data: projects, isLoading } = useGetAllProjects();
-
+  const {data: sections} = useGetAllSections()
   const filteredProjects = useMemo(() => {
     if (!hasKeyword) return projects?.results;
-    return projects?.results.filter((project) =>
-      project.name.toLowerCase().includes(debounceSearchKeyword),
-    );
-  }, [debounceSearchKeyword, hasKeyword, projects]);
+    return projects?.results.filter((project) => {
+      const matchedProject = project.name.toLowerCase().includes(debounceSearchKeyword);
+      const matchedSection = sections?.results?.some(section => section.project_id === project.id &&
+      section.name.toLowerCase().includes(debounceSearchKeyword));
+      return matchedProject || matchedSection
+    })
+
+  }, [debounceSearchKeyword, hasKeyword, projects, sections?.results]);
+
 
   const isNoProjectsFound = hasKeyword && filteredProjects?.length === 0;
 
@@ -86,6 +92,8 @@ const MyTaskFormProjectDropdown = ({
             project={project}
             isProjectsSelected={selectedProject?.name === project.name}
             onProjectsSelected={onSelect}
+            keyword={debounceSearchKeyword}
+            hasKeyword={hasKeyword}
           />
         ))}
 
