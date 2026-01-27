@@ -38,6 +38,7 @@ type MyTaskFormProps = {
   isPending?: boolean;
   errorMessage?: string | null;
   variant?: string;
+  isEditMode?: boolean
 };
 const MyTaskForm = ({
   onCloseMyTaskForm,
@@ -48,7 +49,7 @@ const MyTaskForm = ({
   submittingLabel,
   isPending,
   errorMessage,
-  variant,
+  variant, isEditMode
 }: MyTaskFormProps) => {
   const [isOpenAddMyTaskDropdown, setIsOpenAddMyTaskDropdown] =
     useState<OpenMyTaskFormDropdown>(null);
@@ -104,7 +105,7 @@ const MyTaskForm = ({
         <div className={"max-h-50 mb-small flex flex-col gap-xsmall"}>
 
           <div className={"flex items-center gap-1"}>
-            {values.project && (
+            {!isEditMode && values.project && (
                 <ProjectChip project={values.project} section={values.section} onRemove={() =>
                 onChange({...values, project: null, section: null})}/>
             )}

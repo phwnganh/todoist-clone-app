@@ -15,6 +15,7 @@ const EditMyTaskModalDialog = ({
   variant,
 }: EditMyTaskModalDialogProps) => {
   const projectId = useProjectStore((state) => state.projectId);
+  const isEditMode = !!task.id
   const { data: projectDetail } = useGetAProject(projectId);
   const [values, setValues] = useState<MyTaskFormValues>({
     content: task.content,
@@ -36,6 +37,7 @@ const EditMyTaskModalDialog = ({
       onSubmit={handleUpdateMyTask}
       submitLabel={"Save"}
       submittingLabel={"Saving..."}
+      isEditMode={isEditMode}
     />
   );
 };
