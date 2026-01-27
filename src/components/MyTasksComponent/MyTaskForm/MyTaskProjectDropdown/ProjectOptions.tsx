@@ -5,17 +5,20 @@ import VerifiedIcon from "../../../icons/VerifiedIcon.tsx";
 import SectionsOfProjectOptions from "./SectionsOfProjectOptions.tsx";
 import {useGetAllSections} from "../../../../hooks/useQueryHook/useSections.ts";
 import {useMemo} from "react";
+import type {Section} from "../../../../types/section.type.ts";
 
 type ProjectOptionsProps = {
   project: Project;
   isProjectsSelected: boolean;
   onProjectsSelected: (project: Project) => void;
+  onSectionSelected: (project: Project, section: Section) => void;
   keyword: string;
 };
 const ProjectOptions = ({
   project,
   isProjectsSelected,
   onProjectsSelected, keyword,
+    onSectionSelected
 }: ProjectOptionsProps) => {
   const {data: sections} = useGetAllSections()
 
@@ -60,7 +63,7 @@ const ProjectOptions = ({
         </div>
 
         {filteredSectionsOfProject?.map(section => {
-          return (<SectionsOfProjectOptions key={section.id} section={section}/>)
+          return (<SectionsOfProjectOptions key={section.id} section={section} onSelectedSection={() => onSectionSelected(project, section)}/>)
         })}
 
       </>

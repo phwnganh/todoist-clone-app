@@ -4,8 +4,9 @@ import SectionIcon from "../../../icons/SectionIcon.tsx";
 
 type SectionsOfProjectOptionsProps = {
     section: Section;
+    onSelectedSection: () =>void;
 }
-const SectionsOfProjectOptions = ({section}: SectionsOfProjectOptionsProps) => {
+const SectionsOfProjectOptions = ({section, onSelectedSection}: SectionsOfProjectOptionsProps) => {
     return (
         <div role={"option"}
              // aria-selected={}
@@ -13,6 +14,7 @@ const SectionsOfProjectOptions = ({section}: SectionsOfProjectOptionsProps) => {
              // data-selected={}
         onMouseDown={e => {
             e.preventDefault()
+            onSelectedSection()
         }} className={"group/section flex items-center gap-1.5 pl-6 py-1 ml-small justify-between data-[selected=true]:bg-product-library-selectable-secondary-hover-fill hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}>
             <div className={"flex items-center gap-1.5"}>
                 <div className={"flex justify-center items-center w-6 h-6"}>

@@ -8,14 +8,17 @@ import ProjectOptions from "./ProjectOptions.tsx";
 import ProjectDropdownFooter from "./ProjectDropdownFooter.tsx";
 import type { Project } from "../../../../types/project.type.ts";
 import {useGetAllSections} from "../../../../hooks/useQueryHook/useSections.ts";
+import type {Section} from "../../../../types/section.type.ts";
 
 type AddMyTaskProjectDropdownProps = {
   selectedProject: Project | null;
   onSelect: (project: Project) => void;
+  onSelectedSection: (project: Project, section: Section) => void;
 };
 const MyTaskFormProjectDropdown = ({
   selectedProject,
   onSelect,
+    onSelectedSection,
 }: AddMyTaskProjectDropdownProps) => {
   const [typedProject, setTypedProject] = useState<string>("");
   const keyword = typedProject.trim().toLowerCase();
@@ -93,6 +96,7 @@ const MyTaskFormProjectDropdown = ({
             isProjectsSelected={selectedProject?.name === project.name}
             onProjectsSelected={onSelect}
             keyword={debounceSearchKeyword}
+            onSectionSelected={onSelectedSection}
           />
         ))}
 

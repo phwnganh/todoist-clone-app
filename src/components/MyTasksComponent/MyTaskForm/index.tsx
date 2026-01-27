@@ -14,16 +14,19 @@ import { getProjectColorClass } from "../../../helpers/getProjectColorClass.ts";
 import type { Project } from "../../../types/project.type.ts";
 import { useProjectStore } from "../../../stores/project.store.ts";
 import { useGetAProject } from "../../../hooks/useQueryHook/useProjects.ts";
-import { replaceProjectHashtagFromContent } from "../../../helpers/replaceProjectHashtagFromContent.ts";
 import CloseIcon from "../../../assets/close-icon.svg";
 import SubmitIcon from "../../icons/SubmitIcon.tsx";
 import type {Priority} from "../../../types/task.type.ts";
+import type {Section} from "../../../types/section.type.ts";
+import ProjectChip from "../../ui/ProjectChip.tsx";
+
 export type MyTaskFormValues = {
   content: string;
   description: string;
   due_date: string;
   priority: Priority | null;
   project: Project | null;
+  section: Section | null;
 };
 type MyTaskFormProps = {
   onCloseMyTaskForm: () => void;
@@ -65,22 +68,14 @@ const MyTaskForm = ({
     setIsOpenAddMyTaskDropdown(null);
   };
 
-  const handleSelectProject = (project: Project) => {
-    const hashtag = `#${project.name}`;
-    const replacedContent = replaceProjectHashtagFromContent(
-      values.content,
-      values.project,
-    );
-
+  const handleSelectProject = (project: Project, section?: Section) => {
     onChange({
       ...values,
       project,
-      content: replacedContent
-        ? `${replacedContent} ${hashtag} `
-        : `${hashtag} `,
-    });
-    setIsOpenAddMyTaskDropdown(null);
-  };
+      section: section ?? null
+    })
+    setIsOpenAddMyTaskDropdown(null)
+  }
 
   const handleContentChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(updateMyTaskField(values, "content", e.target.value));
@@ -107,15 +102,24 @@ const MyTaskForm = ({
     >
       <div className={"pt-small px-small rounded-large"}>
         <div className={"max-h-50 mb-small flex flex-col gap-xsmall"}>
-          <input
-            type={"text"}
-            className={
-              "mr-7 leading-tight font-medium text-sm text-product-library-display-primary-idle-tint outline-none"
-            }
-            placeholder={"Content"}
-            value={values.content}
-            onChange={handleContentChange}
-          ></input>
+          {/*<input*/}
+          {/*  type={"text"}*/}
+          {/*  className={*/}
+          {/*    `mr-7 leading-tight font-medium text-sm text-product-library-display-primary-idle-tint outline-none ${values.project ? "bg-amber-100" : ""}`*/}
+          {/*  }*/}
+          {/*  placeholder={"Content"}*/}
+          {/*  value={values.content}*/}
+          {/*  onKeyDown={handleContentKeyDown}*/}
+          {/*  onChange={handleContentChange}*/}
+          {/*></input>*/}
+
+          <div className={"flex items-center gap-1"}>
+            {values.project && (
+                <ProjectChip project={values.project} section={values.section} onRemove={() =>
+                onChange({...values, project: null, section: null})}/>
+            )}
+            <input type={"text"} value={values.content} onChange={handleContentChange} className={"flex-1 min-w-30 outline-none text-sm"} placeholder={"Content"}/>
+          </div>
           <input
             type={"text"}
             className={
@@ -263,6 +267,7 @@ const MyTaskForm = ({
             <MyTaskProjectDropdown
               selectedProject={values.project}
               onSelect={(project: Project) => handleSelectProject(project)}
+              onSelectedSection={(project: Project, section: Section) => handleSelectProject(project, section)}
             />
           )}
         </div>
