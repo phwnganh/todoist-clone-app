@@ -16,6 +16,7 @@ const AddMyTaskModalDialog = ({
     due_date: "",
     priority: priorityFilterData.find(p => p.value === 1) ?? null,
     project: null,
+    section: null
   });
 
   const handleAddMyTask = (e: FormEvent<HTMLFormElement>) => {

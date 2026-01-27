@@ -58,7 +58,7 @@ const MyTaskFormProjectDropdown = ({
   return (
     <div
       className={
-        "absolute bottom-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom max-h-70 w-75 mt-1 bg-white"
+        "absolute top-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom max-h-70 w-75 mt-1 bg-white"
       }
       id={"project-listbox"}
       role={"listbox"}

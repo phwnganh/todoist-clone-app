@@ -11,6 +11,8 @@ export type OpenDropdown = "color" | "workspace" | "parentProject" | null;
 
 export type OpenMyTaskFormDropdown = "date" | "priority" | "reminders" | "project" | null;
 
+export type OpenMyTaskDetailAsideDropdown = "project" | "date" | "priority" | "labels" | null;
+
 export type OpenMyTaskFilterDropdown = "grouping" | "sorting" | "date" | "priority" | null;
 export type LayoutItem = {
     key: string;
