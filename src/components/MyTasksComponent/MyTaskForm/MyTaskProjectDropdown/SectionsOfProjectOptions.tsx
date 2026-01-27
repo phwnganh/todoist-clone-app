@@ -13,7 +13,7 @@ const SectionsOfProjectOptions = ({section}: SectionsOfProjectOptionsProps) => {
              // data-selected={}
         onMouseDown={e => {
             e.preventDefault()
-        }} className={"group/section flex items-center gap-1.5 pl-6 py-1 mx-small justify-between data-[selected=true]:bg-product-library-selectable-secondary-hover-fill hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}>
+        }} className={"group/section flex items-center gap-1.5 pl-6 py-1 ml-small justify-between data-[selected=true]:bg-product-library-selectable-secondary-hover-fill hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}>
             <div className={"flex items-center gap-1.5"}>
                 <div className={"flex justify-center items-center w-6 h-6"}>
                     <SectionIcon/>

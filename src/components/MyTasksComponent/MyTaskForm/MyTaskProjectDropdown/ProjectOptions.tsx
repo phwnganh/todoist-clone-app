@@ -11,24 +11,21 @@ type ProjectOptionsProps = {
   isProjectsSelected: boolean;
   onProjectsSelected: (project: Project) => void;
   keyword: string;
-  hasKeyword: boolean;
 };
 const ProjectOptions = ({
   project,
   isProjectsSelected,
-  onProjectsSelected, keyword, hasKeyword,
+  onProjectsSelected, keyword,
 }: ProjectOptionsProps) => {
   const {data: sections} = useGetAllSections()
 
   const filteredSectionsOfProject = useMemo(() => {
     if(!sections) return [];
-    return sections?.results?.filter(section => {
-      const matchProject = section.project_id === project.id;
-      const matchKeyword = hasKeyword ? section.name.toLowerCase().includes(keyword) : true;
+    return sections?.results?.filter(section =>
+        section.project_id === project.id && section.name.toLowerCase().includes(keyword)
+    )
+  }, [sections, project.id, keyword])
 
-      return matchProject && matchKeyword;
-    })
-  }, [sections, project.id, keyword, hasKeyword])
   return (
       <>
         <div
@@ -42,7 +39,7 @@ const ProjectOptions = ({
               onProjectsSelected(project);
             }}
             className={
-              "group flex items-center gap-1.5 py-1 mx-small pl-medium justify-between data-[selected=true]:bg-product-library-selectable-secondary-hover-fill hover:bg-product-library-selectable-secondary-hover-fill rounded-small"
+              "group flex items-center gap-1.5 py-1 ml-small pl-medium justify-between data-[selected=true]:bg-product-library-selectable-secondary-hover-fill hover:bg-product-library-selectable-secondary-hover-fill rounded-small"
             }
         >
           <div className={"flex items-center gap-1.5"}>

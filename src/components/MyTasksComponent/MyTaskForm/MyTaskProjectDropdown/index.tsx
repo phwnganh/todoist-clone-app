@@ -67,7 +67,7 @@ const MyTaskFormProjectDropdown = ({
         inputRef={searchInputRef}
       />
       <hr className="border-t border-t-product-library-divider-tertiary" />
-      <div className={"p-1.5 flex flex-col"}>
+      <div className={"pt-1.5 flex flex-col"}>
         {trimmedProjectValue.length === 0 && (
           <div className={"py-1.5 px-2.5 flex items-center gap-1.5"}>
             <div className={"flex justify-center items-center w-4 h-4"}>
@@ -93,7 +93,6 @@ const MyTaskFormProjectDropdown = ({
             isProjectsSelected={selectedProject?.name === project.name}
             onProjectsSelected={onSelect}
             keyword={debounceSearchKeyword}
-            hasKeyword={hasKeyword}
           />
         ))}
 
