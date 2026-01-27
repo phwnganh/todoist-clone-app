@@ -48,7 +48,7 @@ const SidebarNavItem = ({ item, onClick }: SidebarNavItemProps) => {
       className={({ isActive }) =>
         `${commonClass} hover:rounded-small ${
           isActive
-            ? "bg-product-library-priorities-p2-secondary-hover-fill rounded-small hover:bg-product-library-priorities-p2-secondary-hover-fill"
+            ? "bg-product-library-display-accent-secondary-fill rounded-small hover:bg-product-library-display-accent-secondary-fill"
             : "hover:bg-product-library-selectable-secondary-hover-fill"
         }`
       }

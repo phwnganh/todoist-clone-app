@@ -11,7 +11,7 @@ const SidebarMyProjectsItem = ({ project }: { project: Project }) => {
       className={({ isActive }) =>
         `flex items-center rounded-small ${
           isActive
-            ? "bg-product-library-priorities-p2-secondary-hover-fill hover:bg-product-library-priorities-p2-secondary-hover-fill"
+            ? "bg-product-library-display-accent-secondary-fill hover:bg-product-library-display-accent-secondary-fill"
             : "hover:bg-product-library-selectable-secondary-hover-fill"
         }`
       }

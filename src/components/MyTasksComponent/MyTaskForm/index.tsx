@@ -102,23 +102,13 @@ const MyTaskForm = ({
     >
       <div className={"pt-small px-small rounded-large"}>
         <div className={"max-h-50 mb-small flex flex-col gap-xsmall"}>
-          {/*<input*/}
-          {/*  type={"text"}*/}
-          {/*  className={*/}
-          {/*    `mr-7 leading-tight font-medium text-sm text-product-library-display-primary-idle-tint outline-none ${values.project ? "bg-amber-100" : ""}`*/}
-          {/*  }*/}
-          {/*  placeholder={"Content"}*/}
-          {/*  value={values.content}*/}
-          {/*  onKeyDown={handleContentKeyDown}*/}
-          {/*  onChange={handleContentChange}*/}
-          {/*></input>*/}
 
           <div className={"flex items-center gap-1"}>
             {values.project && (
                 <ProjectChip project={values.project} section={values.section} onRemove={() =>
                 onChange({...values, project: null, section: null})}/>
             )}
-            <input type={"text"} value={values.content} onChange={handleContentChange} className={"flex-1 min-w-30 outline-none text-sm"} placeholder={"Content"}/>
+            <input type={"text"} value={values.content} onChange={handleContentChange} className={"flex-1 min-w-30 outline-none text-sm text-product-library-display-primary-idle-tint"} placeholder={"Content"}/>
           </div>
           <input
             type={"text"}
