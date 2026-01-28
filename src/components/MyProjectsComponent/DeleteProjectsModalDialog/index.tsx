@@ -17,13 +17,10 @@ const DeleteProjectsModalDialog = ({
   const handleDeleteProject = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     mutate(
-      { projectId: projectId },
-      {
-        onSuccess: () => {
-          onClose();
-        },
-      }
+      { projectId: projectId }
     );
+    onClose();
+
   };
 
   if (isLoading) {

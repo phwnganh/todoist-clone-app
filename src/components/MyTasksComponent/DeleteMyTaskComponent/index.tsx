@@ -2,8 +2,9 @@ import {createPortal} from "react-dom";
 import {useTaskStore} from "../../../stores/task.store.ts";
 import {useDeleteMyTask} from "../../../hooks/useQueryHook/useTasks.ts";
 import {type MouseEvent} from "react";
+import type {Task} from "../../../types/task.type.ts";
 
-const DeleteMyTaskModalDialog = () => {
+const DeleteMyTaskModalDialog = ({task}: {task: Task}) => {
     const {deleteTaskId, onCloseDeleteMyTask} = useTaskStore();
     const {mutate} = useDeleteMyTask()
 
@@ -25,7 +26,7 @@ const DeleteMyTaskModalDialog = () => {
                 </header>
                 <main>
                     <p className={"text-xs"}>
-                        The <span className={"font-strong"}></span> task will be permanently deleted.
+                        The <span className={"font-strong"}>{task?.content}</span> task will be permanently deleted.
                     </p>
                 </main>
                 <footer className={"pt-6 pb-4 flex justify-end gap-2.5"}>
