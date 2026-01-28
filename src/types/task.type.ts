@@ -1,28 +1,18 @@
 export type Task = {
-    user_id : string,
     id : string,
-    project_id: string,
-    section_id: string,
-    parent_id: string,
-    added_by_uid: string,
-    assigned_by_uid: string,
-    responsible_uid: string,
-    labels: string[],
-    deadline: Deadline,
-    duration: Duration,
-    checked: boolean,
-    is_deleted: boolean,
-    added_at: string,
-    completed_at: string,
-    updated_at: string,
-    due: Due,
-    priority: number,
-    child_order: number,
+    project_id: string | undefined,
+    section_id: string | undefined | null,
+    parent_id: string | null | undefined,
+    labels?: string[],
+    deadline?: Deadline,
+    duration?: Duration,
+    checked?: boolean,
+    due?: Due,
+    priority: number | undefined,
+    child_order?: number,
     content: string,
     description: string,
-    note_count: number,
-    day_order: number,
-    is_completed: boolean,
+    is_completed?: boolean,
 }
 
 export type Deadline = {
@@ -62,4 +52,21 @@ export type Priority = {
     label: string;
     value: number;
     color: string;
+}
+
+export type TaskPayload = {
+    content: string;
+    description: string;
+    project_id: string | undefined;
+    section_id: string | undefined | null;
+    parent_id: string | undefined | null;
+    priority: number | undefined;
+}
+
+export type UpdateTaskPayload = {
+    id: string;
+    content: string;
+    description: string;
+    priority: number;
+
 }

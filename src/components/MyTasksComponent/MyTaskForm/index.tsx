@@ -16,7 +16,7 @@ import { useProjectStore } from "../../../stores/project.store.ts";
 import { useGetAProject } from "../../../hooks/useQueryHook/useProjects.ts";
 import CloseIcon from "../../../assets/close-icon.svg";
 import SubmitIcon from "../../icons/SubmitIcon.tsx";
-import type {Priority} from "../../../types/task.type.ts";
+import type {Priority, Task} from "../../../types/task.type.ts";
 import type {Section} from "../../../types/section.type.ts";
 import ProjectChip from "../../ui/ProjectChip.tsx";
 
@@ -27,6 +27,7 @@ export type MyTaskFormValues = {
   priority: Priority | null;
   project: Project | null;
   section: Section | null;
+  parentTask?: Task | null;
 };
 type MyTaskFormProps = {
   onCloseMyTaskForm: () => void;
@@ -263,6 +264,16 @@ const MyTaskForm = ({
           )}
         </div>
 
+        {errorMessage && (
+            <div
+                className={
+                  "text-sm text-product-library-actionable-destructive-idle-tint"
+                }
+                role={"alert"}
+            >
+              {errorMessage}
+            </div>
+        )}
         <div className={"flex gap-2.5"}>
           <button
             type="button"
@@ -291,8 +302,7 @@ const MyTaskForm = ({
           >
             {variant === "list" ? (
               <span className="text-sm font-medium text-product-library-actionable-primary-on-idle-tint">
-                {/*{isPending ? submittingLabel : submitLabel}*/}
-                {submitLabel}
+                {isPending ? submittingLabel : submitLabel}
               </span>
             ) : (
               <span className={"w-6 h-6 flex justify-center items-center"}>
