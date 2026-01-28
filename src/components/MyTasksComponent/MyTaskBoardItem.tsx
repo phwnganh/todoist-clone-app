@@ -8,6 +8,7 @@ import { type MouseEvent, useMemo } from "react";
 import MyTasksToolbarDropdown from "./MyTasksToolbarDropdown.tsx";
 import { useTaskStore } from "../../stores/task.store.ts";
 import EditMyTaskModalDialog from "./EditMyTaskComponent";
+import DeleteMyTaskModalDialog from "./DeleteMyTaskComponent";
 
 type MyTaskBoardItemProps = {
   task: Task;
@@ -21,9 +22,9 @@ const MyTaskBoardItem = ({
   onOpenTaskDetailToolbar,
   tasks,
 }: MyTaskBoardItemProps) => {
-  const { editingTaskId, onCloseEditTask } = useTaskStore();
+  const { editingTaskId, onCloseEditTask, deleteTaskId } = useTaskStore();
   const isEditing = editingTaskId === task.id;
-
+  const isDeleting = deleteTaskId === task.id;
   const childrenTasks = useMemo(() => {
     return tasks.filter((t) => t.parent_id === task.id);
   }, [tasks, task.id]);
@@ -118,6 +119,9 @@ const MyTaskBoardItem = ({
             </div>
           )}
         </div>
+      )}
+      {isDeleting && (
+          <DeleteMyTaskModalDialog task={task}/>
       )}
     </>
   );
