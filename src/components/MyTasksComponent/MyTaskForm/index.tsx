@@ -23,7 +23,7 @@ import ProjectChip from "../../ui/ProjectChip.tsx";
 export type MyTaskFormValues = {
   content: string;
   description: string;
-  due_date: string;
+  due_date?: string;
   priority: Priority | null;
   project: Project | null;
   section: Section | null;
