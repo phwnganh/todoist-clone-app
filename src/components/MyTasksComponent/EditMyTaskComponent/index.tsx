@@ -1,9 +1,8 @@
 import {type FormEvent, useEffect, useState} from "react";
 import MyTaskForm, { type MyTaskFormValues } from "../MyTaskForm";
 import type { Task } from "../../../types/task.type.ts";
-import {useGetAllProjects, useGetAProject} from "../../../hooks/useQueryHook/useProjects.ts";
-import { useProjectStore } from "../../../stores/project.store.ts";
-import {useGetATask, useUpdateMyTask} from "../../../hooks/useQueryHook/useTasks.ts";
+import {useGetAllProjects} from "../../../hooks/useQueryHook/useProjects.ts";
+import {useUpdateMyTask} from "../../../hooks/useQueryHook/useTasks.ts";
 import {useTaskStore} from "../../../stores/task.store.ts";
 import {getTaskValuesByMappingDataType} from "../../../helpers/updateMyTaskField.ts";
 import {useGetAllSections} from "../../../hooks/useQueryHook/useSections.ts";
@@ -20,7 +19,6 @@ const EditMyTaskModalDialog = ({
 }: EditMyTaskModalDialogProps) => {
   const {editingTaskId} = useTaskStore()
   const isEditMode = !!task.id
-  const {data: taskDetail} = useGetATask(editingTaskId)
   const {data: projects} = useGetAllProjects()
   const {data: sections} = useGetAllSections()
   const {mutate, isPending, isError, error} = useUpdateMyTask()
@@ -34,9 +32,9 @@ const EditMyTaskModalDialog = ({
   });
 
   useEffect(() => {
-    if(!taskDetail) return;
-    setValues(getTaskValuesByMappingDataType(taskDetail, projects?.results, sections?.results))
-  }, [taskDetail, projects?.results, sections?.results]);
+    if(!task) return;
+    setValues(getTaskValuesByMappingDataType(task, projects?.results, sections?.results))
+  }, [task, projects?.results, sections?.results]);
 
   const handleUpdateMyTask = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
