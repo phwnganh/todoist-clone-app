@@ -19,12 +19,13 @@ import FiltersPage from "../pages/FiltersPage";
 import ActivityPage from "../pages/ActivityPage";
 import MyProjectDetailPage from "../pages/MyProjectDetailPage";
 import GoogleRedirectPage from "../pages/GoogleRedirectPage";
+import PublicRoute from "./PublicRoute.tsx";
 
 const AppRoutes = () => {
     return (
         <>
            <Routes>
-            <Route path={LOGIN} element={<LoginPage/>}/>
+            <Route path={LOGIN} element={<PublicRoute><LoginPage/></PublicRoute>}/>
                <Route element={<MainLayout/>}>
                    <Route path={PROJECTS} element={<MyProjectsPage/>}/>
                    <Route path={`${PROJECT_DETAILS}/:projectId`} element={<MyProjectDetailPage/>}/>
