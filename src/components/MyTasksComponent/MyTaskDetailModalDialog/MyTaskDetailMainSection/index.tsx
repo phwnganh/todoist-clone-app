@@ -5,6 +5,7 @@ import {
 } from "../../../../hooks/useQueryHook/useTasks.ts";
 import MyTaskDetailHeaderMainSection from "./MyTaskDetailHeaderMainSection";
 import MyTaskDetailSubTaskMainSection from "./MyTaskDetailSubTaskMainSection";
+import MyNoParentTaskDetailAddSubtaskButtonSection from "./MyNoParentTaskDetailAddSubtaskButtonSection.tsx";
 
 const MyTaskDetailMainSection = () => {
   const { taskDetailId } = useTaskStore();
@@ -17,10 +18,12 @@ const MyTaskDetailMainSection = () => {
           taskDetail={taskDetail}
           isLoading={isLoading}
         />
-        <MyTaskDetailSubTaskMainSection
-          taskId={taskDetailId}
-          tasks={tasks?.results}
-        />
+        {taskDetail?.parent_id !== null ?
+            <MyTaskDetailSubTaskMainSection
+            taskId={taskDetailId}
+            tasks={tasks?.results}
+        /> : <MyNoParentTaskDetailAddSubtaskButtonSection taskId={taskDetailId}/>}
+
       </div>
     </section>
   );
