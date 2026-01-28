@@ -1,35 +1,26 @@
 import { createPortal } from "react-dom";
-import { useDeleteProject, useGetAProject } from "../../../hooks/useQueryHook/useProjects.ts";
+import { useDeleteProject } from "../../../hooks/useQueryHook/useProjects.ts";
 import { type MouseEvent } from "react";
-import LoadingSpin from "../../ui/LoadingSpin";
+import type {Project} from "../../../types/project.type.ts";
 
 type DeleteProjectModalDialogProps = {
-  projectId: string;
+  project: Project;
   onClose: () => void;
 };
 const DeleteProjectsModalDialog = ({
-  projectId,
+  project,
   onClose,
 }: DeleteProjectModalDialogProps) => {
-  const { data: projectDetail, isLoading } = useGetAProject(projectId);
   const { mutate } = useDeleteProject();
 
   const handleDeleteProject = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     mutate(
-      { projectId: projectId }
+      { projectId: project.id }
     );
     onClose();
 
   };
-
-  if (isLoading) {
-    return (
-      <div className={"mt-medium"}>
-        <LoadingSpin />
-      </div>
-    );
-  }
   return createPortal(
     <div
       role={"alertdialog"}
@@ -53,7 +44,7 @@ const DeleteProjectsModalDialog = ({
         </header>
         <main>
           <p className={"text-xs"}>
-            The <span className={"font-strong"}>{projectDetail?.name}</span>{" "}
+            The <span className={"font-strong"}>{project?.name}</span>{" "}
             project and all of its tasks will be permanently deleted.
           </p>
         </main>

@@ -75,7 +75,7 @@ const MyProjectsList = ({ search }: MyProjectsListProps) => {
               onCloseProjectDetailToolbar={onCloseProjectDetailToolbar}
               onEditProjectDetail={() => onEditProjectDetail(project.id)}
               onDeleteProjectDetail={() =>
-                onDeleteProjectDetail(project.id)
+                onDeleteProjectDetail(project)
               }
             />
           </div>
@@ -92,7 +92,7 @@ const MyProjectsList = ({ search }: MyProjectsListProps) => {
       {deleteProjectDetail && (
         <DeleteProjectsModalDialog
           onClose={onCloseDeleteProjectDetail}
-          projectId={deleteProjectDetail}
+          project={deleteProjectDetail}
         />
       )}
     </>

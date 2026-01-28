@@ -1,16 +1,17 @@
 import {create} from "zustand/react";
+import type {Project} from "../types/project.type.ts";
 
 type ProjectState = {
     projectId: string;
     setProjectId: (id: string) => void;
     openProjectDetailToolbar: string | null;
     editProjectDetail: string | null;
-    deleteProjectDetail: string | null;
+    deleteProjectDetail: Project | null;
     onOpenProjectDetailToolbar: (id: string) => void;
     onCloseProjectDetailToolbar: () => void;
     onEditProjectDetail: (id: string) => void;
     onCloseEditProjectDetail: () => void;
-    onDeleteProjectDetail: (id: string) => void;
+    onDeleteProjectDetail: (project: Project) => void;
     onCloseDeleteProjectDetail: () => void;
 }
 
@@ -24,6 +25,6 @@ export const useProjectStore = create<ProjectState>(set => ({
     onCloseProjectDetailToolbar: () => set({openProjectDetailToolbar: null}),
     onEditProjectDetail: (id) => set({editProjectDetail: id}),
     onCloseEditProjectDetail: () => set({editProjectDetail: null}),
-    onDeleteProjectDetail: (id) => set({deleteProjectDetail: id}),
+    onDeleteProjectDetail: (project) => set({deleteProjectDetail: project}),
     onCloseDeleteProjectDetail: () => set({deleteProjectDetail: null}),
 }))
