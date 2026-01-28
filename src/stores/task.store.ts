@@ -4,6 +4,7 @@ type TaskStore = {
     addingTaskId: string | null | undefined;
     editingTaskId: string | null;
     taskDetailId: string | null;
+    deleteTaskId: string | null;
     onOpenEditTask: (taskId: string) => void;
     onCloseEditTask: () => void;
     onOpenAddMyTask: (sectionId: string | null) => void;
@@ -13,11 +14,14 @@ type TaskStore = {
     onCloseTaskDetailToolbar: () => void;
     onOpenTaskDetail: (taskId: string) => void;
     onCloseTaskDetail: () => void;
+    onOpenDeleteMyTask: (taskId: string) => void;
+    onCloseDeleteMyTask: () => void;
 }
 export const useTaskStore = create<TaskStore>(set => ({
     addingTaskId: undefined,
     editingTaskId: null,
     taskDetailId: null,
+    deleteTaskId: null,
     openAddMyTask: false,
     onOpenEditTask: (taskId) => set({editingTaskId: taskId}),
     onCloseEditTask: () => set({editingTaskId: null}),
@@ -27,5 +31,7 @@ export const useTaskStore = create<TaskStore>(set => ({
     onOpenTaskDetailToolbar: (taskId) => set({openTaskDetailToolbar: taskId}),
     onCloseTaskDetailToolbar: () => set({openTaskDetailToolbar: null}),
     onOpenTaskDetail: (taskId) => set({taskDetailId: taskId}),
-    onCloseTaskDetail: () => set({taskDetailId: null})
+    onCloseTaskDetail: () => set({taskDetailId: null}),
+    onOpenDeleteMyTask: (taskId) => set({deleteTaskId: taskId}),
+    onCloseDeleteMyTask: () => set({deleteTaskId: null})
 }))

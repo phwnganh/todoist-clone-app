@@ -16,6 +16,7 @@ import { useExpanded } from "../../hooks/useExpanded.ts";
 import { type MouseEvent } from "react";
 import MyTasksToolbarDropdown from "./MyTasksToolbarDropdown.tsx";
 import MyTaskDetailModalDialog from "./MyTaskDetailModalDialog";
+import DeleteMyTaskModalDialog from "./DeleteMyTaskComponent";
 
 type MyTaskListItemProps = {
   taskNode: TaskNode;
@@ -33,9 +34,10 @@ const MyTaskListItem = ({
 }: MyTaskListItemProps) => {
   const { task, children } = taskNode;
   const { isExpanded, handleExpanded } = useExpanded(true);
-  const { editingTaskId, onOpenEditTask, onCloseEditTask, taskDetailId, onOpenTaskDetail, onCloseTaskDetail } = useTaskStore();
+  const { editingTaskId, deleteTaskId, onOpenEditTask, onCloseEditTask, taskDetailId, onOpenTaskDetail, onCloseTaskDetail } = useTaskStore();
   const isEditing = editingTaskId === task.id;
   const isOpenTaskDetail = taskDetailId === task.id;
+  const isDeleting = deleteTaskId === task.id;
   const hasChildren = children.length > 0;
 
   return (
@@ -200,7 +202,9 @@ const MyTaskListItem = ({
       {isOpenTaskDetail && (
           <MyTaskDetailModalDialog onCloseTaskDetail={onCloseTaskDetail} />
       )}
-
+      {isDeleting && (
+          <DeleteMyTaskModalDialog/>
+      )}
     </>
   );
 };

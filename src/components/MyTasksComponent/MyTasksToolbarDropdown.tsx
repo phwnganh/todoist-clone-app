@@ -8,7 +8,7 @@ import { useTaskStore } from "../../stores/task.store.ts";
 import TrashIcon from "../icons/TrashIcon.tsx";
 import MyTasksMenuButton from "../ui/MyTasksMenuButton.tsx";
 const MyTasksToolbarDropdown = ({ taskId }: { taskId: string }) => {
-  const { onOpenEditTask, onCloseTaskDetailToolbar } = useTaskStore();
+  const { onOpenEditTask, onCloseTaskDetailToolbar, onOpenDeleteMyTask } = useTaskStore();
   const MY_TASKS_MENU_TOOLBAR: MyTaskMenuToolbar[] = [
     {
       label: "Add task above",
@@ -45,7 +45,10 @@ const MyTasksToolbarDropdown = ({ taskId }: { taskId: string }) => {
     {
       label: "Delete",
       danger: true,
-      onClick: () => {},
+      onClick: () => {
+        onCloseTaskDetailToolbar()
+        onOpenDeleteMyTask(taskId)
+      },
       icon: (
         <TrashIcon
           className={"text-product-library-actionable-destructive-idle-fill"}
