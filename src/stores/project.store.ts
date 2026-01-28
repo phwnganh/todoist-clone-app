@@ -5,11 +5,11 @@ type ProjectState = {
     projectId: string;
     setProjectId: (id: string) => void;
     openProjectDetailToolbar: string | null;
-    editProjectDetail: string | null;
+    editProjectDetail: Project | null;
     deleteProjectDetail: Project | null;
     onOpenProjectDetailToolbar: (id: string) => void;
     onCloseProjectDetailToolbar: () => void;
-    onEditProjectDetail: (id: string) => void;
+    onEditProjectDetail: (project: Project) => void;
     onCloseEditProjectDetail: () => void;
     onDeleteProjectDetail: (project: Project) => void;
     onCloseDeleteProjectDetail: () => void;
@@ -23,7 +23,7 @@ export const useProjectStore = create<ProjectState>(set => ({
     deleteProjectDetail: null,
     onOpenProjectDetailToolbar: (id) => set({openProjectDetailToolbar: id}),
     onCloseProjectDetailToolbar: () => set({openProjectDetailToolbar: null}),
-    onEditProjectDetail: (id) => set({editProjectDetail: id}),
+    onEditProjectDetail: (project) => set({editProjectDetail: project}),
     onCloseEditProjectDetail: () => set({editProjectDetail: null}),
     onDeleteProjectDetail: (project) => set({deleteProjectDetail: project}),
     onCloseDeleteProjectDetail: () => set({deleteProjectDetail: null}),

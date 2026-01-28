@@ -73,7 +73,7 @@ const MyProjectsList = ({ search }: MyProjectsListProps) => {
                 handleOpenProjectDetailToolbar(project.id, e)
               }
               onCloseProjectDetailToolbar={onCloseProjectDetailToolbar}
-              onEditProjectDetail={() => onEditProjectDetail(project.id)}
+              onEditProjectDetail={() => onEditProjectDetail(project)}
               onDeleteProjectDetail={() =>
                 onDeleteProjectDetail(project)
               }
@@ -86,7 +86,7 @@ const MyProjectsList = ({ search }: MyProjectsListProps) => {
       {editProjectDetail && (
         <EditProjectModalDialog
           onClose={onCloseEditProjectDetail}
-          projectId={editProjectDetail}
+          project={editProjectDetail}
         />
       )}
       {deleteProjectDetail && (

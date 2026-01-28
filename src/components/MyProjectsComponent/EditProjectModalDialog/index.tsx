@@ -1,16 +1,15 @@
 import MyProjectForm, { type MyProjectFormValues } from "../MyProjectForm";
 import { type FormEvent, useEffect, useState } from "react";
-import { useGetAProject, useUpdateProject } from "../../../hooks/useQueryHook/useProjects.ts";
+import {useUpdateProject } from "../../../hooks/useQueryHook/useProjects.ts";
 import { getValuesByMappingDataType } from "../../../helpers/updateMyProjectField";
-import LoadingSpin from "../../ui/LoadingSpin";
+import type {Project} from "../../../types/project.type.ts";
 const EditProjectModalDialog = ({
   onClose,
-  projectId,
+  project,
 }: {
   onClose: () => void;
-  projectId: string;
+  project: Project;
 }) => {
-  const { data: projectDetail, isLoading } = useGetAProject(projectId);
   const { mutate, isPending, isError, error } = useUpdateProject();
   const [values, setValues] = useState<MyProjectFormValues>({
     name: "",
@@ -20,34 +19,22 @@ const EditProjectModalDialog = ({
   });
 
   useEffect(() => {
-    if (!projectDetail) return;
-    setValues(getValuesByMappingDataType(projectDetail));
-  }, [projectDetail]);
+    if (!project) return;
+    setValues(getValuesByMappingDataType(project));
+  }, [project]);
   const handleEditMyProject = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     mutate(
       {
-        id: projectId,
+        id: project.id,
         name: values.name.trim(),
         color: values.color?.value ?? "charcoal",
         parent_id: values?.parentProject ?? "No Parent",
         view_style: values.layout,
       },
-      {
-        onSuccess: () => {
-          onClose();
-        },
-      }
     );
+    onClose();
   };
-
-  if (isLoading) {
-    return (
-      <div className={"mt-medium"}>
-        <LoadingSpin />
-      </div>
-    );
-  }
   return (
     <MyProjectForm
       title={"Edit"}

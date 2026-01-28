@@ -26,11 +26,8 @@ const AddProjectsModalDialog = ({ onClose }: { onClose: () => void }) => {
   const handleAddMyProjects = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const payload = formValuesPayload(values);
-    mutate(payload, {
-      onSuccess: () => {
-        onClose();
-      },
-    });
+    mutate(payload);
+    onClose();
   };
 
   return (
