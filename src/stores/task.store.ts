@@ -8,7 +8,7 @@ type TaskStore = {
     deleteTaskId: string | null;
     onOpenEditTask: (taskId: string) => void;
     onCloseEditTask: () => void;
-    onOpenAddMyTask: (sectionId: string | null) => void;
+    onOpenAddMyTask: (sectionId: string | null | undefined) => void;
     onCloseAddMyTask: () => void;
     openTaskDetailToolbar: string | null;
     onOpenTaskDetailToolbar: (taskId: string) => void;

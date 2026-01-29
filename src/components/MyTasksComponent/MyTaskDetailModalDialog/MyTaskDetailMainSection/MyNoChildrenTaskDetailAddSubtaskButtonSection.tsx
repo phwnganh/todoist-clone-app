@@ -1,7 +1,7 @@
 import PlusAddIcon from '../../../../assets/add-icon.svg'
 import {useTaskStore} from "../../../../stores/task.store.ts";
 import AddMyTaskModalDialog from "../../AddMyTaskComponent";
-const MyNoParentTaskDetailAddSubtaskButtonSection = ({taskId}: {taskId: string | null}) => {
+const MyNoChildrenTaskDetailAddSubtaskButtonSection = ({taskId}: {taskId: string | undefined | null}) => {
     const {addingTaskId, onOpenAddMyTask, onCloseAddMyTask} = useTaskStore()
     const isAdding = addingTaskId === taskId
     return (
@@ -17,4 +17,4 @@ const MyNoParentTaskDetailAddSubtaskButtonSection = ({taskId}: {taskId: string |
     );
 };
 
-export default MyNoParentTaskDetailAddSubtaskButtonSection;
+export default MyNoChildrenTaskDetailAddSubtaskButtonSection;
