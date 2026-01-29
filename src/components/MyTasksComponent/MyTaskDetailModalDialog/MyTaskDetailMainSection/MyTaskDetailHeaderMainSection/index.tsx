@@ -3,15 +3,12 @@ import type { Task } from "../../../../../types/task.type.ts";
 import { useState } from "react";
 import MyTaskDetailHeaderForm from "./MyTaskDetailHeaderForm.tsx";
 import MyTaskDetailHeaderTitle from "./MyTaskDetailHeaderTitle.tsx";
-import LoadingSpin from "../../../../ui/LoadingSpin.tsx";
 
 type MyTaskDetailHeaderMainSectionProps = {
-  taskDetail: Task | undefined;
-  isLoading: boolean;
+  taskDetail: Task | null;
 };
 const MyTaskDetailHeaderMainSection = ({
   taskDetail,
-  isLoading,
 }: MyTaskDetailHeaderMainSectionProps) => {
   const [openMyTaskDetailForm, setOpenMyTaskDetailForm] = useState(false);
   const handleOpenMyTaskDetailForm = () => {
@@ -21,9 +18,6 @@ const MyTaskDetailHeaderMainSection = ({
     setOpenMyTaskDetailForm(false);
   };
 
-  if (isLoading) {
-    return <LoadingSpin />;
-  }
   return (
     <div className={"flex gap-1.5 items-start"}>
       <button

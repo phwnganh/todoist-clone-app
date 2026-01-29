@@ -3,7 +3,7 @@ import DescriptionIcon from "../../../../../assets/description-icon.svg";
 import type { Task } from "../../../../../types/task.type.ts";
 
 type MyTaskDetailHeaderTitleProps = {
-  taskDetail?: Task | undefined;
+  taskDetail?: Task | null;
   onOpenMyTaskDetailForm: () => void;
 };
 const MyTaskDetailHeaderTitle = ({

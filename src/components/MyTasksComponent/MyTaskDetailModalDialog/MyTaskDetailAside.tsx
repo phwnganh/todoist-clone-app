@@ -12,7 +12,6 @@ import TaskSmallArrowDownIcon from "../../icons/TaskSmallArrowDownIcon.tsx";
 import MyTaskPriorityDropdown from "../MyTaskForm/MyTaskPriorityDropdown.tsx";
 import PriorityIcon from "../../icons/PriorityIcon.tsx";
 import {useTaskStore} from "../../../stores/task.store.ts";
-import {useGetATask} from "../../../hooks/useQueryHook/useTasks.ts";
 import {getTaskValuesByMappingDataType} from "../../../helpers/updateMyTaskField.ts";
 import {useGetAllProjects} from "../../../hooks/useQueryHook/useProjects.ts";
 import {useGetAllSections} from "../../../hooks/useQueryHook/useSections.ts";
@@ -21,8 +20,7 @@ type MyTaskDetailAsideProps = {
 }
 const MyTaskDetailAside = ({projectDetail}: MyTaskDetailAsideProps) => {
     const [isOpenMyTaskDetailAside, setIsOpenMyTaskDetailAside] = useState<OpenMyTaskDetailAsideDropdown>(null)
-    const { taskDetailId } = useTaskStore();
-    const { data: taskDetail } = useGetATask(taskDetailId);
+    const { taskDetail } = useTaskStore();
     const {data: projects} = useGetAllProjects()
     const {data: sections} = useGetAllSections()
     const [selectedProject, setSelectedProject] = useState<Project | null>(null)

@@ -8,19 +8,19 @@ import { Fragment, useMemo } from "react";
 import ChildrenTaskItem from "./ChildrenTaskItem.tsx";
 
 type MyTaskDetailSubTaskMainSectionProps = {
-  taskId: string | null;
+  taskDetail: Task | null;
   tasks: Task[] | undefined;
 };
 const MyTaskDetailSubTaskMainSection = ({
-  taskId,
+  taskDetail,
   tasks,
 }: MyTaskDetailSubTaskMainSectionProps) => {
   const { onOpenAddMyTask, addingTaskId, onCloseAddMyTask } = useTaskStore();
-  const isTaskAdding = addingTaskId === taskId;
+  const isTaskAdding = addingTaskId === taskDetail?.id;
 
   const childrenTasks = useMemo(() => {
-    return tasks?.filter((t) => t.parent_id === taskId);
-  }, [tasks, taskId]);
+    return tasks?.filter((t) => t.parent_id === taskDetail?.id);
+  }, [tasks, taskDetail?.id]);
 
   if (!childrenTasks) return null;
 
@@ -65,7 +65,7 @@ const MyTaskDetailSubTaskMainSection = ({
         ) : (
           <AddMyTaskButtonSection
             taskType={"sub-task"}
-            onOpenAddMyTask={() => onOpenAddMyTask(taskId)}
+            onOpenAddMyTask={() => onOpenAddMyTask(taskDetail?.id as string)}
           />
         )}
       </div>
