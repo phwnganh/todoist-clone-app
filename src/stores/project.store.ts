@@ -15,7 +15,7 @@ type ProjectState = {
     onCloseDeleteProjectDetail: () => void;
 }
 
-export const useProjectStore = create<ProjectState>(set => ({
+export const useProjectStore = create<ProjectState>((set) => ({
     projectId: "",
     setProjectId: (projectId) => set({projectId: projectId}),
     openProjectDetailToolbar: null,

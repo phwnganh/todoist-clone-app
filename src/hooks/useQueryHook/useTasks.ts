@@ -1,12 +1,13 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {
+    apiAddMySubTask,
     apiAddMyTask,
     apiDeleteMyTask,
     apiGetAllTasks,
     apiGetATask,
     apiUpdateMyTask
 } from "../../services/task.service.ts";
-import type {Task, TaskPayload, TaskResponse, UpdateTaskPayload} from "../../types/task.type.ts";
+import type {SubTaskPayload, Task, TaskPayload, TaskResponse, UpdateTaskPayload} from "../../types/task.type.ts";
 import type {ApiError, SyncResponse} from "../../types/api.type.ts";
 import {
     optimisticAddMyTask, optimisticDeleteMyTask, optimisticUpdateMyTask,
@@ -62,6 +63,60 @@ export const useAddMyTask = () => {
             }
         })
     },
+        onError: (_, __, context) => {
+            rollbackOptimisticUpdates({
+                queryClient,
+                queryKey: ["tasks"],
+                context
+            })
+        },
+        onSettled: (error) => {
+            if(error){
+                void queryClient.invalidateQueries({
+                    queryKey: ["tasks"]
+                })
+            }
+
+        }
+    })
+}
+
+export const useAddMySubTask = () => {
+    const queryClient = useQueryClient();
+    return useMutation<SyncResponse, ApiError, SubTaskPayload, OptimisticUpdatesContext>({
+        mutationFn: apiAddMySubTask,
+        onMutate: async (newSubTask) => {
+            const tempId = `temp-task-${crypto.randomUUID()}`
+            const parentTask = queryClient.getQueryData<TaskResponse>(["tasks"])?.results.find(t => t.id === newSubTask.parent_id)
+
+            const optimisticTask: Task = {
+                id: tempId,
+                content: newSubTask.content,
+                description: newSubTask.description,
+                priority: newSubTask.priority ?? 1,
+                parent_id: newSubTask.parent_id ?? null,
+                project_id: parentTask?.project_id,
+                section_id: parentTask?.section_id ?? null,
+                child_order: Number.MAX_SAFE_INTEGER
+            }
+            const res = optimisticAddMyTask({
+                queryClient,
+                queryKey: ['tasks'],
+                optimisticTask: optimisticTask
+            })
+            return {...res, tempId}
+        },
+        onSuccess: (res, _, context) => {
+            const realId = res.temp_id_mapping?.[context.tempId!]
+            if(!realId) return;
+            queryClient.setQueryData<TaskResponse>(["tasks"], (old) => {
+                if(!old) return old;
+                return {
+                    ...old,
+                    results: old.results.map(t => t.id === context.tempId ? {...t, id: realId} : t)
+                }
+            })
+        },
         onError: (_, __, context) => {
             rollbackOptimisticUpdates({
                 queryClient,

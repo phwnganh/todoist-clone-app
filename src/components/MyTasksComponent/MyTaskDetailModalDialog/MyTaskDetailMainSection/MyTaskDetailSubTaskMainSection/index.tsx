@@ -2,10 +2,10 @@ import TaskSmallArrowDownIcon from "../../../../icons/TaskSmallArrowDownIcon.tsx
 
 import AddMyTaskButtonSection from "../../../AddMyTaskButtonSection.tsx";
 import { useTaskStore } from "../../../../../stores/task.store.ts";
-import AddMyTaskModalDialog from "../../../AddMyTaskComponent";
 import type { Task } from "../../../../../types/task.type.ts";
 import { Fragment, useMemo } from "react";
 import ChildrenTaskItem from "./ChildrenTaskItem.tsx";
+import AddMyTaskDetailMainSubChildrenForm from "../AddMyTaskDetailMainSubChildrenForm";
 
 type MyTaskDetailSubTaskMainSectionProps = {
   taskDetail?: Task;
@@ -15,8 +15,8 @@ const MyTaskDetailSubTaskMainSection = ({
   taskDetail,
   tasks,
 }: MyTaskDetailSubTaskMainSectionProps) => {
-  const { onOpenAddMyTask, addingTaskId, onCloseAddMyTask } = useTaskStore();
-  const isTaskAdding = addingTaskId === taskDetail?.id;
+  const { onOpenAddSubTask, addingSubTaskId, onCloseAddSubTask } = useTaskStore();
+  const isTaskAdding = addingSubTaskId === taskDetail?.id;
 
   const childrenTasks = useMemo(() => {
     return tasks?.filter((t) => t.parent_id === taskDetail?.id);
@@ -58,14 +58,13 @@ const MyTaskDetailSubTaskMainSection = ({
       <hr className={"border-t border-product-library-divider-tertiary"} />
       <div className={"px-2"}>
         {isTaskAdding ? (
-          <AddMyTaskModalDialog
-            variant={"list"}
-            onCloseAddMyTask={onCloseAddMyTask}
+          <AddMyTaskDetailMainSubChildrenForm
+            onCloseAddMySubTask={onCloseAddSubTask}
           />
         ) : (
           <AddMyTaskButtonSection
             taskType={"sub-task"}
-            onOpenAddMyTask={() => onOpenAddMyTask(taskDetail?.id as string)}
+            onOpenAddMyTask={() => onOpenAddSubTask(taskDetail?.id as string)}
           />
         )}
       </div>

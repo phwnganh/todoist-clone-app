@@ -1,15 +1,14 @@
 import {create} from "zustand/react";
-import type {Task} from "../types/task.type.ts";
 
 type TaskStore = {
     addingTaskId: string | null | undefined;
-    addingSubTaskId: string | null;
+    addingSubTaskId: string | null | undefined;
     editingTaskId: string | null;
     taskDetailId: string | null;
     deleteTaskId: string | null;
     onOpenEditTask: (taskId: string) => void;
     onCloseEditTask: () => void;
-    onOpenAddMyTask: (sectionId: string | null | undefined) => void;
+    onOpenAddMyTask: (taskId: string | null | undefined) => void;
     onCloseAddMyTask: () => void;
     openTaskDetailToolbar: string | null;
     onOpenTaskDetailToolbar: (taskId: string) => void;
@@ -18,7 +17,7 @@ type TaskStore = {
     onCloseTaskDetail: () => void;
     onOpenDeleteMyTask: (taskId: string) => void;
     onCloseDeleteMyTask: () => void;
-    onOpenAddSubTask: (task: Task) => void;
+    onOpenAddSubTask: (taskId: string | null | undefined) => void;
     onCloseAddSubTask: () => void;
 }
 export const useTaskStore = create<TaskStore>(set => ({
@@ -39,12 +38,8 @@ export const useTaskStore = create<TaskStore>(set => ({
     onCloseTaskDetail: () => set({taskDetailId: null}),
     onOpenDeleteMyTask: (taskId) => set({deleteTaskId: taskId}),
     onCloseDeleteMyTask: () => set({deleteTaskId: null}),
-    onOpenAddSubTask: (task) => set({
-        addingTaskId: task.section_id ?? null,
-        addingSubTaskId: task.id
-    }),
+    onOpenAddSubTask: (taskId) => set({addingSubTaskId: taskId}),
     onCloseAddSubTask: () => set({
-        addingTaskId: null,
         addingSubTaskId: null
     })
 }))

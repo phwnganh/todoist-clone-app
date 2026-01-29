@@ -9,7 +9,7 @@ type SectionStore = {
     onCloseEditSection: () => void;
 }
 
-export const useSectionStore = create<SectionStore>(set => ({
+export const useSectionStore = create<SectionStore>((set) => ({
     addSectionId: undefined,
     editingSectionId: null,
     onOpenAddSectionForm: (sectionId) => set({addSectionId: sectionId}),

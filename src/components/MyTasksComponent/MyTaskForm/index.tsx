@@ -19,6 +19,9 @@ import SubmitIcon from "../../icons/SubmitIcon.tsx";
 import type {Priority, Task} from "../../../types/task.type.ts";
 import type {Section} from "../../../types/section.type.ts";
 import ProjectChip from "../../ui/ProjectChip.tsx";
+import SectionIcon from "../../icons/SectionIcon.tsx";
+import {useGetATask} from "../../../hooks/useQueryHook/useTasks.ts";
+import {useTaskStore} from "../../../stores/task.store.ts";
 
 export type MyTaskFormValues = {
   content: string;
@@ -39,7 +42,8 @@ type MyTaskFormProps = {
   isPending?: boolean;
   errorMessage?: string | null;
   variant?: string;
-  isEditMode?: boolean
+  isEditMode?: boolean;
+  taskDetail?: Task;
 };
 const MyTaskForm = ({
   onCloseMyTaskForm,
@@ -50,7 +54,7 @@ const MyTaskForm = ({
   submittingLabel,
   isPending,
   errorMessage,
-  variant, isEditMode
+  variant, isEditMode,
 }: MyTaskFormProps) => {
   const [isOpenAddMyTaskDropdown, setIsOpenAddMyTaskDropdown] =
     useState<OpenMyTaskFormDropdown>(null);
@@ -248,6 +252,16 @@ const MyTaskForm = ({
             >
               {projectDetail?.name}
             </span>
+            {values.section && (<>
+              <div className={"text-sm text-product-library-display-secondary-idle-tint"}>/</div>
+              <span className={"flex items-center gap-1.5"}>
+              <div className={"flex justify-center items-center"}>
+                <SectionIcon/>
+              </div>
+              <p className={"text-product-library-display-secondary-idle-tint font-medium"}>{values.section?.name}</p>
+            </span>
+            </>)}
+
             <div className={"flex justify-center items-center"}>
               <img
                 src={TaskSmallDropdownIcon}
