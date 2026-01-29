@@ -5,22 +5,21 @@ import SmallPlusAddIcon from "../../icons/SmallPlusAddIcon.tsx";
 import type {OpenMyTaskDetailAsideDropdown} from "../../../types/menu-nav.type.ts";
 import {useEffect, useRef, useState} from "react";
 import type {Section} from "../../../types/section.type.ts";
-import type {Priority} from "../../../types/task.type.ts";
+import type {Priority, Task} from "../../../types/task.type.ts";
 import {useClickOutside} from "../../../hooks/useClickOutside.ts";
 import MyTaskProjectDropdown from "../MyTaskForm/MyTaskProjectDropdown";
 import TaskSmallArrowDownIcon from "../../icons/TaskSmallArrowDownIcon.tsx";
 import MyTaskPriorityDropdown from "../MyTaskForm/MyTaskPriorityDropdown.tsx";
 import PriorityIcon from "../../icons/PriorityIcon.tsx";
-import {useTaskStore} from "../../../stores/task.store.ts";
 import {getTaskValuesByMappingDataType} from "../../../helpers/updateMyTaskField.ts";
 import {useGetAllProjects} from "../../../hooks/useQueryHook/useProjects.ts";
 import {useGetAllSections} from "../../../hooks/useQueryHook/useSections.ts";
 type MyTaskDetailAsideProps = {
-    projectDetail: Project | undefined
+    projectDetail?: Project
+    taskDetail?: Task
 }
-const MyTaskDetailAside = ({projectDetail}: MyTaskDetailAsideProps) => {
+const MyTaskDetailAside = ({projectDetail, taskDetail}: MyTaskDetailAsideProps) => {
     const [isOpenMyTaskDetailAside, setIsOpenMyTaskDetailAside] = useState<OpenMyTaskDetailAsideDropdown>(null)
-    const { taskDetail } = useTaskStore();
     const {data: projects} = useGetAllProjects()
     const {data: sections} = useGetAllSections()
     const [selectedProject, setSelectedProject] = useState<Project | null>(null)

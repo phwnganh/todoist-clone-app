@@ -8,7 +8,7 @@ import { Fragment, useMemo } from "react";
 import ChildrenTaskItem from "./ChildrenTaskItem.tsx";
 
 type MyTaskDetailSubTaskMainSectionProps = {
-  taskDetail: Task | null;
+  taskDetail?: Task;
   tasks: Task[] | undefined;
 };
 const MyTaskDetailSubTaskMainSection = ({

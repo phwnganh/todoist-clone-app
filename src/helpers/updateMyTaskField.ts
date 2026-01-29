@@ -4,7 +4,17 @@ import type {Task} from "../types/task.type.ts";
 import {priorityFilterData} from "../data/myTaskFilter.data.ts";
 import type {Project} from "../types/project.type.ts";
 import type {Section} from "../types/section.type.ts";
+import type {
+    TaskDetailHeaderFormValues
+} from "../components/MyTasksComponent/MyTaskDetailModalDialog/MyTaskDetailMainSection/MyTaskDetailHeaderMainSection/MyTaskDetailHeaderForm.tsx";
 export const updateMyTaskField = <K extends keyof MyTaskFormValues>(values: MyTaskFormValues, key: K, value: MyTaskFormValues[K]) => {
+    return {
+        ...values,
+        [key]: value
+    }
+}
+
+export const updateMyTaskDetailHeader = <K extends keyof TaskDetailHeaderFormValues>(values: TaskDetailHeaderFormValues, key: K, value: TaskDetailHeaderFormValues[K]) => {
     return {
         ...values,
         [key]: value

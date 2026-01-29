@@ -5,7 +5,7 @@ import MyTaskDetailHeaderForm from "./MyTaskDetailHeaderForm.tsx";
 import MyTaskDetailHeaderTitle from "./MyTaskDetailHeaderTitle.tsx";
 
 type MyTaskDetailHeaderMainSectionProps = {
-  taskDetail: Task | null;
+  taskDetail?: Task;
 };
 const MyTaskDetailHeaderMainSection = ({
   taskDetail,
@@ -42,7 +42,7 @@ const MyTaskDetailHeaderMainSection = ({
         </div>
       </button>
       {openMyTaskDetailForm ? (
-        <MyTaskDetailHeaderForm onCancelForm={handleCloseMyTaskDetailForm} />
+        <MyTaskDetailHeaderForm onCancelForm={handleCloseMyTaskDetailForm} taskDetail={taskDetail} />
       ) : (
         <MyTaskDetailHeaderTitle
           taskDetail={taskDetail}

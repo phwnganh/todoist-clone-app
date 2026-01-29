@@ -1,16 +1,17 @@
-import { useTaskStore } from "../../../../stores/task.store.ts";
-import {
-  useGetAllTasks,
-} from "../../../../hooks/useQueryHook/useTasks.ts";
 import MyTaskDetailHeaderMainSection from "./MyTaskDetailHeaderMainSection";
 import MyTaskDetailSubTaskMainSection from "./MyTaskDetailSubTaskMainSection";
 import MyNoChildrenTaskDetailAddSubtaskButtonSection from "./MyNoChildrenTaskDetailAddSubtaskButtonSection.tsx";
 import AddMyTaskModalDialog from "../../AddMyTaskComponent";
+import {useTaskStore} from "../../../../stores/task.store.ts";
+import type {Task, TaskResponse} from "../../../../types/task.type.ts";
 
-const MyTaskDetailMainSection = () => {
-  const { taskDetail, addingTaskId, onCloseAddMyTask } = useTaskStore();
-  const { data: tasks } = useGetAllTasks();
-  const isTaskAdding = addingTaskId === taskDetail?.id;
+type MyTaskDetailMainSectionProps = {
+  taskDetail?: Task
+  tasks?: TaskResponse
+}
+const MyTaskDetailMainSection = ({taskDetail, tasks}: MyTaskDetailMainSectionProps) => {
+  const { taskDetailId, addingTaskId, onCloseAddMyTask } = useTaskStore();
+  const isTaskAdding = addingTaskId === taskDetailId;
   const hasChildren = tasks?.results?.some(task => task.parent_id === taskDetail?.id)
   return (
     <section className={"px-large pt-large w-full"}>

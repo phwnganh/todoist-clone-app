@@ -1,12 +1,46 @@
 import DescriptionIcon from "../../../../../assets/description-icon.svg";
+import type {Task} from "../../../../../types/task.type.ts";
+import {type ChangeEvent, type FormEvent, useState} from "react";
+import {useUpdateMyTask} from "../../../../../hooks/useQueryHook/useTasks.ts";
+import {updateMyTaskDetailHeader} from "../../../../../helpers/updateMyTaskField.ts";
 
+export type TaskDetailHeaderFormValues = {
+    content: string;
+    description: string;
+}
 const MyTaskDetailHeaderForm = ({
   onCancelForm,
+    taskDetail
 }: {
   onCancelForm: () => void;
+  taskDetail?: Task
 }) => {
+    const [values, setValues] = useState<TaskDetailHeaderFormValues>({
+        content: taskDetail?.content ?? "",
+        description: taskDetail?.description ?? ""
+    })
+    const {mutate} = useUpdateMyTask()
+
+    const handleUpdateTaskHeader = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if(!taskDetail) return;
+        mutate({
+            id: taskDetail.id,
+            content: values.content.trim(),
+            description: values.description.trim()
+        })
+        onCancelForm()
+    }
+
+    const handleContentChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setValues(updateMyTaskDetailHeader(values, "content", e.target.value));
+    }
+
+    const handleDescriptionChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setValues(updateMyTaskDetailHeader(values, "description", e.target.value));
+    }
   return (
-    <form className={"w-full"}>
+    <form className={"w-full"} onSubmit={handleUpdateTaskHeader}>
       <div
         className={
           "outline-product-library-border-hover-tint rounded-large outline flex flex-col pt-1 px-1.75"
@@ -16,6 +50,8 @@ const MyTaskDetailHeaderForm = ({
           type={"text"}
           className={"outline-none font-medium text-header"}
           placeholder={"Content"}
+          value={values?.content}
+          onChange={handleContentChange}
         />
         <div className={"flex mt-small mb-xsmall ml-px"}>
           <div className={"flex justify-center items-center"}>
@@ -27,6 +63,8 @@ const MyTaskDetailHeaderForm = ({
               "outline-none text-sm text-product-library-display-secondary-idle-tint"
             }
             placeholder={"Description"}
+            value={values?.description}
+            onChange={handleDescriptionChange}
           />
         </div>
       </div>

@@ -85,13 +85,13 @@ export const useUpdateMyTask = () => {
     return useMutation<SyncResponse, ApiError, UpdateTaskPayload, OptimisticUpdatesContext>({
         mutationFn: apiUpdateMyTask,
         onMutate: async (updatingTask) => {
-            const tempId = `temp-task-${crypto.randomUUID()}`
+            // const tempId = `temp-task-${crypto.randomUUID()}`
             return optimisticUpdateMyTask({
                 queryClient,
                 queryKey: ["tasks"],
                 taskId: updatingTask.id,
                 optimisticTask: {
-                    id: tempId,
+                    id: updatingTask.id,
                     content: updatingTask.content,
                     description: updatingTask.description,
                     priority: updatingTask.priority

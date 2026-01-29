@@ -34,9 +34,9 @@ const MyTaskListItem = ({
 }: MyTaskListItemProps) => {
   const { task, children } = taskNode;
   const { isExpanded, handleExpanded } = useExpanded(true);
-  const { editingTaskId, deleteTaskId, onOpenEditTask, onCloseEditTask, taskDetail, onOpenTaskDetail, onCloseTaskDetail } = useTaskStore();
+  const { editingTaskId, deleteTaskId, onOpenEditTask, onCloseEditTask, taskDetailId, onOpenTaskDetail, onCloseTaskDetail } = useTaskStore();
   const isEditing = editingTaskId === task.id;
-  const isOpenTaskDetail = taskDetail?.id === task.id;
+  const isOpenTaskDetail = taskDetailId === task.id;
   const isDeleting = deleteTaskId === task.id;
   const hasChildren = children.length > 0;
 
@@ -95,7 +95,7 @@ const MyTaskListItem = ({
             </button>
             {/*task list item*/}
             <div role={"button"} className={"py-2 mr-7.5 flex flex-col cursor-pointer"}
-            onClick={() => onOpenTaskDetail(task)}>
+            onClick={() => onOpenTaskDetail(task.id)}>
               <div className={"mb-0.75 text-sm"}>
                 <MyTaskContent content={task.content} />
               </div>

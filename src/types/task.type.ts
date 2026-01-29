@@ -66,7 +66,7 @@ export type TaskPayload = {
 export type UpdateTaskPayload = {
     id: string;
     content: string;
-    description: string;
-    priority: number;
+    description?: string;
+    priority?: number;
 
 }
