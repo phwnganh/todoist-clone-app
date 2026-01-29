@@ -5,10 +5,12 @@ import {
 import MyTaskDetailHeaderMainSection from "./MyTaskDetailHeaderMainSection";
 import MyTaskDetailSubTaskMainSection from "./MyTaskDetailSubTaskMainSection";
 import MyNoChildrenTaskDetailAddSubtaskButtonSection from "./MyNoChildrenTaskDetailAddSubtaskButtonSection.tsx";
+import AddMyTaskModalDialog from "../../AddMyTaskComponent";
 
 const MyTaskDetailMainSection = () => {
-  const { taskDetail } = useTaskStore();
+  const { taskDetail, addingTaskId, onCloseAddMyTask } = useTaskStore();
   const { data: tasks } = useGetAllTasks();
+  const isTaskAdding = addingTaskId === taskDetail?.id;
   const hasChildren = tasks?.results?.some(task => task.parent_id === taskDetail?.id)
   return (
     <section className={"px-large pt-large w-full"}>
@@ -20,8 +22,16 @@ const MyTaskDetailMainSection = () => {
             <MyTaskDetailSubTaskMainSection
             taskDetail={taskDetail}
             tasks={tasks?.results}
-        /> : <MyNoChildrenTaskDetailAddSubtaskButtonSection taskId={taskDetail?.id}/>}
+        /> : (
+          <div className={"pt-2"}>
+            {isTaskAdding ? (<div className={"pl-8"}><AddMyTaskModalDialog
+                variant={"list"}
+                onCloseAddMyTask={onCloseAddMyTask}
+            /></div>) : (<MyNoChildrenTaskDetailAddSubtaskButtonSection taskId={taskDetail?.id}/>)}
 
+          </div>
+            )
+        }
       </div>
     </section>
   );
