@@ -56,7 +56,7 @@ const MyTaskDetailSubTaskMainSection = ({
         );
       })}
       <hr className={"border-t border-product-library-divider-tertiary"} />
-      <div className={"px-2"}>
+      <div className={"pl-4"}>
         {isTaskAdding ? (
           <AddMyTaskDetailMainSubChildrenForm
             onCloseAddMySubTask={onCloseAddSubTask}

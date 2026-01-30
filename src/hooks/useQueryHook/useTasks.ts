@@ -93,7 +93,7 @@ export const useAddMySubTask = () => {
     return useMutation<SyncResponse, ApiError, SubTaskPayload, OptimisticUpdatesContext>({
         mutationFn: apiAddMySubTask,
         onMutate: async (newSubTask) => {
-            const tempId = `temp-task-${crypto.randomUUID()}`
+            const tempId = `temp-subtask-${crypto.randomUUID()}`
             const parentTask = queryClient.getQueryData<TaskResponse>(["tasks"])?.results.find(t => t.id === newSubTask.parent_id)
 
             const optimisticTask: Task = {
