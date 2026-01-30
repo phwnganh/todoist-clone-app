@@ -95,7 +95,7 @@ const MyTaskFormProjectDropdown = ({
           <ProjectOptions
             key={project.id}
             project={project}
-            isProjectsSelected={selectedProject?.name === project.name}
+            isProjectsSelected={selectedProject?.name === project.name && !selectedSection}
             selectedSection={selectedSection}
             onProjectsSelected={onSelect}
             keyword={debounceSearchKeyword}

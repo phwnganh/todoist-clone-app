@@ -12,13 +12,13 @@ type SectionsOfProjectOptionsProps = {
 const SectionsOfProjectOptions = ({section, onSelectedSection, isSectionsSelected}: SectionsOfProjectOptionsProps) => {
     return (
         <div role={"option"}
-             aria-selected={isSectionsSelected}
+             aria-section-selected={isSectionsSelected}
              tabIndex={-1}
-             data-selected={isSectionsSelected}
+             data-section-selected={isSectionsSelected}
         onClick={e => {
             e.preventDefault()
             onSelectedSection(section)
-        }} className={"group/section flex items-center gap-1.5 pl-6 py-1 ml-small justify-between data-[selected=true]:bg-product-library-selectable-secondary-hover-fill hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}>
+        }} className={"group/section flex items-center gap-1.5 pl-6 py-1 ml-small justify-between data-[section-selected=true]:bg-product-library-selectable-secondary-hover-fill hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}>
             <div className={"flex items-center gap-1.5"}>
                 <div className={"flex justify-center items-center w-6 h-6"}>
                     <SectionIcon/>
@@ -27,7 +27,7 @@ const SectionsOfProjectOptions = ({section, onSelectedSection, isSectionsSelecte
             </div>
             <div
                 className={
-                    "flex justify-center items-center invisible group-data-[selected=true]:visible"
+                    "flex justify-center items-center invisible group-data-[section-selected=true]/section:visible"
                 }
             >
                 <VerifiedIcon
