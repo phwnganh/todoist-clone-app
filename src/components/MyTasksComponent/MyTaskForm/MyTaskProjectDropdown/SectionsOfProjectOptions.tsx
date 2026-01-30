@@ -12,7 +12,7 @@ type SectionsOfProjectOptionsProps = {
 const SectionsOfProjectOptions = ({section, onSelectedSection, isSectionsSelected}: SectionsOfProjectOptionsProps) => {
     return (
         <div role={"option"}
-             aria-section-selected={isSectionsSelected}
+             aria-selected={isSectionsSelected}
              tabIndex={-1}
              data-section-selected={isSectionsSelected}
         onClick={e => {
