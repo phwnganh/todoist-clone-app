@@ -5,6 +5,7 @@ import {useAddMyTask} from "../../../hooks/useQueryHook/useTasks.ts";
 import type {TaskPayload} from "../../../types/task.type.ts";
 import {useProjectStore} from "../../../stores/project.store.ts";
 import {useTaskStore} from "../../../stores/task.store.ts";
+import type {Project} from "../../../types/project.type.ts";
 
 type AddMyTaskModalDialogProps = {
   onCloseAddMyTask: () => void;
@@ -32,11 +33,12 @@ const AddMyTaskModalDialog = ({
       content: values.content.trim(),
       description: values.description.trim(),
       parent_id: values.parentTask?.parent_id ?? null,
-      project_id: projectId,
-      section_id: addingTaskId ?? null,
+      project_id: values?.project?.id ?? projectId,
+      section_id: values?.section?.id ?? addingTaskId ?? null,
       priority: values.priority?.value
     }
   }
+
 
   const handleAddMyTask = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

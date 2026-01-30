@@ -89,7 +89,6 @@ const MyTaskDetailAside = ({projectDetail, taskDetail}: MyTaskDetailAsideProps) 
             <div className={"flex flex-col gap-1.5"}>
                 <p className={"text-product-library-display-secondary-idle-tint font-medium text-sm"}>Project</p>
                 <div className={"relative group/project"} ref={projectRef}>
-                    {}
                     <div role={"listbox"} onClick={() => handleToggleDropdown("project")} className={"cursor-pointer px-2 py-1.5 flex items-center justify-between hover:bg-product-library-display-accent-secondary-fill rounded-sm"}>
                         <div className={"flex items-center"}>
                             <div className={"flex justify-center items-center w-4 h-4 mr-0.5"}>

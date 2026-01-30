@@ -13,7 +13,7 @@ import HashtagIcon from "../../icons/HashtagIcon.tsx";
 import { getProjectColorClass } from "../../../helpers/getProjectColorClass.ts";
 import type { Project } from "../../../types/project.type.ts";
 import { useProjectStore } from "../../../stores/project.store.ts";
-import { useGetAProject } from "../../../hooks/useQueryHook/useProjects.ts";
+import {useGetAllProjects, useGetAProject} from "../../../hooks/useQueryHook/useProjects.ts";
 import CloseIcon from "../../../assets/close-icon.svg";
 import SubmitIcon from "../../icons/SubmitIcon.tsx";
 import type {Priority, Task} from "../../../types/task.type.ts";
@@ -61,9 +61,14 @@ const MyTaskForm = ({
   const dummyRef = useRef<HTMLDivElement | null>(null);
   const projectId = useProjectStore((state) => state.projectId);
   const { data: projectDetail } = useGetAProject(projectId);
+  const {data: projects} = useGetAllProjects()
   const handleToggleDropdown = (name: OpenMyTaskFormDropdown) => {
     setIsOpenAddMyTaskDropdown((prev) => (prev === name ? null : name));
   };
+
+  const filteredProjectsBySection = (section: Section) => {
+    return projects?.results?.find(p => p.id === section.project_id)
+  }
 
   const handleSelectPriority = (priority: Priority) => {
     onChange(updateMyTaskField(values, "priority", priority));
@@ -71,14 +76,33 @@ const MyTaskForm = ({
     setIsOpenAddMyTaskDropdown(null);
   };
 
-  const handleSelectProject = (project: Project, section?: Section) => {
+  const handleSelectProject = (project: Project) => {
     onChange({
       ...values,
       project,
-      section: section ?? null
+      section: null
     })
-    setIsOpenAddMyTaskDropdown(null)
+    console.log("select project: ", project);
   }
+
+  const handleSelectSection = (section: Section) => {
+    const project = filteredProjectsBySection(section);
+    if(!project) return;
+    onChange({
+      ...values,
+      project,
+      section
+    })
+    console.log("select section: ", section);
+  }
+  // const handleSelectProject = (project: Project, section?: Section) => {
+  //   onChange({
+  //     ...values,
+  //     project,
+  //     section: section ?? null
+  //   })
+  //   setIsOpenAddMyTaskDropdown(null)
+  // }
 
   const handleContentChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(updateMyTaskField(values, "content", e.target.value));
@@ -107,7 +131,7 @@ const MyTaskForm = ({
         <div className={"max-h-50 mb-small flex flex-col gap-xsmall"}>
 
           <div className={"flex items-center gap-1"}>
-            {!isEditMode && values.project && (
+            {values.project && (
                 <ProjectChip project={values.project} section={values.section} onRemove={() =>
                 onChange({...values, project: null, section: null})}/>
             )}
@@ -269,8 +293,9 @@ const MyTaskForm = ({
           {isOpenAddMyTaskDropdown === "project" && (
             <MyTaskProjectDropdown
               selectedProject={values.project}
-              onSelect={(project: Project) => handleSelectProject(project)}
-              onSelectedSection={(project: Project, section: Section) => handleSelectProject(project, section)}
+              selectedSection={values.section}
+              onSelect={handleSelectProject}
+              onSelectedSection={handleSelectSection}
             />
           )}
         </div>
