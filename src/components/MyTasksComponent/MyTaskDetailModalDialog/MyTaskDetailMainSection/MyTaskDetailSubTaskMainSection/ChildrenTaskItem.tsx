@@ -7,18 +7,26 @@ import CommentIcon from "../../../../icons/CommentIcon.tsx";
 import MenuIcon from "../../../../icons/MenuIcon.tsx";
 import {useTaskStore} from "../../../../../stores/task.store.ts";
 import EditMyTaskDetailMainSubChildrenForm from "../EditMyTaskDetailMainSubChildrenForm";
+import type {MouseEvent} from "react";
+import MyTasksToolbarDropdown from "../../../MyTasksToolbarDropdown.tsx";
+import MySubTaskToolbarDropdown from "../MySubTaskToolbarDropdown/MySubTaskToolbarDropdown.tsx";
 type ChildrenTaskItemProps = {
   hasSubChildren: boolean;
   childrenTask: Task;
   subChildren: Task[];
+    onOpenSubTaskDetailToolbar: (e: MouseEvent<HTMLButtonElement>) => void;
+    isOpenSubTaskDetailToolbar: boolean;
 };
 const ChildrenTaskItem = ({
   hasSubChildren,
   childrenTask,
   subChildren,
+    onOpenSubTaskDetailToolbar,
+    isOpenSubTaskDetailToolbar,
 }: ChildrenTaskItemProps) => {
-    const {editingSubTaskId, onOpenEditSubTask, onCloseEditSubTask} = useTaskStore()
+    const {editingSubTaskId, onOpenEditSubTask, onCloseEditSubTask, onCloseSubTaskDetailToolbar} = useTaskStore()
     const isEditing = editingSubTaskId === childrenTask.id
+
   return (
       <>
           {isEditing ? <EditMyTaskDetailMainSubChildrenForm onCloseEditMySubTask={onCloseEditSubTask} taskDetail={childrenTask} /> : (
@@ -79,9 +87,16 @@ const ChildrenTaskItem = ({
                       <button type={"button"} aria-label={"comment"} className={"rounded-small hover:bg-product-library-selectable-secondary-hover-fill"}>
                           <CommentIcon/>
                       </button>
-                      <button type={"button"} aria-label={"menu"} className={"rounded-small hover:bg-product-library-selectable-secondary-hover-fill"}>
-                          <MenuIcon />
-                      </button>
+                      <div className={"relative"}>
+                          <button onClick={onOpenSubTaskDetailToolbar} type={"button"} aria-label={"menu"} className={"rounded-small hover:bg-product-library-selectable-secondary-hover-fill"}>
+                              <MenuIcon />
+                          </button>
+                          {isOpenSubTaskDetailToolbar && <div className={"absolute right-9 z-50"}
+                          onClick={e => e.stopPropagation()}>
+                              <MySubTaskToolbarDropdown taskId={childrenTask.id}/>
+                          </div>}
+                      </div>
+
                   </div>
               </div>
           )}

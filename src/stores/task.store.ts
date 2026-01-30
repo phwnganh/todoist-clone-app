@@ -16,6 +16,9 @@ type TaskStore = {
     openTaskDetailToolbar: string | null;
     onOpenTaskDetailToolbar: (taskId: string) => void;
     onCloseTaskDetailToolbar: () => void;
+    openSubTaskDetailToolbar: string | null;
+    onOpenSubTaskDetailToolbar: (taskId: string) => void;
+    onCloseSubTaskDetailToolbar: () => void;
     onOpenTaskDetail: (taskId: string) => void;
     onCloseTaskDetail: () => void;
     onOpenDeleteMyTask: (taskId: string) => void;
@@ -40,6 +43,9 @@ export const useTaskStore = create<TaskStore>(set => ({
     openTaskDetailToolbar: null,
     onOpenTaskDetailToolbar: (taskId) => set({openTaskDetailToolbar: taskId}),
     onCloseTaskDetailToolbar: () => set({openTaskDetailToolbar: null}),
+    openSubTaskDetailToolbar: null,
+    onOpenSubTaskDetailToolbar: (taskId) => set({openSubTaskDetailToolbar: taskId}),
+    onCloseSubTaskDetailToolbar: () => set({openSubTaskDetailToolbar: null}),
     onOpenTaskDetail: (taskId) => set({taskDetailId: taskId}),
     onCloseTaskDetail: () => set({taskDetailId: null}),
     onOpenDeleteMyTask: (taskId) => set({deleteTaskId: taskId}),

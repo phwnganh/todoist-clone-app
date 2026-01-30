@@ -8,6 +8,7 @@ import ChildrenTaskItem from "./ChildrenTaskItem.tsx";
 import AddMyTaskDetailMainSubChildrenForm from "../AddMyTaskDetailMainSubChildrenForm";
 import {useExpanded} from "../../../../../hooks/useExpanded.ts";
 import TaskSmallArrowRightIcon from "../../../../icons/TaskSmallArrowRightIcon.tsx";
+import {type MouseEvent} from "react";
 
 type MyTaskDetailSubTaskMainSectionProps = {
   taskDetail?: Task | null;
@@ -17,7 +18,7 @@ const MyTaskDetailSubTaskMainSection = ({
   taskDetail,
   tasks,
 }: MyTaskDetailSubTaskMainSectionProps) => {
-  const { onOpenAddSubTask, addingSubTaskId, onCloseAddSubTask } = useTaskStore();
+  const { onOpenAddSubTask, addingSubTaskId, onCloseAddSubTask, openSubTaskDetailToolbar, onOpenSubTaskDetailToolbar } = useTaskStore();
   const isTaskAdding = addingSubTaskId === taskDetail?.id;
   const {isExpanded, handleExpanded} = useExpanded(true)
   const childrenTasks = useMemo(() => {
@@ -25,6 +26,10 @@ const MyTaskDetailSubTaskMainSection = ({
   }, [tasks, taskDetail?.id]);
   if (!childrenTasks) return null;
 
+  const handleOpenSubTaskDetailToolbar = (id: string, e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      onOpenSubTaskDetailToolbar(id)
+  }
     return (
     <>
       <div className={"flex items-center gap-1.5 px-3"}>
@@ -58,6 +63,10 @@ const MyTaskDetailSubTaskMainSection = ({
                                 hasSubChildren={hasSubChildren}
                                 childrenTask={children}
                                 subChildren={subChildren}
+                                onOpenSubTaskDetailToolbar={e => {
+                                    handleOpenSubTaskDetailToolbar(children.id, e)
+                                }}
+                                isOpenSubTaskDetailToolbar={openSubTaskDetailToolbar === children.id}
                             />
                         </Fragment>
                     );
