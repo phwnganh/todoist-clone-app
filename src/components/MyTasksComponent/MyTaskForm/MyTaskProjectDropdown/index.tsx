@@ -12,11 +12,13 @@ import type {Section} from "../../../../types/section.type.ts";
 
 type AddMyTaskProjectDropdownProps = {
   selectedProject: Project | null;
+  selectedSection: Section | null;
   onSelect: (project: Project) => void;
-  onSelectedSection: (project: Project, section: Section) => void;
+  onSelectedSection: (section: Section) => void;
 };
 const MyTaskFormProjectDropdown = ({
   selectedProject,
+    selectedSection,
   onSelect,
     onSelectedSection,
 }: AddMyTaskProjectDropdownProps) => {
@@ -94,6 +96,7 @@ const MyTaskFormProjectDropdown = ({
             key={project.id}
             project={project}
             isProjectsSelected={selectedProject?.name === project.name}
+            selectedSection={selectedSection}
             onProjectsSelected={onSelect}
             keyword={debounceSearchKeyword}
             onSectionSelected={onSelectedSection}

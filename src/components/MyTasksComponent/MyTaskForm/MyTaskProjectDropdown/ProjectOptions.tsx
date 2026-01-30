@@ -10,14 +10,15 @@ import type {Section} from "../../../../types/section.type.ts";
 type ProjectOptionsProps = {
   project: Project;
   isProjectsSelected: boolean;
-  onProjectsSelected: (project: Project) => void;
-  onSectionSelected: (project: Project, section: Section) => void;
+    selectedSection: Section | null;
+    onProjectsSelected: (project: Project) => void;
+  onSectionSelected: (section: Section) => void;
   keyword: string;
 };
 const ProjectOptions = ({
   project,
   isProjectsSelected,
-  onProjectsSelected, keyword,
+  onProjectsSelected, keyword, selectedSection,
     onSectionSelected
 }: ProjectOptionsProps) => {
   const {data: sections} = useGetAllSections()
@@ -37,7 +38,7 @@ const ProjectOptions = ({
             tabIndex={-1}
             data-selected={isProjectsSelected}
             key={project.id}
-            onMouseDown={(e) => {
+            onClick={(e) => {
               e.preventDefault();
               onProjectsSelected(project);
             }}
@@ -63,7 +64,7 @@ const ProjectOptions = ({
         </div>
 
         {filteredSectionsOfProject?.map(section => {
-          return (<SectionsOfProjectOptions key={section.id} section={section} onSelectedSection={() => onSectionSelected(project, section)}/>)
+          return (<SectionsOfProjectOptions key={section.id} isSectionsSelected={selectedSection?.name === section.name} project={project} section={section} onSelectedSection={() => onSectionSelected(section)}/>)
         })}
 
       </>

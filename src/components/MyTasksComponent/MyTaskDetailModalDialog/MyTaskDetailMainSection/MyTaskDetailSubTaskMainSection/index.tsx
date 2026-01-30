@@ -8,7 +8,7 @@ import ChildrenTaskItem from "./ChildrenTaskItem.tsx";
 import AddMyTaskDetailMainSubChildrenForm from "../AddMyTaskDetailMainSubChildrenForm";
 
 type MyTaskDetailSubTaskMainSectionProps = {
-  taskDetail?: Task;
+  taskDetail?: Task | null;
   tasks: Task[] | undefined;
 };
 const MyTaskDetailSubTaskMainSection = ({

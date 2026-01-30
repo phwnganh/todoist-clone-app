@@ -1,6 +1,6 @@
 export type Task = {
     id : string,
-    project_id?: string | undefined,
+    project_id?: string | undefined | null,
     section_id?: string | undefined | null,
     parent_id: string | null | undefined,
     labels?: string[],
@@ -75,5 +75,11 @@ export type UpdateTaskPayload = {
     content: string;
     description?: string;
     priority?: number;
+}
 
+export type MoveTaskPayload = {
+    id: string;
+    project_id?: string | undefined | null;
+    section_id?: string | undefined | null;
+    parent_id?: string | null
 }

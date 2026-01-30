@@ -20,8 +20,6 @@ import type {Priority, Task} from "../../../types/task.type.ts";
 import type {Section} from "../../../types/section.type.ts";
 import ProjectChip from "../../ui/ProjectChip.tsx";
 import SectionIcon from "../../icons/SectionIcon.tsx";
-import {useGetATask} from "../../../hooks/useQueryHook/useTasks.ts";
-import {useTaskStore} from "../../../stores/task.store.ts";
 
 export type MyTaskFormValues = {
   content: string;
@@ -43,7 +41,6 @@ type MyTaskFormProps = {
   errorMessage?: string | null;
   variant?: string;
   isEditMode?: boolean;
-  taskDetail?: Task;
 };
 const MyTaskForm = ({
   onCloseMyTaskForm,

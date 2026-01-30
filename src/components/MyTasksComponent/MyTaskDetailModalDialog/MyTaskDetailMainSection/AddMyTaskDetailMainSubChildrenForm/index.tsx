@@ -38,7 +38,7 @@ const AddMyTaskDetailMainSubChildrenForm = ({onCloseAddMySubTask, taskDetail}: A
         onCloseAddMySubTask()
     }
     return (
-    <MyTaskForm onCloseMyTaskForm={onCloseAddMySubTask} onSubmit={handleAddMySubTask} submitLabel={"Add task"} submittingLabel={"Adding..."} values={values} onChange={setValues} variant={"list"} taskDetail={taskDetail} />
+    <MyTaskForm onCloseMyTaskForm={onCloseAddMySubTask} onSubmit={handleAddMySubTask} submitLabel={"Add task"} submittingLabel={"Adding..."} values={values} onChange={setValues} variant={"list"} />
     );
 };
 

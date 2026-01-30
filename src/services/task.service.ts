@@ -1,5 +1,12 @@
 import {api} from "./api.ts";
-import type {SubTaskPayload, Task, TaskPayload, TaskResponse, UpdateTaskPayload} from "../types/task.type.ts";
+import type {
+    MoveTaskPayload,
+    SubTaskPayload,
+    Task,
+    TaskPayload,
+    TaskResponse,
+    UpdateTaskPayload
+} from "../types/task.type.ts";
 import type {SyncResponse} from "../types/api.type.ts";
 
 export const apiGetAllTasks = () => {
@@ -41,6 +48,17 @@ export const apiUpdateMyTask = async(payload: UpdateTaskPayload) => {
     return api.sync<SyncResponse, UpdateTaskPayload>([
         {
             type: "item_update",
+            uuid,
+            args: payload
+        }
+    ])
+}
+
+export const apiMoveMyTask = async (payload: MoveTaskPayload)=> {
+    const uuid = crypto.randomUUID()
+    return api.sync<SyncResponse, MoveTaskPayload>([
+        {
+            type: "item_move",
             uuid,
             args: payload
         }

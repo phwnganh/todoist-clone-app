@@ -4,10 +4,17 @@ import {
     apiAddMyTask,
     apiDeleteMyTask,
     apiGetAllTasks,
-    apiGetATask,
+    apiGetATask, apiMoveMyTask,
     apiUpdateMyTask
 } from "../../services/task.service.ts";
-import type {SubTaskPayload, Task, TaskPayload, TaskResponse, UpdateTaskPayload} from "../../types/task.type.ts";
+import type {
+    MoveTaskPayload,
+    SubTaskPayload,
+    Task,
+    TaskPayload,
+    TaskResponse,
+    UpdateTaskPayload
+} from "../../types/task.type.ts";
 import type {ApiError, SyncResponse} from "../../types/api.type.ts";
 import {
     optimisticAddMyTask, optimisticDeleteMyTask, optimisticUpdateMyTask,
@@ -168,6 +175,37 @@ export const useUpdateMyTask = () => {
     })
 }
 
+export const useMoveMyTask = () => {
+    const queryClient = useQueryClient();
+    return useMutation<SyncResponse, ApiError, MoveTaskPayload, OptimisticUpdatesContext>({
+        mutationFn: apiMoveMyTask,
+        onMutate: async (movingTask) => {
+            return optimisticUpdateMyTask({
+                queryClient,
+                queryKey: ["tasks"],
+                taskId: movingTask.id,
+                optimisticTask: {
+                    id: movingTask.id,
+                    project_id: movingTask.project_id,
+                    section_id: movingTask.section_id,
+                    parent_id: null,
+                }
+            })
+        },
+        onError: (_, __, context) => {
+            rollbackOptimisticUpdates({
+                queryClient,
+                queryKey: ["tasks"],
+                context
+            })
+        },
+        onSettled: () => {
+            void queryClient.invalidateQueries({
+                queryKey: ["tasks"]
+            })
+        }
+    })
+}
 export const useDeleteMyTask = () => {
     const queryClient = useQueryClient();
     return useMutation<null, ApiError, {taskId: string}, OptimisticUpdatesContext>({
