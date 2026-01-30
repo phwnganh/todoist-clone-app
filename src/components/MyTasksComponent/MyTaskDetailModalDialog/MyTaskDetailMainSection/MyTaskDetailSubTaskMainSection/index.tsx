@@ -6,6 +6,8 @@ import type { Task } from "../../../../../types/task.type.ts";
 import { Fragment, useMemo } from "react";
 import ChildrenTaskItem from "./ChildrenTaskItem.tsx";
 import AddMyTaskDetailMainSubChildrenForm from "../AddMyTaskDetailMainSubChildrenForm";
+import {useExpanded} from "../../../../../hooks/useExpanded.ts";
+import TaskSmallArrowRightIcon from "../../../../icons/TaskSmallArrowRightIcon.tsx";
 
 type MyTaskDetailSubTaskMainSectionProps = {
   taskDetail?: Task | null;
@@ -17,19 +19,21 @@ const MyTaskDetailSubTaskMainSection = ({
 }: MyTaskDetailSubTaskMainSectionProps) => {
   const { onOpenAddSubTask, addingSubTaskId, onCloseAddSubTask } = useTaskStore();
   const isTaskAdding = addingSubTaskId === taskDetail?.id;
-
+  const {isExpanded, handleExpanded} = useExpanded(true)
   const childrenTasks = useMemo(() => {
     return tasks?.filter((t) => t.parent_id === taskDetail?.id);
   }, [tasks, taskDetail?.id]);
-
   if (!childrenTasks) return null;
 
-  return (
+    return (
     <>
       <div className={"flex items-center gap-1.5 px-3"}>
-        <div className={"flex justify-center items-center w-6 h-6"}>
-          <TaskSmallArrowDownIcon />
-        </div>
+              <button type={"button"} onClick={handleExpanded} className={"flex justify-center items-center w-6 h-6"}>
+              {
+                  isExpanded ? <TaskSmallArrowDownIcon/> : <TaskSmallArrowRightIcon/>
+              }
+          </button>
+
         <p className={"text-sm font-medium"}>Sub-tasks</p>
         <p
           className={"text-sm text-product-library-display-secondary-idle-tint"}
@@ -38,36 +42,42 @@ const MyTaskDetailSubTaskMainSection = ({
         </p>
       </div>
       <hr className={"border-t border-product-library-divider-tertiary"} />
-      {childrenTasks?.map((children) => {
-        const subChildren = tasks?.filter((t) => t.parent_id === children.id);
-        const subSubChildren = subChildren?.filter(
-          (child) => child.parent_id === children.id,
-        );
-        if (!subChildren || !subSubChildren) return null;
-        const hasSubChildren = subSubChildren.length > 0;
-        return (
-          <Fragment key={children.id}>
-            <ChildrenTaskItem
-              hasSubChildren={hasSubChildren}
-              childrenTask={children}
-              subChildren={subChildren}
-            />
-          </Fragment>
-        );
-      })}
-      <hr className={"border-t border-product-library-divider-tertiary"} />
-      <div className={"pl-4"}>
-        {isTaskAdding ? (
-          <AddMyTaskDetailMainSubChildrenForm
-            onCloseAddMySubTask={onCloseAddSubTask}
-          />
-        ) : (
-          <AddMyTaskButtonSection
-            taskType={"sub-task"}
-            onOpenAddMyTask={() => onOpenAddSubTask(taskDetail?.id as string)}
-          />
+        {isExpanded && (
+            <>
+                {childrenTasks?.map((children) => {
+                    const subChildren = tasks?.filter((t) => t.parent_id === children.id);
+                    const subSubChildren = subChildren?.filter(
+                        (child) => child.parent_id === children.id,
+                    );
+                    if (!subChildren || !subSubChildren) return null;
+                    const hasSubChildren = subSubChildren.length > 0;
+
+                    return (
+                        <Fragment key={children.id}>
+                            <ChildrenTaskItem
+                                hasSubChildren={hasSubChildren}
+                                childrenTask={children}
+                                subChildren={subChildren}
+                            />
+                        </Fragment>
+                    );
+                })}
+                <hr className={"border-t border-product-library-divider-tertiary"} />
+                <div className={"pl-4"}>
+                    {isTaskAdding ? (
+                        <AddMyTaskDetailMainSubChildrenForm
+                            onCloseAddMySubTask={onCloseAddSubTask}
+                        />
+                    ) : (
+                        <AddMyTaskButtonSection
+                            taskType={"sub-task"}
+                            onOpenAddMyTask={() => onOpenAddSubTask(taskDetail?.id as string)}
+                        />
+                    )}
+                </div>
+
+            </>
         )}
-      </div>
     </>
   );
 };
