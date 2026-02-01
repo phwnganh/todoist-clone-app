@@ -3,6 +3,7 @@ import type { Task } from "../../../../../types/task.type.ts";
 import { useState } from "react";
 import MyTaskDetailHeaderForm from "./MyTaskDetailHeaderForm.tsx";
 import MyTaskDetailHeaderTitle from "./MyTaskDetailHeaderTitle.tsx";
+import {PRIORITY_BORDER_CLASS_MAPPING} from "../../../../../constants/priority.constants";
 
 type MyTaskDetailHeaderMainSectionProps = {
   taskDetail?: Task;
@@ -28,7 +29,7 @@ const MyTaskDetailHeaderMainSection = ({
       >
         <div
           className={
-            "h-5 w-5 rounded-full border-2 border-product-library-priorities-p4-primary-idle-fill"
+            `h-5 w-5 rounded-full border-2 ${PRIORITY_BORDER_CLASS_MAPPING[taskDetail?.priority as number]}`
           }
         ></div>
         <div

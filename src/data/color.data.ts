@@ -126,75 +126,75 @@ export const colorData: Color[] = [
 export const hashtagColors: HashtagColor[] = [
     {
         value: "berry_red",
-        colorVar: "text-product-library-meta-berry-fill"
+        colorVar: "product-library-meta-berry-fill"
     },
     {
         value: "red",
-        colorVar: "text-product-library-meta-red-fill"
+        colorVar: "product-library-meta-red-fill"
     },
     {
         value: "orange",
-        colorVar: "text-product-library-meta-orange-tint"
+        colorVar: "product-library-meta-orange-tint"
     },
     {
         value: "yellow",
-        colorVar: "text-product-library-meta-yellow-tint"
+        colorVar: "product-library-meta-yellow-tint"
     },
     {
         value: "olive_green",
-        colorVar: "text-product-library-meta-olive-green-tint"
+        colorVar: "product-library-meta-olive-green-tint"
     },
     {
         value: "lime_green",
-        colorVar: "text-product-library-meta-lime-green-tint"
+        colorVar: "product-library-meta-lime-green-tint"
     },
     {
         value: "green",
-        colorVar: "text-product-library-meta-green-fill"
+        colorVar: "product-library-meta-green-fill"
     },
     {
         value: "mint_green",
-        colorVar: "text-product-library-meta-mint-green-tint"
+        colorVar: "product-library-meta-mint-green-tint"
     },
     {
         value: "teal",
-        colorVar: "text-product-library-meta-teal-fill"
+        colorVar: "product-library-meta-teal-fill"
     },
     {
         value: "sky_blue",
-        colorVar: "text-product-library-meta-sky-blue-tint"
+        colorVar: "product-library-meta-sky-blue-tint"
     },
     {
         value: "light_blue",
-        colorVar: "text-product-library-meta-light-blue-tint"
+        colorVar: "product-library-meta-light-blue-tint"
     },
     {
         value: "blue",
-        colorVar: "text-product-library-info-neutral-primary-on-dark-idle-fill"
+        colorVar: "product-library-info-neutral-primary-on-dark-idle-fill"
     },
     {
         value: "grape",
-        colorVar: "text-product-library-meta-grape-fill"
+        colorVar: "product-library-meta-grape-fill"
     },
     {
         value: "violet",
-        colorVar: "text-product-library-meta-violet-tint"
+        colorVar: "product-library-meta-violet-tint"
     },
     {
         value: "lavender",
-        colorVar: "text-product-library-meta-lavender-tint"
+        colorVar: "product-library-meta-lavender-tint"
     },
     {
         value: "magenta",
-        colorVar: "text-product-library-meta-magenta-fill"
+        colorVar: "product-library-meta-magenta-fill"
     },
     {
         value: "salmon",
-        colorVar: "text-product-library-meta-salmon-fill"
+        colorVar: "product-library-meta-salmon-fill"
     },
     {
         value: "charcoal",
-        colorVar: "text-charcoal"
+        colorVar: "charcoal"
     },
     {
         value: "grey",
@@ -202,6 +202,6 @@ export const hashtagColors: HashtagColor[] = [
     },
     {
         value: "taupe",
-        colorVar: "text-product-library-meta-taupe-tint"
+        colorVar: "product-library-meta-taupe-tint"
     }
 ]

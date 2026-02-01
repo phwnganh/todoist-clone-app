@@ -17,6 +17,7 @@ import { type MouseEvent } from "react";
 import MyTasksToolbarDropdown from "./MyTasksToolbarDropdown.tsx";
 import MyTaskDetailModalDialog from "./MyTaskDetailModalDialog";
 import DeleteMyTaskModalDialog from "./DeleteMyTaskComponent";
+import {PRIORITY_BORDER_CLASS_MAPPING} from "../../constants/priority.constants";
 
 type MyTaskListItemProps = {
   taskNode: TaskNode;
@@ -78,7 +79,7 @@ const MyTaskListItem = ({
             >
               <div
                 className={
-                  "h-5 w-5 rounded-full border-2 border-product-library-priorities-p4-primary-idle-fill"
+                  `h-5 w-5 rounded-full border-2 ${PRIORITY_BORDER_CLASS_MAPPING[task.priority]}`
                 }
               ></div>
               <div

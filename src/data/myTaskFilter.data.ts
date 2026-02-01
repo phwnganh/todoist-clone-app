@@ -90,24 +90,24 @@ export const priorityFilterData: Priority[] = [
         key: "priority-1",
         label: "Priority 1",
         value: 4,
-        color: "text-product-library-priorities-p1-primary-idle-tint",
+        color: "product-library-priorities-p1-primary-idle-tint",
     },
     {
         key: "priority-2",
         label: "Priority 2",
         value: 3,
-        color: "text-product-library-priorities-p2-primary-idle-tint",
+        color: "product-library-priorities-p2-primary-idle-tint",
     },
     {
         key: "priority-3",
         label: "Priority 3",
         value: 2,
-        color: "text-product-library-priorities-p3-primary-idle-tint",
+        color: "product-library-priorities-p3-primary-idle-tint",
     },
     {
         key: "priority-4",
         label: "Priority 4",
         value: 1,
-        color: "text-product-library-selectable-primary-unselected-tint",
+        color: "product-library-selectable-primary-unselected-tint",
     }
 ]

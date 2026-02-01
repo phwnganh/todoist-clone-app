@@ -8,7 +8,7 @@ export type Task = {
     duration?: Duration,
     checked?: boolean,
     due?: Due,
-    priority: number | undefined,
+    priority: number,
     child_order?: number,
     content: string,
     description: string,

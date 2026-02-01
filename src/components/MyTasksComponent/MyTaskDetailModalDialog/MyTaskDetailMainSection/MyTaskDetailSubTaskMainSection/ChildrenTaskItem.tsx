@@ -8,8 +8,8 @@ import MenuIcon from "../../../../icons/MenuIcon.tsx";
 import {useTaskStore} from "../../../../../stores/task.store.ts";
 import EditMyTaskDetailMainSubChildrenForm from "../EditMyTaskDetailMainSubChildrenForm";
 import type {MouseEvent} from "react";
-import MyTasksToolbarDropdown from "../../../MyTasksToolbarDropdown.tsx";
 import MySubTaskToolbarDropdown from "../MySubTaskToolbarDropdown/MySubTaskToolbarDropdown.tsx";
+import {PRIORITY_BORDER_CLASS_MAPPING} from "../../../../../constants/priority.constants";
 type ChildrenTaskItemProps = {
   hasSubChildren: boolean;
   childrenTask: Task;
@@ -24,7 +24,7 @@ const ChildrenTaskItem = ({
     onOpenSubTaskDetailToolbar,
     isOpenSubTaskDetailToolbar,
 }: ChildrenTaskItemProps) => {
-    const {editingSubTaskId, onOpenEditSubTask, onCloseEditSubTask, onCloseSubTaskDetailToolbar} = useTaskStore()
+    const {editingSubTaskId, onOpenEditSubTask, onCloseEditSubTask} = useTaskStore()
     const isEditing = editingSubTaskId === childrenTask.id
 
   return (
@@ -43,7 +43,7 @@ const ChildrenTaskItem = ({
                       >
                           <div
                               className={
-                                  "h-5 w-5 rounded-full border-2 border-product-library-priorities-p4-primary-idle-fill"
+                                  `h-5 w-5 rounded-full border-2 ${PRIORITY_BORDER_CLASS_MAPPING[childrenTask?.priority]}`
                               }
                           ></div>
                           <div
