@@ -30,8 +30,8 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
 
   return (
     <nav
-      className={`pt-2.5 flex flex-col bg-product-library-background-base-secondary z-40 transition-all duration-300 ease-out overflow-hidden ${
-        isMobile ? "fixed inset-y-0 left-0" : "relative"
+      className={`flex flex-col bg-product-library-background-base-secondary z-40 transition-all duration-300 ease-out overflow-hidden ${
+        isMobile ? "fixed inset-y-0 left-0 top-0 z-50" : "relative z-40"
       } ${open ? "w-70" : isMobile ? "w-70 -translate-x-full" : "w-0"}`}
     >
       <div className="flex flex-col">
