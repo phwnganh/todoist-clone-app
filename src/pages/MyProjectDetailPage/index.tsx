@@ -17,6 +17,7 @@ import {useGetAllSections} from "../../hooks/useQueryHook/useSections.ts";
 import {DndContext, type DragEndEvent} from "@dnd-kit/core";
 import {useGetAllTasks} from "../../hooks/useQueryHook/useTasks.ts";
 import {findTaskByIdToOrder, getSiblings, handleReorder} from "../../helpers/dragDropMyTasks.ts";
+import HeaderThreeDotsIcon from "../../components/icons/HeaderThreeDotsIcon.tsx";
 
 const MyProjectDetailPage = () => {
     const {projectId} = useParams<{projectId: string}>();
@@ -89,14 +90,14 @@ const MyProjectDetailPage = () => {
                         <div className={"mr-1.5"}>
                             <img src={UserAdded} alt={"user-added-icon"}/>
                         </div>
-                        <span className="text-product-library-actionable-quaternary-idle-tint text-sm font-medium">Share</span>
+                        <span className="hidden md:block text-product-library-actionable-quaternary-idle-tint text-sm font-medium">Share</span>
                     </button>
-                        <div className={"relative p-2.5"}>
+                        <div className={"relative p-1 md:p-2.5"}>
                         <button type={"button"} className={"flex items-center px-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"} onClick={handleOpenLayoutDropdown}>
                             <div className={"flex items-center justify-center w-8 h-8"}>
                                 <img src={SmallListIcon} alt={"small-list-icon"}/>
                             </div>
-                            <span className="text-product-library-actionable-quaternary-idle-tint text-sm font-medium">Display</span>
+                            <span className="hidden md:block text-product-library-actionable-quaternary-idle-tint text-sm font-medium">Display</span>
 
                         </button>
                         {openLayoutDropdown && (<MyTaskLayoutFiltersDropdown onSelectLayout={handleSelectLayout} layoutTitle={layoutName}/>)}
@@ -109,7 +110,10 @@ const MyProjectDetailPage = () => {
                     </button>
                 </div>
             } left={<div className={"flex items-center mr-auto"}>
-                <button className={"px-1 text-product-library-actionable-quaternary-idle-tint text-sm font-medium hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small p-1.5"} onClick={() => navigate(PROJECTS)}>My Projects</button>
+                <button onClick={() => navigate(PROJECTS)} className={"flex sm:hidden justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small p-1.5"}>
+                    <HeaderThreeDotsIcon className={"text-product-library-display-secondary-idle-tint"}/>
+                </button>
+                <button className={"hidden sm:block px-1 text-product-library-actionable-quaternary-idle-tint text-sm font-medium hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small p-1.5"} onClick={() => navigate(PROJECTS)}>My Projects</button>
                 <div className={"text-sm text-product-library-display-secondary-idle-tint"}>/</div>
             </div>}></HeaderLayout>
             <DndContext onDragEnd={layoutName === "list" ? handleDragEndList : handleDragEndBoard}>
