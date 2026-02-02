@@ -9,6 +9,8 @@ import MyTasksToolbarDropdown from "./MyTasksToolbarDropdown.tsx";
 import { useTaskStore } from "../../stores/task.store.ts";
 import EditMyTaskModalDialog from "./EditMyTaskComponent";
 import DeleteMyTaskModalDialog from "./DeleteMyTaskComponent";
+import {PRIORITY_BORDER_CLASS_MAPPING, PRIORITY_VERIFIED_CLASS_MAPPING} from "../../constants/priority.constants.ts";
+import MyTaskDetailModalDialog from "./MyTaskDetailModalDialog";
 
 type MyTaskBoardItemProps = {
   task: Task;
@@ -22,9 +24,10 @@ const MyTaskBoardItem = ({
   onOpenTaskDetailToolbar,
   tasks,
 }: MyTaskBoardItemProps) => {
-  const { editingTaskId, onCloseEditTask, deleteTaskId } = useTaskStore();
+  const { editingTaskId, onCloseEditTask, deleteTaskId, taskDetailId, onOpenTaskDetail, onCloseTaskDetail } = useTaskStore();
   const isEditing = editingTaskId === task.id;
   const isDeleting = deleteTaskId === task.id;
+  const isOpeningTaskDetail = taskDetailId === task.id;
   const childrenTasks = useMemo(() => {
     return tasks.filter((t) => t.parent_id === task.id);
   }, [tasks, task.id]);
@@ -50,7 +53,7 @@ const MyTaskBoardItem = ({
           >
             <div
               className={
-                "h-5 w-5 rounded-full border-2 border-product-library-priorities-p4-primary-idle-fill"
+                `h-5 w-5 rounded-full border-2 ${PRIORITY_BORDER_CLASS_MAPPING[task.priority]}`
               }
             ></div>
             <div
@@ -60,13 +63,13 @@ const MyTaskBoardItem = ({
             >
               <VerifiedIcon
                 className={
-                  "text-product-library-actionable-quaternary-idle-tint"
+                  `${PRIORITY_VERIFIED_CLASS_MAPPING[task.priority]} opacity-50`
                 }
               />
             </div>
           </button>
 
-          <div className={"py-2 flex flex-col min-w-0 mr-3"}>
+          <div role={"button"} className={"py-2 flex flex-col min-w-0 mr-3 cursor-pointer"} onClick={() => onOpenTaskDetail(task.id)}>
             <div className={"mb-0.75 text-sm"}>
               <MyTaskContent content={task.content} />
             </div>
@@ -122,6 +125,9 @@ const MyTaskBoardItem = ({
       )}
       {isDeleting && (
           <DeleteMyTaskModalDialog task={task}/>
+      )}
+      {isOpeningTaskDetail && (
+          <MyTaskDetailModalDialog onCloseTaskDetail={onCloseTaskDetail}/>
       )}
     </>
   );

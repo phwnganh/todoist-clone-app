@@ -3,7 +3,10 @@ import type { Task } from "../../../../../types/task.type.ts";
 import { useState } from "react";
 import MyTaskDetailHeaderForm from "./MyTaskDetailHeaderForm.tsx";
 import MyTaskDetailHeaderTitle from "./MyTaskDetailHeaderTitle.tsx";
-import {PRIORITY_BORDER_CLASS_MAPPING} from "../../../../../constants/priority.constants";
+import {
+  PRIORITY_BORDER_CLASS_MAPPING,
+  PRIORITY_VERIFIED_CLASS_MAPPING
+} from "../../../../../constants/priority.constants";
 
 type MyTaskDetailHeaderMainSectionProps = {
   taskDetail?: Task;
@@ -38,7 +41,7 @@ const MyTaskDetailHeaderMainSection = ({
           }
         >
           <VerifiedIcon
-            className={"text-product-library-actionable-quaternary-idle-tint"}
+            className={`${PRIORITY_VERIFIED_CLASS_MAPPING[taskDetail?.priority as number]} opacity-50`}
           />
         </div>
       </button>

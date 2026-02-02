@@ -9,7 +9,10 @@ import {useTaskStore} from "../../../../../stores/task.store.ts";
 import EditMyTaskDetailMainSubChildrenForm from "../EditMyTaskDetailMainSubChildrenForm";
 import type {MouseEvent} from "react";
 import MySubTaskToolbarDropdown from "../MySubTaskToolbarDropdown/MySubTaskToolbarDropdown.tsx";
-import {PRIORITY_BORDER_CLASS_MAPPING} from "../../../../../constants/priority.constants";
+import {
+    PRIORITY_BORDER_CLASS_MAPPING,
+    PRIORITY_VERIFIED_CLASS_MAPPING
+} from "../../../../../constants/priority.constants";
 type ChildrenTaskItemProps = {
   hasSubChildren: boolean;
   childrenTask: Task;
@@ -52,7 +55,7 @@ const ChildrenTaskItem = ({
                               }
                           >
                               <VerifiedIcon
-                                  className={"text-product-library-actionable-quaternary-idle-tint"}
+                                  className={`${PRIORITY_VERIFIED_CLASS_MAPPING[childrenTask?.priority]} opacity-50`}
                               />
                           </div>
                       </button>

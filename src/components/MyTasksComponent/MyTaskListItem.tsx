@@ -17,7 +17,7 @@ import { type MouseEvent } from "react";
 import MyTasksToolbarDropdown from "./MyTasksToolbarDropdown.tsx";
 import MyTaskDetailModalDialog from "./MyTaskDetailModalDialog";
 import DeleteMyTaskModalDialog from "./DeleteMyTaskComponent";
-import {PRIORITY_BORDER_CLASS_MAPPING} from "../../constants/priority.constants";
+import {PRIORITY_BORDER_CLASS_MAPPING, PRIORITY_VERIFIED_CLASS_MAPPING} from "../../constants/priority.constants";
 
 type MyTaskListItemProps = {
   taskNode: TaskNode;
@@ -89,7 +89,7 @@ const MyTaskListItem = ({
               >
                 <VerifiedIcon
                   className={
-                    "text-product-library-actionable-quaternary-idle-tint"
+                    `${PRIORITY_VERIFIED_CLASS_MAPPING[task.priority]} opacity-50`
                   }
                 />
               </div>
