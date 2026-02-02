@@ -9,7 +9,7 @@ export type MenuNavItem = {
 
 export type OpenDropdown = "color" | "workspace" | "parentProject" | null;
 
-export type OpenMyTaskFormDropdown = "date" | "priority" | "reminders" | "project" | null;
+export type OpenMyTaskFormDropdown = "date" | "priority" | "reminders" | "project" | "labels" | null;
 
 export type OpenMyTaskDetailAsideDropdown = "project" | "date" | "priority" | "labels" | null;
 

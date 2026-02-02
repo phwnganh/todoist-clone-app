@@ -20,6 +20,7 @@ import type {Priority, Task} from "../../../types/task.type.ts";
 import type {Section} from "../../../types/section.type.ts";
 import ProjectChip from "../../ui/ProjectChip.tsx";
 import SectionIcon from "../../icons/SectionIcon.tsx";
+import MyTaskLabelsDropdown from "./MyTaskLabelsDropdown";
 
 export type MyTaskFormValues = {
   content: string;
@@ -58,6 +59,7 @@ const MyTaskForm = ({
   const dateRef = useRef<HTMLDivElement | null>(null);
   const priorityRef = useRef<HTMLDivElement | null>(null);
   const projectRef = useRef<HTMLDivElement | null>(null);
+  const labelRef = useRef<HTMLDivElement | null>(null);
   const dummyRef = useRef<HTMLDivElement | null>(null);
   const projectId = useProjectStore((state) => state.projectId);
   const { data: projectDetail } = useGetAProject(projectId);
@@ -95,14 +97,6 @@ const MyTaskForm = ({
     })
     console.log("select section: ", section);
   }
-  // const handleSelectProject = (project: Project, section?: Section) => {
-  //   onChange({
-  //     ...values,
-  //     project,
-  //     section: section ?? null
-  //   })
-  //   setIsOpenAddMyTaskDropdown(null)
-  // }
 
   const handleContentChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(updateMyTaskField(values, "content", e.target.value));
@@ -116,7 +110,7 @@ const MyTaskForm = ({
           ? priorityRef
           : isOpenAddMyTaskDropdown === "project"
             ? projectRef
-            : dummyRef,
+            : isOpenAddMyTaskDropdown === "labels" ? labelRef : dummyRef,
     handler: () => setIsOpenAddMyTaskDropdown(null),
     enabled: isOpenAddMyTaskDropdown !== null,
   });
@@ -130,12 +124,14 @@ const MyTaskForm = ({
       <div className={"pt-small px-small rounded-large"}>
         <div className={"max-h-50 mb-small flex flex-col gap-xsmall"}>
 
-          <div className={"flex items-center gap-1"}>
+          <div className={"flex items-center gap-1 relative"} ref={labelRef}>
             {values.project && (
                 <ProjectChip project={values.project} section={values.section} onRemove={() =>
                 onChange({...values, project: null, section: null})}/>
             )}
             <input type={"text"} value={values.content} onChange={handleContentChange} className={"flex-1 min-w-30 outline-none text-sm text-product-library-display-primary-idle-tint"} placeholder={"Content"}/>
+            {isOpenAddMyTaskDropdown === "labels" && <MyTaskLabelsDropdown/>}
+
           </div>
           <input
             type={"text"}
@@ -224,24 +220,26 @@ const MyTaskForm = ({
               </div>
             </div>
 
-            <button
-              className={
-                "px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"
-              }
-            >
-              <div className={"w-4 h-4 flex justify-center items-center"}>
-                <img src={LabelIcon} alt={"label-icon"} />
+              <div role={"button"}
+                   className={
+                     "px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"
+                   }
+                   onClick={() => handleToggleDropdown("labels")}
+              >
+                <div className={"w-4 h-4 flex justify-center items-center"}>
+                  <img src={LabelIcon} alt={"label-icon"} />
+                </div>
+                {variant === "list" && (
+                    <p
+                        className={
+                          "text-sm text-product-library-display-secondary-idle-tint"
+                        }
+                    >
+                      Labels
+                    </p>
+                )}
               </div>
-              {variant === "list" && (
-                <p
-                  className={
-                    "text-sm text-product-library-display-secondary-idle-tint"
-                  }
-                >
-                  Labels
-                </p>
-              )}
-            </button>
+
           </div>
         </div>
       </div>
