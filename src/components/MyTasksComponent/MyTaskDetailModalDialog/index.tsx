@@ -27,8 +27,8 @@ const MyTaskDetailModalDialog = ({onCloseTaskDetail}: MyTaskDetailModalDialogPro
     }, [taskDetail?.section_id, sections?.results])
 
     return createPortal(
-        <div role={"dialog"} aria-modal={"true"} aria-labelledby={"task-detail"} className={"fixed inset-0 bg-black/40 z-50 pt-16"}>
-            <div className={"w-216 max-w-full h-200 mx-auto rounded-large bg-white flex flex-col"}>
+        <div role={"dialog"} aria-modal={"true"} aria-labelledby={"task-detail"} className={"fixed inset-0 bg-black/40 z-50 lg:pt-16"}>
+            <div className={"w-216 max-w-full h-full lg:h-200 mx-auto rounded-large bg-white flex flex-col"}>
                 <MyTaskDetailTitleSection sectionDetail={sectionDetail} projectDetail={projectDetail} onCloseTaskDetail={onCloseTaskDetail}/>
                 <main className={"flex flex-1"}>
                         <MyTaskDetailMainSection taskDetail={taskDetail} tasks={tasks}/>

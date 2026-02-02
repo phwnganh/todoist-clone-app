@@ -65,7 +65,7 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
     );
   }
   return (
-    <section className={"pb-4.5"}>
+    <section className={"pb-4.5 px-3 lg:px-0"}>
       {section.id !== null && (
         <div
           className={
@@ -107,33 +107,35 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
                   />
                 </Fragment>
             ))}
+          <li>
+            {isAddingTask ? (
+                <AddMyTaskModalDialog
+                    variant={"list"}
+                    onCloseAddMyTask={onCloseAddMyTask}
+                />
+            ) : (
+                <AddMyTaskButtonSection
+                    taskType={"task"}
+                    onOpenAddMyTask={() => onOpenAddMyTask(section.id)}
+                />
+            )}
 
-          {isAddingTask ? (
-            <li>
-              <AddMyTaskModalDialog
-                variant={"list"}
-                onCloseAddMyTask={onCloseAddMyTask}
-              />
-            </li>
-          ) : (
-            <li className={"pr-5 pl-px"}>
-              <AddMyTaskButtonSection
-                  taskType={"task"}
-                onOpenAddMyTask={() => onOpenAddMyTask(section.id)}
-              />
-            </li>
-          )}
+            {isSectionAdding ? (
+                <AddMyTaskSectionComponent
+                    onCancelAddMyTaskSection={onCloseAddSectionForm}
+                />
+
+            ) : (
+                <MyTaskListSectionFooter
+                    onAddMyTaskSectionForm={() => onOpenAddSectionForm(section.id)}
+                />
+            )}
+
+          </li>
+
         </ul>
       )}
-      {isSectionAdding ? (
-        <AddMyTaskSectionComponent
-          onCancelAddMyTaskSection={onCloseAddSectionForm}
-        />
-      ) : (
-        <MyTaskListSectionFooter
-          onAddMyTaskSectionForm={() => onOpenAddSectionForm(section.id)}
-        />
-      )}
+
     </section>
   );
 };
