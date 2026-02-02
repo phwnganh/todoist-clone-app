@@ -14,7 +14,7 @@ const MyTaskDetailMainSection = ({taskDetail, tasks}: MyTaskDetailMainSectionPro
   const isTaskAdding = addingSubTaskId === taskDetailId;
   const hasChildren = tasks?.results?.some(task => task.parent_id === taskDetail?.id)
   return (
-    <section className={"px-large pt-large w-full"}>
+    <section className={"px-large pt-large w-full flex-1 min-w-0"}>
       <div className={"flex flex-col gap-small"}>
         <MyTaskDetailHeaderMainSection
           taskDetail={taskDetail}

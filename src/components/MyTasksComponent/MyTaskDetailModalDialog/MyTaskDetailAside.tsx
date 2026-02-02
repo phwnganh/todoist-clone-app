@@ -85,7 +85,7 @@ const MyTaskDetailAside = ({projectDetail, taskDetail}: MyTaskDetailAsideProps) 
         enabled: isOpenMyTaskDetailAside !== null
     })
     return (
-        <aside className={"p-large bg-product-library-background-base-secondary flex flex-col gap-small max-w-65 w-full shrink-0"}>
+        <aside className={"p-large mt-3 md:mt-0 md:bg-product-library-background-base-secondary flex flex-col w-full gap-small md:w-80 shrink-0 border-t-6 border-t-product-library-divider-tertiary md:border-t-0"}>
             <div className={"flex flex-col gap-1.5"}>
                 <p className={"text-product-library-display-secondary-idle-tint font-medium text-sm"}>Project</p>
                 <div className={"relative group/project"} ref={projectRef}>

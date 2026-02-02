@@ -33,7 +33,7 @@ const ChildrenTaskItem = ({
   return (
       <>
           {isEditing ? <EditMyTaskDetailMainSubChildrenForm onCloseEditMySubTask={onCloseEditSubTask} taskDetail={childrenTask} /> : (
-              <div className={"flex justify-between items-center group"}>
+              <div className={"flex justify-between items-start lg:items-center group"}>
                   <div className={"flex items-start gap-1.5"}>
                       <div
                           className={"w-6 h-6 flex justify-center items-center shrink-0"}
