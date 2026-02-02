@@ -148,7 +148,7 @@ const MyTaskForm = ({
               onChange(updateMyTaskField(values, "description", e.target.value))
             }
           />
-          <div className={"mb-small flex gap-small"}>
+          <div className={"mb-small flex gap-small flex-wrap"}>
             {/*date*/}
             <div
               role={"button"}
@@ -313,13 +313,18 @@ const MyTaskForm = ({
         <div className={"flex gap-2.5"}>
           <button
             type="button"
-            className={`${variant === "list" ? "px-3 py-1.5 min-w-17" : "w-8 h-8"} flex justify-center items-center rounded-small bg-product-library-actionable-secondary-idle-fill`}
+            className={`${variant === "list" ? "p-1 md:px-3 md:py-1.5 min-w-0 md:min-w-17" : "w-8 h-8"} flex justify-center items-center rounded-small bg-product-library-actionable-secondary-idle-fill`}
             onClick={onCloseMyTaskForm}
           >
             {variant === "list" ? (
-              <span className="text-sm font-medium text-product-library-actionable-secondary-on-idle-tint">
-                Cancel
-              </span>
+                <>
+                  <span className={"flex md:hidden w-6 h-6 justify-center items-center"}>
+                    <img src={CloseIcon} alt={"close-icon"}/>
+                  </span>
+                  <span className="hidden md:inline text-sm font-medium text-product-library-actionable-secondary-on-idle-tint">
+                    Cancel
+                </span></>
+
             ) : (
               <span className={"w-6 h-6 flex justify-center items-center"}>
                 <img src={CloseIcon} alt={"close-icon"} />
@@ -328,7 +333,7 @@ const MyTaskForm = ({
           </button>
           <button
             type="submit"
-            className={`${variant === "list" ? "px-3 py-1.5 min-w-17" : "w-8 h-8"} rounded-small flex justify-center items-center  ${
+            className={`${variant === "list" ? "p-1 md:px-3 md:py-1.5 min-w-0 md:min-w-17" : "w-8 h-8"} rounded-small flex justify-center items-center  ${
               isAddButtonDisabled
                 ? "bg-product-library-actionable-primary-disabled-fill cursor-not-allowed"
                 : "bg-product-library-actionable-primary-idle-fill hover:bg-product-library-actionable-primary-hover-fill"
@@ -337,9 +342,14 @@ const MyTaskForm = ({
             disabled={isAddButtonDisabled}
           >
             {variant === "list" ? (
-              <span className="text-sm font-medium text-product-library-actionable-primary-on-idle-tint">
+                <>
+                  <span className={"w-6 h-6 flex md:hidden justify-center items-center"}>
+                    <SubmitIcon className={"text-white"} />
+                  </span>
+                  <span className="hidden md:inline text-sm font-medium text-product-library-actionable-primary-on-idle-tint">
                 {isPending ? submittingLabel : submitLabel}
-              </span>
+              </span></>
+
             ) : (
               <span className={"w-6 h-6 flex justify-center items-center"}>
                 <SubmitIcon className={"text-white"} />
