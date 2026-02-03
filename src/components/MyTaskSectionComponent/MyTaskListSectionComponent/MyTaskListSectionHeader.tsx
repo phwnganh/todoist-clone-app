@@ -2,11 +2,14 @@ import TaskSmallArrowDownIcon from "../../icons/TaskSmallArrowDownIcon.tsx";
 import TaskSmallArrowRightIcon from "../../icons/TaskSmallArrowRightIcon.tsx";
 import MenuIcon from "../../icons/MenuIcon.tsx";
 import type { Task } from "../../../types/task.type.ts";
+import {useSectionStore} from "../../../stores/section.store";
+import {type Section} from "../../../types/section.type";
+import MySectionsToolbarDropdown from "../MySectionsToolbarDropdown";
 
 type MyTaskSectionHeaderProps = {
   isExpanded: boolean;
   onExpanded: () => void;
-  name: string;
+  section: Section;
   tasks: Task[] | undefined | null;
   onOpenEditMyTaskSection: () => void;
 };
@@ -14,10 +17,12 @@ type MyTaskSectionHeaderProps = {
 const MyTaskListSectionHeader = ({
   isExpanded,
   onExpanded,
-  name,
+  section,
   tasks,
   onOpenEditMyTaskSection,
 }: MyTaskSectionHeaderProps) => {
+  const {onOpenSectionToolbarDropdown, openSectionToolbarDropdown} = useSectionStore()
+  const isOpenToolbar = openSectionToolbarDropdown === section.id
   return (
     <div className={"flex justify-between items-start px-4"}>
       <div role={"button"} className={"flex items-start"}>
@@ -40,7 +45,7 @@ const MyTaskListSectionHeader = ({
             onClick={onOpenEditMyTaskSection}
             className={"font-bold text-sm pt-1.5 pr-1.5 pb-1.25"}
           >
-            {name}
+            {section.name}
           </div>
           <span
             className={
@@ -51,9 +56,13 @@ const MyTaskListSectionHeader = ({
           </span>
         </div>
       </div>
-      <button type={"button"} className={"flex justify-center items-center"}>
-        <MenuIcon />
-      </button>
+      <div className={"relative"} onClick={() => onOpenSectionToolbarDropdown(section.id)}>
+        <button type={"button"}  className={"flex justify-center items-center"}>
+          <MenuIcon />
+        </button>
+        {isOpenToolbar && (<MySectionsToolbarDropdown/>)}
+      </div>
+
     </div>
   );
 };

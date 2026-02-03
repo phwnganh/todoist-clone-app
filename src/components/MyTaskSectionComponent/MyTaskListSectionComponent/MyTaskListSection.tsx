@@ -83,7 +83,7 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
               onOpenEditMyTaskSection={() => onOpenEditSection(section.id)}
               isExpanded={isExpanded}
               onExpanded={handleExpanded}
-              name={section.name}
+              section={section}
               tasks={filteredTasks}
             />
           )}

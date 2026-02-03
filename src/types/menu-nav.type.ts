@@ -32,3 +32,10 @@ export type MyTaskMenuToolbar = | "divider" | {
     onClick: () => void;
     icon: ReactNode;
 }
+
+export type MySectionMenuToolbar = | "divider" | {
+    label: string;
+    danger?: boolean;
+    onClick: () => void;
+    icon: ReactNode;
+}
