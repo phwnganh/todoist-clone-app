@@ -1,9 +1,10 @@
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
 import type { Project, ProjectResponse } from "../types/project.type.ts";
 import type { Task, TaskResponse } from "../types/task.type.ts";
+import type {Section, SectionResponse} from "../types/section.type.ts";
 
 export type OptimisticUpdatesContext = {
-  previousData?: ProjectResponse | TaskResponse;
+  previousData?: ProjectResponse | TaskResponse | SectionResponse;
   tempId?: string;
 };
 
@@ -136,6 +137,47 @@ export async function optimisticDeleteMyTask({
   });
   return { previousData };
 }
+
+export async function optimisticAddSection({queryClient, queryKey, optimisticSection}: {queryClient: QueryClient, queryKey: QueryKey, optimisticSection: Section}): Promise<OptimisticUpdatesContext>{
+  await queryClient.cancelQueries({queryKey});
+  const previousData = queryClient.getQueryData<SectionResponse>(queryKey);
+  queryClient.setQueryData<SectionResponse>(queryKey, (old) => {
+    if (!old) return old;
+    return {
+      ...old,
+      results: [...old.results, optimisticSection],
+      next_cursor: old.next_cursor ?? "",
+    };
+  });
+  return { previousData };
+}
+
+export async function optimisticUpdateSection({queryClient, queryKey, sectionId, optimisticSection}: {queryClient: QueryClient, queryKey: QueryKey, sectionId: string, optimisticSection: Partial<Section>}): Promise<OptimisticUpdatesContext>{
+  await queryClient.cancelQueries({queryKey});
+  const previousData = queryClient.getQueryData<SectionResponse>(queryKey);
+  queryClient.setQueryData<SectionResponse>(queryKey, old => {
+    if(!old) return old;
+    return {
+      ...old,
+      results: old.results.map(section => section.id === sectionId ? {...section, ...optimisticSection} : section),
+    }
+  })
+  return { previousData };
+}
+
+export async function optimisticDeleteSection({queryClient, queryKey, sectionId}: {queryClient: QueryClient, queryKey: QueryKey, sectionId: string}): Promise<OptimisticUpdatesContext>{
+  await queryClient.cancelQueries({queryKey});
+  const previousData = queryClient.getQueryData<SectionResponse>(queryKey);   
+  queryClient.setQueryData<SectionResponse>(queryKey, (old) => {
+    if (!old) return old;
+    return {
+      ...old,
+      results: old.results.filter((section) => section.id !== sectionId),
+    };
+  });
+  return { previousData };
+}
+
 export function rollbackOptimisticUpdates({
   queryClient,
   queryKey,

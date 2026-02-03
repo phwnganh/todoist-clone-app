@@ -104,7 +104,7 @@ const MyTaskForm = ({
 
   const handleOpenLabels = () => {
     handleToggleDropdown("labels")
-    if(!values.labels && !values.content.endsWith("@")){
+    if(!values.content.endsWith("@")){
       onChange(updateMyTaskField(values, "content", values.content + "@"))
     }
     setIsInsertingLabel(true);

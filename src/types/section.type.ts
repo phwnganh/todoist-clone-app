@@ -1,18 +1,22 @@
 export type Section = {
     id: string | null;
-    user_id: string;
     project_id: string;
-    added_at: string;
-    updated_at: string;
-    archived_at: string;
     name: string;
-    section_order: number;
-    is_archived: boolean;
-    is_deleted: boolean;
-    is_collapsed: boolean;
+    section_order?: number;
 }
 
 export type SectionResponse = {
     results: Section[];
     next_cursor: string;
+}
+
+export type SectionPayload = {
+    name: string;
+    project_id: string;
+}
+
+export type UpdateSectionPayload = {
+    id: string;
+    name: string;
+    project_id?: string;
 }
