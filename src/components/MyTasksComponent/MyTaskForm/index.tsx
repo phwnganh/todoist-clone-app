@@ -22,6 +22,7 @@ import ProjectChip from "../../ui/ProjectChip.tsx";
 import SectionIcon from "../../icons/SectionIcon.tsx";
 import MyTaskLabelsDropdown from "./MyTaskLabelsDropdown";
 import type {Label} from "../../../types/label.type.ts";
+import LabelChip from "../../ui/LabelChip.tsx";
 
 export type MyTaskFormValues = {
   content: string;
@@ -58,6 +59,7 @@ const MyTaskForm = ({
 }: MyTaskFormProps) => {
   const [isOpenAddMyTaskDropdown, setIsOpenAddMyTaskDropdown] =
     useState<OpenMyTaskFormDropdown>(null);
+  const [isInsertingLabel, setIsInsertingLabel] = useState(false)
   const dateRef = useRef<HTMLDivElement | null>(null);
   const priorityRef = useRef<HTMLDivElement | null>(null);
   const projectRef = useRef<HTMLDivElement | null>(null);
@@ -100,8 +102,25 @@ const MyTaskForm = ({
     console.log("select section: ", section);
   }
 
+  const handleOpenLabels = () => {
+    handleToggleDropdown("labels")
+    if(!values.label && !values.content.endsWith("@")){
+      onChange(updateMyTaskField(values, "content", values.content + "@"))
+    }
+    setIsInsertingLabel(true);
+  }
+
   const handleSelectLabel = (label: Label) => {
-    onChange(updateMyTaskField(values, "label", label));
+    let nextContent = values.content
+    if(isInsertingLabel && nextContent.endsWith("@")){
+      nextContent = nextContent.slice(0, -1)
+    }
+    onChange({
+      ...values,
+      content: nextContent,
+      label
+    })
+    setIsInsertingLabel(false);
     setIsOpenAddMyTaskDropdown(null)
   }
 
@@ -136,8 +155,11 @@ const MyTaskForm = ({
                 <ProjectChip project={values.project} section={values.section} onRemove={() =>
                 onChange({...values, project: null, section: null})}/>
             )}
+            {values.label && (
+                <LabelChip label={values.label} onRemove={() => onChange({...values, label: null})}/>
+            )}
             <input type={"text"} value={values.content} onChange={handleContentChange} className={"flex-1 min-w-30 outline-none text-sm text-product-library-display-primary-idle-tint"} placeholder={"Content"}/>
-            {isOpenAddMyTaskDropdown === "labels" && <MyTaskLabelsDropdown selectedLabel={values.label} onSelect={(label: Label) => handleSelectLabel(label)} />}
+            {isOpenAddMyTaskDropdown === "labels" && <MyTaskLabelsDropdown selectedLabel={values.label} onSelect={handleSelectLabel} />}
 
           </div>
           <input
@@ -231,7 +253,7 @@ const MyTaskForm = ({
                    className={
                      "px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"
                    }
-                   onClick={() => handleToggleDropdown("labels")}
+                   onClick={handleOpenLabels}
               >
                 <div className={"w-4 h-4 flex justify-center items-center"}>
                   <img src={LabelIcon} alt={"label-icon"} />
