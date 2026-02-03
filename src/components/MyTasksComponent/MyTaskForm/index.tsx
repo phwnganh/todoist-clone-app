@@ -21,6 +21,7 @@ import type {Section} from "../../../types/section.type.ts";
 import ProjectChip from "../../ui/ProjectChip.tsx";
 import SectionIcon from "../../icons/SectionIcon.tsx";
 import MyTaskLabelsDropdown from "./MyTaskLabelsDropdown";
+import type {Label} from "../../../types/label.type.ts";
 
 export type MyTaskFormValues = {
   content: string;
@@ -30,6 +31,7 @@ export type MyTaskFormValues = {
   project: Project | null;
   section: Section | null;
   parentTask?: Task | null;
+  label: Label | null;
 };
 type MyTaskFormProps = {
   onCloseMyTaskForm: () => void;
@@ -98,6 +100,11 @@ const MyTaskForm = ({
     console.log("select section: ", section);
   }
 
+  const handleSelectLabel = (label: Label) => {
+    onChange(updateMyTaskField(values, "label", label));
+    setIsOpenAddMyTaskDropdown(null)
+  }
+
   const handleContentChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(updateMyTaskField(values, "content", e.target.value));
   };
@@ -130,7 +137,7 @@ const MyTaskForm = ({
                 onChange({...values, project: null, section: null})}/>
             )}
             <input type={"text"} value={values.content} onChange={handleContentChange} className={"flex-1 min-w-30 outline-none text-sm text-product-library-display-primary-idle-tint"} placeholder={"Content"}/>
-            {isOpenAddMyTaskDropdown === "labels" && <MyTaskLabelsDropdown/>}
+            {isOpenAddMyTaskDropdown === "labels" && <MyTaskLabelsDropdown selectedLabel={values.label} onSelect={(label: Label) => handleSelectLabel(label)} />}
 
           </div>
           <input
