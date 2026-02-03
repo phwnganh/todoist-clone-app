@@ -2,6 +2,8 @@ import { type FormEvent, useState } from "react";
 import MyTaskListSectionForm, {
   type MyTaskSectionFormValues,
 } from "../MyTaskListSectionComponent/MyTaskListSectionForm.tsx";
+import {useAddSection} from "../../../hooks/useQueryHook/useSections";
+import {useProjectStore} from "../../../stores/project.store";
 
 type AddMyTaskSectionProps = {
   onCancelAddMyTaskSection: () => void;
@@ -12,9 +14,17 @@ const AddMyTaskSection = ({
   const [values, setValues] = useState<MyTaskSectionFormValues>({
     name: "",
   });
+  const {projectId} = useProjectStore()
+
+  const {mutate} = useAddSection()
 
   const handleAddMyTaskSection = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    mutate({
+      name: values.name,
+      project_id: projectId
+    })
+    onCancelAddMyTaskSection();
   };
   return (
     <div className={"mt-1"}>
