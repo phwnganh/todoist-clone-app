@@ -32,7 +32,7 @@ export type MyTaskFormValues = {
   project: Project | null;
   section: Section | null;
   parentTask?: Task | null;
-  label: Label | null;
+  labels: Label[];
 };
 type MyTaskFormProps = {
   onCloseMyTaskForm: () => void;
@@ -104,13 +104,21 @@ const MyTaskForm = ({
 
   const handleOpenLabels = () => {
     handleToggleDropdown("labels")
-    if(!values.label && !values.content.endsWith("@")){
+    if(!values.labels && !values.content.endsWith("@")){
       onChange(updateMyTaskField(values, "content", values.content + "@"))
     }
     setIsInsertingLabel(true);
   }
 
   const handleSelectLabel = (label: Label) => {
+    let nextLabels: Label[]
+
+    const existed = values.labels.some(l => l.id === label.id)
+    if(existed){
+      nextLabels = values.labels.filter(l => l.id !== label.id)
+    }else{
+      nextLabels = [...values.labels, label]
+    }
     let nextContent = values.content
     if(isInsertingLabel && nextContent.endsWith("@")){
       nextContent = nextContent.slice(0, -1)
@@ -118,7 +126,7 @@ const MyTaskForm = ({
     onChange({
       ...values,
       content: nextContent,
-      label
+      labels: nextLabels
     })
     setIsInsertingLabel(false);
     setIsOpenAddMyTaskDropdown(null)
@@ -155,11 +163,13 @@ const MyTaskForm = ({
                 <ProjectChip project={values.project} section={values.section} onRemove={() =>
                 onChange({...values, project: null, section: null})}/>
             )}
-            {values.label && (
-                <LabelChip label={values.label} onRemove={() => onChange({...values, label: null})}/>
-            )}
+
+            {values.labels.map((label) => (
+                <LabelChip key={label.id} label={label} onRemove={() => onChange({...values, labels: values.labels.filter(l => l.id !== label.id)})}/>
+
+            ))}
             <input type={"text"} value={values.content} onChange={handleContentChange} className={"flex-1 min-w-30 outline-none text-sm text-product-library-display-primary-idle-tint"} placeholder={"Content"}/>
-            {isOpenAddMyTaskDropdown === "labels" && <MyTaskLabelsDropdown selectedLabel={values.label} onSelect={handleSelectLabel} />}
+            {isOpenAddMyTaskDropdown === "labels" && <MyTaskLabelsDropdown selectedLabels={values.labels} onSelect={handleSelectLabel} />}
 
           </div>
           <input

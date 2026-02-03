@@ -7,6 +7,7 @@ import type {Section} from "../types/section.type.ts";
 import type {
     TaskDetailHeaderFormValues
 } from "../components/MyTasksComponent/MyTaskDetailModalDialog/MyTaskDetailMainSection/MyTaskDetailHeaderMainSection/MyTaskDetailHeaderForm.tsx";
+import type {Label} from "../types/label.type.ts";
 export const updateMyTaskField = <K extends keyof MyTaskFormValues>(values: MyTaskFormValues, key: K, value: MyTaskFormValues[K]) => {
     return {
         ...values,
@@ -21,15 +22,17 @@ export const updateMyTaskDetailHeader = <K extends keyof TaskDetailHeaderFormVal
     }
 }
 
-export const getTaskValuesByMappingDataType = (task: Task, projects: Project[] | undefined, sections: Section[] | undefined): MyTaskFormValues => {
+export const getTaskValuesByMappingDataType = (task: Task, projects: Project[] | undefined, sections: Section[] | undefined, labels: Label[] | undefined): MyTaskFormValues => {
     const project = projects?.find(p => p.id === task.project_id) ?? null
     const section = sections?.find(s => s.id === task.section_id) ?? null
+    const label = labels?.filter(label => task.labels?.includes(label.name)) ?? []
     return {
         content: task.content,
         priority: priorityFilterData.find(p => p.value === task.priority) ?? null,
         description: task.description,
         project: project,
-        section: section
+        section: section,
+        labels: label
     }
 }
 

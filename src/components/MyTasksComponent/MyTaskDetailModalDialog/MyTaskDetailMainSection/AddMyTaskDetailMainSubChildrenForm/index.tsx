@@ -16,7 +16,8 @@ const AddMyTaskDetailMainSubChildrenForm = ({onCloseAddMySubTask, taskDetail}: A
         priority: priorityFilterData.find(p => p.value === 1) ?? null,
         project: null,
         parentTask: taskDetail ?? null,
-        section: null
+        section: null,
+        labels: []
     });
     const {mutate} = useAddMySubTask()
     const {addingSubTaskId} = useTaskStore()

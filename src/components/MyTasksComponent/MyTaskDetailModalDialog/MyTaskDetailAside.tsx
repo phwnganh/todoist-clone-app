@@ -15,6 +15,9 @@ import {getTaskValuesByMappingDataType} from "../../../helpers/updateMyTaskField
 import {useGetAllProjects} from "../../../hooks/useQueryHook/useProjects.ts";
 import {useGetAllSections} from "../../../hooks/useQueryHook/useSections.ts";
 import {useMoveMyTask, useUpdateMyTask} from "../../../hooks/useQueryHook/useTasks.ts";
+import type {Label} from "../../../types/label.type.ts";
+import MyTaskAvailableLabelsDropdown from "./MyTaskAvailableLabelsDropdown";
+import {useGetAllLabels} from "../../../hooks/useQueryHook/useLabels.ts";
 type MyTaskDetailAsideProps = {
     projectDetail?: Project
     taskDetail?: Task
@@ -26,6 +29,7 @@ const MyTaskDetailAside = ({projectDetail, taskDetail}: MyTaskDetailAsideProps) 
     const [selectedProject, setSelectedProject] = useState<Project | null>(null)
     const [selectedSection, setSelectedSection] = useState<Section | null>(null)
     const [selectedPriority, setSelectedPriority] = useState<Priority | null>(null)
+    const [selectedLabels, setSelectedLabels] = useState<Label[]>([])
     const projectRef = useRef<HTMLDivElement | null>(null)
     const dateRef = useRef<HTMLDivElement | null>(null)
     const priorityRef = useRef<HTMLDivElement | null>(null)
@@ -33,6 +37,8 @@ const MyTaskDetailAside = ({projectDetail, taskDetail}: MyTaskDetailAsideProps) 
     const dummyRef = useRef<HTMLDivElement | null>(null)
     const {mutate} = useUpdateMyTask()
     const {mutate: mutateMoveTask} = useMoveMyTask()
+    const {data: labels} = useGetAllLabels()
+
     const handleToggleDropdown = (name: OpenMyTaskDetailAsideDropdown)=> {
         setIsOpenMyTaskDetailAside(prev => (prev === name ? null : name));
     }
@@ -70,14 +76,52 @@ const MyTaskDetailAside = ({projectDetail, taskDetail}: MyTaskDetailAsideProps) 
         })
     }
 
-    useEffect(() => {
-        if(!taskDetail) return;
+    const handleSelectLabels = (label: Label) => {
+        setSelectedLabels(prev => {
+            let nextVal;
+            const existed = prev.some(l => l.id === label.id)
+            if(existed){
+                nextVal = prev.filter(l => l.id !== label.id)
+            }else{
+                nextVal = [...prev, label]
+            }
 
-        const values = getTaskValuesByMappingDataType(taskDetail, projects?.results, sections?.results)
+            if(taskDetail){
+                mutate({
+                    id: taskDetail.id,
+                    content: taskDetail.content,
+                    description: taskDetail.description,
+                    labels: nextVal.map(l => l.name)
+                })
+            }
+            return nextVal;
+        })
+    }
+
+    const handleRemoveLabel = (id: string) => {
+        setSelectedLabels(prev => {
+            const nextVal = prev.filter(l => l.id !== id)
+            if(taskDetail){
+                mutate({
+                    id: taskDetail.id,
+                    content: taskDetail.content,
+                    description: taskDetail.description,
+                    labels: nextVal.map(l => l.name)
+                })
+            }
+            return nextVal;
+        })
+    }
+
+    useEffect(() => {
+        if(!taskDetail || !projects || !sections || !labels) return;
+
+        const values = getTaskValuesByMappingDataType(taskDetail, projects?.results, sections?.results, labels?.results)
         setSelectedProject(values.project)
         setSelectedSection(values.section)
         setSelectedPriority(values.priority)
-    }, [taskDetail, projects?.results, sections?.results])
+        setSelectedLabels(values.labels)
+    }, [taskDetail, projects, sections, labels])
 
     useClickOutside({
         ref: isOpenMyTaskDetailAside === "project" ? projectRef : isOpenMyTaskDetailAside === "priority" ? priorityRef : isOpenMyTaskDetailAside === "date" ? dateRef : isOpenMyTaskDetailAside === "labels" ? labelsRef : dummyRef,
@@ -137,12 +181,25 @@ const MyTaskDetailAside = ({projectDetail, taskDetail}: MyTaskDetailAsideProps) 
                     </div>
                 </div>
                 <hr className="border-t border-t-product-library-divider-tertiary" />
-                <div role={"listbox"} className={"cursor-pointer flex justify-between items-center hover:bg-product-library-display-accent-secondary-fill rounded-sm p-1.5"}>
-                    <p className={"text-product-library-display-secondary-idle-tint font-medium text-sm"}>Labels</p>
-                    <button type={"button"} className={"flex justify-center items-center"}>
-                        <SmallPlusAddIcon/>
-                    </button>
+                <div className={"relative"} ref={labelsRef}>
+                    <div role={"listbox"} onClick={() => handleToggleDropdown("labels")} className={"cursor-pointer flex justify-between items-center hover:bg-product-library-display-accent-secondary-fill rounded-sm p-1.5"}>
+                        <p className={"text-product-library-display-secondary-idle-tint font-medium text-sm"}>Labels</p>
+                        <button type={"button"} className={"flex justify-center items-center"}>
+                            <SmallPlusAddIcon/>
+                        </button>
+                    </div>
+                    {isOpenMyTaskDetailAside === "labels" && <MyTaskAvailableLabelsDropdown selectedLabel={selectedLabels} onLabelSelected={(label: Label) => handleSelectLabels(label)}/>}
                 </div>
+                {selectedLabels.length > 0 && (
+                    <div className={"flex flex-wrap gap-1"}>
+                        {selectedLabels.map((label) => (
+                            <span key={label.id} className={"flex items-center justify-between px-3 py-1 rounded-lg text-sm bg-product-library-selectable-secondary-hover-fill"}>
+                                    <p>{label.name}</p>
+                                    <button type={"button"} onClick={() => handleRemoveLabel(label.id)} className={"w-5 h-5 flex justify-center items-center"}>x</button>
+                                </span>
+                        ))}
+                    </div>
+                )}
             </div>
         </aside>
 

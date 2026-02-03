@@ -6,6 +6,7 @@ import {useMoveMyTask, useUpdateMyTask} from "../../../hooks/useQueryHook/useTas
 import {useTaskStore} from "../../../stores/task.store.ts";
 import {getTaskValuesByMappingDataType} from "../../../helpers/updateMyTaskField.ts";
 import {useGetAllSections} from "../../../hooks/useQueryHook/useSections.ts";
+import {useGetAllLabels} from "../../../hooks/useQueryHook/useLabels.ts";
 
 type EditMyTaskModalDialogProps = {
   onCloseEditMyTask: () => void;
@@ -21,6 +22,7 @@ const EditMyTaskModalDialog = ({
   const isEditMode = !!task.id
   const {data: projects} = useGetAllProjects()
   const {data: sections} = useGetAllSections()
+  const {data: labels} = useGetAllLabels()
   const {mutate, isPending, isError, error} = useUpdateMyTask()
   const {mutate: moveTaskMutate} = useMoveMyTask()
   const [values, setValues] = useState<MyTaskFormValues>({
@@ -29,7 +31,8 @@ const EditMyTaskModalDialog = ({
     priority: null,
     project: null,
     section: null,
-    parentTask: null
+    parentTask: null,
+    labels: []
   });
 
   const initialProjectSection = useRef({
@@ -44,8 +47,8 @@ const EditMyTaskModalDialog = ({
 
   useEffect(() => {
     if(!task) return;
-    setValues(getTaskValuesByMappingDataType(task, projects?.results, sections?.results))
-  }, [task, projects?.results, sections?.results]);
+    setValues(getTaskValuesByMappingDataType(task, projects?.results, sections?.results, labels?.results))
+  }, [task, projects?.results, sections?.results, labels?.results]);
 
   const handleUpdateMyTask = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

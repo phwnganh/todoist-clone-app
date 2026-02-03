@@ -7,6 +7,7 @@ import {getTaskValuesByMappingDataType} from "../../../../../helpers/updateMyTas
 import {useGetAllProjects} from "../../../../../hooks/useQueryHook/useProjects.ts";
 import {useGetAllSections} from "../../../../../hooks/useQueryHook/useSections.ts";
 import {useUpdateMyTask} from "../../../../../hooks/useQueryHook/useTasks.ts";
+import {useGetAllLabels} from "../../../../../hooks/useQueryHook/useLabels.ts";
 
 type EditMyTaskDetailMainSubChildrenFormProps = {
     onCloseEditMySubTask: () => void,
@@ -20,17 +21,19 @@ const EditMyTaskDetailMainSubChildrenForm = ({onCloseEditMySubTask, taskDetail}:
         priority: priorityFilterData.find(p => p.value === 1) ?? null,
         project: null,
         parentTask: null,
-        section: null
+        section: null,
+        labels: []
     })
     const {editingSubTaskId} = useTaskStore()
     const isEditMode = !!taskDetail?.id
     const {data: projects} = useGetAllProjects()
     const {data: sections} = useGetAllSections()
+    const {data: labels} = useGetAllLabels()
     const {mutate} = useUpdateMyTask()
     useEffect(() => {
         if(!taskDetail) return;
-        setValues(getTaskValuesByMappingDataType(taskDetail, projects?.results, sections?.results))
-    }, [taskDetail, projects?.results, sections?.results])
+        setValues(getTaskValuesByMappingDataType(taskDetail, projects?.results, sections?.results, labels?.results))
+    }, [taskDetail, projects?.results, sections?.results, labels?.results])
 
     if(!editingSubTaskId) {
         return;

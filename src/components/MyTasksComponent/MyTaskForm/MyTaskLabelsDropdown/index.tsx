@@ -5,10 +5,10 @@ import AddNewLabelButton from "./AddNewLabelButton.tsx";
 import type {Label} from "../../../../types/label.type.ts";
 
 type MyTaskLabelsDropdownProps = {
-    selectedLabel: Label | null;
+    selectedLabels: Label[];
     onSelect: (label: Label) => void;
 }
-const MyTaskLabelsDropdown = ({selectedLabel, onSelect}: MyTaskLabelsDropdownProps) => {
+const MyTaskLabelsDropdown = ({selectedLabels, onSelect}: MyTaskLabelsDropdownProps) => {
     const {data: labels, isLoading} = useGetAllLabels()
     const results = labels?.results ?? []
     if(isLoading) {
@@ -19,7 +19,7 @@ const MyTaskLabelsDropdown = ({selectedLabel, onSelect}: MyTaskLabelsDropdownPro
             {results.length > 0 ? (
                 <>
                     {labels?.results.map(label => (
-                        <MyLabelListItem key={label.id} label={label} isLabelSelected={selectedLabel?.name === label.name} onSelectLabel={onSelect}/>
+                        <MyLabelListItem key={label.id} label={label} isLabelSelected={selectedLabels.some(l => l.id === label.id)} onSelectLabel={onSelect}/>
                     ))}
                     <AddNewLabelButton/>
                 </>

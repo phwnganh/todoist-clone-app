@@ -5,7 +5,6 @@ import {useAddMyTask} from "../../../hooks/useQueryHook/useTasks.ts";
 import type {TaskPayload} from "../../../types/task.type.ts";
 import {useProjectStore} from "../../../stores/project.store.ts";
 import {useTaskStore} from "../../../stores/task.store.ts";
-import type {Project} from "../../../types/project.type.ts";
 
 type AddMyTaskModalDialogProps = {
   onCloseAddMyTask: () => void;
@@ -21,7 +20,8 @@ const AddMyTaskModalDialog = ({
     due_date: "",
     priority: priorityFilterData.find(p => p.value === 1) ?? null,
     project: null,
-    section: null
+    section: null,
+    labels: []
   });
 
   const {mutate, isPending, isError, error} = useAddMyTask()
@@ -35,7 +35,8 @@ const AddMyTaskModalDialog = ({
       parent_id: values.parentTask?.parent_id ?? null,
       project_id: values?.project?.id ?? projectId,
       section_id: values?.section?.id ?? addingTaskId ?? null,
-      priority: values.priority?.value
+      priority: values.priority?.value,
+      labels: values.labels.map((label) => label.name),
     }
   }
 

@@ -61,6 +61,7 @@ export type TaskPayload = {
     section_id: string | undefined | null;
     parent_id: string | undefined | null;
     priority: number | undefined;
+    labels: string[]
 }
 
 export type SubTaskPayload = {
@@ -75,6 +76,7 @@ export type UpdateTaskPayload = {
     content: string;
     description?: string;
     priority?: number;
+    labels?: string[];
 }
 
 export type MoveTaskPayload = {
