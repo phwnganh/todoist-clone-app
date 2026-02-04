@@ -4,13 +4,18 @@ import EditIcon from "../icons/EditIcon";
 import TaskMoveToIcon from "../icons/MoveToTaskIcon";
 import TrashIcon from "../icons/TrashIcon";
 import MyTasksMenuButton from "../ui/MyTasksMenuButton";
-const MySectionsToolbarDropdown = () => {
-    const {onCloseSectionToolbarDropdown} = useSectionStore()
+type MySectionsToolbarDropdownProps = {
+    sectionId: string | null;
+}
+const MySectionsToolbarDropdown = ({sectionId}: MySectionsToolbarDropdownProps) => {
+    const {onCloseSectionToolbarDropdown, onOpenEditSection, onOpenDeleteSection} = useSectionStore()
     const MY_SECTIONS_MENU_TOOLBAR: MySectionMenuToolbar[] = [
         {
             label: "Edit",
             onClick: () => {
                 onCloseSectionToolbarDropdown()
+                onOpenEditSection(sectionId)
+
             },
             icon: <EditIcon/>
         },
@@ -27,6 +32,7 @@ const MySectionsToolbarDropdown = () => {
             danger: true,
             onClick: () => {
                 onCloseSectionToolbarDropdown()
+                onOpenDeleteSection(sectionId)
             },
             icon: (
                 <TrashIcon

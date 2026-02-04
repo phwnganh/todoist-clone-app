@@ -5,6 +5,7 @@ type SectionStore = {
     setSectionId: (sectionId: string) => void;
     addSectionId: string | null | undefined;
     editingSectionId: string | null;
+    deleteSectionId: string | null;
     openSectionToolbarDropdown: string | null;
     onOpenSectionToolbarDropdown: (sectionId: string | null) => void;
     onCloseSectionToolbarDropdown: () => void;
@@ -12,6 +13,8 @@ type SectionStore = {
     onCloseAddSectionForm: () => void;
     onOpenEditSection: (sectionId: string | null) => void;
     onCloseEditSection: () => void;
+    onOpenDeleteSection: (id: string | null) => void;
+    onCloseDeleteSection: () => void;
 }
 
 export const useSectionStore = create<SectionStore>((set) => ({
@@ -19,6 +22,7 @@ export const useSectionStore = create<SectionStore>((set) => ({
     setSectionId: (sectionId: string) => set({sectionId}),
     addSectionId: undefined,
     editingSectionId: null,
+    deleteSectionId: null,
     openSectionToolbarDropdown: null,
     onOpenSectionToolbarDropdown: (sectionId) => set({openSectionToolbarDropdown: sectionId}),
     onCloseSectionToolbarDropdown: () => set({openSectionToolbarDropdown: null}),
@@ -26,4 +30,6 @@ export const useSectionStore = create<SectionStore>((set) => ({
     onCloseAddSectionForm: () => set({addSectionId: undefined}),
     onOpenEditSection: (sectionId) => set({editingSectionId: sectionId}),
     onCloseEditSection: () => set({editingSectionId: null}),
+    onOpenDeleteSection: (sectionId) => set({deleteSectionId: sectionId}),
+    onCloseDeleteSection: () => set({deleteSectionId: null}),
 }))
