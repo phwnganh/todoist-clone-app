@@ -6,5 +6,5 @@ export const apiGetAllLabels = () => {
 }
 
 export const apiSearchLabels = (query: string) => {
-    return api.get<LabelsResponse>(`/labels?q=*${query}*`);
+    return api.get<LabelsResponse>(`/labels/search?query=*${query}*`);
 }

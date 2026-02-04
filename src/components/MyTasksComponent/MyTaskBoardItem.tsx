@@ -11,6 +11,8 @@ import EditMyTaskModalDialog from "./EditMyTaskComponent";
 import DeleteMyTaskModalDialog from "./DeleteMyTaskComponent";
 import {PRIORITY_BORDER_CLASS_MAPPING, PRIORITY_VERIFIED_CLASS_MAPPING} from "../../constants/priority.constants.ts";
 import MyTaskDetailModalDialog from "./MyTaskDetailModalDialog";
+import LabelIcon from "../../assets/label-icon.svg";
+import MyTaskBoardLabelsPreview from "./MyTaskForm/MyTaskLabelsDropdown/MyTaskBoardLabelsPreview.tsx";
 
 type MyTaskBoardItemProps = {
   task: Task;
@@ -28,6 +30,10 @@ const MyTaskBoardItem = ({
   const isEditing = editingTaskId === task.id;
   const isDeleting = deleteTaskId === task.id;
   const isOpeningTaskDetail = taskDetailId === task.id;
+
+  const labels = task.labels ?? []
+  const firstLabel = labels[0]
+  const extraLabelLength = labels.length - 1
   const childrenTasks = useMemo(() => {
     return tasks.filter((t) => t.parent_id === task.id);
   }, [tasks, task.id]);
@@ -101,6 +107,8 @@ const MyTaskBoardItem = ({
                 <img src={SmallCalendarIcon} alt={"small-calendar-icon"} />
                 <span>Tomorrow</span>
               </button>
+
+              <MyTaskBoardLabelsPreview labels={task.labels} />
             </div>
           </div>
           <button

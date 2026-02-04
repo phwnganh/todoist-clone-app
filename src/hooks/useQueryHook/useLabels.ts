@@ -12,6 +12,7 @@ export const useGetAllLabels = () => {
 export const useSearchLabels = (query: string) => {
     return useQuery<LabelsResponse>({
         queryKey: ["labels", query],
-        queryFn: () => apiSearchLabels(query)
+        queryFn: () => apiSearchLabels(query),
+        enabled: !!query
     })
 }
