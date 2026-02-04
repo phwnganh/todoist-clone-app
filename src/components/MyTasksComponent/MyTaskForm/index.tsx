@@ -139,13 +139,11 @@ const MyTaskForm = ({
   const handleContentChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     onChange(updateMyTaskField(values, "content", value));
-
-    if (value.endsWith("@")) {
+    const keyword = getLabelKeyword(value)
+    if(keyword !== null){
       setIsInsertingLabel(true);
-      setIsOpenAddMyTaskDropdown("labels");
-    }
-
-    if (isInsertingLabel && !value.endsWith("@")) {
+      setIsOpenAddMyTaskDropdown("labels")
+    }else{
       setIsInsertingLabel(false);
       setIsOpenAddMyTaskDropdown(null);
     }

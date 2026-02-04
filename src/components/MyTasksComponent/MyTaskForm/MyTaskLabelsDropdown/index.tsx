@@ -1,9 +1,10 @@
-import {useGetAllLabels} from "../../../../hooks/useQueryHook/useLabels.ts";
+import {useGetAllLabels, useSearchLabels} from "../../../../hooks/useQueryHook/useLabels.ts";
 import LoadingSpin from "../../../ui/LoadingSpin.tsx";
 import MyLabelListItem from "./MyLabelListItem.tsx";
 import AddNewLabelButton from "./AddNewLabelButton.tsx";
 import type {Label} from "../../../../types/label.type.ts";
 import {shouldShowLabel} from "../../../../helpers/handleCommasTag.ts";
+import {useDebounce} from "../../../../hooks/useDebounce.ts";
 
 type MyTaskLabelsDropdownProps = {
     selectedLabels: Label[];
@@ -11,10 +12,12 @@ type MyTaskLabelsDropdownProps = {
     keyword: string;
 }
 const MyTaskLabelsDropdown = ({selectedLabels, onSelect, keyword}: MyTaskLabelsDropdownProps) => {
+    const debouncedKeyword = useDebounce(keyword, 500)
     const {data: labels, isLoading} = useGetAllLabels()
-    const results = labels?.results ?? []
-    const filteredLabels = results?.filter(label => shouldShowLabel(label, selectedLabels, keyword))
-    if(isLoading) {
+    const {data: searchedLabels, isLoading: isSearching} = useSearchLabels(debouncedKeyword)
+    const results = debouncedKeyword ? searchedLabels?.results : labels?.results ?? []
+    const filteredLabels = results?.filter(label => shouldShowLabel(label, selectedLabels, debouncedKeyword))
+    if(isLoading || isSearching) {
         return <LoadingSpin/>
     }
     return (
@@ -27,8 +30,9 @@ const MyTaskLabelsDropdown = ({selectedLabels, onSelect, keyword}: MyTaskLabelsD
                     <AddNewLabelButton/>
                 </>
             ) : <button type={"button"} className={"w-full text-start text-sm py-1 px-4 hover:bg-product-library-selectable-secondary-hover-fill"}>
-                Label not found. <span className={"font-semibold"}>Create</span>
-            </button>}
+                Label not found. <span className={"font-semibold"}>Create {keyword}</span>
+            </button>
+            }
         </div>
     );
 };
