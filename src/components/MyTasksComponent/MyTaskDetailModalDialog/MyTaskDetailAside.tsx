@@ -18,6 +18,7 @@ import {useMoveMyTask, useUpdateMyTask} from "../../../hooks/useQueryHook/useTas
 import type {Label} from "../../../types/label.type.ts";
 import MyTaskAvailableLabelsDropdown from "./MyTaskAvailableLabelsDropdown";
 import {useGetAllLabels} from "../../../hooks/useQueryHook/useLabels.ts";
+import CustomLabel from "../../ui/CustomLabel.tsx";
 type MyTaskDetailAsideProps = {
     projectDetail?: Project
     taskDetail?: Task
@@ -193,10 +194,7 @@ const MyTaskDetailAside = ({projectDetail, taskDetail}: MyTaskDetailAsideProps) 
                 {selectedLabels.length > 0 && (
                     <div className={"flex flex-wrap gap-1"}>
                         {selectedLabels.map((label) => (
-                            <span key={label.id} className={"flex items-center justify-between px-3 py-1 rounded-lg text-sm bg-product-library-selectable-secondary-hover-fill"}>
-                                    <p>{label.name}</p>
-                                    <button type={"button"} onClick={() => handleRemoveLabel(label.id)} className={"w-5 h-5 flex justify-center items-center"}>x</button>
-                                </span>
+                            <CustomLabel key={label.id} className={"bg-label-pill-idle-fill hover:bg-label-pill-hover-fill"} onRemove={handleRemoveLabel} label={label}/>
                         ))}
                     </div>
                 )}
