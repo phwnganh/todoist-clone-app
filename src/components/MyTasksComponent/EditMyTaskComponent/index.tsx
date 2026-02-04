@@ -78,6 +78,7 @@ const EditMyTaskModalDialog = ({
         content: values.content.trim(),
         description: values.description.trim(),
         priority: values.priority?.value ?? 1,
+        labels: values.labels.map(label => label.name)
       })
       onCloseEditMyTask();
 
