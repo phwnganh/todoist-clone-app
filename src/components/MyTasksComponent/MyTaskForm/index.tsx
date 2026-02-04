@@ -23,6 +23,7 @@ import SectionIcon from "../../icons/SectionIcon.tsx";
 import MyTaskLabelsDropdown from "./MyTaskLabelsDropdown";
 import type {Label} from "../../../types/label.type.ts";
 import LabelChip from "../../ui/LabelChip.tsx";
+import {getLabelKeyword, insertLabelCommasFirst, removeLabelCommasFirst} from "../../../helpers/handleCommasTag.ts";
 
 export type MyTaskFormValues = {
   content: string;
@@ -68,6 +69,7 @@ const MyTaskForm = ({
   const projectId = useProjectStore((state) => state.projectId);
   const { data: projectDetail } = useGetAProject(projectId);
   const {data: projects} = useGetAllProjects()
+  const labelKeyword = isInsertingLabel ? getLabelKeyword(values.content) : ""
   const handleToggleDropdown = (name: OpenMyTaskFormDropdown) => {
     setIsOpenAddMyTaskDropdown((prev) => (prev === name ? null : name));
   };
@@ -104,28 +106,20 @@ const MyTaskForm = ({
 
   const handleOpenLabels = () => {
     handleToggleDropdown("labels")
-    if(!values.content.endsWith("@")){
-      onChange(updateMyTaskField(values, "content", values.content + "@"))
-    }
+    onChange({
+      ...values,
+      content: insertLabelCommasFirst(values.content)
+    })
     setIsInsertingLabel(true);
   }
 
   const handleSelectLabel = (label: Label) => {
-    let nextLabels: Label[]
 
     const existed = values.labels.some(l => l.id === label.id)
-    if(existed){
-      nextLabels = values.labels.filter(l => l.id !== label.id)
-    }else{
-      nextLabels = [...values.labels, label]
-    }
-    let nextContent = values.content
-    if(isInsertingLabel && nextContent.endsWith("@")){
-      nextContent = nextContent.slice(0, -1)
-    }
+    const nextLabels = existed ? values.labels.filter(l => l.id !== label.id) : [...values.labels, label]
     onChange({
       ...values,
-      content: nextContent,
+      content: removeLabelCommasFirst(values.content),
       labels: nextLabels
     })
     setIsInsertingLabel(false);
@@ -133,7 +127,18 @@ const MyTaskForm = ({
   }
 
   const handleContentChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange(updateMyTaskField(values, "content", e.target.value));
+    const value = e.target.value;
+    onChange(updateMyTaskField(values, "content", value));
+
+    if(value.endsWith("@")){
+      setIsInsertingLabel(true)
+      setIsOpenAddMyTaskDropdown("labels")
+    }
+
+    if(isInsertingLabel && !value.endsWith("@")){
+      setIsInsertingLabel(false)
+      setIsOpenAddMyTaskDropdown(null)
+    }
   };
 
   useClickOutside({
@@ -169,7 +174,7 @@ const MyTaskForm = ({
 
             ))}
             <input type={"text"} value={values.content} onChange={handleContentChange} className={"flex-1 min-w-30 outline-none text-sm text-product-library-display-primary-idle-tint"} placeholder={"Content"}/>
-            {isOpenAddMyTaskDropdown === "labels" && <MyTaskLabelsDropdown selectedLabels={values.labels} onSelect={handleSelectLabel} />}
+            {isOpenAddMyTaskDropdown === "labels" && <MyTaskLabelsDropdown selectedLabels={values.labels} onSelect={handleSelectLabel} keyword={labelKeyword}/>}
 
           </div>
           <input

@@ -3,23 +3,26 @@ import LoadingSpin from "../../../ui/LoadingSpin.tsx";
 import MyLabelListItem from "./MyLabelListItem.tsx";
 import AddNewLabelButton from "./AddNewLabelButton.tsx";
 import type {Label} from "../../../../types/label.type.ts";
+import {shouldShowLabel} from "../../../../helpers/handleCommasTag.ts";
 
 type MyTaskLabelsDropdownProps = {
     selectedLabels: Label[];
     onSelect: (label: Label) => void;
+    keyword: string;
 }
-const MyTaskLabelsDropdown = ({selectedLabels, onSelect}: MyTaskLabelsDropdownProps) => {
+const MyTaskLabelsDropdown = ({selectedLabels, onSelect, keyword}: MyTaskLabelsDropdownProps) => {
     const {data: labels, isLoading} = useGetAllLabels()
     const results = labels?.results ?? []
+    const filteredLabels = results?.filter(label => shouldShowLabel(label, selectedLabels, keyword))
     if(isLoading) {
         return <LoadingSpin/>
     }
     return (
         <div id={"label-listbox"} role={"listbox"} aria-labelledby={"label-trigger"} className={"absolute top-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom w-195.5 bg-white mt-1"}>
-            {results.length > 0 ? (
+            {filteredLabels.length > 0 ? (
                 <>
-                    {labels?.results.map(label => (
-                        <MyLabelListItem key={label.id} label={label} isLabelSelected={selectedLabels.some(l => l.id === label.id)} onSelectLabel={onSelect}/>
+                    {filteredLabels.map(label => (
+                        <MyLabelListItem key={label.id} label={label} onSelectLabel={onSelect}/>
                     ))}
                     <AddNewLabelButton/>
                 </>
