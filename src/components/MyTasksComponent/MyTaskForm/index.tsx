@@ -141,6 +141,13 @@ const MyTaskForm = ({
     }
   };
 
+  const handleRemoveLabel = (labelId: string) => {
+    onChange({
+      ...values,
+      labels: values.labels.filter(l => l.id !== labelId)
+    })
+  }
+
   useClickOutside({
     ref:
       isOpenAddMyTaskDropdown === "date"
@@ -263,26 +270,41 @@ const MyTaskForm = ({
                 )}
               </div>
             </div>
-
-              <div role={"button"}
-                   className={
-                     "px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"
-                   }
-                   onClick={handleOpenLabels}
-              >
-                <div className={"w-4 h-4 flex justify-center items-center"}>
-                  <img src={LabelIcon} alt={"label-icon"} />
-                </div>
-                {variant === "list" && (
-                    <p
-                        className={
-                          "text-sm text-product-library-display-secondary-idle-tint"
-                        }
-                    >
-                      Labels
-                    </p>
-                )}
+            {!values.labels.length ? <div role={"button"}
+                                          className={
+                                            "px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"
+                                          }
+                                          onClick={handleOpenLabels}
+            >
+              <div className={"w-4 h-4 flex justify-center items-center"}>
+                <img src={LabelIcon} alt={"label-icon"} />
               </div>
+              {variant === "list" && (
+                  <p
+                      className={
+                        "text-sm text-product-library-display-secondary-idle-tint"
+                      }
+                  >
+                    Labels
+                  </p>
+              )}
+            </div> : values.labels.map(label => (
+                <div role={"button"} className={
+                  "px-1.5 flex justify-between items-center gap-small border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"
+                }>
+                  <div className={"flex items-center"}>
+                    <div className={"w-4 h-4 flex justify-center items-center gap-1.5"}>
+                      <img src={LabelIcon} alt={"label-icon"} />
+                    </div>
+                    <span className={"text-sm text-product-library-display-secondary-idle-tint"}>{label.name}</span>
+                  </div>
+                  <div role={"button"} onClick={(e) => {
+                    e.stopPropagation()
+                    handleRemoveLabel(label.id)
+                  }} className={"text-sm text-product-library-display-secondary-idle-tint"}>x</div>
+                </div>
+            ))}
+
 
           </div>
         </div>
