@@ -70,7 +70,7 @@ const MyTaskBoardSection = ({ section }: MyTaskBoardSectionProps) => {
             ) : (
               <MyTaskBoardSectionHeader
                 onOpenEditMyTaskSection={() => onOpenEditSection(section.id)}
-                name={section.name}
+                section={section}
                 tasks={filteredTasksNoParent}
               />
             )}
