@@ -12,6 +12,7 @@ import EditMyTaskModalDialog from "./EditMyTaskComponent";
 import { useTaskStore } from "../../stores/task.store.ts";
 import VerifiedIcon from "../icons/VerifiedIcon.tsx";
 import ChildrenIcon from "../../assets/children-icon.svg";
+import LabelIcon from '../../assets/label-icon.svg'
 import { useExpanded } from "../../hooks/useExpanded.ts";
 import { type MouseEvent } from "react";
 import MyTasksToolbarDropdown from "./MyTasksToolbarDropdown.tsx";
@@ -127,6 +128,14 @@ const MyTaskListItem = ({
                   <img src={SmallCalendarIcon} alt={"small-calendar-icon"} />
                   <span>Tomorrow</span>
                 </button>
+                {task.labels?.map((label) => (
+                    <div key={label} className={"flex gap-0.5 text-xs text-product-library-display-secondary-idle-tint"}>
+                      <div className={"w-4 h-4 flex justify-center items-center"}>
+                        <img src={LabelIcon} alt={"label-icon"} />
+                      </div>
+                      <span>{label}</span>
+                    </div>
+                ))}
               </div>
             </div>
           </div>
