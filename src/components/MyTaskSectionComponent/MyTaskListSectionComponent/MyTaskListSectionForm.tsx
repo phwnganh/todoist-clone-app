@@ -9,6 +9,7 @@ type MyTaskSectionFormProps = {
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
   submitLabel: string;
   submittingLabel: string;
+  isPending: boolean;
   values: MyTaskSectionFormValues;
   onChange: (values: MyTaskSectionFormValues) => void;
 };
@@ -19,6 +20,7 @@ const MyTaskListSectionForm = ({
   onSubmit,
   submitLabel,
   submittingLabel,
+    isPending
 }: MyTaskSectionFormProps) => {
   const isAddButtonDisabled = values.name.trim() === "";
 
@@ -46,7 +48,7 @@ const MyTaskListSectionForm = ({
               : "bg-product-library-actionable-primary-idle-fill hover:bg-product-library-actionable-primary-hover-fill"
           } text-white font-medium rounded-small`}
         >
-          {submitLabel}
+          {isPending ? submittingLabel : submitLabel}
         </button>
         <button
           type={"button"}

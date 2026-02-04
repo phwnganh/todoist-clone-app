@@ -16,7 +16,7 @@ const AddMyTaskSection = ({
   });
   const {projectId} = useProjectStore()
 
-  const {mutate} = useAddSection()
+  const {mutate, isPending} = useAddSection()
 
   const handleAddMyTaskSection = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,6 +35,7 @@ const AddMyTaskSection = ({
         onSubmit={handleAddMyTaskSection}
         submitLabel={"Add section"}
         submittingLabel={"Adding..."}
+        isPending={isPending}
       />
     </div>
   );
