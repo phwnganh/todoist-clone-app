@@ -28,8 +28,9 @@ export const useSectionStore = create<SectionStore>((set) => ({
     onCloseSectionToolbarDropdown: () => set({openSectionToolbarDropdown: null}),
     onOpenAddSectionForm: (sectionId) => set({addSectionId: sectionId}),
     onCloseAddSectionForm: () => set({addSectionId: undefined}),
-    onOpenEditSection: (sectionId) => set({editingSectionId: sectionId}),
-    onCloseEditSection: () => set({editingSectionId: null}),
+    onOpenEditSection: (sectionId) => set({editingSectionId: sectionId,
+    openSectionToolbarDropdown: null}),
+    onCloseEditSection: () => set({editingSectionId: null, openSectionToolbarDropdown: null}),
     onOpenDeleteSection: (sectionId) => set({deleteSectionId: sectionId}),
     onCloseDeleteSection: () => set({deleteSectionId: null}),
 }))
