@@ -68,3 +68,31 @@ export const apiMoveMyTask = async (payload: MoveTaskPayload)=> {
 export const apiDeleteMyTask = async (taskId: string) => {
     return api.delete<null>(`/tasks/${taskId}`);
 }
+
+export const apiCompleteTask = async (taskId: string) => {
+    const uuid = crypto.randomUUID()
+    return api.sync<SyncResponse, {id: string}>([
+        {
+            type: "item_complete",
+            uuid,
+            args:
+                {
+                    id: taskId
+                }
+        }
+    ])
+}
+
+export const apiUnCompleteTask = async (taskId: string) => {
+    const uuid = crypto.randomUUID()
+    return api.sync<SyncResponse, {id: string}>([
+        {
+            type: "item_uncomplete",
+            uuid,
+            args:
+                {
+                    id: taskId
+                }
+        }
+    ])
+}

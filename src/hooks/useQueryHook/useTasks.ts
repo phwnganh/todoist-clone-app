@@ -2,6 +2,7 @@ import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {
     apiAddMySubTask,
     apiAddMyTask,
+    apiCompleteTask,
     apiDeleteMyTask,
     apiGetAllTasks,
     apiGetATask, apiMoveMyTask,
@@ -210,6 +211,32 @@ export const useDeleteMyTask = () => {
     const queryClient = useQueryClient();
     return useMutation<null, ApiError, {taskId: string}, OptimisticUpdatesContext>({
         mutationFn: ({taskId}) => apiDeleteMyTask(taskId),
+        onMutate: async ({taskId}) => {
+            return optimisticDeleteMyTask({
+                queryClient,
+                queryKey: ["tasks"],
+                taskId: taskId,
+            })
+        },
+        onError: (_, __, context) => {
+            rollbackOptimisticUpdates({
+                queryClient,
+                queryKey: ["tasks"],
+                context
+            })
+        },
+        onSettled: () => {
+            void queryClient.invalidateQueries({
+                queryKey: ["tasks"]
+            })
+        }
+    })
+}
+
+export const useCompleteTask = () => {
+    const queryClient = useQueryClient();
+    return useMutation<SyncResponse, ApiError, {taskId: string}, OptimisticUpdatesContext>({
+        mutationFn: ({taskId}) => apiCompleteTask(taskId),
         onMutate: async ({taskId}) => {
             return optimisticDeleteMyTask({
                 queryClient,
