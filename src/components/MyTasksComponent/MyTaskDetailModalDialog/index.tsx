@@ -16,11 +16,11 @@ const MyTaskDetailModalDialog = ({onCloseTaskDetail}: MyTaskDetailModalDialogPro
     const projectId = useProjectStore(state => state.projectId)
     const {taskDetailId} = useTaskStore()
     const {data: projectDetail} = useGetAProject(projectId);
-    const { data: tasks } = useGetAllTasks();
+    const { data: tasks } = useGetAllTasks({project_id: projectId});
     const taskDetail = useMemo(() => {
         return tasks?.results?.find((task) => task.id === taskDetailId);
     }, [taskDetailId, tasks?.results])
-    const {data: sections} = useGetAllSections()
+    const {data: sections} = useGetAllSections({project_id: projectId});
     const sectionDetail = useMemo(() => {
         if(!taskDetail?.section_id) return null;
         return sections?.results.find(sec => sec.id === taskDetail?.section_id)
