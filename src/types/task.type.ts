@@ -85,3 +85,7 @@ export type MoveTaskPayload = {
     section_id?: string | undefined | null;
     parent_id?: string | null
 }
+
+export type TaskQuery = {
+    project_id?: string;
+}

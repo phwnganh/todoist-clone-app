@@ -20,3 +20,7 @@ export type UpdateSectionPayload = {
     name: string;
     project_id?: string;
 }
+
+export type SectionQuery = {
+    project_id?: string;
+}

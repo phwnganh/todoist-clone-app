@@ -12,7 +12,7 @@ import type {
     MoveTaskPayload,
     SubTaskPayload,
     Task,
-    TaskPayload,
+    TaskPayload, TaskQuery,
     TaskResponse,
     UpdateTaskPayload
 } from "../../types/task.type.ts";
@@ -23,10 +23,10 @@ import {
     rollbackOptimisticUpdates
 } from "../../helpers/optimisticUpdates.ts";
 
-export const useGetAllTasks = () => {
+export const useGetAllTasks = (query?: TaskQuery) => {
     return useQuery<TaskResponse>({
-        queryKey: ['tasks'],
-        queryFn: apiGetAllTasks
+        queryKey: ['tasks', query],
+        queryFn: () => apiGetAllTasks(query)
     })
 }
 
@@ -55,7 +55,6 @@ export const useAddMyTask = () => {
             }
             const res = optimisticAddMyTask({
                 queryClient,
-                queryKey: ['tasks'],
                 optimisticTask: optimisticTask
             })
             return {...res, tempId}
@@ -74,7 +73,6 @@ export const useAddMyTask = () => {
         onError: (_, __, context) => {
             rollbackOptimisticUpdates({
                 queryClient,
-                queryKey: ["tasks"],
                 context
             })
         },
@@ -109,7 +107,6 @@ export const useAddMySubTask = () => {
             }
             const res = optimisticAddMyTask({
                 queryClient,
-                queryKey: ['tasks'],
                 optimisticTask: optimisticTask
             })
             return {...res, tempId}
@@ -128,7 +125,6 @@ export const useAddMySubTask = () => {
         onError: (_, __, context) => {
             rollbackOptimisticUpdates({
                 queryClient,
-                queryKey: ["tasks"],
                 context
             })
         },
@@ -151,7 +147,6 @@ export const useUpdateMyTask = () => {
             // const tempId = `temp-task-${crypto.randomUUID()}`
             return optimisticUpdateMyTask({
                 queryClient,
-                queryKey: ["tasks"],
                 taskId: updatingTask.id,
                 optimisticTask: {
                     id: updatingTask.id,
@@ -164,7 +159,6 @@ export const useUpdateMyTask = () => {
         onError: (_, __, context) => {
             rollbackOptimisticUpdates({
                 queryClient,
-                queryKey: ["tasks"],
                 context
             })
         },
@@ -183,7 +177,6 @@ export const useMoveMyTask = () => {
         onMutate: async (movingTask) => {
             return optimisticUpdateMyTask({
                 queryClient,
-                queryKey: ["tasks"],
                 taskId: movingTask.id,
                 optimisticTask: {
                     id: movingTask.id,
@@ -196,7 +189,6 @@ export const useMoveMyTask = () => {
         onError: (_, __, context) => {
             rollbackOptimisticUpdates({
                 queryClient,
-                queryKey: ["tasks"],
                 context
             })
         },
@@ -214,14 +206,12 @@ export const useDeleteMyTask = () => {
         onMutate: async ({taskId}) => {
             return optimisticDeleteMyTask({
                 queryClient,
-                queryKey: ["tasks"],
                 taskId: taskId,
             })
         },
         onError: (_, __, context) => {
             rollbackOptimisticUpdates({
                 queryClient,
-                queryKey: ["tasks"],
                 context
             })
         },
@@ -240,14 +230,12 @@ export const useCompleteTask = () => {
         onMutate: async ({taskId}) => {
             return optimisticDeleteMyTask({
                 queryClient,
-                queryKey: ["tasks"],
                 taskId: taskId,
             })
         },
         onError: (_, __, context) => {
             rollbackOptimisticUpdates({
                 queryClient,
-                queryKey: ["tasks"],
                 context
             })
         },

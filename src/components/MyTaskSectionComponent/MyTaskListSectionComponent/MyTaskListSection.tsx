@@ -20,8 +20,8 @@ type MyTaskSectionProps = {
   section: Section;
 };
 const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
-  const { data: tasks, isLoading } = useGetAllTasks();
   const projectId = useProjectStore((state) => state.projectId);
+  const { data: tasks, isLoading } = useGetAllTasks({project_id: projectId});
   const { isExpanded, handleExpanded } = useExpanded(true);
   const taskTree = useTaskTreeMultiLevel(tasks?.results, projectId, section.id);
   const {
@@ -42,9 +42,9 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
   } = useTaskStore();
   const filteredTasks = useMemo(() => {
     return tasks?.results.filter(
-      (task) => task.project_id === projectId && task.section_id === section.id,
+      (task) => task.section_id === section.id,
     );
-  }, [projectId, section.id, tasks?.results]);
+  }, [section.id, tasks?.results]);
 
   const isSectionAdding = addSectionId === section.id;
   const isEditing = editingSectionId === section.id;

@@ -3,23 +3,26 @@ import type { Project, ProjectResponse } from "../types/project.type.ts";
 import type { Task, TaskResponse } from "../types/task.type.ts";
 import type {Section, SectionResponse} from "../types/section.type.ts";
 
-export type OptimisticUpdatesContext = {
-  previousData?: ProjectResponse | TaskResponse | SectionResponse;
+export type OptimisticUpdatesProjectContext = {
+  previousData?: ProjectResponse;
   tempId?: string;
 };
 
+export type OptimisticUpdatesContext = {
+  previousData?: [QueryKey, unknown][];
+  tempId?: string;
+}
+
 export async function optimisticAddProject({
   queryClient,
-  queryKey,
   optimisticProject,
 }: {
   queryClient: QueryClient;
-  queryKey: QueryKey;
   optimisticProject: Project;
-}): Promise<OptimisticUpdatesContext> {
-  await queryClient.cancelQueries({ queryKey });
-  const previousData = queryClient.getQueryData<ProjectResponse>(queryKey);
-  queryClient.setQueryData<ProjectResponse>(queryKey, (old) => ({
+}): Promise<OptimisticUpdatesProjectContext> {
+  await queryClient.cancelQueries({ queryKey: ['projects'] });
+  const previousData = queryClient.getQueryData<ProjectResponse>(['projects']);
+  queryClient.setQueryData<ProjectResponse>(['projects'], (old) => ({
     results: old ? [...old.results, optimisticProject] : [optimisticProject],
     next_cursor: old?.next_cursor ?? "",
   }));
@@ -28,18 +31,16 @@ export async function optimisticAddProject({
 
 export async function optimisticUpdateProject({
   queryClient,
-  queryKey,
   projectId,
   optimisticProject,
 }: {
   queryClient: QueryClient;
-  queryKey: QueryKey;
   projectId: string;
   optimisticProject: Partial<Project>;
-}): Promise<OptimisticUpdatesContext> {
-  await queryClient.cancelQueries({ queryKey });
-  const previousData = queryClient.getQueryData<ProjectResponse>(queryKey);
-  queryClient.setQueryData<ProjectResponse>(queryKey, (old) => {
+}): Promise<OptimisticUpdatesProjectContext> {
+  await queryClient.cancelQueries({ queryKey: ['projects'] });
+  const previousData = queryClient.getQueryData<ProjectResponse>(['projects']);
+  queryClient.setQueryData<ProjectResponse>(['projects'], (old) => {
     if (!old) return old;
     return {
       ...old,
@@ -55,16 +56,14 @@ export async function optimisticUpdateProject({
 
 export async function optimisticDeleteProject({
   queryClient,
-  queryKey,
   projectId,
 }: {
   queryClient: QueryClient;
-  queryKey: QueryKey;
   projectId: string;
-}): Promise<OptimisticUpdatesContext> {
-  await queryClient.cancelQueries({ queryKey });
-  const previousData = queryClient.getQueryData<ProjectResponse>(queryKey);
-  queryClient.setQueryData<ProjectResponse>(queryKey, (old) => {
+}): Promise<OptimisticUpdatesProjectContext> {
+  await queryClient.cancelQueries({ queryKey: ['projects'] });
+  const previousData = queryClient.getQueryData<ProjectResponse>(['projects']);
+  queryClient.setQueryData<ProjectResponse>(['projects'], (old) => {
     if (!old) return old;
     return {
       ...old,
@@ -76,36 +75,36 @@ export async function optimisticDeleteProject({
 
 export async function optimisticAddMyTask({
   queryClient,
-  queryKey,
   optimisticTask,
 }: {
   queryClient: QueryClient;
-  queryKey: QueryKey;
   optimisticTask: Task;
 }): Promise<OptimisticUpdatesContext> {
-  await queryClient.cancelQueries({ queryKey });
-  const previousData = queryClient.getQueryData<TaskResponse>(queryKey);
-  queryClient.setQueryData<TaskResponse>(queryKey, (old) => ({
-    results: old ? [...old.results, optimisticTask] : [optimisticTask],
-    next_cursor: old?.next_cursor ?? "",
-  }));
+  await queryClient.cancelQueries({ queryKey: ['tasks'] });
+  const previousData = queryClient.getQueriesData<TaskResponse>({queryKey: ['tasks']});
+  queryClient.setQueriesData<TaskResponse>({queryKey: ['tasks']}, old => {
+    if (!old) return old;
+    return {
+      ...old,
+      results: [...old.results, optimisticTask],
+      next_cursor: old?.next_cursor ?? "",
+    }
+  });
   return { previousData };
 }
 
 export async function optimisticUpdateMyTask({
   queryClient,
-  queryKey,
   taskId,
   optimisticTask,
 }: {
   queryClient: QueryClient;
-  queryKey: QueryKey;
   taskId: string;
   optimisticTask: Partial<Task>;
 }): Promise<OptimisticUpdatesContext> {
-  await queryClient.cancelQueries({ queryKey });
-  const previousData = queryClient.getQueryData<TaskResponse>(queryKey);
-  queryClient.setQueryData<TaskResponse>(queryKey, (old) => {
+  await queryClient.cancelQueries({ queryKey: ['tasks'] });
+  const previousData = queryClient.getQueriesData<TaskResponse>({queryKey: ['tasks']});
+  queryClient.setQueriesData<TaskResponse>({queryKey: ['tasks']}, (old) => {
     if (!old) return old;
     return {
       ...old,
@@ -119,16 +118,14 @@ export async function optimisticUpdateMyTask({
 
 export async function optimisticDeleteMyTask({
   queryClient,
-  queryKey,
   taskId,
 }: {
   queryClient: QueryClient;
-  queryKey: QueryKey;
   taskId: string;
 }): Promise<OptimisticUpdatesContext> {
-  await queryClient.cancelQueries({ queryKey });
-  const previousData = queryClient.getQueryData<TaskResponse>(queryKey);
-  queryClient.setQueryData<TaskResponse>(queryKey, (old) => {
+  await queryClient.cancelQueries({ queryKey: ['tasks'] });
+  const previousData = queryClient.getQueriesData<TaskResponse>({queryKey: ['tasks']});
+  queryClient.setQueriesData<TaskResponse>({queryKey: ['tasks']}, (old) => {
     if (!old) return old;
     return {
       ...old,
@@ -138,10 +135,10 @@ export async function optimisticDeleteMyTask({
   return { previousData };
 }
 
-export async function optimisticAddSection({queryClient, queryKey, optimisticSection}: {queryClient: QueryClient, queryKey: QueryKey, optimisticSection: Section}): Promise<OptimisticUpdatesContext>{
-  await queryClient.cancelQueries({queryKey});
-  const previousData = queryClient.getQueryData<SectionResponse>(queryKey);
-  queryClient.setQueryData<SectionResponse>(queryKey, (old) => {
+export async function optimisticAddSection({queryClient, optimisticSection}: {queryClient: QueryClient, optimisticSection: Section}): Promise<OptimisticUpdatesContext>{
+  await queryClient.cancelQueries({queryKey: ['sections']});
+  const previousData = queryClient.getQueriesData<SectionResponse>({queryKey: ['sections']});
+  queryClient.setQueriesData<SectionResponse>({queryKey: ['sections']}, (old) => {
     if (!old) return old;
     return {
       ...old,
@@ -152,10 +149,10 @@ export async function optimisticAddSection({queryClient, queryKey, optimisticSec
   return { previousData };
 }
 
-export async function optimisticUpdateSection({queryClient, queryKey, sectionId, optimisticSection}: {queryClient: QueryClient, queryKey: QueryKey, sectionId: string, optimisticSection: Partial<Section>}): Promise<OptimisticUpdatesContext>{
-  await queryClient.cancelQueries({queryKey});
-  const previousData = queryClient.getQueryData<SectionResponse>(queryKey);
-  queryClient.setQueryData<SectionResponse>(queryKey, old => {
+export async function optimisticUpdateSection({queryClient, sectionId, optimisticSection}: {queryClient: QueryClient, sectionId: string, optimisticSection: Partial<Section>}): Promise<OptimisticUpdatesContext>{
+  await queryClient.cancelQueries({queryKey: ['sections']});
+  const previousData = queryClient.getQueriesData<SectionResponse>({queryKey: ['sections']});
+  queryClient.setQueriesData<SectionResponse>({queryKey: ['sections']}, old => {
     if(!old) return old;
     return {
       ...old,
@@ -165,10 +162,10 @@ export async function optimisticUpdateSection({queryClient, queryKey, sectionId,
   return { previousData };
 }
 
-export async function optimisticDeleteSection({queryClient, queryKey, sectionId}: {queryClient: QueryClient, queryKey: QueryKey, sectionId: string}): Promise<OptimisticUpdatesContext>{
-  await queryClient.cancelQueries({queryKey});
-  const previousData = queryClient.getQueryData<SectionResponse>(queryKey);   
-  queryClient.setQueryData<SectionResponse>(queryKey, (old) => {
+export async function optimisticDeleteSection({queryClient, sectionId}: {queryClient: QueryClient, sectionId: string}): Promise<OptimisticUpdatesContext>{
+  await queryClient.cancelQueries({queryKey: ['sections']});
+  const previousData = queryClient.getQueriesData<SectionResponse>({queryKey: ['sections']});   
+  queryClient.setQueriesData<SectionResponse>({queryKey: ['sections']}, (old) => {
     if (!old) return old;
     return {
       ...old,
@@ -178,16 +175,21 @@ export async function optimisticDeleteSection({queryClient, queryKey, sectionId}
   return { previousData };
 }
 
+export function rollbackOptimisticProjectUpdates({
+    queryClient,
+    context}: {queryClient: QueryClient; context?: OptimisticUpdatesProjectContext}){
+      if(context?.previousData){
+        queryClient.setQueryData(['projects'], context.previousData)
+      }
+}
 export function rollbackOptimisticUpdates({
   queryClient,
-  queryKey,
   context,
 }: {
   queryClient: QueryClient;
-  queryKey: QueryKey;
   context?: OptimisticUpdatesContext;
 }) {
-  if (context?.previousData) {
-    queryClient.setQueryData(queryKey, context.previousData);
-  }
+  context?.previousData?.forEach(([key, data]) => {
+    queryClient.setQueryData(key, data)
+  })
 }

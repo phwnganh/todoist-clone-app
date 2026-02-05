@@ -8,9 +8,8 @@ import {
 import type {Project, ProjectPayload, ProjectResponse, UpdateProjectPayload} from "../../types/project.type.ts";
 import type {ApiError, SyncResponse} from "../../types/api.type.ts";
 import {
-    optimisticAddProject, optimisticDeleteProject, optimisticUpdateProject,
-    type OptimisticUpdatesContext,
-    rollbackOptimisticUpdates
+    optimisticAddProject, optimisticDeleteProject, optimisticUpdateProject, type OptimisticUpdatesProjectContext,
+    rollbackOptimisticProjectUpdates,
 } from "../../helpers/optimisticUpdates.ts";
 
 export const useGetAllProjects = () => {
@@ -29,7 +28,7 @@ export const useGetAProject = (projectId: string) => {
 
 export const useAddProject = () => {
     const queryClient = useQueryClient()
-    return useMutation<SyncResponse, ApiError, ProjectPayload, OptimisticUpdatesContext>({
+    return useMutation<SyncResponse, ApiError, ProjectPayload, OptimisticUpdatesProjectContext>({
         mutationFn: apiCreateMyProject,
         onMutate: async (newProject) => {
             const tempId = `temp-project-${crypto.randomUUID()}`
@@ -47,7 +46,6 @@ export const useAddProject = () => {
             }
             const res = optimisticAddProject({
                 queryClient,
-                queryKey: ['projects'],
                 optimisticProject: optimisticProject
             })
             return {...res, tempId}
@@ -65,9 +63,8 @@ export const useAddProject = () => {
             })
         },
         onError: (_, __, context) => {
-            rollbackOptimisticUpdates({
+            rollbackOptimisticProjectUpdates({
                 queryClient,
-                queryKey: ['projects'],
                 context
             })
         },
@@ -81,13 +78,12 @@ export const useAddProject = () => {
 
 export const useUpdateProject = () => {
     const queryClient = useQueryClient()
-    return useMutation<SyncResponse, ApiError, UpdateProjectPayload, OptimisticUpdatesContext>({
+    return useMutation<SyncResponse, ApiError, UpdateProjectPayload, OptimisticUpdatesProjectContext>({
         mutationFn: (updatingProject) => apiUpdateMyProject(updatingProject),
         onMutate: async (updatingProject) => {
             const tempId = `temp-project-${crypto.randomUUID()}`
             return optimisticUpdateProject({
                 queryClient,
-                queryKey: ["projects"],
                 projectId: updatingProject.id,
                 optimisticProject: {
                     id: tempId,
@@ -104,9 +100,8 @@ export const useUpdateProject = () => {
             })
         },
         onError: (_, __, context) => {
-            rollbackOptimisticUpdates({
+            rollbackOptimisticProjectUpdates({
                 queryClient,
-                queryKey: ["projects"],
                 context
             })
         },
@@ -120,19 +115,17 @@ export const useUpdateProject = () => {
 
 export const useDeleteProject = () => {
     const queryClient = useQueryClient()
-    return useMutation<null, ApiError, {projectId: string}, OptimisticUpdatesContext>({
+    return useMutation<null, ApiError, {projectId: string}, OptimisticUpdatesProjectContext>({
         mutationFn: ({projectId}) => apiDeleteMyProject(projectId),
         onMutate: async ({projectId}) => {
             return optimisticDeleteProject({
                 queryClient,
-                queryKey: ["projects"],
                 projectId: projectId
             })
         },
         onError: (_, __, context) => {
-            rollbackOptimisticUpdates({
+            rollbackOptimisticProjectUpdates({
                 queryClient,
-                queryKey: ["projects"],
                 context
             })
         },

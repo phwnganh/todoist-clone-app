@@ -78,7 +78,9 @@ const MyTaskForm = ({
   const projectId = useProjectStore((state) => state.projectId);
   const { data: projectDetail } = useGetAProject(projectId);
   const { data: projects } = useGetAllProjects();
-  const labelKeyword = isInsertingLabel ? getLabelKeyword(values.content) ?? "" : "";
+  const labelKeyword = isInsertingLabel
+    ? (getLabelKeyword(values.content) ?? "")
+    : "";
   const handleToggleDropdown = (name: OpenMyTaskFormDropdown) => {
     setIsOpenAddMyTaskDropdown((prev) => (prev === name ? null : name));
   };
@@ -139,11 +141,11 @@ const MyTaskForm = ({
   const handleContentChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     onChange(updateMyTaskField(values, "content", value));
-    const keyword = getLabelKeyword(value)
-    if(keyword !== null){
+    const keyword = getLabelKeyword(value);
+    if (keyword !== null) {
       setIsInsertingLabel(true);
-      setIsOpenAddMyTaskDropdown("labels")
-    }else{
+      setIsOpenAddMyTaskDropdown("labels");
+    } else {
       setIsInsertingLabel(false);
       setIsOpenAddMyTaskDropdown(null);
     }
@@ -194,8 +196,7 @@ const MyTaskForm = ({
               <LabelChip
                 key={label.id}
                 label={label}
-                onRemove={() => handleRemoveLabel(label.id)
-                }
+                onRemove={() => handleRemoveLabel(label.id)}
               />
             ))}
             <input
@@ -329,7 +330,15 @@ const MyTaskForm = ({
               </div>
             ) : (
               values.labels.map((label) => (
-                <CustomLabel key={label.id} onRemove={handleRemoveLabel} className={"border border-product-library-border-idle-tint rounded-small hover:bg-product-library-selectable-secondary-hover-fill text-sm text-product-library-display-secondary-idle-tint"} label={label} icon={<img src={LabelIcon} alt={"label-icon"} />}/>
+                <CustomLabel
+                  key={label.id}
+                  onRemove={handleRemoveLabel}
+                  className={
+                    "border border-product-library-border-idle-tint rounded-small hover:bg-product-library-selectable-secondary-hover-fill text-sm text-product-library-display-secondary-idle-tint"
+                  }
+                  label={label}
+                  icon={<img src={LabelIcon} alt={"label-icon"} />}
+                />
               ))
             )}
           </div>

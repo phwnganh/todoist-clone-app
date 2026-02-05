@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type {
   Section,
-  SectionPayload,
+  SectionPayload, SectionQuery,
   SectionResponse,
   UpdateSectionPayload,
 } from "../../types/section.type.ts";
@@ -21,10 +21,10 @@ import {
   type OptimisticUpdatesContext,
 } from "../../helpers/optimisticUpdates.ts";
 
-export const useGetAllSections = () => {
+export const useGetAllSections = (query?: SectionQuery) => {
   return useQuery<SectionResponse>({
-    queryKey: ["section"],
-    queryFn: apiGetAllSections,
+    queryKey: ["section", query],
+    queryFn: () => apiGetAllSections(query),
   });
 };
 
@@ -53,7 +53,6 @@ export const useAddSection = () => {
       };
       const res = optimisticAddSection({
         queryClient,
-        queryKey: ["section"],
         optimisticSection,
       });
       return { ...res, tempId };
@@ -61,7 +60,7 @@ export const useAddSection = () => {
     onSuccess: (res, _, context) => {
       const realId = res.temp_id_mapping?.[context.tempId!];
       if (!realId) return;
-      queryClient.setQueryData<SectionResponse>(["section"], (old) => {
+      queryClient.setQueryData<SectionResponse>(["section", undefined], (old) => {
         if (!old) return old;
         return {
           ...old,
@@ -76,7 +75,6 @@ export const useAddSection = () => {
     onError: (_, __, context) => {
       rollbackOptimisticUpdates({
         queryClient,
-        queryKey: ["section"],
         context,
       });
     },
@@ -100,7 +98,6 @@ export const useUpdateSection = () => {
     onMutate: async (updatedSection) => {
       return optimisticUpdateSection({
         queryClient,
-        queryKey: ["section"],
         sectionId: updatedSection.id,
         optimisticSection: {
           name: updatedSection.name,
@@ -111,7 +108,6 @@ export const useUpdateSection = () => {
     onError: (_, __, context) => {
       rollbackOptimisticUpdates({
         queryClient,
-        queryKey: ["section"],
         context,
       });
     },
@@ -133,14 +129,12 @@ export const useDeleteSection = () => {
     onMutate: async ({ sectionId }) => {
       return optimisticDeleteSection({
         queryClient,
-        queryKey: ["section"],
         sectionId,
       });
     },
     onError: (_, __, context) => {
       rollbackOptimisticUpdates({
         queryClient,
-        queryKey: ["section"],
         context,
       });
     },

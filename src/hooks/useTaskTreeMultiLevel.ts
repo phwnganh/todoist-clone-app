@@ -6,7 +6,6 @@ export const useTaskTreeMultiLevel = (tasks: Task[] | undefined, projectId: stri
         if(!tasks) return []
         // filter tasks by project
         const projectTasks = tasks.filter(task => {
-            if(task.project_id !== projectId) return false;
 
             if(sectionId === null){
                 return task.section_id === null;

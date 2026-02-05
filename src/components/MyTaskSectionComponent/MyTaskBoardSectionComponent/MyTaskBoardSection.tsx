@@ -14,8 +14,8 @@ type MyTaskBoardSectionProps = {
   section: Section;
 };
 const MyTaskBoardSection = ({ section }: MyTaskBoardSectionProps) => {
-  const { data: tasks, isLoading } = useGetAllTasks();
   const projectId = useProjectStore((state) => state.projectId);
+  const { data: tasks, isLoading } = useGetAllTasks({project_id: projectId});
   const { editingSectionId, onOpenEditSection, onCloseEditSection } =
     useSectionStore();
   const {
@@ -29,11 +29,10 @@ const MyTaskBoardSection = ({ section }: MyTaskBoardSectionProps) => {
   const filteredTasksNoParent = useMemo(() => {
     return tasks?.results.filter(
       (task) =>
-        task.project_id === projectId &&
         task.section_id === section.id &&
         task.parent_id === null,
     );
-  }, [projectId, section.id, tasks?.results]);
+  }, [section.id, tasks?.results]);
 
   const isEditing = editingSectionId === section.id;
   const isAddingTask = addingTaskId === section.id;
