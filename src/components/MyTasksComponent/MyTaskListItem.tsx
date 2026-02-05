@@ -19,6 +19,7 @@ import MyTasksToolbarDropdown from "./MyTasksToolbarDropdown.tsx";
 import MyTaskDetailModalDialog from "./MyTaskDetailModalDialog";
 import DeleteMyTaskModalDialog from "./DeleteMyTaskComponent";
 import {PRIORITY_BORDER_CLASS_MAPPING, PRIORITY_VERIFIED_CLASS_MAPPING} from "../../constants/priority.constants";
+import {useCompleteTask} from "../../hooks/useQueryHook/useTasks.ts";
 
 type MyTaskListItemProps = {
   taskNode: TaskNode;
@@ -41,7 +42,13 @@ const MyTaskListItem = ({
   const isOpenTaskDetail = taskDetailId === task.id;
   const isDeleting = deleteTaskId === task.id;
   const hasChildren = children.length > 0;
-
+  const completedChildrenLength = children.filter(child => child.task.checked || child.task.completed_at).length
+  const {mutate} = useCompleteTask()
+  const handleCompleteTask = (taskId: string) => {
+    mutate({
+      taskId: taskId,
+    })
+  }
   return (
     <>
       {isEditing ? (
@@ -74,6 +81,7 @@ const MyTaskListItem = ({
             {/*btn toggle checked complete the task*/}
             <button
               type={"button"}
+              onClick={() => handleCompleteTask(task.id)}
               aria-checked={"false"}
               aria-label={"Mark task as complete"}
               className={"mt-2 mr-1.5 -ml-0.75 relative group/check"}
@@ -116,7 +124,7 @@ const MyTaskListItem = ({
                     }
                   >
                     <img src={ChildrenIcon} alt={"children-icon"} />
-                    <span>0/{children.length}</span>
+                    <span>{completedChildrenLength}/{children.length}</span>
                   </div>
                 )}
                 <button

@@ -12,7 +12,7 @@ export type Task = {
     child_order?: number,
     content: string,
     description: string,
-    is_completed?: boolean,
+    completed_at?: string,
 }
 
 export type Deadline = {
