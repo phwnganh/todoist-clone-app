@@ -7,6 +7,7 @@ import {
   PRIORITY_BORDER_CLASS_MAPPING,
   PRIORITY_VERIFIED_CLASS_MAPPING
 } from "../../../../../constants/priority.constants";
+import {useCompleteTask} from "../../../../../hooks/useQueryHook/useTasks.ts";
 
 type MyTaskDetailHeaderMainSectionProps = {
   taskDetail?: Task;
@@ -14,6 +15,12 @@ type MyTaskDetailHeaderMainSectionProps = {
 const MyTaskDetailHeaderMainSection = ({
   taskDetail,
 }: MyTaskDetailHeaderMainSectionProps) => {
+  const {mutate} = useCompleteTask()
+  const handleCompleteTask = (taskId: string) => {
+    mutate({
+      taskId: taskId,
+    })
+  }
   const [openMyTaskDetailForm, setOpenMyTaskDetailForm] = useState(false);
   const handleOpenMyTaskDetailForm = () => {
     setOpenMyTaskDetailForm(true);
@@ -21,11 +28,13 @@ const MyTaskDetailHeaderMainSection = ({
   const handleCloseMyTaskDetailForm = () => {
     setOpenMyTaskDetailForm(false);
   };
+  if(!taskDetail) return;
 
   return (
     <div className={"flex gap-1.5 items-start"}>
       <button
         type={"button"}
+        onClick={() => handleCompleteTask(taskDetail?.id)}
         aria-checked={"false"}
         aria-label={"Mark task as complete"}
         className={"mt-2 mr-1.5 -ml-0.75 relative group/check"}

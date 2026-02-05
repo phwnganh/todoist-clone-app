@@ -11,8 +11,8 @@ import EditMyTaskModalDialog from "./EditMyTaskComponent";
 import DeleteMyTaskModalDialog from "./DeleteMyTaskComponent";
 import {PRIORITY_BORDER_CLASS_MAPPING, PRIORITY_VERIFIED_CLASS_MAPPING} from "../../constants/priority.constants.ts";
 import MyTaskDetailModalDialog from "./MyTaskDetailModalDialog";
-import LabelIcon from "../../assets/label-icon.svg";
 import MyTaskBoardLabelsPreview from "./MyTaskForm/MyTaskLabelsDropdown/MyTaskBoardLabelsPreview.tsx";
+import {useCompleteTask} from "../../hooks/useQueryHook/useTasks.ts";
 
 type MyTaskBoardItemProps = {
   task: Task;
@@ -31,12 +31,17 @@ const MyTaskBoardItem = ({
   const isDeleting = deleteTaskId === task.id;
   const isOpeningTaskDetail = taskDetailId === task.id;
 
-  const labels = task.labels ?? []
-  const firstLabel = labels[0]
-  const extraLabelLength = labels.length - 1
+  const {mutate} = useCompleteTask()
+  const handleCompleteTask = (taskId: string) => {
+    mutate({
+      taskId: taskId,
+    })
+  }
   const childrenTasks = useMemo(() => {
     return tasks.filter((t) => t.parent_id === task.id);
   }, [tasks, task.id]);
+  const completedChildrenLength = childrenTasks.filter(task => task.checked || task.completed_at).length
+
   return (
     <>
       {isEditing ? (
@@ -53,6 +58,7 @@ const MyTaskBoardItem = ({
         >
           <button
             type={"button"}
+            onClick={() => handleCompleteTask(task.id)}
             aria-checked={"false"}
             aria-label={"Mark task as complete"}
             className={"mt-2 mr-1.5 -ml-0.75 relative group/check"}
@@ -94,7 +100,7 @@ const MyTaskBoardItem = ({
                   }
                 >
                   <img src={ChildrenIcon} alt={"children-icon"} />
-                  <span>0/{childrenTasks.length}</span>
+                  <span>{completedChildrenLength}/{childrenTasks.length}</span>
                 </div>
               )}
 

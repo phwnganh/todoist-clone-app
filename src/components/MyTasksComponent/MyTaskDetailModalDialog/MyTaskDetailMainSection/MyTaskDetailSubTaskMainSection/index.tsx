@@ -25,11 +25,12 @@ const MyTaskDetailSubTaskMainSection = ({
     return tasks?.filter((t) => t.parent_id === taskDetail?.id);
   }, [tasks, taskDetail?.id]);
   if (!childrenTasks) return null;
-
   const handleOpenSubTaskDetailToolbar = (id: string, e: MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
       onOpenSubTaskDetailToolbar(id)
   }
+
+  const completedChildrenLength = childrenTasks.filter(task => task.checked || task.completed_at).length
     return (
     <>
       <div className={"flex items-center gap-1.5 px-3"}>
@@ -43,7 +44,7 @@ const MyTaskDetailSubTaskMainSection = ({
         <p
           className={"text-sm text-product-library-display-secondary-idle-tint"}
         >
-          0/{childrenTasks?.length}
+          {completedChildrenLength}/{childrenTasks?.length}
         </p>
       </div>
       <hr className={"border-t border-product-library-divider-tertiary"} />

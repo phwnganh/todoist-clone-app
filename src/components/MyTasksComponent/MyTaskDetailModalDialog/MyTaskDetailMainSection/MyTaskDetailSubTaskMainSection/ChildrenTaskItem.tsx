@@ -13,6 +13,7 @@ import {
     PRIORITY_BORDER_CLASS_MAPPING,
     PRIORITY_VERIFIED_CLASS_MAPPING
 } from "../../../../../constants/priority.constants";
+import {useCompleteTask} from "../../../../../hooks/useQueryHook/useTasks.ts";
 type ChildrenTaskItemProps = {
   hasSubChildren: boolean;
   childrenTask: Task;
@@ -29,7 +30,13 @@ const ChildrenTaskItem = ({
 }: ChildrenTaskItemProps) => {
     const {editingSubTaskId, onOpenEditSubTask, onCloseEditSubTask} = useTaskStore()
     const isEditing = editingSubTaskId === childrenTask.id
-
+    const {mutate} = useCompleteTask()
+    const handleCompleteTask = (taskId: string) => {
+        mutate({
+            taskId: taskId,
+        })
+    }
+    const completedSubChildrenLength = subChildren.filter(task => task.checked || task.completed_at).length
   return (
       <>
           {isEditing ? <EditMyTaskDetailMainSubChildrenForm onCloseEditMySubTask={onCloseEditSubTask} taskDetail={childrenTask} /> : (
@@ -40,6 +47,7 @@ const ChildrenTaskItem = ({
                       ></div>
                       <button
                           type={"button"}
+                          onClick={() => handleCompleteTask(childrenTask.id)}
                           aria-checked={"false"}
                           aria-label={"Mark task as complete"}
                           className={"mr-1.5 -ml-0.75 relative group/check"}
@@ -75,23 +83,23 @@ const ChildrenTaskItem = ({
                                   }
                               >
                                   <img src={ChildrenIcon} alt={"children-icon"} />
-                                  <span>0/{subChildren?.length}</span>
+                                  <span>{completedSubChildrenLength}/{subChildren?.length}</span>
                               </div>
                           )}
                       </div>
                   </div>
-                  <div className={"group-hover:flex hidden pl-4 gap-small"}>
-                      <button onClick={() => onOpenEditSubTask(childrenTask.id)} type={"button"} aria-label={"edit"} className={"rounded-small hover:bg-product-library-selectable-secondary-hover-fill"}>
+                  <div className={"flex pl-4 gap-small opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"}>
+                      <button onClick={() => onOpenEditSubTask(childrenTask.id)} type={"button"} aria-label={"edit"} className={"w-6 h-6 rounded-small hover:bg-product-library-selectable-secondary-hover-fill"}>
                           <EditIcon/>
                       </button>
-                      <button type={"button"} aria-label={"due-date"} className={"rounded-small hover:bg-product-library-selectable-secondary-hover-fill"}>
+                      <button type={"button"} aria-label={"due-date"} className={"w-6 h-6 rounded-small hover:bg-product-library-selectable-secondary-hover-fill"}>
                           <DueDateIcon/>
                       </button>
-                      <button type={"button"} aria-label={"comment"} className={"rounded-small hover:bg-product-library-selectable-secondary-hover-fill"}>
+                      <button type={"button"} aria-label={"comment"} className={"w-6 h-6 rounded-small hover:bg-product-library-selectable-secondary-hover-fill"}>
                           <CommentIcon/>
                       </button>
                       <div className={"relative"}>
-                          <button onClick={onOpenSubTaskDetailToolbar} type={"button"} aria-label={"menu"} className={"rounded-small hover:bg-product-library-selectable-secondary-hover-fill"}>
+                          <button onClick={onOpenSubTaskDetailToolbar} type={"button"} aria-label={"menu"} className={"w-6 h-6 rounded-small hover:bg-product-library-selectable-secondary-hover-fill"}>
                               <MenuIcon />
                           </button>
                           {isOpenSubTaskDetailToolbar && <div className={"absolute right-9 z-50"}
