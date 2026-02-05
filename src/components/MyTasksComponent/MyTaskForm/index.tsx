@@ -78,7 +78,7 @@ const MyTaskForm = ({
   const projectId = useProjectStore((state) => state.projectId);
   const { data: projectDetail } = useGetAProject(projectId);
   const { data: projects } = useGetAllProjects();
-  const labelKeyword = isInsertingLabel ? getLabelKeyword(values.content) : "";
+  const labelKeyword = isInsertingLabel ? getLabelKeyword(values.content) ?? "" : "";
   const handleToggleDropdown = (name: OpenMyTaskFormDropdown) => {
     setIsOpenAddMyTaskDropdown((prev) => (prev === name ? null : name));
   };

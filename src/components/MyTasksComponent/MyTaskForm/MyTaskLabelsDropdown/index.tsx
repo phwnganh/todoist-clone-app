@@ -16,7 +16,7 @@ const MyTaskLabelsDropdown = ({selectedLabels, onSelect, keyword}: MyTaskLabelsD
     const {data: labels, isLoading} = useGetAllLabels()
     const {data: searchedLabels, isLoading: isSearching} = useSearchLabels(debouncedKeyword)
     const results = debouncedKeyword ? searchedLabels?.results : labels?.results ?? []
-    const filteredLabels = results?.filter(label => shouldShowLabel(label, selectedLabels, debouncedKeyword))
+    const filteredLabels = results?.filter(label => shouldShowLabel(label, selectedLabels, debouncedKeyword)) ?? []
     if(isLoading || isSearching) {
         return <LoadingSpin/>
     }
