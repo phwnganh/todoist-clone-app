@@ -23,7 +23,7 @@ import {
 
 export const useGetAllSections = (query?: SectionQuery) => {
   return useQuery<SectionResponse>({
-    queryKey: ["section", query],
+    queryKey: ["sections", query],
     queryFn: () => apiGetAllSections(query),
   });
 };
@@ -60,7 +60,7 @@ export const useAddSection = () => {
     onSuccess: (res, _, context) => {
       const realId = res.temp_id_mapping?.[context.tempId!];
       if (!realId) return;
-      queryClient.setQueryData<SectionResponse>(["section", undefined], (old) => {
+      queryClient.setQueryData<SectionResponse>(["sections"], (old) => {
         if (!old) return old;
         return {
           ...old,
@@ -80,7 +80,7 @@ export const useAddSection = () => {
     },
     onSettled: (error) => {
       if (error) {
-        void queryClient.invalidateQueries({ queryKey: ["section"] });
+        void queryClient.invalidateQueries({ queryKey: ["sections"] });
       }
     },
   });
@@ -112,7 +112,7 @@ export const useUpdateSection = () => {
       });
     },
     onSettled: () => {
-      void queryClient.invalidateQueries({ queryKey: ["section"] });
+      void queryClient.invalidateQueries({ queryKey: ["sections"] });
     },
   });
 };
@@ -139,7 +139,7 @@ export const useDeleteSection = () => {
       });
     },
     onSettled: () => {
-      void queryClient.invalidateQueries({ queryKey: ["section"] });
+      void queryClient.invalidateQueries({ queryKey: ["sections"] });
     },
   });
 };

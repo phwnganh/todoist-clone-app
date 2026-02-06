@@ -152,7 +152,8 @@ export const useUpdateMyTask = () => {
                     id: updatingTask.id,
                     content: updatingTask.content,
                     description: updatingTask.description,
-                    priority: updatingTask.priority
+                    priority: updatingTask.priority,
+                    labels: updatingTask.labels
                 }
             })
         },

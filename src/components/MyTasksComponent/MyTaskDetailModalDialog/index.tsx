@@ -32,7 +32,7 @@ const MyTaskDetailModalDialog = ({onCloseTaskDetail}: MyTaskDetailModalDialogPro
                 <MyTaskDetailTitleSection sectionDetail={sectionDetail} projectDetail={projectDetail} onCloseTaskDetail={onCloseTaskDetail}/>
                 <main className={"flex md:flex-1 flex-col md:flex-row"}>
                         <MyTaskDetailMainSection taskDetail={taskDetail} tasks={tasks}/>
-                        <MyTaskDetailAside projectDetail={projectDetail} taskDetail={taskDetail}/>
+                        <MyTaskDetailAside taskDetail={taskDetail}/>
                 </main>
             </div>
         </div>,

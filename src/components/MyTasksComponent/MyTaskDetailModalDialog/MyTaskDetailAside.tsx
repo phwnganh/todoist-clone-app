@@ -3,7 +3,7 @@ import {getProjectColorClass} from "../../../helpers/getProjectColorClass.ts";
 import type {Project} from "../../../types/project.type.ts";
 import SmallPlusAddIcon from "../../icons/SmallPlusAddIcon.tsx";
 import type {OpenMyTaskDetailAsideDropdown} from "../../../types/menu-nav.type.ts";
-import {useEffect, useRef, useState} from "react";
+import {useMemo, useRef, useState} from "react";
 import type {Section} from "../../../types/section.type.ts";
 import type {Priority, Task} from "../../../types/task.type.ts";
 import {useClickOutside} from "../../../hooks/useClickOutside.ts";
@@ -20,17 +20,30 @@ import MyTaskAvailableLabelsDropdown from "./MyTaskAvailableLabelsDropdown";
 import {useGetAllLabels} from "../../../hooks/useQueryHook/useLabels.ts";
 import CustomLabel from "../../ui/CustomLabel.tsx";
 type MyTaskDetailAsideProps = {
-    projectDetail?: Project
     taskDetail?: Task
 }
-const MyTaskDetailAside = ({projectDetail, taskDetail}: MyTaskDetailAsideProps) => {
+const MyTaskDetailAside = ({taskDetail}: MyTaskDetailAsideProps) => {
     const [isOpenMyTaskDetailAside, setIsOpenMyTaskDetailAside] = useState<OpenMyTaskDetailAsideDropdown>(null)
     const {data: projects} = useGetAllProjects()
     const {data: sections} = useGetAllSections()
-    const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-    const [selectedSection, setSelectedSection] = useState<Section | null>(null)
-    const [selectedPriority, setSelectedPriority] = useState<Priority | null>(null)
-    const [selectedLabels, setSelectedLabels] = useState<Label[]>([])
+    const {data: labels} = useGetAllLabels()
+    const {project, section, priority} = useMemo(() => {
+        if(!taskDetail || !projects || !sections || !labels){
+            return {
+                project: null,
+                section: null,
+                priority: null,
+            }
+        }
+        return getTaskValuesByMappingDataType(taskDetail, projects.results, sections.results, labels.results)
+    }, [taskDetail, projects, sections, labels])
+    const selectedProject = project
+    const selectedSection = section
+    const selectedPriority = priority
+    const selectedLabels = useMemo(() => {
+        if(!taskDetail || !labels) return []
+        return labels?.results?.filter(label => taskDetail.labels?.includes(label.name))
+    }, [taskDetail, labels])
     const projectRef = useRef<HTMLDivElement | null>(null)
     const dateRef = useRef<HTMLDivElement | null>(null)
     const priorityRef = useRef<HTMLDivElement | null>(null)
@@ -38,7 +51,6 @@ const MyTaskDetailAside = ({projectDetail, taskDetail}: MyTaskDetailAsideProps) 
     const dummyRef = useRef<HTMLDivElement | null>(null)
     const {mutate} = useUpdateMyTask()
     const {mutate: mutateMoveTask} = useMoveMyTask()
-    const {data: labels} = useGetAllLabels()
 
     const handleToggleDropdown = (name: OpenMyTaskDetailAsideDropdown)=> {
         setIsOpenMyTaskDetailAside(prev => (prev === name ? null : name));
@@ -46,8 +58,6 @@ const MyTaskDetailAside = ({projectDetail, taskDetail}: MyTaskDetailAsideProps) 
 
     const handleMoveProject = (project: Project) => {
         if(!taskDetail) return;
-        setSelectedProject(project);
-        setSelectedSection(null);
         setIsOpenMyTaskDetailAside(null);
         mutateMoveTask({
             id: taskDetail.id,
@@ -57,7 +67,6 @@ const MyTaskDetailAside = ({projectDetail, taskDetail}: MyTaskDetailAsideProps) 
 
     const handleMoveSection = (section: Section) => {
         if(!taskDetail) return;
-        setSelectedSection(section);
         setIsOpenMyTaskDetailAside(null);
         mutateMoveTask({
             id: taskDetail.id,
@@ -66,63 +75,38 @@ const MyTaskDetailAside = ({projectDetail, taskDetail}: MyTaskDetailAsideProps) 
     }
 
     const handleSelectPriority = (priority: Priority) => {
-        setSelectedPriority(priority)
         setIsOpenMyTaskDetailAside(null)
         if(!taskDetail) return;
         mutate({
             id: taskDetail?.id,
             content: taskDetail?.content,
-            description: taskDetail?.description,
             priority: priority.value
         })
     }
 
     const handleSelectLabels = (label: Label) => {
-        setSelectedLabels(prev => {
-            let nextVal;
-            const existed = prev.some(l => l.id === label.id)
-            if(existed){
-                nextVal = prev.filter(l => l.id !== label.id)
-            }else{
-                nextVal = [...prev, label]
-            }
-
-            if(taskDetail){
-                mutate({
-                    id: taskDetail.id,
-                    content: taskDetail.content,
-                    description: taskDetail.description,
-                    labels: nextVal.map(l => l.name)
-                })
-            }
-            return nextVal;
+        if(!taskDetail) return;
+        const existed = taskDetail.labels?.includes(label.name)
+        const nextLabels = existed ? taskDetail.labels?.filter(l => l !== label.name) : [...(taskDetail.labels ?? []), label.name]
+        mutate({
+            id: taskDetail.id,
+            content: taskDetail.content,
+            labels: nextLabels
         })
     }
 
     const handleRemoveLabel = (id: string) => {
-        setSelectedLabels(prev => {
-            const nextVal = prev.filter(l => l.id !== id)
-            if(taskDetail){
-                mutate({
-                    id: taskDetail.id,
-                    content: taskDetail.content,
-                    description: taskDetail.description,
-                    labels: nextVal.map(l => l.name)
-                })
-            }
-            return nextVal;
+        if(!taskDetail) return;
+        const labelName = labels?.results.find(l => l.id === id)?.name
+        if(!labelName) return
+
+        mutate({
+            id: taskDetail.id,
+            content: taskDetail.content,
+            labels: taskDetail.labels?.filter(l => l !== labelName)
         })
     }
 
-    useEffect(() => {
-        if(!taskDetail || !projects || !sections || !labels) return;
-
-        const values = getTaskValuesByMappingDataType(taskDetail, projects?.results, sections?.results, labels?.results)
-        setSelectedProject(values.project)
-        setSelectedSection(values.section)
-        setSelectedPriority(values.priority)
-        setSelectedLabels(values.labels)
-    }, [taskDetail, projects, sections, labels])
 
     useClickOutside({
         ref: isOpenMyTaskDetailAside === "project" ? projectRef : isOpenMyTaskDetailAside === "priority" ? priorityRef : isOpenMyTaskDetailAside === "date" ? dateRef : isOpenMyTaskDetailAside === "labels" ? labelsRef : dummyRef,
@@ -137,11 +121,11 @@ const MyTaskDetailAside = ({projectDetail, taskDetail}: MyTaskDetailAsideProps) 
                     <div role={"listbox"} onClick={() => handleToggleDropdown("project")} className={"cursor-pointer px-2 py-1.5 flex items-center justify-between hover:bg-product-library-display-accent-secondary-fill rounded-sm"}>
                         <div className={"flex items-center"}>
                             <div className={"flex justify-center items-center w-4 h-4 mr-0.5"}>
-                                <HashtagIcon className={getProjectColorClass(selectedProject?.color)}/>
+                                <HashtagIcon className={getProjectColorClass(project?.color)}/>
                             </div>
                             <span className={
                                 "text-product-library-display-secondary-idle-tint font-medium text-sm "
-                            }>{selectedProject?.name} {selectedSection && ` / ${selectedSection?.name}`}</span>
+                            }>{project?.name} {section && ` / ${section?.name}`}</span>
                         </div>
 
                         <div className={"group-hover/project:flex justify-center items-center hidden"}>

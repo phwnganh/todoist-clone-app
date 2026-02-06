@@ -109,7 +109,7 @@ export async function optimisticUpdateMyTask({
     return {
       ...old,
       results: old.results.map((task) =>
-        task.id === taskId ? { ...task, ...optimisticTask } : task,
+        task.id === taskId ? { ...task, ...optimisticTask} : task,
       ),
     };
   });
