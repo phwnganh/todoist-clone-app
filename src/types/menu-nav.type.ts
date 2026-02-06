@@ -39,3 +39,10 @@ export type MySectionMenuToolbar = | "divider" | {
     onClick: () => void;
     icon: ReactNode;
 }
+
+export type SuggestedTimeMenuToolbar = {
+    label: string;
+    onClick?: () => void;
+    icon: ReactNode;
+    time?: string;
+}
