@@ -32,7 +32,8 @@ const EditMyTaskModalDialog = ({
     project: null,
     section: null,
     parentTask: null,
-    labels: []
+    labels: [],
+    due_date: null
   });
 
   const initialProjectSection = useRef({

@@ -32,11 +32,14 @@ import {
   removeLabelCommasFirst,
 } from "../../../helpers/handleCommasTag.ts";
 import CustomLabel from "../../ui/CustomLabel.tsx";
+import MyTaskDateDropdown from "./MyTaskDateDropdown";
+import DateChip from "../../ui/DateChip.tsx";
+import {formatChipDate} from "../../../helpers/formateDate.ts";
 
 export type MyTaskFormValues = {
   content: string;
   description: string;
-  due_date?: string;
+  due_date: string | null;
   priority: Priority | null;
   project: Project | null;
   section: Section | null;
@@ -88,6 +91,11 @@ const MyTaskForm = ({
   const filteredProjectsBySection = (section: Section) => {
     return projects?.results?.find((p) => p.id === section.project_id);
   };
+
+  const handleSelectDate = (date: string) => {
+    onChange(updateMyTaskField(values, "due_date", date))
+    setIsOpenAddMyTaskDropdown(null)
+  }
 
   const handleSelectPriority = (priority: Priority) => {
     onChange(updateMyTaskField(values, "priority", priority));
@@ -158,6 +166,10 @@ const MyTaskForm = ({
     });
   };
 
+  const handleRemoveDate = () => {
+    onChange(updateMyTaskField(values, "due_date", null))
+  }
+
   useClickOutside({
     ref:
       isOpenAddMyTaskDropdown === "date"
@@ -199,6 +211,9 @@ const MyTaskForm = ({
                 onRemove={() => handleRemoveLabel(label.id)}
               />
             ))}
+            {values.due_date &&
+                <DateChip date={formatChipDate(values.due_date)} onRemove={handleRemoveDate}/>
+            }
             <input
               type={"text"}
               value={values.content}
@@ -229,27 +244,32 @@ const MyTaskForm = ({
           />
           <div className={"mb-small flex gap-small flex-wrap"}>
             {/*date*/}
-            <div
-              role={"button"}
-              className={
-                "px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"
-              }
-            >
-              <div className={"flex items-center"}>
-                <div className={"w-4 h-4 flex justify-center items-center"}>
-                  <img src={TaskSmallCalendarIcon} alt={"calendar"} />
-                </div>
-                {variant === "list" && (
-                  <div
-                    className={
-                      "ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"
-                    }
-                  >
-                    Date
+            <div className={"relative"} ref={dateRef}>
+              <div
+                  role={"button"}
+                  onClick={() => handleToggleDropdown("date")}
+                  className={
+                    "px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"
+                  }
+              >
+                <div className={"flex items-center"}>
+                  <div className={"w-4 h-4 flex justify-center items-center"}>
+                    <img src={TaskSmallCalendarIcon} alt={"calendar"} />
                   </div>
-                )}
+                  {variant === "list" && (
+                      <div
+                          className={
+                            "ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"
+                          }
+                      >
+                        Date
+                      </div>
+                  )}
+                </div>
               </div>
+              {isOpenAddMyTaskDropdown === "date" && <MyTaskDateDropdown onSelectDate={handleSelectDate}/>}
             </div>
+
 
             {/*priority*/}
             <div className={"relative"} ref={priorityRef}>

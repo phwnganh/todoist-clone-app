@@ -6,7 +6,7 @@ import NextWeekIcon from "../../../icons/NextWeekIcon.tsx";
 import NextWeekendIcon from "../../../icons/NextWeekendIcon.tsx";
 import SuggestedTime from "./SuggestedTime.tsx";
 import {
-    formatFullDate,
+    formatFullDate, formatOnlyDate,
     formatWeekday,
     getNextWeek,
     getNextWeekend,
@@ -14,7 +14,10 @@ import {
     getTomorrow
 } from "../../../../helpers/formateDate.ts";
 
-const MyTaskDateDropdown = () => {
+type MyTaskDateDropdownProps = {
+    onSelectDate: (date: string) => void;
+}
+const MyTaskDateDropdown = ({onSelectDate}: MyTaskDateDropdownProps) => {
     const today = getToday()
     const tomorrow = getTomorrow()
     const nextWeek = getNextWeek()
@@ -23,22 +26,26 @@ const MyTaskDateDropdown = () => {
         {
             icon: <CalendarIcon/>,
             label: "Today",
-            time: formatWeekday(today)
+            time: formatWeekday(today),
+            onClick: () => onSelectDate(formatOnlyDate(today))
         },
         {
             icon: <TomorrowIcon/>,
             label: "Tomorrow",
-            time: formatWeekday(tomorrow)
+            time: formatWeekday(tomorrow),
+            onClick: () => onSelectDate(formatOnlyDate(tomorrow))
         },
         {
             icon: <NextWeekIcon/>,
             label: "Next week",
-            time: formatFullDate(nextWeek)
+            time: formatFullDate(nextWeek),
+            onClick: () => onSelectDate(formatOnlyDate(nextWeek))
         },
         {
             icon: <NextWeekendIcon/>,
             label: "Next weekend",
-            time: formatFullDate(nextWeekend)
+            time: formatFullDate(nextWeekend),
+            onClick: () => onSelectDate(formatOnlyDate(nextWeekend))
         }
     ]
     return (
