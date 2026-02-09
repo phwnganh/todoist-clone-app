@@ -35,6 +35,7 @@ import CustomLabel from "../../ui/CustomLabel.tsx";
 import MyTaskDateDropdown from "./MyTaskDateDropdown";
 import DateChip from "../../ui/DateChip.tsx";
 import {formatChipDate} from "../../../helpers/formateDate.ts";
+import PriorityIcon from "../../icons/PriorityIcon.tsx";
 
 export type MyTaskFormValues = {
   content: string;
@@ -280,20 +281,37 @@ const MyTaskForm = ({
                   "px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"
                 }
               >
-                <div className={"flex items-center"}>
-                  <div className={"w-4 h-4 flex justify-center items-center"}>
-                    <img src={TaskFlagIcon} alt={"flag-icon"} />
-                  </div>
-                  {variant === "list" && (
-                    <div
-                      className={
-                        "ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"
-                      }
-                    >
-                      Priority
+                {values.priority ? (
+                    <div className={"flex items-center"}>
+                      <div className={"w-4 h-4 flex justify-center items-center"}>
+                        <PriorityIcon className={`text-${values.priority.color}`} />
+                      </div>
+                      {variant === "list" && (
+                          <div
+                              className={
+                                "ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"
+                              }
+                          >
+                            {values.priority.label}
+                          </div>
+                      )}
                     </div>
-                  )}
-                </div>
+                ) : (
+                    <div className={"flex items-center"}>
+                      <div className={"w-4 h-4 flex justify-center items-center"}>
+                        <img src={TaskFlagIcon} alt={"flag-icon"} />
+                      </div>
+                      {variant === "list" && (
+                          <div
+                              className={
+                                "ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"
+                              }
+                          >
+                            Priority
+                          </div>
+                      )}
+                    </div>
+                )}
               </div>
               {isOpenAddMyTaskDropdown === "priority" && (
                 <MyTaskPriorityDropdown
