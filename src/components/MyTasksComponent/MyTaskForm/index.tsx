@@ -19,7 +19,7 @@ import {
 } from "../../../hooks/useQueryHook/useProjects.ts";
 import CloseIcon from "../../../assets/close-icon.svg";
 import SubmitIcon from "../../icons/SubmitIcon.tsx";
-import type { Priority, Task } from "../../../types/task.type.ts";
+import type {Due, Priority, Task} from "../../../types/task.type.ts";
 import type { Section } from "../../../types/section.type.ts";
 import ProjectChip from "../../ui/ProjectChip.tsx";
 import SectionIcon from "../../icons/SectionIcon.tsx";
@@ -40,7 +40,7 @@ import PriorityIcon from "../../icons/PriorityIcon.tsx";
 export type MyTaskFormValues = {
   content: string;
   description: string;
-  due_date: string | null;
+  due: Due | null;
   priority: Priority | null;
   project: Project | null;
   section: Section | null;
@@ -93,8 +93,8 @@ const MyTaskForm = ({
     return projects?.results?.find((p) => p.id === section.project_id);
   };
 
-  const handleSelectDate = (date: string) => {
-    onChange(updateMyTaskField(values, "due_date", date))
+  const handleSelectDate = (date: Due) => {
+    onChange(updateMyTaskField(values, "due", date))
     setIsOpenAddMyTaskDropdown(null)
   }
 
@@ -171,7 +171,7 @@ const MyTaskForm = ({
     onChange(updateMyTaskField(values, "priority", null))
   }
   const handleRemoveDate = () => {
-    onChange(updateMyTaskField(values, "due_date", null))
+    onChange(updateMyTaskField(values, "due", null))
   }
 
   useClickOutside({
@@ -215,8 +215,8 @@ const MyTaskForm = ({
                 onRemove={() => handleRemoveLabel(label.id)}
               />
             ))}
-            {values.due_date &&
-                <DateChip date={formatChipDate(values.due_date)} onRemove={handleRemoveDate}/>
+            {values.due &&
+                <DateChip date={values.due.string} onRemove={handleRemoveDate}/>
             }
             <input
               type={"text"}
@@ -256,22 +256,38 @@ const MyTaskForm = ({
                     "px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"
                   }
               >
-                <div className={"flex items-center"}>
-                  <div className={"w-4 h-4 flex justify-center items-center"}>
-                    <img src={TaskSmallCalendarIcon} alt={"calendar"} />
-                  </div>
-                  {variant === "list" && (
-                      <div
-                          className={
-                            "ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"
-                          }
-                      >
-                        Date
+                {values.due ? (
+                    <div className={"flex justify-between items-start"}>
+                      <div className={"flex items-center"}>
+                        <div className={"w-4 h-4 flex justify-center items-center"}>
+                          <img src={TaskSmallCalendarIcon} alt={"calendar"} />
+                        </div>
+                        {variant === "list" && (
+                            <div className={"ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"}>{values.due.string}</div>
+                        )}
                       </div>
-                  )}
-                </div>
+                      <button type={"button"} onClick={handleRemoveDate} className={"w-5 h-5 flex justify-center items-center"}>x</button>
+
+                    </div>
+                ) : (
+                    <div className={"flex items-center"}>
+                      <div className={"w-4 h-4 flex justify-center items-center"}>
+                        <img src={TaskSmallCalendarIcon} alt={"calendar"} />
+                      </div>
+                      {variant === "list" && (
+                          <div
+                              className={
+                                "ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"
+                              }
+                          >
+                            Date
+                          </div>
+                      )}
+                    </div>
+                )}
+
               </div>
-              {isOpenAddMyTaskDropdown === "date" && <MyTaskDateDropdown onSelectDate={handleSelectDate}/>}
+              {isOpenAddMyTaskDropdown === "date" && <MyTaskDateDropdown selectedDate={values.due} onSelectDate={handleSelectDate}/>}
             </div>
 
 

@@ -33,7 +33,7 @@ const EditMyTaskModalDialog = ({
     section: null,
     parentTask: null,
     labels: [],
-    due_date: null
+    due: null,
   });
 
   const initialProjectSection = useRef({
@@ -79,7 +79,8 @@ const EditMyTaskModalDialog = ({
         content: values.content.trim(),
         description: values.description.trim(),
         priority: values.priority?.value ?? 1,
-        labels: values.labels.map(label => label.name)
+        labels: values.labels.map(label => label.name),
+        due: values.due ?? null
       })
       onCloseEditMyTask();
 

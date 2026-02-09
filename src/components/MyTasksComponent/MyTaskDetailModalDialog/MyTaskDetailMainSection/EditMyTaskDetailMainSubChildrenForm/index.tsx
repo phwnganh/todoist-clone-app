@@ -17,7 +17,7 @@ const EditMyTaskDetailMainSubChildrenForm = ({onCloseEditMySubTask, taskDetail}:
     const [values, setValues] = useState<MyTaskFormValues>({
         content: "",
         description: "",
-        due_date: "",
+        due: null,
         priority: priorityFilterData.find(p => p.value === 1) ?? null,
         project: null,
         parentTask: null,
@@ -43,7 +43,8 @@ const EditMyTaskDetailMainSubChildrenForm = ({onCloseEditMySubTask, taskDetail}:
         id: editingSubTaskId,
         content: values.content.trim(),
         description: values.description.trim(),
-        priority: values.priority?.value
+        priority: values.priority?.value,
+        due_date: values.due_date
     })
     const handleUpdateMySubTask = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();

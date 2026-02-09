@@ -28,7 +28,7 @@ export const getTaskValuesByMappingDataType = (task: Task, projects: Project[] |
     const label = labels?.filter(label => task.labels?.includes(label.name)) ?? []
     return {
         content: task.content,
-        due_date: task.due?.date ?? null,
+        due: task.due ?? null,
         priority: priorityFilterData.find(p => p.value === task.priority) ?? null,
         description: task.description,
         project: project,

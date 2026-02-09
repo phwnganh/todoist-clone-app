@@ -1,11 +1,11 @@
-import {MONTH, WEEKDAY} from "../constants/time.constants.ts";
-
+import type {Due} from "../types/task.type.ts";
+import {format, addDays, nextMonday, nextSaturday} from 'date-fns'
 export const formatWeekday = (date: Date) => {
-    return WEEKDAY[date.getDay()];
+    return format(date, "EEE")
 }
 
 export const formatFullDate = (date: Date) => {
-    return `${formatWeekday(date)} ${date.getDate()} ${MONTH[date.getMonth()]}`;
+    return format(date, "EEE d MMM")
 }
 
 export const getToday = () => {
@@ -14,39 +14,33 @@ export const getToday = () => {
 
 export const getTomorrow = () => {
     const d = new Date();
-    d.setDate(d.getDate() + 1);
-    return d;
+    return addDays(d, 1)
 }
 
 export const getNextWeek = () => {
     const d = new Date();
-    const day = d.getDay();
-    const diffToNextMonday = (8 - day) % 7 || 7;
-    d.setDate(d.getDate() + diffToNextMonday);
-    return d;
+    return nextMonday(d)
 }
 
 export const getNextWeekend = () => {
     const d = new Date();
-    const day = d.getDay();
-    const diffToThisSaturday = (6 - day + 7) % 7;
-    const diffToNextSaturday = diffToThisSaturday + 7;
-    d.setDate(d.getDate() + diffToNextSaturday);
-    return d;
+    return nextSaturday(addDays(d, 7))
 }
 
 export const formatOnlyDate = (date: Date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+    return format(date, "yyyy-MM-dd")
 }
 
 export const formatChipDate = (dateOnly: string) => {
-    const [year, month, day] = dateOnly.split("-").map(Number);
-    const date = new Date(year, month - 1, day)
-    return date.toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "short"
-    })
+    return format(new Date(dateOnly), "MMM d")
 }
+
+export const formatDueString = (date: Date) => {
+    return format(date, "d MMM")
+}
+
+export const buildDue  = (date: Date): Due => ({
+    date: formatOnlyDate(date),
+    string: formatDueString(date),
+    timezone: null
+})

@@ -1,5 +1,5 @@
 type DateChipProps = {
-    date: string
+    date?: string
     onRemove: () => void
 }
 const DateChip = ({date, onRemove}: DateChipProps) => {

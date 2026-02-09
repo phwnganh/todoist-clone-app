@@ -51,7 +51,8 @@ export const useAddMyTask = () => {
                 section_id: newTask.section_id ?? null,
                 priority: newTask.priority ?? 1,
                 parent_id: newTask.parent_id ?? null,
-                child_order: Number.MAX_SAFE_INTEGER
+                child_order: Number.MAX_SAFE_INTEGER,
+                due: newTask.due
             }
             const res = optimisticAddMyTask({
                 queryClient,
@@ -103,7 +104,10 @@ export const useAddMySubTask = () => {
                 parent_id: newSubTask.parent_id ?? null,
                 project_id: parentTask?.project_id,
                 section_id: parentTask?.section_id ?? null,
-                child_order: Number.MAX_SAFE_INTEGER
+                child_order: Number.MAX_SAFE_INTEGER,
+                due: {
+                    date: parentTask?.due?.date
+                }
             }
             const res = optimisticAddMyTask({
                 queryClient,
@@ -153,7 +157,8 @@ export const useUpdateMyTask = () => {
                     content: updatingTask.content,
                     description: updatingTask.description,
                     priority: updatingTask.priority,
-                    labels: updatingTask.labels
+                    labels: updatingTask.labels,
+                    due: updatingTask.due
                 }
             })
         },

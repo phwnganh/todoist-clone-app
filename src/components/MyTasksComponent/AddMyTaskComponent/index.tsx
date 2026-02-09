@@ -17,7 +17,7 @@ const AddMyTaskModalDialog = ({
   const [values, setValues] = useState<MyTaskFormValues>({
     content: "",
     description: "",
-    due_date: "",
+    due: null,
     priority: priorityFilterData.find(p => p.value === 1) ?? null,
     project: null,
     section: null,
@@ -37,7 +37,7 @@ const AddMyTaskModalDialog = ({
       section_id: values?.section?.id ?? addingTaskId ?? null,
       priority: values.priority?.value,
       labels: values.labels.map((label) => label.name),
-      due_date: values.due_date
+      due: values.due
     }
   }
 

@@ -7,7 +7,7 @@ export type Task = {
     deadline?: Deadline,
     duration?: Duration,
     checked?: boolean,
-    due?: Due,
+    due?: Due | null,
     priority: number,
     child_order?: number,
     content: string,
@@ -26,10 +26,10 @@ export type Duration = {
 }
 
 export type Due = {
-    date: string,
-    timezone: null,
-    string: string,
-    is_recurring: boolean,
+    date?: string | null,
+    timezone?: null,
+    string?: string,
+    is_recurring?: boolean,
 }
 
 export type TaskResponse = {
@@ -62,7 +62,7 @@ export type TaskPayload = {
     parent_id: string | undefined | null;
     priority: number | undefined;
     labels: string[];
-    due_date: string | null;
+    due: Due | null;
 }
 
 export type SubTaskPayload = {
@@ -70,6 +70,7 @@ export type SubTaskPayload = {
     description: string;
     parent_id: string;
     priority: number | undefined;
+    due: Due | null;
 }
 
 export type UpdateTaskPayload = {
@@ -78,7 +79,7 @@ export type UpdateTaskPayload = {
     description?: string;
     priority?: number;
     labels?: string[];
-    due_date?: string;
+    due?: Due | null;
 }
 
 export type MoveTaskPayload = {

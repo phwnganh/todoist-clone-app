@@ -30,6 +30,7 @@ const AddMyTaskDetailMainSubChildrenForm = ({onCloseAddMySubTask, taskDetail}: A
             description: values.description.trim(),
             parent_id: addingSubTaskId,
             priority: values.priority?.value,
+        due_date: values.due_date
     })
 
     const handleAddMySubTask = (e: FormEvent<HTMLFormElement>) => {
