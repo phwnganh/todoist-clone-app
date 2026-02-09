@@ -20,6 +20,8 @@ import MyTaskDetailModalDialog from "./MyTaskDetailModalDialog";
 import DeleteMyTaskModalDialog from "./DeleteMyTaskComponent";
 import {PRIORITY_BORDER_CLASS_MAPPING, PRIORITY_VERIFIED_CLASS_MAPPING} from "../../constants/priority.constants";
 import {useCompleteTask} from "../../hooks/useQueryHook/useTasks.ts";
+import {getDueCategory} from "../../helpers/formateDate.ts";
+import {DUE_COLOR_CLASS} from "../../constants/color.constants.ts";
 
 type MyTaskListItemProps = {
   taskNode: TaskNode;
@@ -43,6 +45,7 @@ const MyTaskListItem = ({
   const isDeleting = deleteTaskId === task.id;
   const hasChildren = children.length > 0;
   const completedChildrenLength = children.filter(child => child.task.checked || child.task.completed_at).length
+  const dueCategory = getDueCategory(task.due?.date)
   const {mutate} = useCompleteTask()
   const handleCompleteTask = (taskId: string) => {
     mutate({
@@ -127,15 +130,17 @@ const MyTaskListItem = ({
                     <span>{completedChildrenLength}/{children.length}</span>
                   </div>
                 )}
-                <button
-                  type={"button"}
-                  className={
-                    "flex gap-0.5 text-xs text-product-library-actionable-primary-idle-fill"
-                  }
+                {task.due &&
+                    <button
+                    type={"button"}
+                    className={
+                      `flex gap-0.5 text-xs ${DUE_COLOR_CLASS[dueCategory]}`
+                    }
                 >
                   <img src={SmallCalendarIcon} alt={"small-calendar-icon"} />
-                  <span>Tomorrow</span>
-                </button>
+                  <span>{task.due.string}</span>
+                </button>}
+
                 {task.labels?.map((label) => (
                     <div key={label} className={"flex gap-0.5 text-xs text-product-library-display-secondary-idle-tint"}>
                       <div className={"w-4 h-4 flex justify-center items-center"}>

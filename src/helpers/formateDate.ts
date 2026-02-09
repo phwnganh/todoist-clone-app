@@ -1,5 +1,17 @@
 import type {Due} from "../types/task.type.ts";
-import {format, addDays, nextMonday, nextSaturday} from 'date-fns'
+import {
+    format,
+    addDays,
+    nextMonday,
+    nextSaturday,
+    parseISO,
+    isToday,
+    isTomorrow,
+    startOfWeek,
+    addWeeks,
+    isWeekend, isPast
+} from 'date-fns'
+import type {DueCategory} from "../types/menu-nav.type.ts";
 export const formatWeekday = (date: Date) => {
     return format(date, "EEE")
 }
@@ -44,3 +56,27 @@ export const buildDue  = (date: Date): Due => ({
     string: formatDueString(date),
     timezone: null
 })
+
+export const getDueCategory = (dueDate?: string | null): DueCategory => {
+    if(!dueDate) return ""
+    const date = parseISO(dueDate)
+    const now = new Date()
+
+    if(isToday(date)) return "today";
+    if(isTomorrow(date)) return "tomorrow";
+    if(isPast(date) && !isToday(date)) return "overdue"
+
+    const nextWeekStart = startOfWeek(addWeeks(now, 1), {
+        weekStartsOn: 1
+    });
+
+    const nextWeekEnd = addWeeks(nextWeekStart, 1)
+    const isInNextWeek = date >= nextWeekStart && date < nextWeekEnd
+    if(isInNextWeek && isWeekend(date)){
+        return "nextWeekend"
+    }
+    if(isInNextWeek){
+        return "nextWeek"
+    }
+    return ""
+}
