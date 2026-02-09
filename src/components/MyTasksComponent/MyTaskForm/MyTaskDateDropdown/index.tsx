@@ -15,6 +15,8 @@ import {
     getTomorrow
 } from "../../../../helpers/formateDate.ts";
 import type {Due} from "../../../../types/task.type.ts";
+import DatePicker from "../../../ui/DatePicker/DatePicker.tsx";
+import {parseISO} from "date-fns";
 
 type MyTaskDateDropdownProps = {
     onSelectDate: (date: Due) => void;
@@ -61,6 +63,12 @@ const MyTaskDateDropdown = ({onSelectDate, selectedDate}: MyTaskDateDropdownProp
                 ))}
                 <hr className="border-t border-t-product-library-divider-tertiary" />
 
+                <div className={"mt-2 rdp-nav_button"}>
+                    <DatePicker value={selectedDate?.date ?? null} onChange={value => {
+                        if(!value) return;
+                        onSelectDate(buildDue(parseISO(value)))
+                    }}/>
+                </div>
             </div>
         </div>
     );
