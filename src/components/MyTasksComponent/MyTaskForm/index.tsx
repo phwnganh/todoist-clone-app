@@ -167,6 +167,9 @@ const MyTaskForm = ({
     });
   };
 
+  const handleRemovePriority = () => {
+    onChange(updateMyTaskField(values, "priority", null))
+  }
   const handleRemoveDate = () => {
     onChange(updateMyTaskField(values, "due_date", null))
   }
@@ -282,19 +285,23 @@ const MyTaskForm = ({
                 }
               >
                 {values.priority ? (
-                    <div className={"flex items-center"}>
-                      <div className={"w-4 h-4 flex justify-center items-center"}>
-                        <PriorityIcon className={`text-${values.priority.color}`} />
+                    <div className={"flex justify-between items-start"}>
+                      <div className={"flex items-center"}>
+                        <div className={"w-4 h-4 flex justify-center items-center"}>
+                          <PriorityIcon className={`text-${values.priority.color}`} />
+                        </div>
+                        {variant === "list" && (
+                            <div
+                                className={
+                                  "ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"
+                                }
+                            >
+                              {values.priority.label}
+                            </div>
+                        )}
                       </div>
-                      {variant === "list" && (
-                          <div
-                              className={
-                                "ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"
-                              }
-                          >
-                            {values.priority.label}
-                          </div>
-                      )}
+                      <button type={"button"} onClick={() => handleRemovePriority()} className={"w-5 h-5 flex justify-center items-center"}>x</button>
+
                     </div>
                 ) : (
                     <div className={"flex items-center"}>

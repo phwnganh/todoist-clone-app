@@ -132,7 +132,7 @@ const MyTaskBoardItem = ({
               className={"absolute top-9 right-9 left-6 z-50"}
               onClick={(e) => e.stopPropagation()}
             >
-              <MyTasksToolbarDropdown taskId={task.id} />
+              <MyTasksToolbarDropdown taskId={task.id} task={task}/>
             </div>
           )}
         </div>
