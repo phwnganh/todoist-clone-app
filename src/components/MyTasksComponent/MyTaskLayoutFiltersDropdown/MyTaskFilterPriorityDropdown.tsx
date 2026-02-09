@@ -27,7 +27,7 @@ const MyTaskFilterPriorityDropdown = () => {
               </div>
               <span className="flex items-center gap-1.5">
                 <div className="w-6 h-6 flex justify-center items-center shrink-0">
-                  <PriorityIcon className={priority.color} />
+                  <PriorityIcon className={`text-${priority.color}`} />
                 </div>
                 <div className="flex gap-1.5 overflow-hidden">
                   <div className="text-sm">{priority.label}</div>

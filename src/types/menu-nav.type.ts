@@ -26,11 +26,24 @@ export type MyProjectMenuToolbar = | "divider" | {
     onClick: () => void;
 }
 
-export type MyTaskMenuToolbar = | "divider" | {
+type PriorityValue = 4 | 3 | 2 | 1;
+export type MyTaskMenuToolbar = | {type: "divider"} | {
+    type: "item";
     label: string;
     danger?: boolean;
     onClick: () => void;
     icon: ReactNode;
+} | {
+    type: "section";
+    label: string;
+} | {
+    type: "icon-row";
+    items: {
+        icon: ReactNode;
+        onClick?: () => void;
+        active?: boolean;
+        priority?: PriorityValue;
+    }[]
 }
 
 export type MySectionMenuToolbar = | "divider" | {

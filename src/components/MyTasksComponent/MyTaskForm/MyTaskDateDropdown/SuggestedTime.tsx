@@ -5,7 +5,7 @@ type SuggestedTimeProps = {
 }
 const SuggestedTime = ({item}: SuggestedTimeProps) => {
     return (
-        <button type={"button"} onClick={item.onClick} className={"py-1 pr-4 pl-3 flex justify-between items-center"}>
+        <button type={"button"} onClick={item.onClick} className={"py-1 pr-4 pl-3 flex justify-between items-center hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}>
             <div className={"flex items-center gap-small"}>
                 <div className={"flex justify-center items-center w-6 h-6"}>
                     {item.icon}

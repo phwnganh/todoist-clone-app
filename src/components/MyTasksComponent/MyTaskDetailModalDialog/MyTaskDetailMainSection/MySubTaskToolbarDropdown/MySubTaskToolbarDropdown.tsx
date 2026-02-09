@@ -12,17 +12,20 @@ const MySubTaskToolbarDropdown = ({taskId}: {taskId: string}) => {
     const {onOpenEditSubTask, onOpenDeleteMyTask, onCloseTaskDetailToolbar} = useTaskStore()
     const MY_TASKS_MENU_TOOLBAR: MyTaskMenuToolbar[] = [
         {
+            type: "item",
             label: "Add task above",
             onClick: () => {},
             icon: <TaskAboveIcon />,
         },
         {
+            type: "item",
             label: "Add task below",
             onClick: () => {},
             icon: <TaskBelowIcon />,
         },
-        "divider",
+        {type: "divider"},
         {
+            type: "item",
             label: "Edit",
             onClick: () => {
                 onCloseTaskDetailToolbar();
@@ -31,19 +34,22 @@ const MySubTaskToolbarDropdown = ({taskId}: {taskId: string}) => {
             },
             icon: <EditIcon />,
         },
-        "divider",
+        {type: "divider"},
         {
+            type: "item",
             label: "Move to...",
             onClick: () => {},
             icon: <TaskMoveToIcon />,
         },
         {
+            type: "item",
             label: "Duplicate",
             onClick: () => {},
             icon: <DuplicateIcon />,
         },
-        "divider",
+        {type: "divider"},
         {
+            type: "item",
             label: "Delete",
             danger: true,
             onClick: () => {
@@ -66,7 +72,7 @@ const MySubTaskToolbarDropdown = ({taskId}: {taskId: string}) => {
         >
             <div className={"flex flex-col gap-1"}>
                 {MY_TASKS_MENU_TOOLBAR.map((item, index) => {
-                    if (item === "divider") {
+                    if (item.type === "divider") {
                         return (
                             <hr
                                 key={index}
@@ -74,15 +80,18 @@ const MySubTaskToolbarDropdown = ({taskId}: {taskId: string}) => {
                             />
                         );
                     }
-                    return (
-                        <MyTasksMenuButton
-                            key={item.label}
-                            label={item.label}
-                            onClick={item.onClick}
-                            danger={item.danger}
-                            icon={item.icon}
-                        />
-                    );
+                    else if(item.type === "item") {
+                        return (
+                            <MyTasksMenuButton
+                                key={item.label}
+                                label={item.label}
+                                onClick={item.onClick}
+                                danger={item.danger}
+                                icon={item.icon}
+                            />
+                        );
+                    }
+
                 })}
             </div>
         </div>

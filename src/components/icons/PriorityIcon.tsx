@@ -2,7 +2,7 @@
 const PriorityIcon = ({className}: {className: string | undefined}) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"
-             className={`text-${className}`} data-icon-name="priority-icon" data-priority="1">
+             className={`${className}`} data-icon-name="priority-icon" data-priority="1">
             <path fill="currentColor" fillRule="evenodd"
                   d="M4.223 4.584A.5.5 0 0 0 4 5v14.5a.5.5 0 0 0 1 0v-5.723C5.886 13.262 7.05 13 8.5 13c.97 0 1.704.178 3.342.724 1.737.58 2.545.776 3.658.776 1.759 0 3.187-.357 4.277-1.084A.5.5 0 0 0 20 13V4.5a.5.5 0 0 0-.777-.416C18.313 4.69 17.075 5 15.5 5c-.97 0-1.704-.178-3.342-.724C10.421 3.696 9.613 3.5 8.5 3.5c-1.758 0-3.187.357-4.277 1.084"
                   clipRule="evenodd"></path>

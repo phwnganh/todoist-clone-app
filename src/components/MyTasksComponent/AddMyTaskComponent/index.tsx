@@ -37,6 +37,7 @@ const AddMyTaskModalDialog = ({
       section_id: values?.section?.id ?? addingTaskId ?? null,
       priority: values.priority?.value,
       labels: values.labels.map((label) => label.name),
+      due_date: values.due_date
     }
   }
 

@@ -150,7 +150,7 @@ const MyTaskDetailAside = ({taskDetail}: MyTaskDetailAsideProps) => {
                         <div role={"listbox"} onClick={() => handleToggleDropdown("priority")} className={"cursor-pointer flex items-center justify-between gap-1.5 hover:bg-product-library-display-accent-secondary-fill rounded-sm p-1.5 group/priority"}>
                             <div className={"flex justify-center items-center"}>
                                 <div className={"flex justify-center items-center w-4 h-4"}>
-                                    <PriorityIcon className={selectedPriority?.color}/>
+                                    <PriorityIcon className={`text-${selectedPriority?.color}`}/>
                                 </div>
                                 <div className={"ml-xsmall text-sm pr-xsmall"}>
                                     {selectedPriority?.label}
