@@ -13,6 +13,8 @@ import {PRIORITY_BORDER_CLASS_MAPPING, PRIORITY_VERIFIED_CLASS_MAPPING} from "..
 import MyTaskDetailModalDialog from "./MyTaskDetailModalDialog";
 import MyTaskBoardLabelsPreview from "./MyTaskForm/MyTaskLabelsDropdown/MyTaskBoardLabelsPreview.tsx";
 import {useCompleteTask} from "../../hooks/useQueryHook/useTasks.ts";
+import {getDueCategory} from "../../helpers/formateDate.ts";
+import {DUE_COLOR_CLASS} from "../../constants/color.constants.ts";
 
 type MyTaskBoardItemProps = {
   task: Task;
@@ -41,7 +43,7 @@ const MyTaskBoardItem = ({
     return tasks.filter((t) => t.parent_id === task.id);
   }, [tasks, task.id]);
   const completedChildrenLength = childrenTasks.filter(task => task.checked || task.completed_at).length
-
+  const dueCategory = getDueCategory(task.due?.date)
   return (
     <>
       {isEditing ? (
@@ -104,15 +106,17 @@ const MyTaskBoardItem = ({
                 </div>
               )}
 
-              <button
-                type={"button"}
-                className={
-                  "flex gap-0.5 text-xs text-product-library-actionable-primary-idle-fill"
-                }
-              >
-                <img src={SmallCalendarIcon} alt={"small-calendar-icon"} />
-                <span>Tomorrow</span>
-              </button>
+              {task.due &&
+                  <button
+                      type={"button"}
+                      className={
+                        `flex gap-0.5 text-xs ${DUE_COLOR_CLASS[dueCategory]}`
+                      }
+                  >
+                    <img src={SmallCalendarIcon} alt={"small-calendar-icon"} />
+                    <span>{task.due.string}</span>
+                  </button>}
+
 
               <MyTaskBoardLabelsPreview labels={task.labels} />
             </div>

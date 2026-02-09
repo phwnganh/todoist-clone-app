@@ -12,7 +12,7 @@ const AddMyTaskDetailMainSubChildrenForm = ({onCloseAddMySubTask, taskDetail}: A
     const [values, setValues] = useState<MyTaskFormValues>({
         content: "",
         description: "",
-        due_date: "",
+        due: null,
         priority: priorityFilterData.find(p => p.value === 1) ?? null,
         project: null,
         parentTask: taskDetail ?? null,
@@ -30,7 +30,7 @@ const AddMyTaskDetailMainSubChildrenForm = ({onCloseAddMySubTask, taskDetail}: A
             description: values.description.trim(),
             parent_id: addingSubTaskId,
             priority: values.priority?.value,
-        due_date: values.due_date
+        due: values.due
     })
 
     const handleAddMySubTask = (e: FormEvent<HTMLFormElement>) => {
