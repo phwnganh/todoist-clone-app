@@ -5,7 +5,7 @@ import SmallPlusAddIcon from "../../icons/SmallPlusAddIcon.tsx";
 import type {OpenMyTaskDetailAsideDropdown} from "../../../types/menu-nav.type.ts";
 import {useMemo, useRef, useState} from "react";
 import type {Section} from "../../../types/section.type.ts";
-import type {Priority, Task} from "../../../types/task.type.ts";
+import type {Due, Priority, Task} from "../../../types/task.type.ts";
 import {useClickOutside} from "../../../hooks/useClickOutside.ts";
 import MyTaskProjectDropdown from "../MyTaskForm/MyTaskProjectDropdown";
 import TaskSmallArrowDownIcon from "../../icons/TaskSmallArrowDownIcon.tsx";
@@ -19,6 +19,11 @@ import type {Label} from "../../../types/label.type.ts";
 import MyTaskAvailableLabelsDropdown from "./MyTaskAvailableLabelsDropdown";
 import {useGetAllLabels} from "../../../hooks/useQueryHook/useLabels.ts";
 import CustomLabel from "../../ui/CustomLabel.tsx";
+import MyTaskDateDropdown from "../MyTaskForm/MyTaskDateDropdown";
+import {DUE_COLOR_CLASS} from "../../../constants/color.constants.ts";
+import {getDueInfo} from "../../../helpers/formateDate.ts";
+import SmallCalendarIcon from "../../../assets/small-calendar-icon.svg";
+
 type MyTaskDetailAsideProps = {
     taskDetail?: Task
 }
@@ -27,12 +32,13 @@ const MyTaskDetailAside = ({taskDetail}: MyTaskDetailAsideProps) => {
     const {data: projects} = useGetAllProjects()
     const {data: sections} = useGetAllSections()
     const {data: labels} = useGetAllLabels()
-    const {project, section, priority} = useMemo(() => {
+    const {project, section, priority, due} = useMemo(() => {
         if(!taskDetail || !projects || !sections || !labels){
             return {
                 project: null,
                 section: null,
                 priority: null,
+                due: null,
             }
         }
         return getTaskValuesByMappingDataType(taskDetail, projects.results, sections.results, labels.results)
@@ -40,6 +46,7 @@ const MyTaskDetailAside = ({taskDetail}: MyTaskDetailAsideProps) => {
     const selectedProject = project
     const selectedSection = section
     const selectedPriority = priority
+    const selectedDue = due
     const selectedLabels = useMemo(() => {
         if(!taskDetail || !labels) return []
         return labels?.results?.filter(label => taskDetail.labels?.includes(label.name))
@@ -51,6 +58,7 @@ const MyTaskDetailAside = ({taskDetail}: MyTaskDetailAsideProps) => {
     const dummyRef = useRef<HTMLDivElement | null>(null)
     const {mutate} = useUpdateMyTask()
     const {mutate: mutateMoveTask} = useMoveMyTask()
+    const {category, label} = getDueInfo(selectedDue?.date)
 
     const handleToggleDropdown = (name: OpenMyTaskDetailAsideDropdown)=> {
         setIsOpenMyTaskDetailAside(prev => (prev === name ? null : name));
@@ -84,6 +92,15 @@ const MyTaskDetailAside = ({taskDetail}: MyTaskDetailAsideProps) => {
         })
     }
 
+    const handleSelectDate = (date: Due) => {
+        if(!taskDetail) return;
+        setIsOpenMyTaskDetailAside(null)
+        mutate({
+            id: taskDetail?.id,
+            content: taskDetail?.content,
+            due: date
+        })
+    }
     const handleSelectLabels = (label: Label) => {
         if(!taskDetail) return;
         const existed = taskDetail.labels?.includes(label.name)
@@ -104,6 +121,15 @@ const MyTaskDetailAside = ({taskDetail}: MyTaskDetailAsideProps) => {
             id: taskDetail.id,
             content: taskDetail.content,
             labels: taskDetail.labels?.filter(l => l !== labelName)
+        })
+    }
+
+    const handleRemoveDate = () => {
+        if(!taskDetail) return;
+        mutate({
+            id: taskDetail?.id,
+            content: taskDetail.content,
+            due: null
         })
     }
 
@@ -137,12 +163,41 @@ const MyTaskDetailAside = ({taskDetail}: MyTaskDetailAsideProps) => {
                     )}
                 </div>
                 <hr className="border-t border-t-product-library-divider-tertiary" />
-                <div role={"listbox"} className={"cursor-pointer flex justify-between items-center hover:bg-product-library-display-accent-secondary-fill rounded-sm p-1.5"}>
-                    <p className={"text-product-library-display-secondary-idle-tint font-medium text-sm"}>Date</p>
-                    <button type={"button"} className={"flex justify-center items-center"}>
-                        <SmallPlusAddIcon/>
-                    </button>
+                <div className={"relative"} ref={dateRef}>
+                    {selectedDue === null ?
+                        <div role={"listbox"} onClick={() => handleToggleDropdown("date")} className={"cursor-pointer flex justify-between items-center hover:bg-product-library-display-accent-secondary-fill rounded-sm p-1.5"}>
+                        <p className={"text-product-library-display-secondary-idle-tint font-medium text-sm"}>Date</p>
+                        <button type={"button"} className={"flex justify-center items-center"}>
+                            <SmallPlusAddIcon/>
+                        </button>
+                    </div> : <div className={"flex flex-col gap-1.5"}>
+                        <p className={"text-product-library-display-secondary-idle-tint font-medium text-sm"}>Date</p>
+                            <button type={"button"} className={"flex justify-between items-center group hover:bg-product-library-display-accent-secondary-fill rounded-sm p-2"}
+                                    onClick={() => handleToggleDropdown("date")}
+                            >
+                                <div className={"flex items-center gap-1.5"}>
+                                    <div
+                                        className={
+                                            `flex gap-1.5 text-xs ${DUE_COLOR_CLASS[category]}`
+                                        }
+                                    >
+                                        <img src={SmallCalendarIcon} alt={"small-calendar-icon"} />
+                                        <span>{label}</span>
+                                    </div>
+                                </div>
+                                <div role={"button"} className={"text-sm group-hover:opacity-100 opacity-0"} onClick={(e) => {
+                                    e.stopPropagation()
+                                    handleRemoveDate()
+                                }}>x</div>
+                            </button>
+
+                    </div>}
+
+                    {isOpenMyTaskDetailAside === "date" && (
+                        <MyTaskDateDropdown onSelectDate={handleSelectDate} selectedDate={selectedDue}/>
+                    )}
                 </div>
+
                 <hr className="border-t border-t-product-library-divider-tertiary" />
                 <div className={"flex flex-col gap-1.5"}>
                     <p className={"text-product-library-display-secondary-idle-tint font-medium text-sm"}>Priority</p>

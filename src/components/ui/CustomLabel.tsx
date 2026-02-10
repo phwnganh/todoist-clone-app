@@ -20,7 +20,7 @@ const CustomLabel = ({className, icon, onRemove, label}: CustomLabelProps) => {
                 <span>{label.name}</span>
             </div>
 
-            <button type={"button"} onClick={() => onRemove(label.id)} className={"w-5 h-5 flex justify-center items-center"}>x</button>
+            <button type={"button"} onClick={() => onRemove(label.id)} className={"w-4 h-4 flex justify-center items-center"}>x</button>
         </div>
     );
 };
