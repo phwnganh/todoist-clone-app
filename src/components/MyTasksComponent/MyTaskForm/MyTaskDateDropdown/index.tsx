@@ -50,11 +50,11 @@ const MyTaskDateDropdown = ({onSelectDate, selectedDate}: MyTaskDateDropdownProp
             icon: <NextWeekendIcon/>,
             label: "Next weekend",
             time: formatFullDate(nextWeekend),
-            onClick: () => onSelectDate(buildDue(nextWeekend,))
+            onClick: () => onSelectDate(buildDue(nextWeekend))
         }
     ]
     return (
-        <div id={"date-listbox"} role={"listbox"} aria-labelledby={"date-trigger"} className={"absolute top-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom w-62.5 bg-white mt-1"}>
+        <div id={"date-listbox"} role={"listbox"} aria-labelledby={"date-trigger"} className={"absolute top-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom min-w-62.5 bg-white mt-1"}>
             <div className={"flex flex-col gap-xsmall"}>
                 <SearchDateInput currentDate={selectedDate}/>
                 <hr className="border-t border-t-product-library-divider-tertiary" />
@@ -63,7 +63,7 @@ const MyTaskDateDropdown = ({onSelectDate, selectedDate}: MyTaskDateDropdownProp
                 ))}
                 <hr className="border-t border-t-product-library-divider-tertiary" />
 
-                <div className={"mt-2 rdp-nav_button"}>
+                <div className={"mt-2 px-4"}>
                     <DatePicker value={selectedDate?.date ?? null} onChange={value => {
                         if(!value) return;
                         onSelectDate(buildDue(parseISO(value)))
