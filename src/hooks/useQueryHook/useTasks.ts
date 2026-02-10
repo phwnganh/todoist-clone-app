@@ -107,7 +107,8 @@ export const useAddMySubTask = () => {
                 child_order: Number.MAX_SAFE_INTEGER,
                 due: {
                     date: parentTask?.due?.date
-                }
+                },
+                labels: newSubTask.labels || []
             }
             const res = optimisticAddMyTask({
                 queryClient,

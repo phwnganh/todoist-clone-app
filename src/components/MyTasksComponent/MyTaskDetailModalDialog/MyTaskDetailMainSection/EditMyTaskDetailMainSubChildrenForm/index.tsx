@@ -44,6 +44,7 @@ const EditMyTaskDetailMainSubChildrenForm = ({onCloseEditMySubTask, taskDetail}:
         content: values.content.trim(),
         description: values.description.trim(),
         priority: values.priority?.value,
+        labels: values.labels.map(label => label.name),
         due: values.due
     })
     const handleUpdateMySubTask = (e: FormEvent<HTMLFormElement>) => {

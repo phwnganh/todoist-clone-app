@@ -14,6 +14,10 @@ import {
     PRIORITY_VERIFIED_CLASS_MAPPING
 } from "../../../../../constants/priority.constants";
 import {useCompleteTask} from "../../../../../hooks/useQueryHook/useTasks.ts";
+import {getDueInfo} from "../../../../../helpers/formateDate.ts";
+import {DUE_COLOR_CLASS} from "../../../../../constants/color.constants.ts";
+import SmallCalendarIcon from '../../../../../assets/small-calendar-icon.svg'
+import LabelIcon from '../../../../../assets/label-icon.svg'
 type ChildrenTaskItemProps = {
   hasSubChildren: boolean;
   childrenTask: Task;
@@ -37,6 +41,7 @@ const ChildrenTaskItem = ({
         })
     }
     const completedSubChildrenLength = subChildren.filter(task => task.checked || task.completed_at).length
+    const {category, label} = getDueInfo(childrenTask.due?.date)
   return (
       <>
           {isEditing ? <EditMyTaskDetailMainSubChildrenForm onCloseEditMySubTask={onCloseEditSubTask} taskDetail={childrenTask} /> : (
@@ -67,7 +72,7 @@ const ChildrenTaskItem = ({
                               />
                           </div>
                       </button>
-                      <div className={"flex flex-col gap-1.5"}>
+                      <div className={"flex flex-col gap-1"}>
                           <p className={"text-sm"}>{childrenTask.content}</p>
                           <p
                               className={
@@ -86,6 +91,21 @@ const ChildrenTaskItem = ({
                                   <span>{completedSubChildrenLength}/{subChildren?.length}</span>
                               </div>
                           )}
+                          <div className={"flex gap-small items-center"}>
+                              {childrenTask.due && <button type={"button"} className={`flex gap-0.5 text-xs ${DUE_COLOR_CLASS[category]}`}>
+                                  <img src={SmallCalendarIcon} alt={"small-calendar-icon"} />
+                                  <span>{label}</span>
+                              </button>}
+                              {childrenTask.labels?.map(label => (
+                                  <div key={label} className={"flex gap-0.5 text-xs text-product-library-display-secondary-idle-tint"}>
+                                      <div className={"w-4 h-4 flex justify-center items-center"}>
+                                          <img src={LabelIcon} alt={"label-icon"} />
+                                      </div>
+                                      <span>{label}</span>
+                                  </div>
+                              ))}
+                          </div>
+
                       </div>
                   </div>
                   <div className={"flex pl-4 gap-small opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"}>

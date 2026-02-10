@@ -70,6 +70,7 @@ export type SubTaskPayload = {
     description: string;
     parent_id: string;
     priority: number | undefined;
+    labels: string[];
     due: Due | null;
 }
 
