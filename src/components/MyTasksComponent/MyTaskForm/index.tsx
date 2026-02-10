@@ -34,7 +34,6 @@ import {
 import CustomLabel from "../../ui/CustomLabel.tsx";
 import MyTaskDateDropdown from "./MyTaskDateDropdown";
 import DateChip from "../../ui/DateChip.tsx";
-import {formatChipDate} from "../../../helpers/formateDate.ts";
 import PriorityIcon from "../../icons/PriorityIcon.tsx";
 
 export type MyTaskFormValues = {

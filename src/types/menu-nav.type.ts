@@ -60,4 +60,3 @@ export type SuggestedTimeMenuToolbar = {
     time?: string;
 }
 
-export type DueCategory = "today" | "tomorrow" | "nextWeek" | "nextWeekend" | "overdue" | ""

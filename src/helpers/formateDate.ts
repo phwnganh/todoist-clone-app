@@ -9,9 +9,8 @@ import {
     isTomorrow,
     startOfWeek,
     addWeeks,
-    isWeekend, isPast
+    isWeekend, isPast, startOfDay,
 } from 'date-fns'
-import type {DueCategory} from "../types/menu-nav.type.ts";
 export const formatWeekday = (date: Date) => {
     return format(date, "EEE")
 }
@@ -57,26 +56,60 @@ export const buildDue  = (date: Date): Due => ({
     timezone: null
 })
 
-export const getDueCategory = (dueDate?: string | null): DueCategory => {
-    if(!dueDate) return ""
-    const date = parseISO(dueDate)
-    const now = new Date()
-
-    if(isToday(date)) return "today";
-    if(isTomorrow(date)) return "tomorrow";
-    if(isPast(date) && !isToday(date)) return "overdue"
-
-    const nextWeekStart = startOfWeek(addWeeks(now, 1), {
-        weekStartsOn: 1
-    });
-
-    const nextWeekEnd = addWeeks(nextWeekStart, 1)
-    const isInNextWeek = date >= nextWeekStart && date < nextWeekEnd
-    if(isInNextWeek && isWeekend(date)){
-        return "nextWeekend"
+export const getDueInfo = (due?: string | null) => {
+    if(!due){
+        return {category: "", label: null}
     }
-    if(isInNextWeek){
-        return "nextWeek"
+
+    const date = startOfDay(parseISO(due))
+    const today = startOfDay(new Date())
+
+    if(isToday(date)){
+        return {
+            category: "today",
+            label: "Today"
+        }
     }
-    return ""
+
+    if(isTomorrow(date)){
+        return {
+            category: "tomorrow",
+            label: "Tomorrow"
+        }
+    }
+
+    if(isPast(date)){
+        return {
+            category: "overdue",
+            label: format(date, "d MMM")
+        }
+    }
+
+    const start = addDays(today, 2)
+    const end = addDays(today, 7)
+
+    if(date >= start && date <= end){
+        const nextWeekStart = startOfWeek(addWeeks(today, 1), {
+            weekStartsOn: 1
+        })
+        const nextWeekEnd = addDays(nextWeekStart, 7)
+
+        const isNextWeekend = date >= nextWeekStart && date < nextWeekEnd && isWeekend(date)
+
+        if(isNextWeekend){
+            return {
+                category: "nextWeekend",
+                label: format(date, "EEEE")
+            }
+        }
+
+        return {
+            category: "nextWeek",
+            label: format(date, "EEEE")
+        }
+    }
+    return {
+        category: "",
+        label: format(date, "d MMM")
+    }
 }
