@@ -81,17 +81,17 @@ const ChildrenTaskItem = ({
                           >
                               {childrenTask.description}
                           </p>
-                          {hasSubChildren && (
-                              <div
-                                  className={
-                                      "flex gap-0.5 text-xs text-product-library-display-secondary-idle-tint"
-                                  }
-                              >
-                                  <img src={ChildrenIcon} alt={"children-icon"} />
-                                  <span>{completedSubChildrenLength}/{subChildren?.length}</span>
-                              </div>
-                          )}
                           <div className={"flex gap-small items-center"}>
+                              {hasSubChildren && (
+                                  <div
+                                      className={
+                                          "flex gap-0.5 text-xs text-product-library-display-secondary-idle-tint"
+                                      }
+                                  >
+                                      <img src={ChildrenIcon} alt={"children-icon"} />
+                                      <span>{completedSubChildrenLength}/{subChildren?.length}</span>
+                                  </div>
+                              )}
                               {childrenTask.due && <button type={"button"} className={`flex gap-0.5 text-xs ${DUE_COLOR_CLASS[category]}`}>
                                   <img src={SmallCalendarIcon} alt={"small-calendar-icon"} />
                                   <span>{label}</span>
@@ -124,7 +124,7 @@ const ChildrenTaskItem = ({
                           </button>
                           {isOpenSubTaskDetailToolbar && <div className={"absolute right-9 z-50"}
                           onClick={e => e.stopPropagation()}>
-                              <MySubTaskToolbarDropdown taskId={childrenTask.id}/>
+                              <MySubTaskToolbarDropdown taskId={childrenTask.id} task={childrenTask}/>
                           </div>}
                       </div>
 

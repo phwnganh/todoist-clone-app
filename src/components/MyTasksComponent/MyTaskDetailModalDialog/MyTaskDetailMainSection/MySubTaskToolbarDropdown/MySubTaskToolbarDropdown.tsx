@@ -7,9 +7,48 @@ import TaskMoveToIcon from "../../../../icons/MoveToTaskIcon.tsx";
 import DuplicateIcon from "../../../../icons/TaskDuplicateIcon.tsx";
 import TrashIcon from "../../../../icons/TrashIcon.tsx";
 import MyTasksMenuButton from "../../../../ui/MyTasksMenuButton.tsx";
+import PriorityIcon from "../../../../icons/PriorityIcon.tsx";
+import CalendarIcon from "../../../../icons/CalendarIcon.tsx";
+import TomorrowIcon from "../../../../icons/TomorrowIcon.tsx";
+import NextWeekIcon from "../../../../icons/NextWeekIcon.tsx";
+import NextWeekendIcon from "../../../../icons/NextWeekendIcon.tsx";
+import MenuIcon from "../../../../icons/MenuIcon.tsx";
+import type {Due, Task} from "../../../../../types/task.type.ts";
+import {useUpdateMyTask} from "../../../../../hooks/useQueryHook/useTasks.ts";
+import {buildDue, getNextWeek, getNextWeekend, getToday, getTomorrow} from "../../../../../helpers/formateDate.ts";
+import NoDateIcon from "../../../../icons/NoDateIcon.tsx";
 
-const MySubTaskToolbarDropdown = ({taskId}: {taskId: string}) => {
+const MySubTaskToolbarDropdown = ({taskId, task}: {taskId: string; task: Task}) => {
     const {onOpenEditSubTask, onOpenDeleteMyTask, onCloseTaskDetailToolbar} = useTaskStore()
+    const currentPriority = task.priority
+    const today = getToday()
+    const tomorrow = getTomorrow()
+    const nextWeek = getNextWeek()
+    const nextWeekend = getNextWeekend()
+    const {mutate} = useUpdateMyTask()
+    const handleSelectPriority = (priority: number) => {
+        mutate({
+            id: taskId,
+            content: task.content,
+            priority: priority
+        })
+    }
+
+    const handleSelectDate = (date: Due) => {
+        mutate({
+            id: taskId,
+            content: task.content,
+            due: date
+        })
+    }
+
+    const handleRemoveDate = () => {
+        mutate({
+            id: taskId,
+            content: task.content,
+            due: null
+        })
+    }
     const MY_TASKS_MENU_TOOLBAR: MyTaskMenuToolbar[] = [
         {
             type: "item",
@@ -35,6 +74,50 @@ const MySubTaskToolbarDropdown = ({taskId}: {taskId: string}) => {
             icon: <EditIcon />,
         },
         {type: "divider"},
+        {
+            type: "section",
+            label: "Date"
+        },
+        {
+            type: "icon-row",
+            items: [
+                {icon: <CalendarIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+                onClick: () => handleSelectDate(buildDue(today))},
+                {icon: <TomorrowIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+                onClick: () => handleSelectDate(buildDue(tomorrow))},
+                {icon: <NextWeekIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+                onClick: () => handleSelectDate(buildDue(nextWeek))},
+                {icon: <NextWeekendIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+                onClick: () => handleSelectDate(buildDue(nextWeekend))},
+                ...(task.due !== null ? [{
+                    icon: <NoDateIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+                    onClick: handleRemoveDate
+                }] : []),
+                {icon: <MenuIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>}
+            ]
+        },
+        {type: "divider"},
+        {
+            type: "section",
+            label: "Priority",
+        },
+        {
+            type: "icon-row",
+            items: [
+                {icon: <PriorityIcon className={"text-product-library-priorities-p1-primary-idle-tint hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+                    active: currentPriority === 4,
+                    onClick: () => handleSelectPriority(4)},
+                {icon: <PriorityIcon className={"text-product-library-priorities-p2-primary-idle-tint hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+                    active: currentPriority === 3,
+                    onClick: () => handleSelectPriority(3)},
+                {icon: <PriorityIcon className={"text-product-library-priorities-p3-primary-idle-tint hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+                    active: currentPriority === 2,
+                    onClick: () => handleSelectPriority(2)},
+                {icon: <PriorityIcon className={"text-product-library-selectable-primary-unselected-tint hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+                    active: currentPriority === 1,
+                    onClick: () => handleSelectPriority(1)}
+            ]
+        },
         {
             type: "item",
             label: "Move to...",
@@ -72,24 +155,31 @@ const MySubTaskToolbarDropdown = ({taskId}: {taskId: string}) => {
         >
             <div className={"flex flex-col gap-1"}>
                 {MY_TASKS_MENU_TOOLBAR.map((item, index) => {
-                    if (item.type === "divider") {
-                        return (
-                            <hr
-                                key={index}
-                                className={"border-t-product-library-divider-tertiary"}
-                            />
-                        );
-                    }
-                    else if(item.type === "item") {
-                        return (
-                            <MyTasksMenuButton
-                                key={item.label}
-                                label={item.label}
-                                onClick={item.onClick}
-                                danger={item.danger}
-                                icon={item.icon}
-                            />
-                        );
+                    switch (item.type) {
+                        case "divider":
+                            return <hr key={index} className="border-t-product-library-divider-tertiary" />
+
+                        case "section":
+                            return (
+                                <div key={index} className={"px-3 py-1 text-xs font-medium text-gray-700"}>{item.label}</div>
+                            )
+                        case "icon-row":
+                            return (
+                                <div key={index} className={"flex gap-2 px-3 py-1"}>
+                                    {item.items.map((iconItem, iconIndex) => {
+                                            const isActive = iconItem.active;
+                                            return (
+                                                <button type={"button"} key={iconIndex} onClick={iconItem.onClick}
+                                                        className={`flex justify-center items-center w-6 h-6 ${isActive && "border border-product-library-divider-primary rounded-small"}`}>{iconItem.icon}</button>
+                                            )
+                                        }
+                                    )}
+                                </div>
+                            )
+                        case "item":
+                            return (
+                                <MyTasksMenuButton key={item.label} label={item.label} onClick={item.onClick} icon={item.icon}/>
+                            )
                     }
 
                 })}
