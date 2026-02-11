@@ -15,6 +15,7 @@ import AddMyTaskSectionComponent from "../AddMyTaskSectionComponent";
 import EditMyTaskSectionComponent from "../EditMyTaskSectionComponent";
 import { useTaskStore } from "../../../stores/task.store.ts";
 import { type MouseEvent } from "react";
+import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 
 type MyTaskSectionProps = {
   section: Section;
@@ -23,7 +24,7 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
   const projectId = useProjectStore((state) => state.projectId);
   const { data: tasks, isLoading } = useGetAllTasks({project_id: projectId});
   const { isExpanded, handleExpanded } = useExpanded(true);
-  const taskTree = useTaskTreeMultiLevel(tasks?.results, projectId, section.id);
+  const taskTree = useTaskTreeMultiLevel(tasks?.results, section.id);
   const {
     editingSectionId,
     onOpenEditSection,
@@ -92,6 +93,7 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
 
       {isExpanded && (
         <ul className={"mt-1.25 flex flex-col flex-wrap"}>
+          <SortableContext items={taskTree.map(node => node.task.id)} strategy={verticalListSortingStrategy}>
             {taskTree.map((taskNode) => (
                 <Fragment key={taskNode.task.id}>
                   <MyTaskListItem
@@ -107,6 +109,7 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
                   />
                 </Fragment>
             ))}
+          </SortableContext>
           <li>
             {isAddingTask ? (
                 <AddMyTaskModalDialog

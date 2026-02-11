@@ -5,6 +5,7 @@ import { Fragment, useState } from "react";
 import AddMyTaskBoardSectionFinalButton from "../MyTaskSectionComponent/MyTaskBoardSectionComponent/AddMyTaskBoardSectionFinalButton.tsx";
 import AddMyTaskSection from "../MyTaskSectionComponent/AddMyTaskSectionComponent";
 import AddMyTaskBoardSectionSlot from "../MyTaskSectionComponent/MyTaskBoardSectionComponent/AddMyTaskBoardSectionSlot";
+import {horizontalListSortingStrategy, SortableContext} from "@dnd-kit/sortable";
 
 type MyTasksBoardProps = {
   filteredSectionsByProject: Section[] | undefined;
@@ -38,6 +39,7 @@ const MyTasksBoard = ({ filteredSectionsByProject }: MyTasksBoardProps) => {
     >
       <MyTaskBoardSection section={NO_SECTION} />
       <AddMyTaskBoardSectionSlot addedSectionId={NO_SECTION.id} />
+      <SortableContext items={(filteredSectionsByProject ?? []).map(s => s.id!)} strategy={horizontalListSortingStrategy}>
         {filteredSectionsByProject?.map((section) => {
           return (
               <Fragment key={section.id}>
@@ -46,6 +48,8 @@ const MyTasksBoard = ({ filteredSectionsByProject }: MyTasksBoardProps) => {
               </Fragment>
           );
         })}
+
+      </SortableContext>
       {openAddNewTaskSectionFormModalDialog ? (
         <AddMyTaskSection
           onCancelAddMyTaskSection={handleCloseAddNewTaskSectionFormModalDialog}

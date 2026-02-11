@@ -21,6 +21,15 @@ export type UpdateSectionPayload = {
     project_id?: string;
 }
 
+type ReorderSectionItem = {
+    id: string;
+    section_order: number;
+}
+
+export type ReorderSectionPayload = {
+    sections: ReorderSectionItem[];
+}
+
 export type SectionQuery = {
     project_id?: string;
 }

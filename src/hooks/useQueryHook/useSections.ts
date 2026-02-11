@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type {
+  ReorderSectionPayload,
   Section,
   SectionPayload, SectionQuery,
   SectionResponse,
@@ -10,12 +11,14 @@ import {
   apiDeleteSection,
   apiGetAllSections,
   apiGetASection,
+  apiReorderSection,
   apiUpdateSection,
 } from "../../services/section.service.ts";
 import type { ApiError, SyncResponse } from "../../types/api.type.ts";
 import {
   optimisticAddSection,
   optimisticDeleteSection,
+  optimisticReorderSection,
   optimisticUpdateSection,
   rollbackOptimisticUpdates,
   type OptimisticUpdatesContext,
@@ -143,3 +146,27 @@ export const useDeleteSection = () => {
     },
   });
 };
+
+export const useReorderSection = () => {
+  const queryClient = useQueryClient();
+  return useMutation<SyncResponse, ApiError, ReorderSectionPayload, OptimisticUpdatesContext>({
+    mutationFn: apiReorderSection,
+    onMutate: async (reorderingSection) => {
+      return optimisticReorderSection({
+        queryClient,
+        payload: reorderingSection
+      })
+    },
+    onError: (_, __, context) => {
+      rollbackOptimisticUpdates({
+        queryClient,
+        context
+      })
+    },
+    onSettled: () => {
+      void queryClient.invalidateQueries({
+        queryKey: ["sections"]
+      })
+    }
+  })
+}

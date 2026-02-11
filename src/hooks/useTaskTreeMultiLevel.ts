@@ -1,7 +1,7 @@
 import type {Task, TaskNode} from "../types/task.type.ts";
 import {useMemo} from "react";
 
-export const useTaskTreeMultiLevel = (tasks: Task[] | undefined, projectId: string, sectionId?: string | null): TaskNode[] => {
+export const useTaskTreeMultiLevel = (tasks: Task[] | undefined, sectionId?: string | null): TaskNode[] => {
     return useMemo(() => {
         if(!tasks) return []
         // filter tasks by project
@@ -47,5 +47,5 @@ export const useTaskTreeMultiLevel = (tasks: Task[] | undefined, projectId: stri
 
         sortTree(myTaskRoots)
         return myTaskRoots;
-    }, [tasks, projectId, sectionId]);
+    }, [tasks, sectionId]);
 }

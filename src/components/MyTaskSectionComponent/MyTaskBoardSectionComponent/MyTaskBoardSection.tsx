@@ -10,6 +10,7 @@ import MyTaskBoardSectionHeader from "./MyTaskBoardSectionHeader.tsx";
 import MyTaskBoardItem from "../../MyTasksComponent/MyTaskBoardItem.tsx";
 import AddMyTaskModalDialog from "../../MyTasksComponent/AddMyTaskComponent";
 import AddMyTaskButtonSection from "../../MyTasksComponent/AddMyTaskButtonSection.tsx";
+import {SortableContext} from "@dnd-kit/sortable";
 type MyTaskBoardSectionProps = {
   section: Section;
 };
@@ -91,6 +92,7 @@ const MyTaskBoardSection = ({ section }: MyTaskBoardSectionProps) => {
             </span>
           </div>
         )}
+        <SortableContext items={(filteredTasksNoParent ?? [])?.map(t => t.id)}>
           {filteredTasksNoParent?.map((task) => {
             return (
                 <Fragment key={task.id}>
@@ -105,6 +107,7 @@ const MyTaskBoardSection = ({ section }: MyTaskBoardSectionProps) => {
                 </Fragment>
             );
           })}
+        </SortableContext>
 
 
         {isAddingTask ? (

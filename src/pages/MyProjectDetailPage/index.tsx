@@ -8,14 +8,13 @@ import type {HeaderLayoutType} from "../../types/headerLayout.type.ts";
 import {PROJECTS} from "../../constants/routes.constants.ts";
 import MyTasksList from "../../components/MyTasksComponent/MyTasksList.tsx";
 import MyTaskTitle from "../../components/MyTasksComponent/MyTaskTitle.tsx";
-import LoadingSpin from "../../components/ui/LoadingSpin.tsx";
 import {useEffect, useState} from "react";
 import MyTaskLayoutFiltersDropdown from "../../components/MyTasksComponent/MyTaskLayoutFiltersDropdown";
 import MyTasksBoard from "../../components/MyTasksComponent/MyTasksBoard";
 import {useProjectStore} from "../../stores/project.store.ts";
 import {useGetAllSections} from "../../hooks/useQueryHook/useSections.ts";
-import {DndContext, type DragEndEvent} from "@dnd-kit/core";
-import {useGetAllTasks} from "../../hooks/useQueryHook/useTasks.ts";
+import {closestCenter, DndContext, type DragEndEvent} from "@dnd-kit/core";
+import {useGetAllTasks, useMoveMyTask, useReorderTask} from "../../hooks/useQueryHook/useTasks.ts";
 import {findTaskByIdToOrder, getSiblings, handleReorder} from "../../helpers/dragDropMyTasks.ts";
 import HeaderThreeDotsIcon from "../../components/icons/HeaderThreeDotsIcon.tsx";
 
@@ -30,6 +29,8 @@ const MyProjectDetailPage = () => {
     }, [projectId, setProjectId]);
     const {data: sections} = useGetAllSections({project_id: projectId});
     const {data: allTasks} = useGetAllTasks({project_id: projectId});
+    const {mutate: reorderingTaskMutate} = useReorderTask()
+    const {mutate: movingTaskMutate} = useMoveMyTask()
     const [openLayoutDropdown, setOpenLayoutDropdown] = useState(false);
     const [layoutName, setLayoutName] = useState("list");
     const handleOpenLayoutDropdown = () => {
@@ -41,7 +42,7 @@ const MyProjectDetailPage = () => {
     const {showCollapse, onToggleSidebar} = useOutletContext<HeaderLayoutType>()
     const navigate = useNavigate()
 
-    const handleDragEndList = (e: DragEndEvent) => {
+    const handleDragEnd = (e: DragEndEvent) => {
         const {active, over} = e;
         if(!over || active.id === over.id) return;
         const tasks = allTasks?.results
@@ -54,29 +55,8 @@ const MyProjectDetailPage = () => {
         handleReorder(tasks, activeTask, overTask, {
             parent: true,
             section: true
-        })
+        }, reorderingTaskMutate, movingTaskMutate)
 
-    }
-
-    const handleDragEndBoard = (e: DragEndEvent) => {
-        const {active, over} = e;
-        if(!over || active.id === over.id) return;
-
-        const tasks = allTasks?.results;
-        if(!tasks) return;
-        const activeTask = findTaskByIdToOrder(tasks, active.id as string)
-        const overTask = findTaskByIdToOrder(tasks, over.id as string)
-
-        if(!activeTask || !overTask) return;
-        handleReorder(tasks, activeTask, overTask, {
-            parent: false,
-            section: true
-        })
-
-
-    }
-    if(!projectId){
-        return <LoadingSpin/>
     }
 
     return (
@@ -113,7 +93,7 @@ const MyProjectDetailPage = () => {
                 <button className={"hidden sm:block px-1 text-product-library-actionable-quaternary-idle-tint text-sm font-medium hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small p-1.5"} onClick={() => navigate(PROJECTS)}>My Projects</button>
                 <div className={"text-sm text-product-library-display-secondary-idle-tint"}>/</div>
             </div>}></HeaderLayout>
-            <DndContext onDragEnd={layoutName === "list" ? handleDragEndList : handleDragEndBoard}>
+            <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
                 {layoutName === "list" ? (
                     <section className={"max-w-200 mx-auto w-full relative z-10"}>
                         <div className={"flex flex-col gap-small"}>

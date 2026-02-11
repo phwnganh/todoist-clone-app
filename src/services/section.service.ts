@@ -1,5 +1,6 @@
 import {api} from "./api.ts";
 import type {
+    ReorderSectionPayload,
     Section,
     SectionPayload,
     SectionQuery,
@@ -51,4 +52,15 @@ export const apiUpdateSection = async (payload: UpdateSectionPayload)=> {
 
 export const apiDeleteSection = async (taskId: string) => {
     return api.delete<null>(`/sections/${taskId}`);
+}
+
+export const apiReorderSection = async (payload: ReorderSectionPayload) => {
+    const uuid = crypto.randomUUID()
+    return api.sync<SyncResponse, ReorderSectionPayload>([
+        {
+            type: "section_reorder",
+            uuid,
+            args: payload
+        }
+    ])
 }

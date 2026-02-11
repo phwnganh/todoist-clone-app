@@ -5,11 +5,11 @@ import {
     apiCompleteTask,
     apiDeleteMyTask,
     apiGetAllTasks,
-    apiGetATask, apiMoveMyTask,
+    apiGetATask, apiMoveMyTask, apiReorderTask,
     apiUpdateMyTask
 } from "../../services/task.service.ts";
 import type {
-    MoveTaskPayload,
+    MoveTaskPayload, ReorderTaskPayload,
     SubTaskPayload,
     Task,
     TaskPayload, TaskQuery,
@@ -18,7 +18,7 @@ import type {
 } from "../../types/task.type.ts";
 import type {ApiError, SyncResponse} from "../../types/api.type.ts";
 import {
-    optimisticAddMyTask, optimisticDeleteMyTask, optimisticUpdateMyTask,
+    optimisticAddMyTask, optimisticDeleteMyTask, optimisticReorderMyTask, optimisticUpdateMyTask,
     type OptimisticUpdatesContext,
     rollbackOptimisticUpdates
 } from "../../helpers/optimisticUpdates.ts";
@@ -159,7 +159,8 @@ export const useUpdateMyTask = () => {
                     description: updatingTask.description,
                     priority: updatingTask.priority,
                     labels: updatingTask.labels,
-                    due: updatingTask.due
+                    due: updatingTask.due,
+                    child_order: updatingTask.child_order,
                 }
             })
         },
@@ -191,6 +192,30 @@ export const useMoveMyTask = () => {
                     section_id: movingTask.section_id,
                     parent_id: null,
                 }
+            })
+        },
+        onError: (_, __, context) => {
+            rollbackOptimisticUpdates({
+                queryClient,
+                context
+            })
+        },
+        onSettled: () => {
+            void queryClient.invalidateQueries({
+                queryKey: ["tasks"]
+            })
+        }
+    })
+}
+
+export const useReorderTask = () => {
+    const queryClient = useQueryClient();
+    return useMutation<SyncResponse, ApiError, ReorderTaskPayload, OptimisticUpdatesContext>({
+        mutationFn: apiReorderTask,
+        onMutate: async (reorderingTask) => {
+            return optimisticReorderMyTask({
+                queryClient,
+                payload: reorderingTask
             })
         },
         onError: (_, __, context) => {

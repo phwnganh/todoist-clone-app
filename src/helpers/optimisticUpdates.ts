@@ -1,7 +1,7 @@
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
 import type { Project, ProjectResponse } from "../types/project.type.ts";
-import type { Task, TaskResponse } from "../types/task.type.ts";
-import type {Section, SectionResponse} from "../types/section.type.ts";
+import type {ReorderTaskPayload, Task, TaskResponse} from "../types/task.type.ts";
+import type {ReorderSectionPayload, Section, SectionResponse} from "../types/section.type.ts";
 
 export type OptimisticUpdatesProjectContext = {
   previousData?: ProjectResponse;
@@ -116,6 +116,25 @@ export async function optimisticUpdateMyTask({
   return { previousData };
 }
 
+export async function optimisticReorderMyTask({queryClient, payload}: {
+  queryClient: QueryClient;
+  payload: ReorderTaskPayload;
+}): Promise<OptimisticUpdatesContext>{
+  await queryClient.cancelQueries({queryKey: ['tasks']});
+
+  const previousData = queryClient.getQueriesData<TaskResponse>({queryKey: ['tasks']});
+  queryClient.setQueriesData<TaskResponse>({queryKey: ['tasks']}, old => {
+    if (!old) return old;
+    const map = new Map(payload.items.map(item => [item.id, item.child_order]))
+
+    return {
+      ...old,
+      results: old.results.map(task => map.has(task.id) ? {...task, child_order: map.get(task.id)} : task)
+    }
+  })
+  return {previousData};
+}
+
 export async function optimisticDeleteMyTask({
   queryClient,
   taskId,
@@ -173,6 +192,23 @@ export async function optimisticDeleteSection({queryClient, sectionId}: {queryCl
     };
   });
   return { previousData };
+}
+
+export async function optimisticReorderSection({queryClient, payload}: {
+  queryClient: QueryClient;
+  payload: ReorderSectionPayload;
+}): Promise<OptimisticUpdatesContext>{
+  await queryClient.cancelQueries({queryKey: ['sections']});
+  const previousData = queryClient.getQueriesData<SectionResponse>({queryKey: ['sections']})
+  queryClient.setQueriesData<SectionResponse>({queryKey: ['sections']}, old => {
+    if(!old) return old;
+    const map = new Map(payload.sections.map(item => [item.id, item.section_order]))
+    return {
+      ...old,
+      results: old.results.map(section => map.has(section.id) ? {...section, section_order: map.get(section.id)} : section)
+    }
+  })
+  return {previousData}
 }
 
 export function rollbackOptimisticProjectUpdates({

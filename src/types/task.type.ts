@@ -81,6 +81,7 @@ export type UpdateTaskPayload = {
     priority?: number;
     labels?: string[];
     due?: Due | null;
+    child_order?: number;
 }
 
 export type MoveTaskPayload = {
@@ -88,6 +89,14 @@ export type MoveTaskPayload = {
     project_id?: string | undefined | null;
     section_id?: string | undefined | null;
     parent_id?: string | null
+}
+
+export type ReorderTaskItem = {
+    id: string;
+    child_order: number;
+}
+export type ReorderTaskPayload = {
+    items: ReorderTaskItem[]
 }
 
 export type TaskQuery = {

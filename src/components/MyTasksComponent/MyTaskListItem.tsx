@@ -22,6 +22,8 @@ import {PRIORITY_BORDER_CLASS_MAPPING, PRIORITY_VERIFIED_CLASS_MAPPING} from "..
 import {useCompleteTask} from "../../hooks/useQueryHook/useTasks.ts";
 import {getDueInfo} from "../../helpers/formateDate.ts";
 import {DUE_COLOR_CLASS} from "../../constants/color.constants.ts";
+import {SortableContext, useSortable} from "@dnd-kit/sortable";
+import DragDropIcon from "../icons/DragDropIcon.tsx";
 
 type MyTaskListItemProps = {
   taskNode: TaskNode;
@@ -46,6 +48,7 @@ const MyTaskListItem = ({
   const hasChildren = children.length > 0;
   const completedChildrenLength = children.filter(child => child.task.checked || child.task.completed_at).length
   const {category, label} = getDueInfo(task?.due?.date)
+  const {setNodeRef, attributes, listeners} = useSortable({id: task.id})
   const {mutate} = useCompleteTask()
   const handleCompleteTask = (taskId: string) => {
     mutate({
@@ -61,152 +64,157 @@ const MyTaskListItem = ({
           onCloseEditMyTask={onCloseEditTask}
         />
       ) : (
-        <li
-          className={`px-2 border-b border-b-product-library-divider-primary flex justify-between items-start group relative ${getTaskIndentClass(level)}`}
-        >
-          <div role={"button"} className={"flex items-start"}>
-            {hasChildren && (
-              <button
-                type={"button"}
-                onClick={handleExpanded}
-                className={
-                  "absolute pr-0.75 top-2 -left-4 flex justify-center items-center rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
-                }
-              >
-                {isExpanded ? (
-                  <TaskSmallArrowDownIcon />
-                ) : (
-                  <TaskSmallArrowRightIcon />
-                )}
-              </button>
-            )}
-
-            {/*btn toggle checked complete the task*/}
-            <button
-              type={"button"}
-              onClick={() => handleCompleteTask(task.id)}
-              aria-checked={"false"}
-              aria-label={"Mark task as complete"}
-              className={"mt-2 mr-1.5 -ml-0.75 relative group/check"}
-            >
-              <div
-                className={
-                  `h-5 w-5 rounded-full border-2 ${PRIORITY_BORDER_CLASS_MAPPING[task.priority]}`
-                }
-              ></div>
-              <div
-                className={
-                  "inset-0 absolute group-hover/check:flex justify-center items-center hidden"
-                }
-              >
-                <VerifiedIcon
-                  className={
-                    `${PRIORITY_VERIFIED_CLASS_MAPPING[task.priority]} opacity-50`
-                  }
-                />
-              </div>
+          <div ref={setNodeRef} className={"flex items-start gap-5 px-2 border-b border-b-product-library-divider-primary"}>
+            <button type={"button"} className={"flex justify-center items-center w-6 h-6 "} {...attributes} {...listeners}>
+              <DragDropIcon/>
             </button>
-            {/*task list item*/}
-            <div role={"button"} className={"py-2 mr-7.5 flex flex-col cursor-pointer"}
-            onClick={() => onOpenTaskDetail(task.id)}>
-              <div className={"mb-0.75 text-sm"}>
-                <MyTaskContent content={task.content} />
-              </div>
-              <p
-                className={
-                  "text-xs mb-0.5 text-product-library-display-secondary-idle-tint line-clamp-1"
-                }
-              >
-                {task.description}
-              </p>
-              <div className={"flex gap-small items-center"}>
+            <li
+                className={`flex justify-between w-full items-start group relative ${getTaskIndentClass(level)}`}
+            >
+              <div role={"button"} className={"flex items-start"}>
                 {hasChildren && (
-                  <div
-                    className={
-                      "flex gap-0.5 text-xs text-product-library-display-secondary-idle-tint"
-                    }
-                  >
-                    <img src={ChildrenIcon} alt={"children-icon"} />
-                    <span>{completedChildrenLength}/{children.length}</span>
-                  </div>
-                )}
-                {task.due &&
                     <button
+                        type={"button"}
+                        onClick={handleExpanded}
+                        className={
+                          "absolute pr-0.75 top-2 -left-4 flex justify-center items-center rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
+                        }
+                    >
+                      {isExpanded ? (
+                          <TaskSmallArrowDownIcon />
+                      ) : (
+                          <TaskSmallArrowRightIcon />
+                      )}
+                    </button>
+                )}
+
+                {/*btn toggle checked complete the task*/}
+                <button
                     type={"button"}
+                    onClick={() => handleCompleteTask(task.id)}
+                    aria-checked={"false"}
+                    aria-label={"Mark task as complete"}
+                    className={"mt-2 mr-1.5 -ml-0.75 relative group/check"}
+                >
+                  <div
+                      className={
+                        `h-5 w-5 rounded-full border-2 ${PRIORITY_BORDER_CLASS_MAPPING[task.priority]}`
+                      }
+                  ></div>
+                  <div
+                      className={
+                        "inset-0 absolute group-hover/check:flex justify-center items-center hidden"
+                      }
+                  >
+                    <VerifiedIcon
+                        className={
+                          `${PRIORITY_VERIFIED_CLASS_MAPPING[task.priority]} opacity-50`
+                        }
+                    />
+                  </div>
+                </button>
+                {/*task list item*/}
+                <div role={"button"} className={"py-2 mr-7.5 flex flex-col cursor-pointer"}
+                     onClick={() => onOpenTaskDetail(task.id)}>
+                  <div className={"mb-0.75 text-sm"}>
+                    <MyTaskContent content={task.content} />
+                  </div>
+                  <p
+                      className={
+                        "text-xs mb-0.5 text-product-library-display-secondary-idle-tint line-clamp-1"
+                      }
+                  >
+                    {task.description}
+                  </p>
+                  <div className={"flex gap-small items-center"}>
+                    {hasChildren && (
+                        <div
+                            className={
+                              "flex gap-0.5 text-xs text-product-library-display-secondary-idle-tint"
+                            }
+                        >
+                          <img src={ChildrenIcon} alt={"children-icon"} />
+                          <span>{completedChildrenLength}/{children.length}</span>
+                        </div>
+                    )}
+                    {task.due &&
+                        <button
+                            type={"button"}
+                            className={
+                              `flex gap-0.5 text-xs ${DUE_COLOR_CLASS[category]}`
+                            }
+                        >
+                          <img src={SmallCalendarIcon} alt={"small-calendar-icon"} />
+                          <span>{label}</span>
+                        </button>}
+
+                    {task.labels?.map((label) => (
+                        <div key={label} className={"flex gap-0.5 text-xs text-product-library-display-secondary-idle-tint"}>
+                          <div className={"w-4 h-4 flex justify-center items-center"}>
+                            <img src={LabelIcon} alt={"label-icon"} />
+                          </div>
+                          <span>{label}</span>
+                        </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className={"group-hover:flex hidden mt-2 pl-4 gap-small"}>
+                <button
+                    type={"button"}
+                    onClick={() => onOpenEditTask(task.id)}
+                    aria-label={"edit"}
                     className={
-                      `flex gap-0.5 text-xs ${DUE_COLOR_CLASS[category]}`
+                      "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
                     }
                 >
-                  <img src={SmallCalendarIcon} alt={"small-calendar-icon"} />
-                  <span>{label}</span>
-                </button>}
-
-                {task.labels?.map((label) => (
-                    <div key={label} className={"flex gap-0.5 text-xs text-product-library-display-secondary-idle-tint"}>
-                      <div className={"w-4 h-4 flex justify-center items-center"}>
-                        <img src={LabelIcon} alt={"label-icon"} />
-                      </div>
-                      <span>{label}</span>
-                    </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className={"group-hover:flex hidden mt-2 pl-4 gap-small"}>
-            <button
-              type={"button"}
-              onClick={() => onOpenEditTask(task.id)}
-              aria-label={"edit"}
-              className={
-                "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
-              }
-            >
-              <EditIcon />
-            </button>
-            <button
-              type={"button"}
-              aria-label={"due-date"}
-              className={
-                "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
-              }
-            >
-              <DueDateIcon />
-            </button>
-            <button
-              type={"button"}
-              aria-label={"comment"}
-              className={
-                "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
-              }
-            >
-              <CommentIcon />
-            </button>
-            <div className={"relative"}>
-              <button
-                type={"button"}
-                onClick={onOpenTaskDetailToolbar}
-                aria-label={"menu"}
-                className={
-                  "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
-                }
-              >
-                <MenuIcon />
-              </button>
-              {isOpenTaskDetailToolbar && (
-                <div
-                  className={"absolute right-9 z-50"}
-                  onClick={(e) => e.stopPropagation()}
+                  <EditIcon />
+                </button>
+                <button
+                    type={"button"}
+                    aria-label={"due-date"}
+                    className={
+                      "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
+                    }
                 >
-                  <MyTasksToolbarDropdown taskId={task.id} task={task}/>
+                  <DueDateIcon />
+                </button>
+                <button
+                    type={"button"}
+                    aria-label={"comment"}
+                    className={
+                      "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
+                    }
+                >
+                  <CommentIcon />
+                </button>
+                <div className={"relative"}>
+                  <button
+                      type={"button"}
+                      onClick={onOpenTaskDetailToolbar}
+                      aria-label={"menu"}
+                      className={
+                        "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
+                      }
+                  >
+                    <MenuIcon />
+                  </button>
+                  {isOpenTaskDetailToolbar && (
+                      <div
+                          className={"absolute right-9 z-50"}
+                          onClick={(e) => e.stopPropagation()}
+                      >
+                        <MyTasksToolbarDropdown taskId={task.id} task={task}/>
+                      </div>
+                  )}
                 </div>
-              )}
-            </div>
-          </div>
-        </li>
+              </div>
+            </li></div>
+
       )}
       {hasChildren &&
         isExpanded &&
-          <>
+          <SortableContext items={children.map(c => c.task.id)}>
             {children.map((child) => (
                 <MyTaskListItem
                     key={child.task.id}
@@ -219,7 +227,7 @@ const MyTaskListItem = ({
                     onCloseTaskDetailToolbar={onCloseTaskDetailToolbar}
                 />
             ))}
-          </>
+          </SortableContext>
         }
 
       {isOpenTaskDetail && (

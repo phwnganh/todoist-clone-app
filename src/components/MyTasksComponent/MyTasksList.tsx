@@ -1,6 +1,7 @@
 import MyTaskListSection from "../MyTaskSectionComponent/MyTaskListSectionComponent/MyTaskListSection.tsx";
 import { useProjectStore } from "../../stores/project.store.ts";
 import type { Section } from "../../types/section.type.ts";
+import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 type MyTasksListProps = {
   filteredSectionsByProject: Section[] | undefined;
 };
@@ -16,9 +17,11 @@ const MyTasksList = ({ filteredSectionsByProject }: MyTasksListProps) => {
   return (
     <>
       <MyTaskListSection section={NO_SECTION} />
+      <SortableContext items={(filteredSectionsByProject ?? [])?.map(section => section.id!)} strategy={verticalListSortingStrategy}>
       {filteredSectionsByProject?.map((section) => (
         <MyTaskListSection key={section.id} section={section} />
       ))}
+      </SortableContext>
     </>
   );
 };

@@ -1,6 +1,6 @@
 import {api} from "./api.ts";
 import type {
-    MoveTaskPayload,
+    MoveTaskPayload, ReorderTaskPayload,
     SubTaskPayload,
     Task,
     TaskPayload,
@@ -76,6 +76,16 @@ export const apiMoveMyTask = async (payload: MoveTaskPayload)=> {
     ])
 }
 
+export const apiReorderTask = async (payload: ReorderTaskPayload): Promise<SyncResponse> => {
+    const uuid = crypto.randomUUID()
+    return api.sync<SyncResponse, ReorderTaskPayload>([
+        {
+            type: "item_reorder",
+            uuid,
+            args: payload
+        }
+    ])
+}
 export const apiDeleteMyTask = async (taskId: string) => {
     return api.delete<null>(`/tasks/${taskId}`);
 }

@@ -15,6 +15,8 @@ import MyTaskBoardLabelsPreview from "./MyTaskForm/MyTaskLabelsDropdown/MyTaskBo
 import {useCompleteTask} from "../../hooks/useQueryHook/useTasks.ts";
 import {getDueInfo} from "../../helpers/formateDate.ts";
 import {DUE_COLOR_CLASS} from "../../constants/color.constants.ts";
+import {useSortable} from "@dnd-kit/sortable";
+import DragDropIcon from "../icons/DragDropIcon.tsx";
 
 type MyTaskBoardItemProps = {
   task: Task;
@@ -33,6 +35,7 @@ const MyTaskBoardItem = ({
   const isDeleting = deleteTaskId === task.id;
   const isOpeningTaskDetail = taskDetailId === task.id;
   const {category, label} = getDueInfo(task?.due?.date)
+  const {setNodeRef, attributes, listeners} = useSortable({id: task.id})
   const {mutate} = useCompleteTask()
   const handleCompleteTask = (taskId: string) => {
     mutate({
@@ -53,10 +56,14 @@ const MyTaskBoardItem = ({
         />
       ) : (
         <div
+            ref={setNodeRef}
           className={
             "flex items-start outline outline-border-idle hover:outline-border-hover shadow-sm rounded-large p-2.5 group relative"
           }
         >
+          <button type={"button"} {...attributes} {...listeners} className={"flex justify-center items-center w-6 h-6 cursor-grab active:cursor-grabbing"} {...listeners}>
+            <DragDropIcon/>
+          </button>
           <button
             type={"button"}
             onClick={() => handleCompleteTask(task.id)}
