@@ -12,11 +12,12 @@ import {useEffect, useState} from "react";
 import MyTaskLayoutFiltersDropdown from "../../components/MyTasksComponent/MyTaskLayoutFiltersDropdown";
 import MyTasksBoard from "../../components/MyTasksComponent/MyTasksBoard";
 import {useProjectStore} from "../../stores/project.store.ts";
-import {useGetAllSections} from "../../hooks/useQueryHook/useSections.ts";
+import {useGetAllSections, useReorderSection} from "../../hooks/useQueryHook/useSections.ts";
 import {closestCenter, DndContext, type DragEndEvent} from "@dnd-kit/core";
 import {useGetAllTasks, useMoveMyTask, useReorderTask} from "../../hooks/useQueryHook/useTasks.ts";
-import {findTaskByIdToOrder, getSiblings, handleReorder} from "../../helpers/dragDropMyTasks.ts";
+import {findTaskByIdToOrder, handleReorder} from "../../helpers/dragDropMyTasks.ts";
 import HeaderThreeDotsIcon from "../../components/icons/HeaderThreeDotsIcon.tsx";
+import {arrayMove} from "@dnd-kit/sortable";
 
 const MyProjectDetailPage = () => {
     const {projectId} = useParams<{projectId: string}>();
@@ -31,6 +32,7 @@ const MyProjectDetailPage = () => {
     const {data: allTasks} = useGetAllTasks({project_id: projectId});
     const {mutate: reorderingTaskMutate} = useReorderTask()
     const {mutate: movingTaskMutate} = useMoveMyTask()
+    const {mutate: reorderingSectionMutate} = useReorderSection()
     const [openLayoutDropdown, setOpenLayoutDropdown] = useState(false);
     const [layoutName, setLayoutName] = useState("list");
     const handleOpenLayoutDropdown = () => {
@@ -45,6 +47,27 @@ const MyProjectDetailPage = () => {
     const handleDragEnd = (e: DragEndEvent) => {
         const {active, over} = e;
         if(!over || active.id === over.id) return;
+        const activeType = active.data.current?.type;
+        const overType = over.data.current?.type;
+
+        if(activeType === "section" && overType === "section"){
+            const sectionList = sections?.results
+            if(!sectionList) return;
+
+            const oldIndex = sectionList.findIndex(s => s.id === active.id)
+            const newIndex = sectionList.findIndex(s => s.id === over.id)
+
+            if(oldIndex === -1 || newIndex === -1) return;
+
+            const reordered = arrayMove(sectionList, oldIndex, newIndex)
+            reorderingSectionMutate({
+                sections: reordered.filter(section => section.id !== null).map((section, index) => ({
+                    id: section.id as string,
+                    section_order: index
+                }))
+            })
+            return;
+        }
         const tasks = allTasks?.results
         if(!tasks) return;
 

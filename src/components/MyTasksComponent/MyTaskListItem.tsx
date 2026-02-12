@@ -48,7 +48,9 @@ const MyTaskListItem = ({
   const hasChildren = children.length > 0;
   const completedChildrenLength = children.filter(child => child.task.checked || child.task.completed_at).length
   const {category, label} = getDueInfo(task?.due?.date)
-  const {setNodeRef, attributes, listeners} = useSortable({id: task.id})
+  const {setNodeRef, attributes, listeners} = useSortable({id: task.id, data: {
+    type: "task"
+    }})
   const {mutate} = useCompleteTask()
   const handleCompleteTask = (taskId: string) => {
     mutate({

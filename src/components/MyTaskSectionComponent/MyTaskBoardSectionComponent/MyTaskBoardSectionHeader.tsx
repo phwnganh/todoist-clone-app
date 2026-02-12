@@ -28,7 +28,7 @@ const MyTaskBoardSectionHeader = ({
         enabled: isOpenToolbar,
     })
   return (
-    <div className={"flex justify-between items-center"}>
+    <div className={"flex justify-between items-center w-full"}>
       <div className={"flex items-center"}>
         <div
           role={"button"}

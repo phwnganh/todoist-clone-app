@@ -10,7 +10,8 @@ import MyTaskBoardSectionHeader from "./MyTaskBoardSectionHeader.tsx";
 import MyTaskBoardItem from "../../MyTasksComponent/MyTaskBoardItem.tsx";
 import AddMyTaskModalDialog from "../../MyTasksComponent/AddMyTaskComponent";
 import AddMyTaskButtonSection from "../../MyTasksComponent/AddMyTaskButtonSection.tsx";
-import {SortableContext} from "@dnd-kit/sortable";
+import {SortableContext, useSortable} from "@dnd-kit/sortable";
+import DragDropIcon from "../../icons/DragDropIcon.tsx";
 type MyTaskBoardSectionProps = {
   section: Section;
 };
@@ -35,6 +36,9 @@ const MyTaskBoardSection = ({ section }: MyTaskBoardSectionProps) => {
     );
   }, [section.id, tasks?.results]);
 
+  const {setNodeRef, attributes, listeners} = useSortable({id: section.id ?? "", data: {
+    type: "section"
+    }})
   const isEditing = editingSectionId === section.id;
   const isAddingTask = addingTaskId === section.id;
 
@@ -60,7 +64,10 @@ const MyTaskBoardSection = ({ section }: MyTaskBoardSectionProps) => {
         }
       >
         {section.id !== null ? (
-          <div className={"relative"}>
+          <div className={"relative flex items-center"} ref={setNodeRef}>
+            <button type={"button"} className={`flex justify-center items-center ${!isEditing ? "w-6 h-6 visible" : "invisible"}`} {...attributes} {...listeners}>
+              <DragDropIcon/>
+            </button>
             {/*click to edit section here*/}
             {isEditing ? (
               <EditMyTaskSectionComponent

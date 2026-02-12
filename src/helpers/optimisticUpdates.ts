@@ -127,9 +127,21 @@ export async function optimisticReorderMyTask({queryClient, payload}: {
     if (!old) return old;
     const map = new Map(payload.items.map(item => [item.id, item.child_order]))
 
+    const updated = old.results.map(task => {
+      if(!task.id) return task
+      if(map.has(task.id)){
+        return {
+          ...task,
+          child_order: map.get(task.id),
+        }
+      }
+      return task;
+    })
+    updated.sort((a, b) => (a.child_order ?? 0) - (b.child_order ?? 0))
+
     return {
       ...old,
-      results: old.results.map(task => map.has(task.id) ? {...task, child_order: map.get(task.id)} : task)
+      results: updated
     }
   })
   return {previousData};
@@ -203,9 +215,22 @@ export async function optimisticReorderSection({queryClient, payload}: {
   queryClient.setQueriesData<SectionResponse>({queryKey: ['sections']}, old => {
     if(!old) return old;
     const map = new Map(payload.sections.map(item => [item.id, item.section_order]))
+
+    const updated = old.results.map(section => {
+      if(!section.id) return section
+      if(map.has(section.id)){
+        return {
+          ...section,
+          section_order: map.get(section.id),
+        }
+      }
+      return section;
+    })
+    updated.sort((a, b) => (a.section_order ?? 0) - (b.section_order ?? 0))
+
     return {
       ...old,
-      results: old.results.map(section => map.has(section.id) ? {...section, section_order: map.get(section.id)} : section)
+      results: updated
     }
   })
   return {previousData}

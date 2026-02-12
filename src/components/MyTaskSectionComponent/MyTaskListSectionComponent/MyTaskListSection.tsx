@@ -15,7 +15,8 @@ import AddMyTaskSectionComponent from "../AddMyTaskSectionComponent";
 import EditMyTaskSectionComponent from "../EditMyTaskSectionComponent";
 import { useTaskStore } from "../../../stores/task.store.ts";
 import { type MouseEvent } from "react";
-import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
+import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";
+import DragDropIcon from "../../icons/DragDropIcon.tsx";
 
 type MyTaskSectionProps = {
   section: Section;
@@ -47,6 +48,9 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
     );
   }, [section.id, tasks?.results]);
 
+  const {setNodeRef, attributes, listeners} = useSortable({id: section.id ?? "", data: {
+    type: "section"
+    }})
   const isSectionAdding = addSectionId === section.id;
   const isEditing = editingSectionId === section.id;
   const isAddingTask = addingTaskId === section.id;
@@ -68,27 +72,36 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
   return (
     <section className={"pb-4.5 px-3 lg:px-0"}>
       {section.id !== null && (
-        <div
-          className={
-            "border-b border-b-product-library-divider-primary relative"
-          }
-        >
-          {/*click to edit section here*/}
-          {isEditing ? (
-            <EditMyTaskSectionComponent
-              onCancelEditMyTaskSection={onCloseEditSection}
-              section={section}
-            />
-          ) : (
-            <MyTaskListSectionHeader
-              onOpenEditMyTaskSection={() => onOpenEditSection(section.id)}
-              isExpanded={isExpanded}
-              onExpanded={handleExpanded}
-              section={section}
-              tasks={filteredTasks}
-            />
-          )}
-        </div>
+          <div className={`flex items-center gap-5`} ref={setNodeRef}>
+            <button type={"button"} className={`flex justify-center items-center cursor-grab active:cursor-grabbing ${!isEditing ? "visible w-6 h-6" : "invisible"}`} {...attributes} {...listeners}>
+              <DragDropIcon/>
+            </button>
+            <div
+                className={
+                  "border-b border-b-product-library-divider-primary relative w-full"
+                }
+            >
+              {/*click to edit section here*/}
+              {isEditing ? (
+                <>
+                
+                  <EditMyTaskSectionComponent
+                      onCancelEditMyTaskSection={onCloseEditSection}
+                      section={section}
+                  /></>
+
+              ) : (
+                  <MyTaskListSectionHeader
+                      onOpenEditMyTaskSection={() => onOpenEditSection(section.id)}
+                      isExpanded={isExpanded}
+                      onExpanded={handleExpanded}
+                      section={section}
+                      tasks={filteredTasks}
+                  />
+              )}
+            </div>
+          </div>
+
       )}
 
       {isExpanded && (
