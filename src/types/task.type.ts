@@ -102,3 +102,8 @@ export type ReorderTaskPayload = {
 export type TaskQuery = {
     project_id?: string;
 }
+
+export type FlattenTask = {
+    taskNode: TaskNode,
+    level: number
+}

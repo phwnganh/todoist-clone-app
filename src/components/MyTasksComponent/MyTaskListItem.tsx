@@ -214,23 +214,23 @@ const MyTaskListItem = ({
             </li></div>
 
       )}
-      {hasChildren &&
-        isExpanded &&
-          <>
-            {children.map((child) => (
-                <MyTaskListItem
-                    key={child.task.id}
-                    taskNode={child}
-                    level={level + 1}
-                    isOpenTaskDetailToolbar={isOpenTaskDetailToolbar}
-                    onOpenTaskDetailToolbar={(e) => {
-                      onOpenTaskDetailToolbar(e);
-                    }}
-                    onCloseTaskDetailToolbar={onCloseTaskDetailToolbar}
-                />
-            ))}
-          </>
-        }
+      {/*{hasChildren &&*/}
+      {/*  isExpanded &&*/}
+      {/*    <>*/}
+      {/*      {children.map((child) => (*/}
+      {/*          <MyTaskListItem*/}
+      {/*              key={child.task.id}*/}
+      {/*              taskNode={child}*/}
+      {/*              level={level + 1}*/}
+      {/*              isOpenTaskDetailToolbar={isOpenTaskDetailToolbar}*/}
+      {/*              onOpenTaskDetailToolbar={(e) => {*/}
+      {/*                onOpenTaskDetailToolbar(e);*/}
+      {/*              }}*/}
+      {/*              onCloseTaskDetailToolbar={onCloseTaskDetailToolbar}*/}
+      {/*          />*/}
+      {/*      ))}*/}
+      {/*    </>*/}
+      {/*  }*/}
 
       {isOpenTaskDetail && (
           <MyTaskDetailModalDialog onCloseTaskDetail={onCloseTaskDetail} />

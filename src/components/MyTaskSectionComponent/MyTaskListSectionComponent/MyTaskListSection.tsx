@@ -3,7 +3,7 @@ import { Fragment, useMemo } from "react";
 import MyTaskListItem from "../../MyTasksComponent/MyTaskListItem.tsx";
 import AddMyTaskModalDialog from "../../MyTasksComponent/AddMyTaskComponent";
 import AddMyTaskButtonSection from "../../MyTasksComponent/AddMyTaskButtonSection.tsx";
-import { useTaskTreeMultiLevel } from "../../../hooks/useTaskTreeMultiLevel.ts";
+import {flattenTaskMultiLevel, useTaskTreeMultiLevel} from "../../../hooks/useTaskTreeMultiLevel.ts";
 import { useProjectStore } from "../../../stores/project.store.ts";
 import LoadingSpin from "../../ui/LoadingSpin.tsx";
 import type { Section } from "../../../types/section.type.ts";
@@ -26,6 +26,9 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
   const { data: tasks, isLoading } = useGetAllTasks({project_id: projectId});
   const { isExpanded, handleExpanded } = useExpanded(true);
   const taskTree = useTaskTreeMultiLevel(tasks?.results, section.id);
+  const flatTasks = useMemo(() => {
+    return flattenTaskMultiLevel(taskTree)
+  }, [taskTree]);
   const {
     editingSectionId,
     onOpenEditSection,
@@ -106,12 +109,12 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
 
       {isExpanded && (
         <ul className={"mt-1.25 flex flex-col flex-wrap"}>
-          <SortableContext items={taskTree.map(node => node.task.id)} strategy={verticalListSortingStrategy}>
-            {taskTree.map((taskNode) => (
+          <SortableContext items={flatTasks.map(item => item.taskNode.task.id)} strategy={verticalListSortingStrategy}>
+            {flatTasks.map(({taskNode, level}) => (
                 <Fragment key={taskNode.task.id}>
                   <MyTaskListItem
                       taskNode={taskNode}
-                      level={0}
+                      level={level}
                       isOpenTaskDetailToolbar={
                           openTaskDetailToolbar === taskNode.task.id
                       }
