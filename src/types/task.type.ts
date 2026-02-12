@@ -43,8 +43,8 @@ export type TaskNode = {
 }
 
 export type DragMeta = {
-    parent: boolean
-    section: boolean
+    parent?: boolean
+    section?: boolean
 }
 
 export type Priority = {

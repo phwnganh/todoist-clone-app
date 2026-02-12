@@ -77,7 +77,7 @@ const MyProjectDetailPage = () => {
 
         handleReorder(tasks, activeTask, overTask, {
             parent: true,
-            section: true
+            section: true,
         }, reorderingTaskMutate, movingTaskMutate)
 
     }

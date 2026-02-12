@@ -13,8 +13,8 @@ export const handleReorder = (tasks: Task[], activeTask: Task, overTask: Task, m
     const fromParent = meta.parent ? activeTask.parent_id: null
     const toParent = meta.parent ? overTask.parent_id : null
 
-    const fromSection = meta.section ? activeTask.section_id : null
-    const toSection = meta.section ? overTask.section_id : null
+    const fromSection = meta.section ? (activeTask.section_id ?? null) : null
+    const toSection = meta.section ? (overTask.section_id ?? null) : null
 
     const fromSiblings = getSiblings(tasks, fromParent, fromSection)
     const toSiblings = getSiblings(tasks, toParent, toSection)
@@ -35,8 +35,8 @@ export const handleReorder = (tasks: Task[], activeTask: Task, overTask: Task, m
 
     movingTask({
         id: activeTask.id,
-        parent_id: toParent ?? undefined,
-        section_id: toSection ?? undefined,
+        parent_id: toParent ?? null,
+        section_id: toSection ?? null,
     })
     const newFrom = [...fromSiblings]
     newFrom.splice(fromIndex, 1)

@@ -22,7 +22,7 @@ import {PRIORITY_BORDER_CLASS_MAPPING, PRIORITY_VERIFIED_CLASS_MAPPING} from "..
 import {useCompleteTask} from "../../hooks/useQueryHook/useTasks.ts";
 import {getDueInfo} from "../../helpers/formateDate.ts";
 import {DUE_COLOR_CLASS} from "../../constants/color.constants.ts";
-import {SortableContext, useSortable} from "@dnd-kit/sortable";
+import {useSortable} from "@dnd-kit/sortable";
 import DragDropIcon from "../icons/DragDropIcon.tsx";
 
 type MyTaskListItemProps = {
@@ -216,7 +216,7 @@ const MyTaskListItem = ({
       )}
       {hasChildren &&
         isExpanded &&
-          <SortableContext items={children.map(c => c.task.id)}>
+          <>
             {children.map((child) => (
                 <MyTaskListItem
                     key={child.task.id}
@@ -229,7 +229,7 @@ const MyTaskListItem = ({
                     onCloseTaskDetailToolbar={onCloseTaskDetailToolbar}
                 />
             ))}
-          </SortableContext>
+          </>
         }
 
       {isOpenTaskDetail && (
