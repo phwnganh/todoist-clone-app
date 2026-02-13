@@ -1,4 +1,4 @@
-import type {DragMeta, MoveTaskPayload, ReorderTaskPayload, Task} from "../types/task.type.ts";
+import type {MoveTaskPayload, ReorderTaskPayload, Task} from "../types/task.type.ts";
 import {arrayMove} from "@dnd-kit/sortable";
 
 export const findTaskByIdToOrder = (tasks: Task[], id: string) => {
@@ -9,12 +9,12 @@ export const getSiblings = (tasks: Task[], parent_id: string | null | undefined,
     return tasks.filter(t => t.parent_id === parent_id && t.section_id === section_id).sort((a, b) => (a.child_order ?? 0) - (b.child_order ?? 0));
 }
 
-export const handleReorder = (tasks: Task[], activeTask: Task, overTask: Task, meta: DragMeta, reorderTask: (payload: ReorderTaskPayload) => void, movingTask: (payload: MoveTaskPayload) => void) => {
-    const fromParent = meta.parent ? (activeTask.parent_id ?? null): null
-    const toParent = meta.parent ? (overTask.parent_id ?? null) : null
+export const handleReorder = (tasks: Task[], activeTask: Task, overTask: Task, reorderTask: (payload: ReorderTaskPayload) => void, movingTask: (payload: MoveTaskPayload) => void) => {
+    const fromParent = activeTask.parent_id ?? null
+    const toParent = overTask.parent_id ?? null
 
-    const fromSection = meta.section ? (activeTask.section_id ?? null) : null
-    const toSection = meta.section ? (overTask.section_id ?? null) : null
+    const fromSection = activeTask.section_id ?? null
+    const toSection = overTask.section_id ?? null
 
     const fromSiblings = getSiblings(tasks, fromParent, fromSection)
     const toSiblings = getSiblings(tasks, toParent, toSection)
