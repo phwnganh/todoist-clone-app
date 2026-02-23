@@ -42,11 +42,10 @@ export const handleReorderTask = async (tasks: Task[], activeTask: Task, overTas
     newTo.splice(toIndex, 0, activeTask)
 
     reorderTask({
-        items: [
-            ...newTo.map((task, index) => ({
+        items: newTo.map((task, index) => ({
                 id: task.id,
                 child_order: index
             }))
-        ]
+
     })
 }
