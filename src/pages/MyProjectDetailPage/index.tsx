@@ -30,8 +30,8 @@ const MyProjectDetailPage = () => {
     }, [projectId, setProjectId]);
     const {data: sections} = useGetAllSections({project_id: projectId});
     const {data: allTasks} = useGetAllTasks({project_id: projectId});
-    const {mutate: reorderingTaskMutate} = useReorderTask()
-    const {mutate: movingTaskMutate} = useMoveMyTask()
+    const {mutateAsync: movingTaskMutate} = useMoveMyTask()
+    const {mutateAsync: reorderingTaskMutate} = useReorderTask()
     const {mutate: reorderingSectionMutate} = useReorderSection()
     const [openLayoutDropdown, setOpenLayoutDropdown] = useState(false);
     const [layoutName, setLayoutName] = useState("list");
@@ -44,7 +44,7 @@ const MyProjectDetailPage = () => {
     const {showCollapse, onToggleSidebar} = useOutletContext<HeaderLayoutType>()
     const navigate = useNavigate()
 
-    const handleDragEnd = (e: DragEndEvent) => {
+    const handleDragEnd = async (e: DragEndEvent) => {
         const {active, over} = e;
         if(!over || active.id === over.id) return;
         const activeType = active.data.current?.type;
@@ -68,7 +68,7 @@ const MyProjectDetailPage = () => {
         const overTask = findTaskByIdToOrder(tasks, over.id as string)
         if(!activeTask || !overTask) return;
 
-        handleReorderTask(tasks, activeTask, overTask, reorderingTaskMutate, movingTaskMutate)
+        await handleReorderTask(tasks, activeTask, overTask, reorderingTaskMutate, movingTaskMutate)
 
     }
 

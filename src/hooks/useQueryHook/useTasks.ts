@@ -190,7 +190,7 @@ export const useMoveMyTask = () => {
                     id: movingTask.id,
                     project_id: movingTask.project_id,
                     section_id: movingTask.section_id,
-                    parent_id: null,
+                    parent_id: movingTask.parent_id ?? null,
                 }
             })
         },

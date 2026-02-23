@@ -9,7 +9,7 @@ export const getSiblings = (tasks: Task[], parent_id: string | null | undefined,
     return tasks.filter(t => t.parent_id === parent_id && t.section_id === section_id).sort((a, b) => (a.child_order ?? 0) - (b.child_order ?? 0));
 }
 
-export const handleReorderTask = (tasks: Task[], activeTask: Task, overTask: Task, reorderTask: (payload: ReorderTaskPayload) => void, movingTask: (payload: MoveTaskPayload) => void) => {
+export const handleReorderTask = async (tasks: Task[], activeTask: Task, overTask: Task, reorderTask: (payload: ReorderTaskPayload) => void, movingTask: (payload: MoveTaskPayload) => void) => {
     const fromParent = activeTask.parent_id ?? null
     const toParent = overTask.parent_id ?? null
 
@@ -38,17 +38,11 @@ export const handleReorderTask = (tasks: Task[], activeTask: Task, overTask: Tas
         parent_id: toParent,
         section_id: toSection,
     })
-    const newFrom = [...fromSiblings]
-    newFrom.splice(fromIndex, 1)
     const newTo = [...toSiblings]
     newTo.splice(toIndex, 0, activeTask)
 
     reorderTask({
         items: [
-            ...newFrom.map((task, index) => ({
-                id: task.id,
-                child_order: index
-            })),
             ...newTo.map((task, index) => ({
                 id: task.id,
                 child_order: index
