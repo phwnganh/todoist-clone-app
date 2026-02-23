@@ -24,6 +24,7 @@ import {getDueInfo} from "../../helpers/formateDate.ts";
 import {DUE_COLOR_CLASS} from "../../constants/color.constants.ts";
 import {useSortable} from "@dnd-kit/sortable";
 import DragDropIcon from "../icons/DragDropIcon.tsx";
+import {CSS} from "@dnd-kit/utilities";
 
 type MyTaskListItemProps = {
   taskNode: TaskNode;
@@ -48,9 +49,14 @@ const MyTaskListItem = ({
   const hasChildren = children.length > 0;
   const completedChildrenLength = children.filter(child => child.task.checked || child.task.completed_at).length
   const {category, label} = getDueInfo(task?.due?.date)
-  const {setNodeRef, attributes, listeners} = useSortable({id: task.id, data: {
+  const {setNodeRef, attributes, listeners, transition, transform} = useSortable({id: task.id, data: {
     type: "task"
     }})
+
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform)
+  }
   const {mutate} = useCompleteTask()
   const handleCompleteTask = (taskId: string) => {
     mutate({
@@ -66,8 +72,8 @@ const MyTaskListItem = ({
           onCloseEditMyTask={onCloseEditTask}
         />
       ) : (
-          <div ref={setNodeRef} className={"flex items-start gap-5 px-2 border-b border-b-product-library-divider-primary"}>
-            <button type={"button"} className={"flex justify-center items-center w-6 h-6 "} {...attributes} {...listeners}>
+          <div ref={setNodeRef} style={style} className={"flex items-start gap-5 px-2 border-b border-b-product-library-divider-primary"}>
+            <button type={"button"} className={"flex justify-center items-center w-6 h-6 hover:bg-product-library-selectable-secondary-hover-fill rounded-small"} {...attributes} {...listeners}>
               <DragDropIcon/>
             </button>
             <li

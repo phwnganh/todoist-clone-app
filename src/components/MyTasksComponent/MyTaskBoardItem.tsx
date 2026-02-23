@@ -17,6 +17,7 @@ import {getDueInfo} from "../../helpers/formateDate.ts";
 import {DUE_COLOR_CLASS} from "../../constants/color.constants.ts";
 import {useSortable} from "@dnd-kit/sortable";
 import DragDropIcon from "../icons/DragDropIcon.tsx";
+import {CSS} from "@dnd-kit/utilities";
 
 type MyTaskBoardItemProps = {
   task: Task;
@@ -35,7 +36,11 @@ const MyTaskBoardItem = ({
   const isDeleting = deleteTaskId === task.id;
   const isOpeningTaskDetail = taskDetailId === task.id;
   const {category, label} = getDueInfo(task?.due?.date)
-  const {setNodeRef, attributes, listeners} = useSortable({id: task.id})
+  const {setNodeRef, attributes, listeners, transition, transform} = useSortable({id: task.id})
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform)
+  }
   const {mutate} = useCompleteTask()
   const handleCompleteTask = (taskId: string) => {
     mutate({
@@ -57,11 +62,12 @@ const MyTaskBoardItem = ({
       ) : (
         <div
             ref={setNodeRef}
+            style={style}
           className={
             "flex items-start outline outline-border-idle hover:outline-border-hover shadow-sm rounded-large p-2.5 group relative"
           }
         >
-          <button type={"button"} {...attributes} {...listeners} className={"flex justify-center items-center w-6 h-6 cursor-grab active:cursor-grabbing"} {...listeners}>
+          <button type={"button"} {...attributes} {...listeners} className={"flex justify-center items-center w-6 h-6 cursor-grab active:cursor-grabbing hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}>
             <DragDropIcon/>
           </button>
           <button

@@ -31,7 +31,7 @@ const MyProjectDetailPage = () => {
     const {data: sections} = useGetAllSections({project_id: projectId});
     const {data: allTasks} = useGetAllTasks({project_id: projectId});
     const {mutateAsync: movingTaskMutate} = useMoveMyTask()
-    const {mutateAsync: reorderingTaskMutate} = useReorderTask()
+    const {mutate: reorderingTaskMutate} = useReorderTask()
     const {mutate: reorderingSectionMutate} = useReorderSection()
     const [openLayoutDropdown, setOpenLayoutDropdown] = useState(false);
     const [layoutName, setLayoutName] = useState("list");

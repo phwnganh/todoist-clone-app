@@ -17,7 +17,7 @@ import { useTaskStore } from "../../../stores/task.store.ts";
 import { type MouseEvent } from "react";
 import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import DragDropIcon from "../../icons/DragDropIcon.tsx";
-
+import {CSS} from '@dnd-kit/utilities'
 type MyTaskSectionProps = {
   section: Section;
 };
@@ -48,12 +48,17 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
     );
   }, [section.id, tasks?.results]);
 
-  const {setNodeRef, attributes, listeners} = useSortable({id: section.id ?? "", data: {
+  const {setNodeRef, attributes, listeners, transform, transition} = useSortable({id: section.id ?? "", data: {
     type: "section"
     }})
   const isSectionAdding = addSectionId === section.id;
   const isEditing = editingSectionId === section.id;
   const isAddingTask = addingTaskId === section.id;
+
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform),
+  }
   const handleOpenTaskDetailToolbar = (
     id: string,
     e: MouseEvent<HTMLButtonElement>,
@@ -72,8 +77,8 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
   return (
     <section className={"pb-4.5 px-3 lg:px-0"}>
       {section.id !== null && (
-          <div className={`flex items-center gap-5`} ref={setNodeRef}>
-            <button type={"button"} className={`flex justify-center items-center cursor-grab active:cursor-grabbing ${!isEditing ? "visible w-6 h-6" : "invisible"}`} {...attributes} {...listeners}>
+          <div className={`flex items-center gap-5`} ref={setNodeRef} style={style}>
+            <button type={"button"} className={`flex justify-center items-center cursor-grab active:cursor-grabbing hover:bg-product-library-selectable-secondary-hover-fill rounded-small ${!isEditing ? "visible w-6 h-6" : "invisible"}`} {...attributes} {...listeners}>
               <DragDropIcon/>
             </button>
             <div

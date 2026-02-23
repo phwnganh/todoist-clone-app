@@ -12,6 +12,7 @@ import AddMyTaskModalDialog from "../../MyTasksComponent/AddMyTaskComponent";
 import AddMyTaskButtonSection from "../../MyTasksComponent/AddMyTaskButtonSection.tsx";
 import {SortableContext, useSortable} from "@dnd-kit/sortable";
 import DragDropIcon from "../../icons/DragDropIcon.tsx";
+import {CSS} from "@dnd-kit/utilities";
 type MyTaskBoardSectionProps = {
   section: Section;
 };
@@ -36,11 +37,15 @@ const MyTaskBoardSection = ({ section }: MyTaskBoardSectionProps) => {
     );
   }, [section.id, tasks?.results]);
 
-  const {setNodeRef, attributes, listeners} = useSortable({id: section.id ?? "", data: {
+  const {setNodeRef, attributes, listeners, transition, transform} = useSortable({id: section.id ?? "", data: {
     type: "section"
     }})
   const isEditing = editingSectionId === section.id;
   const isAddingTask = addingTaskId === section.id;
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform)
+  }
 
   const handleOpenTaskDetailToolbar = (
     id: string,
@@ -64,8 +69,8 @@ const MyTaskBoardSection = ({ section }: MyTaskBoardSectionProps) => {
         }
       >
         {section.id !== null ? (
-          <div className={"relative flex items-center"} ref={setNodeRef}>
-            <button type={"button"} className={`flex justify-center items-center ${!isEditing ? "w-6 h-6 visible" : "invisible"}`} {...attributes} {...listeners}>
+          <div className={"relative flex items-center"} ref={setNodeRef} style={style}>
+            <button type={"button"} className={`flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill rounded-small ${!isEditing ? "w-6 h-6 visible" : "invisible"}`} {...attributes} {...listeners}>
               <DragDropIcon/>
             </button>
             {/*click to edit section here*/}
