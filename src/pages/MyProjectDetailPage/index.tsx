@@ -68,7 +68,7 @@ const MyProjectDetailPage = () => {
         const overTask = findTaskByIdToOrder(tasks, over.id as string)
         if(!activeTask || !overTask) return;
 
-        await handleReorderTask(tasks, activeTask, overTask, reorderingTaskMutate, movingTaskMutate)
+        await handleReorderTask(tasks, activeTask, overTask, projectId, reorderingTaskMutate, movingTaskMutate)
 
     }
 
