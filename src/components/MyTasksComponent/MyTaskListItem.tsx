@@ -22,7 +22,7 @@ import {PRIORITY_BORDER_CLASS_MAPPING, PRIORITY_VERIFIED_CLASS_MAPPING} from "..
 import {useCompleteTask} from "../../hooks/useQueryHook/useTasks.ts";
 import {getDueInfo} from "../../helpers/formateDate.ts";
 import {DUE_COLOR_CLASS} from "../../constants/color.constants.ts";
-import {useSortable} from "@dnd-kit/sortable";
+import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import DragDropIcon from "../icons/DragDropIcon.tsx";
 import {CSS} from "@dnd-kit/utilities";
 
@@ -222,7 +222,7 @@ const MyTaskListItem = ({
       )}
       {hasChildren &&
         isExpanded &&
-          <>
+          <SortableContext items={children.map(child => child.task.id)} strategy={verticalListSortingStrategy}>
             {children.map((child) => (
                 <MyTaskListItem
                     key={child.task.id}
@@ -235,7 +235,7 @@ const MyTaskListItem = ({
                     onCloseTaskDetailToolbar={onCloseTaskDetailToolbar}
                 />
             ))}
-          </>
+          </SortableContext>
         }
 
       {isOpenTaskDetail && (
