@@ -9,7 +9,7 @@ export const getSiblings = (tasks: Task[], parent_id: string | null | undefined,
     return tasks.filter(t => t.parent_id === parent_id && t.section_id === section_id).sort((a, b) => (a.child_order ?? 0) - (b.child_order ?? 0));
 }
 
-export const handleReorder = (tasks: Task[], activeTask: Task, overTask: Task, reorderTask: (payload: ReorderTaskPayload) => void, movingTask: (payload: MoveTaskPayload) => void) => {
+export const handleReorderTask = (tasks: Task[], activeTask: Task, overTask: Task, reorderTask: (payload: ReorderTaskPayload) => void, movingTask: (payload: MoveTaskPayload) => void) => {
     const fromParent = activeTask.parent_id ?? null
     const toParent = overTask.parent_id ?? null
 

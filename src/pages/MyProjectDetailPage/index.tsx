@@ -15,9 +15,9 @@ import {useProjectStore} from "../../stores/project.store.ts";
 import {useGetAllSections, useReorderSection} from "../../hooks/useQueryHook/useSections.ts";
 import {closestCenter, DndContext, type DragEndEvent} from "@dnd-kit/core";
 import {useGetAllTasks, useMoveMyTask, useReorderTask} from "../../hooks/useQueryHook/useTasks.ts";
-import {findTaskByIdToOrder, handleReorder} from "../../helpers/dragDropMyTasks.ts";
+import {findTaskByIdToOrder, handleReorderTask} from "../../helpers/dragDropMyTasks.ts";
 import HeaderThreeDotsIcon from "../../components/icons/HeaderThreeDotsIcon.tsx";
-import {arrayMove} from "@dnd-kit/sortable";
+import {findSectionByIdToOrder, handleReorderSection} from "../../helpers/dragDropMySection.ts";
 
 const MyProjectDetailPage = () => {
     const {projectId} = useParams<{projectId: string}>();
@@ -54,19 +54,12 @@ const MyProjectDetailPage = () => {
             const sectionList = sections?.results
             if(!sectionList) return;
 
-            const oldIndex = sectionList.findIndex(s => s.id === active.id)
-            const newIndex = sectionList.findIndex(s => s.id === over.id)
+            const activeSection = findSectionByIdToOrder(sectionList, active.id as string)
+            const overSection = findSectionByIdToOrder(sectionList, over.id as string)
 
-            if(oldIndex === -1 || newIndex === -1) return;
+            if(!activeSection || !overSection) return;
 
-            const reordered = arrayMove(sectionList, oldIndex, newIndex)
-            reorderingSectionMutate({
-                sections: reordered.filter(section => section.id !== null).map((section, index) => ({
-                    id: section.id as string,
-                    section_order: index
-                }))
-            })
-            return;
+            handleReorderSection(sectionList, activeSection, overSection, reorderingSectionMutate)
         }
         const tasks = allTasks?.results
         if(!tasks) return;
@@ -75,7 +68,7 @@ const MyProjectDetailPage = () => {
         const overTask = findTaskByIdToOrder(tasks, over.id as string)
         if(!activeTask || !overTask) return;
 
-        handleReorder(tasks, activeTask, overTask, reorderingTaskMutate, movingTaskMutate)
+        handleReorderTask(tasks, activeTask, overTask, reorderingTaskMutate, movingTaskMutate)
 
     }
 
