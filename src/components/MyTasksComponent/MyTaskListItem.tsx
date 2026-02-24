@@ -51,7 +51,7 @@ const MyTaskListItem = ({
   const {category, label} = getDueInfo(task?.due?.date)
   const {setNodeRef, attributes, listeners, transition, transform} = useSortable({id: task.id, data: {
     type: "task"
-    }})
+  }})
 
   const style = {
     transition,
