@@ -200,11 +200,11 @@ export const useMoveMyTask = () => {
                 context
             })
         },
-        onSettled: () => {
-            void queryClient.invalidateQueries({
-                queryKey: ["tasks"]
-            })
-        }
+        // onSettled: () => {
+        //     void queryClient.invalidateQueries({
+        //         queryKey: ["tasks"]
+        //     })
+        // }
     })
 }
 

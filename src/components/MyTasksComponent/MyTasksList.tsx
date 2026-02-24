@@ -16,10 +16,10 @@ const MyTasksList = ({ filteredSectionsByProject }: MyTasksListProps) => {
 
   return (
     <>
-      <MyTaskListSection section={NO_SECTION} />
+      <MyTaskListSection section={NO_SECTION}/>
       <SortableContext items={(filteredSectionsByProject ?? [])?.map(s => s.id!)} strategy={verticalListSortingStrategy}>
       {filteredSectionsByProject?.map((section) => (
-        <MyTaskListSection key={section.id} section={section} />
+        <MyTaskListSection key={section.id} section={section}/>
       ))}
       </SortableContext>
     </>

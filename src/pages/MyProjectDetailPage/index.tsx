@@ -31,7 +31,7 @@ const MyProjectDetailPage = () => {
     const {data: sections} = useGetAllSections({project_id: projectId});
     const {data: allTasks} = useGetAllTasks({project_id: projectId});
     const {mutateAsync: movingTaskMutate} = useMoveMyTask()
-    const {mutate: reorderingTaskMutate} = useReorderTask()
+    const {mutateAsync: reorderingTaskMutate} = useReorderTask()
     const {mutate: reorderingSectionMutate} = useReorderSection()
     const [openLayoutDropdown, setOpenLayoutDropdown] = useState(false);
     const [layoutName, setLayoutName] = useState("list");
@@ -68,7 +68,7 @@ const MyProjectDetailPage = () => {
         const overTask = findTaskByIdToOrder(tasks, over.id as string)
         if(!activeTask || !overTask) return;
 
-        await handleReorderTask(tasks, activeTask, overTask, projectId, reorderingTaskMutate, movingTaskMutate)
+        await handleReorderTask(tasks, activeTask, overTask, projectId, movingTaskMutate, reorderingTaskMutate)
 
     }
 
