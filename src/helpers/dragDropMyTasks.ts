@@ -33,32 +33,42 @@ export const handleReorderTask = async (tasks: Task[], activeTask: Task, overTas
         return
     }
 
-    await movingTask({
-        id: activeTask.id,
+    // move task before
+    const moveTaskPayload: MoveTaskPayload = {
+        id: activeTask.id
+    }
+    // move to subtask that has a different parent id
+    if(toParent !== null){
+        moveTaskPayload.parent_id = toParent
+    }
+    // move to root in section
+    else if(toSection !== null){
+        moveTaskPayload.section_id = toSection
+    }
+    // move to root in project
+    else{
+        moveTaskPayload.project_id = project_id
+    }
+    movingTask(moveTaskPayload)
+
+    // after moving task -> reordering task in a new scope
+    // update task state after moving task to prepare for ordering tasks in a new sibling group
+    const updatedTasks = tasks.map(t => t.id === activeTask.id ? {
+        ...t,
         parent_id: toParent,
-        section_id: toSection,
-        ...(toSection || toParent ? {} : {project_id})
-    })
+        section_id: toSection
+    } : t)
 
-    const updatedTasks = tasks.map(t => t.id === activeTask.id ? {...t, parent_id: toParent, section_id: toSection} : t)
-
-    const toSiblings = getSiblings(updatedTasks, toParent, toSection)
-
-    const toIndex = toSiblings.findIndex(t => t.id === overTask.id)
-
-    const filtered = toSiblings.filter(t => t.id !== activeTask.id)
-    const newTo = [...filtered]
-    newTo.splice(toIndex, 0, {
-        ...activeTask,
-        parent_id: toParent,
-        section_id: toSection,
-    })
+    // identify and sort a new sibling group
+    const siblings = getSiblings(updatedTasks, toParent, toSection)
+    const fromIndex = siblings.findIndex(t => t.id === activeTask.id)
+    const toIndex = siblings.findIndex(t => t.id === overTask.id)
+    const reordered = arrayMove(siblings, fromIndex, toIndex)
 
     reorderTask({
-        items: newTo.map((task, index) => ({
-                id: task.id,
-                child_order: index + 1
-            }))
+        items: reordered.map((t, index) => ({
+            id: t.id,
+            child_order: index + 1
+        }))
     })
-
 }
