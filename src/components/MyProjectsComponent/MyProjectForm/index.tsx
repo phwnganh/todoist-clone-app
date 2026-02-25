@@ -281,6 +281,7 @@ const MyProjectForm = ({
                   onSelect={(parentProject: string) =>
                     handleSelectParentProjects(parentProject)
                   }
+                  onCloseDropdown={() => setIsOpenDropdown(null)}
                 />
               )}
             </div>

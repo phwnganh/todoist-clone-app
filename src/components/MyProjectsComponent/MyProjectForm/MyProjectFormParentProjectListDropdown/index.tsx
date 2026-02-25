@@ -11,10 +11,12 @@ import { useDebounce } from "../../../../hooks/useDebounce.ts";
 type MyProjectFormParentProjectListProps = {
   selectedProject: string | null;
   onSelect: (parentProject: string) => void;
+  onCloseDropdown: () => void;
 };
 const MyProjectFormParentProjectListDropdown = ({
   selectedProject,
   onSelect,
+    onCloseDropdown
 }: MyProjectFormParentProjectListProps) => {
   const NO_PARENT = "No Parent";
   const [typedParentProject, setTypedParentProject] = useState<string>("");
@@ -95,6 +97,7 @@ const MyProjectFormParentProjectListDropdown = ({
           hasKeyword={hasKeyword}
           keyword={trimmedParentProjectValue}
           showNotFound={isNotProjectsFound}
+          onCloseDropdown={onCloseDropdown}
         />
       </div>
     </div>
