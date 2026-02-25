@@ -2,6 +2,7 @@ import type { QueryClient, QueryKey } from "@tanstack/react-query";
 import type { Project, ProjectResponse } from "../types/project.type.ts";
 import type {ReorderTaskPayload, Task, TaskResponse} from "../types/task.type.ts";
 import type {ReorderSectionPayload, Section, SectionResponse} from "../types/section.type.ts";
+import type {Label, LabelsResponse} from "../types/label.type.ts";
 
 export type OptimisticUpdatesProjectContext = {
   previousData?: ProjectResponse;
@@ -242,6 +243,20 @@ export function rollbackOptimisticProjectUpdates({
       if(context?.previousData){
         queryClient.setQueryData(['projects'], context.previousData)
       }
+}
+
+export async function optimisticCreateLabel({queryClient, optimisticLabel}: {queryClient: QueryClient, optimisticLabel: Label}): Promise<OptimisticUpdatesContext>{
+  await queryClient.cancelQueries({queryKey: ['labels']})
+  const previousData = queryClient.getQueriesData<LabelsResponse>({queryKey: ['labels']});
+  queryClient.setQueriesData<LabelsResponse>({queryKey: ['labels']}, old => {
+    if(!old) return old;
+    return {
+      ...old,
+      results: [...old.results, optimisticLabel],
+      next_cursor: old.next_cursor ?? "",
+    }
+  })
+  return { previousData };
 }
 export function rollbackOptimisticUpdates({
   queryClient,

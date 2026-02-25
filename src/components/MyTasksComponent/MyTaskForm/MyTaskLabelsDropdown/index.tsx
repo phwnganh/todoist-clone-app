@@ -1,4 +1,5 @@
 import {
+  useCreateLabels,
   useGetAllLabels,
   useSearchLabels,
 } from "../../../../hooks/useQueryHook/useLabels.ts";
@@ -13,12 +14,14 @@ type MyTaskLabelsDropdownProps = {
   selectedLabels: Label[];
   onSelect: (label: Label) => void;
   keyword: string;
+  onCloseLabelsDropdown: () => void;
 };
 const MyTaskLabelsDropdown = ({
   selectedLabels,
   onSelect,
-  keyword,
+  keyword, onCloseLabelsDropdown
 }: MyTaskLabelsDropdownProps) => {
+  const {mutate} = useCreateLabels()
   const debouncedKeyword = useDebounce(keyword, 500);
   const { data: labels, isLoading } = useGetAllLabels();
   const { data: searchedLabels, isLoading: isSearching } =
@@ -30,6 +33,13 @@ const MyTaskLabelsDropdown = ({
     results?.filter((label) =>
       shouldShowLabel(label, selectedLabels, debouncedKeyword),
     ) ?? [];
+
+  const handleCreateLabel = () => {
+    mutate({
+      name: keyword
+    })
+    onCloseLabelsDropdown()
+  }
   if (isLoading || isSearching) {
     return <LoadingSpin />;
   }
@@ -56,6 +66,7 @@ const MyTaskLabelsDropdown = ({
       ) : (
         <button
           type={"button"}
+          onClick={handleCreateLabel}
           className={
             "w-full text-start text-sm py-1 px-4 hover:bg-product-library-selectable-secondary-hover-fill"
           }

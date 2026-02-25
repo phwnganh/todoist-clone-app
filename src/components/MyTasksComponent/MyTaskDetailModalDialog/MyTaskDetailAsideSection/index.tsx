@@ -162,7 +162,7 @@ const MyTaskDetailAside = ({ taskDetail }: MyTaskDetailAsideProps) => {
         <TaskDetailAsideProjectSection project={project} section={section} selectedProject={selectedProject} selectedSection={selectedSection} isOpenMyTaskDetailAside={isOpenMyTaskDetailAside === "project"} projectRef={projectRef} onToggle={() => handleToggleDropdown("project")} onMoveProject={handleMoveProject} onMoveSection={handleMoveSection}/>
         <TaskDetailAsideDateSection selectedDue={selectedDue} category={category} label={label} isOpenMyTaskDetailAside={isOpenMyTaskDetailAside === "date"} dateRef={dateRef} onToggle={() => handleToggleDropdown("date")} onSelectDate={handleSelectDate} onRemoveDate={handleRemoveDate}/>
         <TaskDetailAsidePrioritySection selectedPriority={selectedPriority} priorityRef={priorityRef} isOpenMyTaskDetailAside={isOpenMyTaskDetailAside === "priority"} onToggle={() => handleToggleDropdown("priority")} onSelectPriority={handleSelectPriority}/>
-        <TaskDetailAsideLabelSection selectedLabels={selectedLabels} labelsRef={labelsRef} isOpenMyTaskDetailAside={isOpenMyTaskDetailAside === "labels"} onToggle={() => handleToggleDropdown("labels")} onSelectLabel={handleSelectLabels} onRemoveLabel={handleRemoveLabel}/>
+        <TaskDetailAsideLabelSection selectedLabels={selectedLabels} labelsRef={labelsRef} isOpenMyTaskDetailAside={isOpenMyTaskDetailAside === "labels"} onToggle={() => handleToggleDropdown("labels")} onSelectLabel={handleSelectLabels} onRemoveLabel={handleRemoveLabel} onCloseDropdown={() => setIsOpenMyTaskDetailAside(null)}/>
       </div>
     </aside>
   );

@@ -231,6 +231,7 @@ const MyTaskForm = ({
                 selectedLabels={values.labels}
                 onSelect={handleSelectLabel}
                 keyword={labelKeyword}
+                onCloseLabelsDropdown={() => setIsOpenAddMyTaskDropdown(null)}
               />
             )}
           </div>

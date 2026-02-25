@@ -12,10 +12,11 @@ import MyLabelFooter from "../../MyTaskForm/MyTaskLabelsDropdown/MyLabelFooter.t
 type MyTaskAvailableLabelsDropdownProps = {
   selectedLabel: Label[];
   onLabelSelected: (label: Label) => void;
+  onCloseDropdown: () => void;
 };
 const MyTaskAvailableLabelsDropdown = ({
   selectedLabel,
-  onLabelSelected,
+  onLabelSelected, onCloseDropdown
 }: MyTaskAvailableLabelsDropdownProps) => {
   const [typedLabels, setTypedLabels] = useState<string>("");
   const keyword = typedLabels.trim().toLowerCase();
@@ -64,6 +65,7 @@ const MyTaskAvailableLabelsDropdown = ({
         hasKeyword={hasKeyword}
         keyword={trimmedLabelValue}
         showNotFound={isNoLabelsFound}
+        onCloseDropdown={onCloseDropdown}
       />
     </div>
   );

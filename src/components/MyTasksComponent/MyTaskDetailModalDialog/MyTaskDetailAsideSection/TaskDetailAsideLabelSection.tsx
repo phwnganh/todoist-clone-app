@@ -11,8 +11,9 @@ type TaskDetailAsideLabelSectionProps = {
     onToggle: () => void;
     onSelectLabel: (label: Label) => void;
     onRemoveLabel: (id: string) => void;
+    onCloseDropdown: () => void;
 }
-const TaskDetailAsideLabelSection = ({selectedLabels, labelsRef, isOpenMyTaskDetailAside, onToggle, onSelectLabel, onRemoveLabel}: TaskDetailAsideLabelSectionProps) => {
+const TaskDetailAsideLabelSection = ({selectedLabels, labelsRef, isOpenMyTaskDetailAside, onToggle, onSelectLabel, onRemoveLabel, onCloseDropdown}: TaskDetailAsideLabelSectionProps) => {
     return (
         <>
             <div className={"relative"} ref={labelsRef}>
@@ -41,6 +42,7 @@ const TaskDetailAsideLabelSection = ({selectedLabels, labelsRef, isOpenMyTaskDet
                     <MyTaskAvailableLabelsDropdown
                         selectedLabel={selectedLabels}
                         onLabelSelected={onSelectLabel}
+                        onCloseDropdown={onCloseDropdown}
                     />
                 )}
             </div>
