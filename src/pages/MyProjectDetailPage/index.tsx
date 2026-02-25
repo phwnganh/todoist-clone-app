@@ -121,7 +121,7 @@ const MyProjectDetailPage = () => {
                 <button className={"hidden sm:block px-1 text-product-library-actionable-quaternary-idle-tint text-sm font-medium hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small p-1.5"} onClick={() => navigate(PROJECTS)}>My Projects</button>
                 <div className={"text-sm text-product-library-display-secondary-idle-tint"}>/</div>
             </div>}></HeaderLayout>
-            <DndContext onDragEnd={handleDragEnd} collisionDetection={customCollisionDetection}>
+            <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver} collisionDetection={customCollisionDetection}>
                 {layoutName === "list" ? (
                     <section className={"max-w-200 mx-auto w-full relative z-10"}>
                         <div className={"flex flex-col gap-small"}>

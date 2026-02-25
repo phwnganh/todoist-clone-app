@@ -24,7 +24,7 @@ const EditMyTaskDetailMainSubChildrenForm = ({onCloseEditMySubTask, taskDetail}:
         section: null,
         labels: []
     })
-    const {editingSubTaskId} = useTaskStore()
+    const {editingTaskId} = useTaskStore()
     const isEditMode = !!taskDetail?.id
     const {data: projects} = useGetAllProjects()
     const {data: sections} = useGetAllSections()
@@ -35,12 +35,12 @@ const EditMyTaskDetailMainSubChildrenForm = ({onCloseEditMySubTask, taskDetail}:
         setValues(getTaskValuesByMappingDataType(taskDetail, projects?.results, sections?.results, labels?.results))
     }, [taskDetail, projects?.results, sections?.results, labels?.results])
 
-    if(!editingSubTaskId) {
+    if(!editingTaskId) {
         return;
     }
 
     const subTaskFormValuesPayload = (values: MyTaskFormValues): UpdateTaskPayload => ({
-        id: editingSubTaskId,
+        id: editingTaskId,
         content: values.content.trim(),
         description: values.description.trim(),
         priority: values.priority?.value,
@@ -49,7 +49,7 @@ const EditMyTaskDetailMainSubChildrenForm = ({onCloseEditMySubTask, taskDetail}:
     })
     const handleUpdateMySubTask = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if(!editingSubTaskId) return;
+        if(!editingTaskId) return;
         const payload = subTaskFormValuesPayload(values)
         mutate(payload)
         onCloseEditMySubTask()

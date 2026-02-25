@@ -9,6 +9,7 @@ import AddMyTaskDetailMainSubChildrenForm from "../AddMyTaskDetailMainSubChildre
 import {useExpanded} from "../../../../../hooks/useExpanded.ts";
 import TaskSmallArrowRightIcon from "../../../../icons/TaskSmallArrowRightIcon.tsx";
 import {type MouseEvent} from "react";
+import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 
 type MyTaskDetailSubTaskMainSectionProps = {
   taskDetail?: Task | null;
@@ -49,7 +50,7 @@ const MyTaskDetailSubTaskMainSection = ({
       </div>
       <hr className={"border-t border-product-library-divider-tertiary"} />
         {isExpanded && (
-            <>
+            <SortableContext items={childrenTasks.map(task => task.id)} strategy={verticalListSortingStrategy}>
                 {childrenTasks?.map((children) => {
                     const subChildren = tasks?.filter((t) => t.parent_id === children.id);
                     const subSubChildren = subChildren?.filter(
@@ -86,7 +87,7 @@ const MyTaskDetailSubTaskMainSection = ({
                     )}
                 </div>
 
-            </>
+            </SortableContext>
         )}
     </>
   );
