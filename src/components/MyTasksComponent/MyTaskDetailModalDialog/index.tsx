@@ -1,7 +1,7 @@
 import { createPortal } from "react-dom";
 import { useProjectStore } from "../../../stores/project.store.ts";
 import { useGetAProject } from "../../../hooks/useQueryHook/useProjects.ts";
-import MyTaskDetailAside from "./MyTaskDetailAside.tsx";
+import MyTaskDetailAside from "./MyTaskDetailAsideSection";
 import MyTaskDetailMainSection from "./MyTaskDetailMainSection";
 import MyTaskDetailTitleSection from "./MyTaskDetailTitleSection.tsx";
 import { useGetAllTasks } from "../../../hooks/useQueryHook/useTasks.ts";
