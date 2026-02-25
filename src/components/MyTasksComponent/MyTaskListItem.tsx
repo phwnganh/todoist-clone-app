@@ -14,7 +14,7 @@ import VerifiedIcon from "../icons/VerifiedIcon.tsx";
 import ChildrenIcon from "../../assets/children-icon.svg";
 import LabelIcon from '../../assets/label-icon.svg'
 import { useExpanded } from "../../hooks/useExpanded.ts";
-import { type MouseEvent } from "react";
+import {type MouseEvent, useRef} from "react";
 import MyTasksToolbarDropdown from "./MyTasksToolbarDropdown.tsx";
 import MyTaskDetailModalDialog from "./MyTaskDetailModalDialog";
 import DeleteMyTaskModalDialog from "./DeleteMyTaskComponent";
@@ -25,34 +25,38 @@ import {DUE_COLOR_CLASS} from "../../constants/color.constants.ts";
 import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import DragDropIcon from "../icons/DragDropIcon.tsx";
 import {CSS} from "@dnd-kit/utilities";
+import {useClickOutside} from "../../hooks/useClickOutside.ts";
 
 type MyTaskListItemProps = {
   taskNode: TaskNode;
   level: number;
-  isOpenTaskDetailToolbar: boolean;
-  onOpenTaskDetailToolbar: (e: MouseEvent<HTMLButtonElement>) => void;
   onCloseTaskDetailToolbar: () => void;
 };
 const MyTaskListItem = ({
   taskNode,
   level,
-  onOpenTaskDetailToolbar,
   onCloseTaskDetailToolbar,
-  isOpenTaskDetailToolbar,
 }: MyTaskListItemProps) => {
   const { task, children } = taskNode;
   const { isExpanded, handleExpanded } = useExpanded(true);
-  const { editingTaskId, deleteTaskId, onOpenEditTask, onCloseEditTask, taskDetailId, onOpenTaskDetail, onCloseTaskDetail } = useTaskStore();
+  const { editingTaskId, deleteTaskId, onOpenEditTask, onCloseEditTask, taskDetailId, onOpenTaskDetail, onCloseTaskDetail, openTaskDetailToolbar, onOpenTaskDetailToolbar } = useTaskStore();
   const isEditing = editingTaskId === task.id;
   const isOpenTaskDetail = taskDetailId === task.id;
   const isDeleting = deleteTaskId === task.id;
+  const isOpenTaskDetailToolbar = openTaskDetailToolbar === task.id;
   const hasChildren = children.length > 0;
   const completedChildrenLength = children.filter(child => child.task.checked || child.task.completed_at).length
   const {category, label} = getDueInfo(task?.due?.date)
   const {setNodeRef, attributes, listeners, transition, transform} = useSortable({id: task.id, data: {
     type: "task"
   }})
+  const taskToolbarRef = useRef<HTMLDivElement | null>(null)
 
+  useClickOutside({
+    ref: taskToolbarRef,
+    handler: onCloseTaskDetailToolbar,
+    enabled: isOpenTaskDetailToolbar
+  })
   const style = {
     transition,
     transform: CSS.Transform.toString(transform)
@@ -62,6 +66,11 @@ const MyTaskListItem = ({
     mutate({
       taskId: taskId,
     })
+  }
+
+  const handleOpenTaskToolbarDropdown = (e: MouseEvent, taskId: string) => {
+    e.stopPropagation()
+    onOpenTaskDetailToolbar(taskId)
   }
   return (
     <>
@@ -196,10 +205,12 @@ const MyTaskListItem = ({
                 >
                   <CommentIcon />
                 </button>
-                <div className={"relative"}>
+                <div className={"relative"} ref={taskToolbarRef}>
                   <button
                       type={"button"}
-                      onClick={onOpenTaskDetailToolbar}
+                      onClick={(e) => {
+                        handleOpenTaskToolbarDropdown(e, task.id);
+                      }}
                       aria-label={"menu"}
                       className={
                         "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
@@ -217,7 +228,8 @@ const MyTaskListItem = ({
                   )}
                 </div>
               </div>
-            </li></div>
+            </li>
+          </div>
 
       )}
       {hasChildren &&
@@ -228,10 +240,6 @@ const MyTaskListItem = ({
                     key={child.task.id}
                     taskNode={child}
                     level={level + 1}
-                    isOpenTaskDetailToolbar={isOpenTaskDetailToolbar}
-                    onOpenTaskDetailToolbar={(e) => {
-                      onOpenTaskDetailToolbar(e);
-                    }}
                     onCloseTaskDetailToolbar={onCloseTaskDetailToolbar}
                 />
             ))}

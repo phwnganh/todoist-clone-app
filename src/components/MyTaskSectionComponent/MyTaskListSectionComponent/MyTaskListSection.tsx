@@ -14,7 +14,6 @@ import { useSectionStore } from "../../../stores/section.store.ts";
 import AddMyTaskSectionComponent from "../AddMyTaskSectionComponent";
 import EditMyTaskSectionComponent from "../EditMyTaskSectionComponent";
 import { useTaskStore } from "../../../stores/task.store.ts";
-import { type MouseEvent } from "react";
 import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import DragDropIcon from "../../icons/DragDropIcon.tsx";
 import {CSS} from '@dnd-kit/utilities'
@@ -38,8 +37,6 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
     addingTaskId,
     onOpenAddMyTask,
     onCloseAddMyTask,
-    openTaskDetailToolbar,
-    onOpenTaskDetailToolbar,
     onCloseTaskDetailToolbar,
   } = useTaskStore();
   const filteredTasks = useMemo(() => {
@@ -59,13 +56,6 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
     transition,
     transform: CSS.Transform.toString(transform),
   }
-  const handleOpenTaskDetailToolbar = (
-    id: string,
-    e: MouseEvent<HTMLButtonElement>,
-  ) => {
-    e.stopPropagation();
-    onOpenTaskDetailToolbar(id);
-  };
 
   if (isLoading) {
     return (
@@ -117,12 +107,6 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
                   <MyTaskListItem
                       taskNode={taskNode}
                       level={0}
-                      isOpenTaskDetailToolbar={
-                          openTaskDetailToolbar === taskNode.task.id
-                      }
-                      onOpenTaskDetailToolbar={(e) => {
-                        handleOpenTaskDetailToolbar(taskNode.task.id, e);
-                      }}
                       onCloseTaskDetailToolbar={onCloseTaskDetailToolbar}
                   />
                 </Fragment>
