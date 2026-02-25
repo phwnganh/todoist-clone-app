@@ -1,44 +1,44 @@
 import DescriptionIcon from "../../../../../assets/description-icon.svg";
-import type {Task} from "../../../../../types/task.type.ts";
-import {type ChangeEvent, type FormEvent, useState} from "react";
-import {useUpdateMyTask} from "../../../../../hooks/useQueryHook/useTasks.ts";
-import {updateMyTaskDetailHeader} from "../../../../../helpers/updateMyTaskField.ts";
+import type { Task } from "../../../../../types/task.type.ts";
+import { type ChangeEvent, type FormEvent, useState } from "react";
+import { useUpdateMyTask } from "../../../../../hooks/useQueryHook/useTasks.ts";
+import { updateMyTaskDetailHeader } from "../../../../../helpers/updateMyTaskField.ts";
 
 export type TaskDetailHeaderFormValues = {
-    content: string;
-    description: string;
-}
+  content: string;
+  description: string;
+};
 const MyTaskDetailHeaderForm = ({
   onCancelForm,
-    taskDetail
+  taskDetail,
 }: {
   onCancelForm: () => void;
-  taskDetail?: Task
+  taskDetail?: Task;
 }) => {
-    const [values, setValues] = useState<TaskDetailHeaderFormValues>({
-        content: taskDetail?.content ?? "",
-        description: taskDetail?.description ?? ""
-    })
-    const {mutate} = useUpdateMyTask()
+  const [values, setValues] = useState<TaskDetailHeaderFormValues>({
+    content: taskDetail?.content ?? "",
+    description: taskDetail?.description ?? "",
+  });
+  const { mutate } = useUpdateMyTask();
 
-    const handleUpdateTaskHeader = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if(!taskDetail) return;
-        mutate({
-            id: taskDetail.id,
-            content: values.content.trim(),
-            description: values.description.trim()
-        })
-        onCancelForm()
-    }
+  const handleUpdateTaskHeader = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!taskDetail) return;
+    mutate({
+      id: taskDetail.id,
+      content: values.content.trim(),
+      description: values.description.trim(),
+    });
+    onCancelForm();
+  };
 
-    const handleContentChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setValues(updateMyTaskDetailHeader(values, "content", e.target.value));
-    }
+  const handleContentChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValues(updateMyTaskDetailHeader(values, "content", e.target.value));
+  };
 
-    const handleDescriptionChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setValues(updateMyTaskDetailHeader(values, "description", e.target.value));
-    }
+  const handleDescriptionChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValues(updateMyTaskDetailHeader(values, "description", e.target.value));
+  };
   return (
     <form className={"w-full"} onSubmit={handleUpdateTaskHeader}>
       <div

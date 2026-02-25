@@ -5,9 +5,9 @@ import MyTaskDetailHeaderForm from "./MyTaskDetailHeaderForm.tsx";
 import MyTaskDetailHeaderTitle from "./MyTaskDetailHeaderTitle.tsx";
 import {
   PRIORITY_BORDER_CLASS_MAPPING,
-  PRIORITY_VERIFIED_CLASS_MAPPING
+  PRIORITY_VERIFIED_CLASS_MAPPING,
 } from "../../../../../constants/priority.constants";
-import {useCompleteTask} from "../../../../../hooks/useQueryHook/useTasks.ts";
+import { useCompleteTask } from "../../../../../hooks/useQueryHook/useTasks.ts";
 
 type MyTaskDetailHeaderMainSectionProps = {
   taskDetail?: Task;
@@ -15,12 +15,12 @@ type MyTaskDetailHeaderMainSectionProps = {
 const MyTaskDetailHeaderMainSection = ({
   taskDetail,
 }: MyTaskDetailHeaderMainSectionProps) => {
-  const {mutate} = useCompleteTask()
+  const { mutate } = useCompleteTask();
   const handleCompleteTask = (taskId: string) => {
     mutate({
       taskId: taskId,
-    })
-  }
+    });
+  };
   const [openMyTaskDetailForm, setOpenMyTaskDetailForm] = useState(false);
   const handleOpenMyTaskDetailForm = () => {
     setOpenMyTaskDetailForm(true);
@@ -28,7 +28,7 @@ const MyTaskDetailHeaderMainSection = ({
   const handleCloseMyTaskDetailForm = () => {
     setOpenMyTaskDetailForm(false);
   };
-  if(!taskDetail) return;
+  if (!taskDetail) return;
 
   return (
     <div className={"flex gap-1.5 items-start"}>
@@ -40,9 +40,7 @@ const MyTaskDetailHeaderMainSection = ({
         className={"mt-2 mr-1.5 -ml-0.75 relative group/check"}
       >
         <div
-          className={
-            `h-5 w-5 rounded-full border-2 ${PRIORITY_BORDER_CLASS_MAPPING[taskDetail?.priority as number]}`
-          }
+          className={`h-5 w-5 rounded-full border-2 ${PRIORITY_BORDER_CLASS_MAPPING[taskDetail?.priority as number]}`}
         ></div>
         <div
           className={
@@ -55,7 +53,10 @@ const MyTaskDetailHeaderMainSection = ({
         </div>
       </button>
       {openMyTaskDetailForm ? (
-        <MyTaskDetailHeaderForm onCancelForm={handleCloseMyTaskDetailForm} taskDetail={taskDetail} />
+        <MyTaskDetailHeaderForm
+          onCancelForm={handleCloseMyTaskDetailForm}
+          taskDetail={taskDetail}
+        />
       ) : (
         <MyTaskDetailHeaderTitle
           taskDetail={taskDetail}

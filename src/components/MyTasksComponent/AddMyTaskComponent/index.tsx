@@ -1,10 +1,10 @@
 import { type FormEvent, useState } from "react";
 import MyTaskForm, { type MyTaskFormValues } from "../MyTaskForm";
-import {priorityFilterData} from "../../../data/myTaskFilter.data.ts";
-import {useAddMyTask} from "../../../hooks/useQueryHook/useTasks.ts";
-import type {TaskPayload} from "../../../types/task.type.ts";
-import {useProjectStore} from "../../../stores/project.store.ts";
-import {useTaskStore} from "../../../stores/task.store.ts";
+import { priorityFilterData } from "../../../data/myTaskFilter.data.ts";
+import { useAddMyTask } from "../../../hooks/useQueryHook/useTasks.ts";
+import type { TaskPayload } from "../../../types/task.type.ts";
+import { useProjectStore } from "../../../stores/project.store.ts";
+import { useTaskStore } from "../../../stores/task.store.ts";
 
 type AddMyTaskModalDialogProps = {
   onCloseAddMyTask: () => void;
@@ -18,15 +18,15 @@ const AddMyTaskModalDialog = ({
     content: "",
     description: "",
     due: null,
-    priority: priorityFilterData.find(p => p.value === 1) ?? null,
+    priority: priorityFilterData.find((p) => p.value === 1) ?? null,
     project: null,
     section: null,
-    labels: []
+    labels: [],
   });
 
-  const {mutate, isPending, isError, error} = useAddMyTask()
-  const {projectId} = useProjectStore()
-  const {addingTaskId} = useTaskStore()
+  const { mutate, isPending, isError, error } = useAddMyTask();
+  const { projectId } = useProjectStore();
+  const { addingTaskId } = useTaskStore();
 
   const taskFormValuesPayload = (values: MyTaskFormValues): TaskPayload => {
     return {
@@ -37,16 +37,15 @@ const AddMyTaskModalDialog = ({
       section_id: values?.section?.id ?? addingTaskId ?? null,
       priority: values.priority?.value,
       labels: values.labels.map((label) => label.name),
-      due: values.due
-    }
-  }
-
+      due: values.due,
+    };
+  };
 
   const handleAddMyTask = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const payload = taskFormValuesPayload(values);
-    mutate(payload)
-    onCloseAddMyTask()
+    mutate(payload);
+    onCloseAddMyTask();
   };
   return (
     <MyTaskForm

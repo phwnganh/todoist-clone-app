@@ -2,9 +2,12 @@ import SmallPlusAddIcon from "../icons/SmallPlusAddIcon.tsx";
 
 type AddMyTaskSectionProps = {
   onOpenAddMyTask: () => void;
-  taskType?: string
+  taskType?: string;
 };
-const AddMyTaskButtonSection = ({ onOpenAddMyTask, taskType }: AddMyTaskSectionProps) => {
+const AddMyTaskButtonSection = ({
+  onOpenAddMyTask,
+  taskType,
+}: AddMyTaskSectionProps) => {
   return (
     <button
       type={"button"}
