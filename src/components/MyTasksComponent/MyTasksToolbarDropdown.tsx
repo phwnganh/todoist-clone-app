@@ -13,11 +13,17 @@ import NextWeekIcon from "../icons/NextWeekIcon.tsx";
 import NextWeekendIcon from "../icons/NextWeekendIcon.tsx";
 import PriorityIcon from "../icons/PriorityIcon.tsx";
 import MenuIcon from "../icons/MenuIcon.tsx";
-import type {Task} from "../../types/task.type.ts";
+import type {Due, Task} from "../../types/task.type.ts";
 import {useUpdateMyTask} from "../../hooks/useQueryHook/useTasks.ts";
+import {buildDue, getNextWeek, getNextWeekend, getToday, getTomorrow} from "../../helpers/formateDate.ts";
+import {isSameDay} from "date-fns";
 const MyTasksToolbarDropdown = ({ taskId, task }: { taskId: string; task: Task }) => {
   const { onOpenEditTask, onCloseTaskDetailToolbar, onOpenDeleteMyTask } = useTaskStore();
 
+  const today = getToday();
+  const tomorrow = getTomorrow()
+  const nextWeek = getNextWeek()
+  const nextWeekend = getNextWeekend()
   const {mutate} = useUpdateMyTask()
   const handleSelectPriority = (priority: number) => {
     mutate({
@@ -26,7 +32,17 @@ const MyTasksToolbarDropdown = ({ taskId, task }: { taskId: string; task: Task }
       priority: priority
     })
   }
+
+  const handleSelectDueDate = (due?: Due | null) => {
+    mutate({
+      id: taskId,
+      content: task.content,
+      due: due
+    })
+  }
   const currentPriority = task.priority;
+  const currentDue = task.due;
+  const currentDueDate = currentDue?.date
   const MY_TASKS_MENU_TOOLBAR: MyTaskMenuToolbar[] = [
     {
       type: "item",
@@ -59,10 +75,19 @@ const MyTasksToolbarDropdown = ({ taskId, task }: { taskId: string; task: Task }
     {
       type: "icon-row",
       items: [
-        {icon: <CalendarIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>},
-        {icon: <TomorrowIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>},
-        {icon: <NextWeekIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>},
-        {icon: <NextWeekendIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>},
+        {icon: <CalendarIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+          active: currentDueDate && isSameDay(new Date(currentDueDate), today),
+          onClick: () => handleSelectDueDate(buildDue(today))
+        },
+        {icon: <TomorrowIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+        active: currentDueDate && isSameDay(new Date(currentDueDate), tomorrow),
+          onClick: () => handleSelectDueDate(buildDue(tomorrow))},
+        {icon: <NextWeekIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+        active: currentDueDate && isSameDay(new Date(currentDueDate), nextWeek),
+          onClick: () => handleSelectDueDate(buildDue(nextWeek))},
+        {icon: <NextWeekendIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+        active: currentDueDate && isSameDay(new Date(currentDueDate), nextWeekend),
+          onClick: () => handleSelectDueDate(buildDue(nextWeekend))},
         {icon: <MenuIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>}
       ]
     },

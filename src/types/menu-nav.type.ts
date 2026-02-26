@@ -41,7 +41,7 @@ export type MyTaskMenuToolbar = | {type: "divider"} | {
     items: {
         icon: ReactNode;
         onClick?: () => void;
-        active?: boolean;
+        active?: boolean | "" | null;
         priority?: PriorityValue;
     }[]
 }
