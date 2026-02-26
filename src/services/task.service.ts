@@ -117,3 +117,7 @@ export const apiUnCompleteTask = async (taskId: string) => {
         }
     ])
 }
+
+export const apiSearchTaskDueDate = (query: string) => {
+    return api.get<TaskResponse>(`/tasks/filter?query=${query}`);
+}

@@ -5,7 +5,7 @@ import {
     apiCompleteTask,
     apiDeleteMyTask,
     apiGetAllTasks,
-    apiGetATask, apiMoveMyTask, apiReorderTask,
+    apiGetATask, apiMoveMyTask, apiReorderTask, apiSearchTaskDueDate,
     apiUpdateMyTask
 } from "../../services/task.service.ts";
 import type {
@@ -34,6 +34,14 @@ export const useGetATask = (taskId: string | null) => {
     return useQuery<Task>({
         queryKey: ['task-detail', taskId],
         queryFn: () => apiGetATask(taskId)
+    })
+}
+
+export const useSearchTaskDueDate = (query: string) => {
+    return useQuery<TaskResponse>({
+        queryKey: ['tasks', query],
+        queryFn: () => apiSearchTaskDueDate(query),
+        enabled: !!query
     })
 }
 

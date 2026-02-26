@@ -17,6 +17,10 @@ import {
 import type { Due } from "../../../../types/task.type.ts";
 import DatePicker from "../../../ui/DatePicker/DatePicker.tsx";
 import { parseISO } from "date-fns";
+import SearchResults from "./SearchResults.tsx";
+import {useMemo, useState} from "react";
+import {useDebounce} from "../../../../hooks/useDebounce.ts";
+import {dateSuggestions} from "../../../../helpers/dateSuggestions.ts";
 
 type MyTaskDateDropdownProps = {
   onSelectDate: (date: Due) => void;
@@ -56,6 +60,21 @@ const MyTaskDateDropdown = ({
       onClick: () => onSelectDate(buildDue(nextWeekend)),
     },
   ];
+
+  const [typedDueDate, setTypedDueDate] = useState<string>("")
+  const keyword = typedDueDate.trim().toLowerCase()
+  const debouncedSearchKeyword = useDebounce(keyword, 500)
+  const trimmedDueDateValue = typedDueDate.trim()
+  const hasKeyword = trimmedDueDateValue.length > 0
+  const filteredTaskDueDate = useMemo(() => {
+    if(!debouncedSearchKeyword) return []
+    return dateSuggestions(debouncedSearchKeyword)
+  }, [debouncedSearchKeyword])
+
+  const handleSelectDueDate = (date: Due) => {
+    onSelectDate(date)
+    setTypedDueDate("")
+  }
   return (
     <div
       id={"date-listbox"}
@@ -66,8 +85,15 @@ const MyTaskDateDropdown = ({
       }
     >
       <div className={"flex flex-col gap-xsmall"}>
-        <SearchDateInput currentDate={selectedDate} />
+        <SearchDateInput typedDueDate={typedDueDate} onTypedDueDate={setTypedDueDate}/>
         <hr className="border-t border-t-product-library-divider-tertiary" />
+        {hasKeyword && filteredTaskDueDate?.length > 0 && (
+            <>
+              <SearchResults results={filteredTaskDueDate} onSelectDueDate={handleSelectDueDate}/>
+              <hr className="border-t border-t-product-library-divider-tertiary" />
+            </>
+
+        )}
         {SUGGEST_TIME_MENU_TOOLBAR.map((item, index) => (
           <SuggestedTime key={index} item={item} />
         ))}
