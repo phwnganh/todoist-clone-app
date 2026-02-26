@@ -17,6 +17,7 @@ import type {Due, Task} from "../../types/task.type.ts";
 import {useUpdateMyTask} from "../../hooks/useQueryHook/useTasks.ts";
 import {buildDue, getNextWeek, getNextWeekend, getToday, getTomorrow} from "../../helpers/formateDate.ts";
 import {isSameDay} from "date-fns";
+import NoDateIcon from "../icons/NoDateIcon.tsx";
 const MyTasksToolbarDropdown = ({ taskId, task }: { taskId: string; task: Task }) => {
   const { onOpenEditTask, onCloseTaskDetailToolbar, onOpenDeleteMyTask } = useTaskStore();
 
@@ -40,6 +41,15 @@ const MyTasksToolbarDropdown = ({ taskId, task }: { taskId: string; task: Task }
       due: due
     })
   }
+
+  const handleRemoveDueDate = () => {
+    mutate({
+      id: taskId,
+      content: task.content,
+      due: null
+    })
+  }
+
   const currentPriority = task.priority;
   const currentDue = task.due;
   const currentDueDate = currentDue?.date
@@ -88,6 +98,10 @@ const MyTasksToolbarDropdown = ({ taskId, task }: { taskId: string; task: Task }
         {icon: <NextWeekendIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
         active: currentDueDate && isSameDay(new Date(currentDueDate), nextWeekend),
           onClick: () => handleSelectDueDate(buildDue(nextWeekend))},
+          ...(currentDue ? [{
+            icon: <NoDateIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+            onClick: handleRemoveDueDate
+          }]: []),
         {icon: <MenuIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>}
       ]
     },
