@@ -39,7 +39,7 @@ export const useCreateLabels = () => {
                 queryClient,
                 optimisticLabel: optimisticLabel
             })
-            return {...res, tempId}
+            return {...res, tempId, optimisticLabel}
         },
         onSuccess: (res, _, context) => {
             const realId = res.temp_id_mapping?.[context.tempId!]

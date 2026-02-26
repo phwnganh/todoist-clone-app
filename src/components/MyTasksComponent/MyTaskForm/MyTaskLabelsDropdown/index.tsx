@@ -6,9 +6,10 @@ import {
 import LoadingSpin from "../../../ui/LoadingSpin.tsx";
 import MyLabelListItem from "./MyLabelListItem.tsx";
 import AddNewLabelButton from "./AddNewLabelButton.tsx";
-import type { Label } from "../../../../types/label.type.ts";
+import type {Label, LabelsResponse} from "../../../../types/label.type.ts";
 import { shouldShowLabel } from "../../../../helpers/handleCommasTag.ts";
 import { useDebounce } from "../../../../hooks/useDebounce.ts";
+import {queryClient} from "../../../../main.tsx";
 
 type MyTaskLabelsDropdownProps = {
   selectedLabels: Label[];
@@ -37,8 +38,18 @@ const MyTaskLabelsDropdown = ({
   const handleCreateLabel = () => {
     mutate({
       name: keyword
+    }, {
+      onSuccess: (_, __, context) => {
+        if(!context?.tempId) return;
+        const labels = queryClient.getQueryData<LabelsResponse>(["labels"])
+        const newLabel = labels?.results.find(label => label.id === context.tempId)
+        if(newLabel){
+          onSelect(newLabel);
+        }
+        onCloseLabelsDropdown()
+      }
     })
-    onCloseLabelsDropdown()
+
   }
   if (isLoading || isSearching) {
     return <LoadingSpin />;
