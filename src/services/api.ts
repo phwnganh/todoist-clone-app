@@ -1,5 +1,5 @@
 import {useAuthStore} from "../stores/auth.store.ts";
-import {BASE_URL, BASE_URL_SYNC} from "../constants/api.constants.ts";
+import {BASE_URL, BASE_URL_SYNC, VIEW_OPTIONS_BASE_URL_SYNC} from "../constants/api.constants.ts";
 import type {ApiError, ApiOptions, SyncCommand, SyncPayload} from "../types/api.type.ts";
 
 async function handleError(res: Response): Promise<ApiError>{
@@ -103,6 +103,36 @@ async function syncRequest<TResponse, TArgs>(commands: SyncCommand<TArgs>[]): Pr
     }
     return res.json();
 }
+
+async function syncViewOptionsRequest<TResponse, TArgs>(commands: SyncCommand<TArgs>[]): Promise<TResponse>{
+    const token = useAuthStore.getState().token;
+    if(!token){
+        throw {
+            status: 401,
+            code: "UNAUTHORIZED",
+            message: "Invalid or missing token",
+        } satisfies ApiError
+    }
+
+    const body: SyncPayload<TArgs> = {
+        sync_token: "*",
+        commands
+    }
+
+    const res = await fetch(VIEW_OPTIONS_BASE_URL_SYNC, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+    })
+
+    if(!res.ok){
+        throw await handleError(res)
+    }
+    return res.json()
+}
 export const api = {
     get<T>(endpoint: string){
         return request<T>(endpoint)
@@ -110,10 +140,13 @@ export const api = {
     delete<T>(endpoint: string){
         return request<T>(endpoint, {
             method: "DELETE",
-
         })
     },
     sync<TResponse, TArgs>(commands: SyncCommand<TArgs>[]){
         return syncRequest<TResponse, TArgs>(commands)
+    },
+    viewOptionsSync<TResponse, TArgs>(commands: SyncCommand<TArgs>[]){
+        return syncViewOptionsRequest<TResponse, TArgs>(commands)
     }
 }
+

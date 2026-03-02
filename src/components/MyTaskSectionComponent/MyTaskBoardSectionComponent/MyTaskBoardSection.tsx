@@ -1,4 +1,3 @@
-import { useGetAllTasks } from "../../../hooks/useQueryHook/useTasks.ts";
 import { useProjectStore } from "../../../stores/project.store.ts";
 import { useSectionStore } from "../../../stores/section.store.ts";
 import { useTaskStore } from "../../../stores/task.store.ts";
@@ -13,12 +12,13 @@ import AddMyTaskButtonSection from "../../MyTasksComponent/AddMyTaskButtonSectio
 import {SortableContext, useSortable} from "@dnd-kit/sortable";
 import DragDropIcon from "../../icons/DragDropIcon.tsx";
 import {CSS} from "@dnd-kit/utilities";
+import {useTasksWithView} from "../../../hooks/useQueryHook/useViewOptions.ts";
 type MyTaskBoardSectionProps = {
   section: Section;
 };
 const MyTaskBoardSection = ({ section }: MyTaskBoardSectionProps) => {
   const projectId = useProjectStore((state) => state.projectId);
-  const { data: tasks, isLoading } = useGetAllTasks({project_id: projectId});
+  const { data: tasks, isLoading } = useTasksWithView({project_id: projectId}, "PROJECT", projectId)
   const { editingSectionId, onOpenEditSection, onCloseEditSection } =
     useSectionStore();
   const {

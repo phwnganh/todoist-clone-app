@@ -13,7 +13,7 @@ export type OpenMyTaskFormDropdown = "date" | "priority" | "reminders" | "projec
 
 export type OpenMyTaskDetailAsideDropdown = "project" | "date" | "priority" | "labels" | null;
 
-export type OpenMyTaskFilterDropdown = "grouping" | "sorting" | "date" | "priority" | null;
+export type OpenMyTaskFilterDropdown = "grouping" | "sorting" | "direction" | "date" | "priority" | null;
 export type LayoutItem = {
     key: string;
     label: string;

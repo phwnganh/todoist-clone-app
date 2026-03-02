@@ -9,6 +9,12 @@ import MyTaskFilterGroupingDropdown from "./MyTaskFilterGroupingDropdown.tsx";
 import MyTaskFilterSortingDropdown from "./MyTaskFilterSortingDropdown.tsx";
 import MyTaskFilterDateDropdown from "./MyTaskFilterDateDropdown.tsx";
 import MyTaskFilterPriorityDropdown from "./MyTaskFilterPriorityDropdown.tsx";
+import {useViewOptions} from "../../../hooks/useQueryHook/useViewOptions.ts";
+import type {GroupedBy, SortedBy, SortOrder, ViewOptionsPayload} from "../../../types/viewOptions.type.ts";
+import {useProjectStore} from "../../../stores/project.store.ts";
+import {useQueryClient} from "@tanstack/react-query";
+import {directionFilterData, groupingFilterData, sortingFilterData} from "../../../data/myTaskFilter.data.ts";
+import MyTaskFilterDirectionDropdown from "./MyTaskFilterDirectionDropdown.tsx";
 
 type MyTaskLayoutFiltersDropdownProps = {
   onSelectLayout: (layoutName: string) => void;
@@ -22,36 +28,93 @@ const MyTaskLayoutFiltersDropdown = ({
     useState<OpenMyTaskFilterDropdown>(null);
   const groupRef = useRef<HTMLDivElement | null>(null);
   const sortRef = useRef<HTMLDivElement | null>(null);
+  const directionRef = useRef<HTMLDivElement | null>(null)
   const dateRef = useRef<HTMLDivElement | null>(null);
   const priorityRef = useRef<HTMLDivElement | null>(null);
   const dummyRef = useRef<HTMLDivElement | null>(null);
+  const {projectId} = useProjectStore()
+const {mutate} = useViewOptions()
+  const queryClient = useQueryClient()
+  const viewOptions = queryClient.getQueryData<ViewOptionsPayload>([
+      'viewOptions',
+      'PROJECT',
+      projectId
+  ])
 
+  const selectedGroupingLabel = groupingFilterData.find(g => g.key === viewOptions?.grouped_by)?.label ?? "None"
+  const selectedSortingLabel = sortingFilterData.find(s => s.key === viewOptions?.sorted_by)?.label ?? "Manual"
+  const selectedDirectionLabel = directionFilterData.find(d => d.key === viewOptions?.sort_order)?.label ?? "Ascending"
+  const handleUpdateViewOption = (payload: Partial<ViewOptionsPayload>) => {
+    mutate({
+      view_type: "PROJECT",
+      object_id: projectId,
+      ...payload
+    })
+  }
   const handleToggleDropdown = (openDropdown: OpenMyTaskFilterDropdown) => {
     setOpenDropdown((prev) => (prev === openDropdown ? null : openDropdown));
   };
 
-  const handleSelectGrouping = () => {
+  const handleSelectGrouping = (group?: GroupedBy | null) => {
+    handleUpdateViewOption({
+      grouped_by: group ?? null
+    })
     setOpenDropdown(null);
   };
 
-  const handleSelectSorting = () => {
+  const handleSelectSorting = (sort?: SortedBy | null, order: SortOrder = "ASC") => {
+    if(!sort){
+      handleUpdateViewOption({
+        sorted_by: null,
+        sort_order: null
+      })
+    }else{
+      handleUpdateViewOption({
+        sorted_by: sort ?? null,
+        sort_order: order ?? "ASC"
+      })
+    }
     setOpenDropdown(null);
   };
+
+  const handleSelectDirection = (direction?: SortOrder) => {
+    handleUpdateViewOption({
+      sort_order: direction
+    })
+    setOpenDropdown(null);
+  }
+
+  const handleToggleCompleted = (checked: boolean) => {
+    handleUpdateViewOption({
+      show_completed_tasks: checked
+    })
+  }
 
   const handleSelectDate = () => {
+
     setOpenDropdown(null);
   };
 
-  const handleSelectPriority = () => {
+  const handleSelectPriority = (priority?: string) => {
+    handleUpdateViewOption({
+      filtered_by: priority
+    })
     setOpenDropdown(null);
   };
+
+  const handleSelectLabel = (label?: string) => {
+    handleUpdateViewOption({
+      filtered_by: `@${label}`
+    })
+    setOpenDropdown(null);
+  }
 
   useClickOutside({
     ref:
       openDropdown === "grouping"
         ? groupRef
         : openDropdown === "sorting"
-          ? sortRef
+          ? sortRef : openDropdown === "direction" ? directionRef
           : openDropdown === "date"
             ? dateRef
             : openDropdown === "priority"
@@ -107,7 +170,7 @@ const MyTaskLayoutFiltersDropdown = ({
 
           <div className={"pr-1 pl-1.5 flex justify-between items-center"}>
             <p className={"text-sm"}>Completed tasks</p>
-            <CustomSwitch />
+            <CustomSwitch onChange={(e) => handleToggleCompleted(e.target.checked)}/>
           </div>
         </div>
         <hr className="border-t border-t-product-library-divider-tertiary overflow-hidden" />
@@ -131,13 +194,13 @@ const MyTaskLayoutFiltersDropdown = ({
                   "cursor-pointer max-w-40 h-7 rounded-small border border-product-library-border-idle-tint pl-2.5 flex items-center justify-between hover:border-product-library-border-focus-tint w-full"
                 }
               >
-                <p className={"text-sm"}>None</p>
+                <p className={"text-sm"}>{selectedGroupingLabel}</p>
                 <div className={"flex justify-center items-center w-7 h-7"}>
                   <TaskSmallArrowDownIcon />
                 </div>
               </div>
             </button>
-            {openDropdown === "grouping" && <MyTaskFilterGroupingDropdown />}
+            {openDropdown === "grouping" && <MyTaskFilterGroupingDropdown selectedGrouping={viewOptions?.grouped_by ?? null} onSelectGrouping={handleSelectGrouping}/>}
           </div>
           <div className={"relative"} ref={sortRef}>
             <button
@@ -152,14 +215,33 @@ const MyTaskLayoutFiltersDropdown = ({
                   "cursor-pointer max-w-40 h-7 rounded-small border border-product-library-border-idle-tint pl-2.5 flex items-center justify-between hover:border-product-library-border-focus-tint w-full"
                 }
               >
-                <p className={"text-sm"}>Manual</p>
+                <p className={"text-sm"}>{selectedSortingLabel}</p>
                 <div className={"flex justify-center items-center w-7 h-7"}>
                   <TaskSmallArrowDownIcon />
                 </div>
               </div>
             </button>
-            {openDropdown === "sorting" && <MyTaskFilterSortingDropdown />}
+            {openDropdown === "sorting" && <MyTaskFilterSortingDropdown selectedSorting={viewOptions?.sorted_by} onSelectSorting={handleSelectSorting}/>}
           </div>
+
+          {viewOptions?.sorted_by &&
+              <div className={"relative"} ref={directionRef}>
+                <button className={"py-0.5 px-1 flex items-center justify-between gap-small w-full"} onClick={() => handleToggleDropdown("direction")}>
+                  <p className={"text-sm"}>Direction</p>
+                  <div
+                      className={
+                        "cursor-pointer max-w-40 h-7 rounded-small border border-product-library-border-idle-tint pl-2.5 flex items-center justify-between hover:border-product-library-border-focus-tint w-full"
+                      }
+                  >
+                    <p className={"text-sm"}>{selectedDirectionLabel}</p>
+                    <div className={"flex justify-center items-center w-7 h-7"}>
+                      <TaskSmallArrowDownIcon />
+                    </div>
+                  </div>
+                </button>
+                {openDropdown === "direction" && <MyTaskFilterDirectionDropdown selectedDirection={viewOptions?.sort_order} onSelectDirection={handleSelectDirection}/>}
+              </div>
+          }
 
           <div className={"px-1.5 flex items-center justify-between"}>
             <p className={"text-sm font-medium"}>Filter</p>

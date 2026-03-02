@@ -13,6 +13,7 @@ export type Task = {
     content: string,
     description: string,
     completed_at?: string,
+    added_at?: string
 }
 
 export type Deadline = {

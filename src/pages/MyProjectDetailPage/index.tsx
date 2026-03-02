@@ -14,12 +14,13 @@ import MyTasksBoard from "../../components/MyTasksComponent/MyTasksBoard";
 import {useProjectStore} from "../../stores/project.store.ts";
 import {useGetAllSections, useReorderSection} from "../../hooks/useQueryHook/useSections.ts";
 import {DndContext, type DragEndEvent, type DragOverEvent} from "@dnd-kit/core";
-import {useGetAllTasks, useMoveMyTask, useReorderTask} from "../../hooks/useQueryHook/useTasks.ts";
+import {useMoveMyTask, useReorderTask} from "../../hooks/useQueryHook/useTasks.ts";
 import {findTaskByIdToOrder, handleReorderTask} from "../../helpers/dragDropMyTasks.ts";
 import HeaderThreeDotsIcon from "../../components/icons/HeaderThreeDotsIcon.tsx";
 import {findSectionByIdToOrder, handleReorderSection} from "../../helpers/dragDropMySection.ts";
 import {customCollisionDetection} from "../../helpers/customCollisionDetection.ts";
 import {useDragStore} from "../../stores/dragDrop.store.ts";
+import {useTasksWithView} from "../../hooks/useQueryHook/useViewOptions.ts";
 
 const MyProjectDetailPage = () => {
     const {projectId} = useParams<{projectId: string}>();
@@ -31,7 +32,7 @@ const MyProjectDetailPage = () => {
         }
     }, [projectId, setProjectId]);
     const {data: sections} = useGetAllSections({project_id: projectId});
-    const {data: allTasks} = useGetAllTasks({project_id: projectId});
+    const {data: allTasks} = useTasksWithView({project_id: projectId}, "PROJECT", projectId);
     const {mutateAsync: movingTaskMutate} = useMoveMyTask()
     const {mutateAsync: reorderingTaskMutate} = useReorderTask()
     const {mutate: reorderingSectionMutate} = useReorderSection()

@@ -3,6 +3,7 @@ import type { Project, ProjectResponse } from "../types/project.type.ts";
 import type {ReorderTaskPayload, Task, TaskResponse} from "../types/task.type.ts";
 import type {ReorderSectionPayload, Section, SectionResponse} from "../types/section.type.ts";
 import type {Label, LabelsResponse} from "../types/label.type.ts";
+import type {ViewOptionsPayload} from "../types/viewOptions.type.ts";
 
 export type OptimisticUpdatesProjectContext = {
   previousData?: ProjectResponse;
@@ -237,14 +238,6 @@ export async function optimisticReorderSection({queryClient, payload}: {
   return {previousData}
 }
 
-export function rollbackOptimisticProjectUpdates({
-    queryClient,
-    context}: {queryClient: QueryClient; context?: OptimisticUpdatesProjectContext}){
-      if(context?.previousData){
-        queryClient.setQueryData(['projects'], context.previousData)
-      }
-}
-
 export async function optimisticCreateLabel({queryClient, optimisticLabel}: {queryClient: QueryClient, optimisticLabel: Label}): Promise<OptimisticUpdatesContext>{
   await queryClient.cancelQueries({queryKey: ['labels']})
   const previousData = queryClient.getQueriesData<LabelsResponse>({queryKey: ['labels']});
@@ -258,6 +251,31 @@ export async function optimisticCreateLabel({queryClient, optimisticLabel}: {que
   })
   return { previousData };
 }
+
+export async function optimisticViewOptions({queryClient, optimisticViewOptions}: {queryClient: QueryClient, optimisticViewOptions: ViewOptionsPayload}): Promise<OptimisticUpdatesContext>{
+  const key: QueryKey = [
+      'viewOptions', optimisticViewOptions.view_type, optimisticViewOptions.object_id
+  ]
+  await queryClient.cancelQueries({queryKey: key});
+  const previousData = queryClient.getQueryData<ViewOptionsPayload>(key);
+  queryClient.setQueryData(key, (old) => {
+    if(!old) return optimisticViewOptions;
+    return {
+      ...old,
+      ...optimisticViewOptions
+    }
+  })
+  return { previousData: previousData ? [[key, previousData]] : [] };
+}
+
+export function rollbackOptimisticProjectUpdates({
+    queryClient,
+    context}: {queryClient: QueryClient; context?: OptimisticUpdatesProjectContext}){
+      if(context?.previousData){
+        queryClient.setQueryData(['projects'], context.previousData)
+      }
+}
+
 export function rollbackOptimisticUpdates({
   queryClient,
   context,

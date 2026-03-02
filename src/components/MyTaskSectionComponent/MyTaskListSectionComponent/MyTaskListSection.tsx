@@ -1,4 +1,3 @@
-import { useGetAllTasks } from "../../../hooks/useQueryHook/useTasks.ts";
 import { Fragment, useMemo } from "react";
 import MyTaskListItem from "../../MyTasksComponent/MyTaskListItem.tsx";
 import AddMyTaskModalDialog from "../../MyTasksComponent/AddMyTaskComponent";
@@ -17,12 +16,13 @@ import { useTaskStore } from "../../../stores/task.store.ts";
 import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import DragDropIcon from "../../icons/DragDropIcon.tsx";
 import {CSS} from '@dnd-kit/utilities'
+import {useTasksWithView} from "../../../hooks/useQueryHook/useViewOptions.ts";
 type MyTaskSectionProps = {
   section: Section;
 };
 const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
   const projectId = useProjectStore((state) => state.projectId);
-  const { data: tasks, isLoading } = useGetAllTasks({project_id: projectId});
+  const { data: tasks, isLoading } = useTasksWithView({project_id: projectId}, "PROJECT", projectId)
   const { isExpanded, handleExpanded } = useExpanded(true);
   const taskTree = useTaskTreeMultiLevel(tasks?.results, section.id);
   const {

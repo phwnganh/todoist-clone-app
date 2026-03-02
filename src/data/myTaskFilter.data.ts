@@ -1,56 +1,82 @@
 import type {Priority} from "../types/task.type.ts";
+import type {GroupedBy, SortedBy, SortOrder} from "../types/viewOptions.type.ts";
 
-export const groupingFilterData = [
+type GroupingOption = {
+    key?: GroupedBy | null;
+    label: string;
+}
+
+type SortingOption = {
+    key?: SortedBy | null;
+    label: string;
+}
+
+type DirectionOption = {
+    key?: SortOrder;
+    label: string;
+}
+export const groupingFilterData: GroupingOption[] = [
     {
-        key: "none",
+        key: null,
         label: "None"
     },
     {
-        key: "date",
+        key: "DUE_DATE",
         label: "Date"
     },
     {
-        key: "date-added",
+        key: "ADDED_DATE",
         label: "Date added"
     },
     {
-        key: "deadline",
+        key: "DEADLINE",
         label: "Deadline"
     },
     {
-        key: "priority",
+        key: "PRIORITY",
         label: "Priority"
     },
     {
-        key: "label",
+        key: "LABEL",
         label: "Label"
     }
 ]
 
-export const sortingFilterData = [
+export const sortingFilterData: SortingOption[] = [
     {
-        key: "manual",
+        key: null,
         label: "Manual"
     },
     {
-        key: "name",
+        key: "ALPHABETICALLY",
         label: "Name"
     },
     {
-        key: "date",
+        key: "DUE_DATE",
         label: "Date"
     },
     {
-        key: "date-added",
+        key: "ADDED_DATE",
         label: "Date added"
     },
     {
-        key: "deadline",
+        key: "DEADLINE",
         label: "Deadline"
     },
     {
-        key: "priority",
+        key: "PRIORITY",
         label: "Priority"
+    }
+]
+
+export const directionFilterData: DirectionOption[] = [
+    {
+        key: "ASC",
+        label: "Ascending"
+    },
+    {
+        key: "DESC",
+        label: "Descending"
     }
 ]
 
