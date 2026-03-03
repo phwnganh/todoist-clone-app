@@ -18,6 +18,7 @@ import MyTaskFilterDirectionDropdown from "./MyTaskFilterDirectionDropdown.tsx";
 import MyTaskFilterLabelDropdown from "./MyTaskFilterLabelDropdown";
 import type {Label} from "../../../types/label.type.ts";
 import {buildFilterQuery, parseFilterQuery} from "../../../helpers/groupSortTasks.ts";
+import {extractLabelsFromList} from "../../../helpers/extractCriteriaFromFiltereds.ts";
 
 type MyTaskLayoutFiltersDropdownProps = {
   onSelectLayout: (layoutName: string) => void;
@@ -51,26 +52,14 @@ const {mutate} = useViewOptions()
 
   const parsedCriteria = parseFilterQuery(viewOptions?.filtered_by)
 
-  const extractLabelsFromList = (criteria: string[]) => {
-    const labels: string[] = []
-    criteria.forEach(c => {
-      // at least 1 label
-      if(c.startsWith("(") && c.endsWith(")")){
-        c.slice(1, -1).split("|").map(l => l.trim()).forEach(l => {
-          if(l.startsWith("@")){
-            labels.push(l)
-          }
-        })
-      }
-      // single label
-      else if(c.startsWith("@")){
-        labels.push(c)
-      }
-    })
-    return labels;
-  }
 
   const selectedLabelName = extractLabelsFromList(parsedCriteria).map(l => l.replace("@", ""))
+  const getSelectedLabelToDisplay = (labels: string[]) => {
+    if(labels.length === 0) return "All"
+    if(labels.length === 1) return labels[0]
+    return `${labels[0]} +${labels.length - 1} more`
+  }
+  const displayLabels = getSelectedLabelToDisplay(selectedLabelName)
 
   const handleUpdateViewOption = (payload: Partial<ViewOptionsPayload>) => {
     mutate({
@@ -368,7 +357,7 @@ const {mutate} = useViewOptions()
                     "cursor-pointer max-w-40 h-7 rounded-small border border-product-library-border-idle-tint pl-2.5 flex items-center justify-between hover:border-product-library-border-focus-tint w-full"
                   }
               >
-                <p className={"text-sm"}>All</p>
+                <p className={"text-sm"}>{displayLabels}</p>
                 <div className={"flex justify-center items-center w-7 h-7"}>
                   <TaskSmallArrowDownIcon />
                 </div>
