@@ -1,12 +1,18 @@
 import { sortingFilterData } from "../../../data/myTaskFilter.data.ts";
 import VerifiedIcon from "../../../assets/verified-icon.svg";
-import type {SortedBy, SortOrder} from "../../../types/viewOptions.type.ts";
+import type { SortedBy, SortOrder } from "../../../types/viewOptions.type.ts";
 
 type MyTaskFilterSortingDropdownProps = {
-    selectedSorting?: SortedBy | null
-    onSelectSorting: (selectedSorting?: SortedBy | null, sortOrder?: SortOrder) => void
-}
-const MyTaskFilterSortingDropdown = ({selectedSorting, onSelectSorting}: MyTaskFilterSortingDropdownProps) => {
+  selectedSorting?: SortedBy | null;
+  onSelectSorting: (
+    selectedSorting?: SortedBy | null,
+    sortOrder?: SortOrder,
+  ) => void;
+};
+const MyTaskFilterSortingDropdown = ({
+  selectedSorting,
+  onSelectSorting,
+}: MyTaskFilterSortingDropdownProps) => {
   return (
     <div
       id={"sorting-listbox"}
@@ -17,7 +23,7 @@ const MyTaskFilterSortingDropdown = ({selectedSorting, onSelectSorting}: MyTaskF
       }
     >
       {sortingFilterData.map((sorting, index) => {
-          const isSelected = sorting.key === selectedSorting;
+        const isSelected = sorting.key === selectedSorting;
         return (
           <div
             key={index}
@@ -30,12 +36,13 @@ const MyTaskFilterSortingDropdown = ({selectedSorting, onSelectSorting}: MyTaskF
           >
             <div className="flex items-center gap-1.5">
               <span className="flex items-center gap-small">
-                  {isSelected ?
-                      <div className="w-4 h-4 flex justify-center items-center shrink-0">
-                          <img src={VerifiedIcon} alt={"verified-icon"} />
-                      </div> :
-                      <div className="w-4 h-4 flex justify-center items-center shrink-0"></div>
-                  }
+                {isSelected ? (
+                  <div className="w-4 h-4 flex justify-center items-center shrink-0">
+                    <img src={VerifiedIcon} alt={"verified-icon"} />
+                  </div>
+                ) : (
+                  <div className="w-4 h-4 flex justify-center items-center shrink-0"></div>
+                )}
                 <div className="flex gap-1.5 overflow-hidden">
                   <div className="text-sm">{sorting.label}</div>
                 </div>

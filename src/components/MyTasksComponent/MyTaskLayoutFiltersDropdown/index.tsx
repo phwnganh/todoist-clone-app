@@ -9,17 +9,32 @@ import MyTaskFilterGroupingDropdown from "./MyTaskFilterGroupingDropdown.tsx";
 import MyTaskFilterSortingDropdown from "./MyTaskFilterSortingDropdown.tsx";
 import MyTaskFilterDateDropdown from "./MyTaskFilterDateDropdown.tsx";
 import MyTaskFilterPriorityDropdown from "./MyTaskFilterPriorityDropdown.tsx";
-import {useViewOptions} from "../../../hooks/useQueryHook/useViewOptions.ts";
-import type {GroupedBy, SortedBy, SortOrder, ViewOptionsPayload} from "../../../types/viewOptions.type.ts";
-import {useProjectStore} from "../../../stores/project.store.ts";
-import {useQueryClient} from "@tanstack/react-query";
-import {directionFilterData, groupingFilterData, sortingFilterData} from "../../../data/myTaskFilter.data.ts";
+import { useViewOptions } from "../../../hooks/useQueryHook/useViewOptions.ts";
+import type {
+  GroupedBy,
+  SortedBy,
+  SortOrder,
+  ViewOptionsPayload,
+} from "../../../types/viewOptions.type.ts";
+import { useProjectStore } from "../../../stores/project.store.ts";
+import { useQueryClient } from "@tanstack/react-query";
+import {
+  directionFilterData,
+  groupingFilterData,
+  sortingFilterData,
+} from "../../../data/myTaskFilter.data.ts";
 import MyTaskFilterDirectionDropdown from "./MyTaskFilterDirectionDropdown.tsx";
 import MyTaskFilterLabelDropdown from "./MyTaskFilterLabelDropdown";
-import type {Label} from "../../../types/label.type.ts";
-import {buildFilterQuery, parseFilterQuery} from "../../../helpers/groupSortTasks.ts";
-import {extractLabelsFromList, extractPrioritiesFromList} from "../../../helpers/extractCriteriaFromFiltereds.ts";
-import type {Priority} from "../../../types/task.type.ts";
+import type { Label } from "../../../types/label.type.ts";
+import {
+  buildFilterQuery,
+  parseFilterQuery,
+} from "../../../helpers/groupSortTasks.ts";
+import {
+  extractLabelsFromList,
+  extractPrioritiesFromList,
+} from "../../../helpers/extractCriteriaFromFiltereds.ts";
+import type { Priority } from "../../../types/task.type.ts";
 
 type MyTaskLayoutFiltersDropdownProps = {
   onSelectLayout: (layoutName: string) => void;
@@ -33,159 +48,177 @@ const MyTaskLayoutFiltersDropdown = ({
     useState<OpenMyTaskFilterDropdown>(null);
   const groupRef = useRef<HTMLDivElement | null>(null);
   const sortRef = useRef<HTMLDivElement | null>(null);
-  const directionRef = useRef<HTMLDivElement | null>(null)
+  const directionRef = useRef<HTMLDivElement | null>(null);
   const dateRef = useRef<HTMLDivElement | null>(null);
   const priorityRef = useRef<HTMLDivElement | null>(null);
   const labelRef = useRef<HTMLDivElement | null>(null);
   const dummyRef = useRef<HTMLDivElement | null>(null);
-  const {projectId} = useProjectStore()
-const {mutate} = useViewOptions()
-  const queryClient = useQueryClient()
+  const { projectId } = useProjectStore();
+  const { mutate } = useViewOptions();
+  const queryClient = useQueryClient();
   const viewOptions = queryClient.getQueryData<ViewOptionsPayload>([
-      'viewOptions',
-      'PROJECT',
-      projectId
-  ])
+    "viewOptions",
+    "PROJECT",
+    projectId,
+  ]);
 
-  const selectedGroupingLabel = groupingFilterData.find(g => g.key === viewOptions?.grouped_by)?.label ?? "None"
-  const selectedSortingLabel = sortingFilterData.find(s => s.key === viewOptions?.sorted_by)?.label ?? "Manual"
-  const selectedDirectionLabel = directionFilterData.find(d => d.key === viewOptions?.sort_order)?.label ?? "Ascending"
+  const selectedGroupingLabel =
+    groupingFilterData.find((g) => g.key === viewOptions?.grouped_by)?.label ??
+    "None";
+  const selectedSortingLabel =
+    sortingFilterData.find((s) => s.key === viewOptions?.sorted_by)?.label ??
+    "Manual";
+  const selectedDirectionLabel =
+    directionFilterData.find((d) => d.key === viewOptions?.sort_order)?.label ??
+    "Ascending";
 
-  const parsedCriteria = parseFilterQuery(viewOptions?.filtered_by)
+  const parsedCriteria = parseFilterQuery(viewOptions?.filtered_by);
 
-
-  const selectedLabelName = extractLabelsFromList(parsedCriteria).map(l => l.replace("@", ""))
-  const selectedPriority = extractPrioritiesFromList(parsedCriteria)
+  const selectedLabelName = extractLabelsFromList(parsedCriteria).map((l) =>
+    l.replace("@", ""),
+  );
+  const selectedPriority = extractPrioritiesFromList(parsedCriteria);
   const getSelectedLabelToDisplay = (labels: string[]) => {
-    if(labels.length === 0) return "All"
-    if(labels.length === 1) return labels[0]
-    return `${labels[0]} +${labels.length - 1} more`
-  }
-  const displayLabels = getSelectedLabelToDisplay(selectedLabelName)
+    if (labels.length === 0) return "All";
+    if (labels.length === 1) return labels[0];
+    return `${labels[0]} +${labels.length - 1} more`;
+  };
+  const displayLabels = getSelectedLabelToDisplay(selectedLabelName);
 
   const handleUpdateViewOption = (payload: Partial<ViewOptionsPayload>) => {
     mutate({
       view_type: "PROJECT",
       object_id: projectId,
-      ...payload
-    })
-  }
+      ...payload,
+    });
+  };
   const handleToggleDropdown = (openDropdown: OpenMyTaskFilterDropdown) => {
     setOpenDropdown((prev) => (prev === openDropdown ? null : openDropdown));
   };
 
   const handleSelectGrouping = (group?: GroupedBy | null) => {
     handleUpdateViewOption({
-      grouped_by: group ?? null
-    })
+      grouped_by: group ?? null,
+    });
     setOpenDropdown(null);
   };
 
-  const handleSelectSorting = (sort?: SortedBy | null, order: SortOrder = "ASC") => {
-    if(!sort){
+  const handleSelectSorting = (
+    sort?: SortedBy | null,
+    order: SortOrder = "ASC",
+  ) => {
+    if (!sort) {
       handleUpdateViewOption({
         sorted_by: null,
-        sort_order: null
-      })
-    }else{
+        sort_order: null,
+      });
+    } else {
       handleUpdateViewOption({
         sorted_by: sort ?? null,
-        sort_order: order ?? "ASC"
-      })
+        sort_order: order ?? "ASC",
+      });
     }
     setOpenDropdown(null);
   };
 
   const handleSelectDirection = (direction?: SortOrder) => {
     handleUpdateViewOption({
-      sort_order: direction
-    })
+      sort_order: direction,
+    });
     setOpenDropdown(null);
-  }
+  };
 
   const handleToggleCompleted = (checked: boolean) => {
     handleUpdateViewOption({
-      show_completed_tasks: checked
-    })
-  }
+      show_completed_tasks: checked,
+    });
+  };
 
   const handleSelectDate = () => {
-
     setOpenDropdown(null);
   };
 
   const handleSelectPriority = (priority?: Priority) => {
-    if(!priority) return;
-    const labelKey = priority.key
-    const criteria = parseFilterQuery(viewOptions?.filtered_by)
-    const currentPriorities = extractPrioritiesFromList(criteria)
-    const updatePriorities = currentPriorities.includes(labelKey) ? currentPriorities.filter(p => p !== labelKey) : [...currentPriorities, labelKey]
+    if (!priority) return;
+    const labelKey = priority.key;
+    const criteria = parseFilterQuery(viewOptions?.filtered_by);
+    const currentPriorities = extractPrioritiesFromList(criteria);
+    const updatePriorities = currentPriorities.includes(labelKey)
+      ? currentPriorities.filter((p) => p !== labelKey)
+      : [...currentPriorities, labelKey];
 
-    const nonPriorityCriteria = criteria.filter(p => {
-      if(/^p[1-4]$/.test(p)) return false;
-      else if(p.startsWith("(") && /p[1-4]/.test(p)) return false;
+    const nonPriorityCriteria = criteria.filter((p) => {
+      if (/^p[1-4]$/.test(p)) return false;
+      else if (p.startsWith("(") && /p[1-4]/.test(p)) return false;
 
       return true;
-    })
+    });
 
-    const finalCriteria = [...nonPriorityCriteria]
+    const finalCriteria = [...nonPriorityCriteria];
 
-    if(updatePriorities.length === 1){
-      finalCriteria.push(updatePriorities[0])
+    if (updatePriorities.length === 1) {
+      finalCriteria.push(updatePriorities[0]);
     }
 
-    if(updatePriorities.length > 1){
-      finalCriteria.push(`(${updatePriorities.join(" | ")})`)
+    if (updatePriorities.length > 1) {
+      finalCriteria.push(`(${updatePriorities.join(" | ")})`);
     }
 
     handleUpdateViewOption({
-      filtered_by: buildFilterQuery(finalCriteria)
-    })
+      filtered_by: buildFilterQuery(finalCriteria),
+    });
     setOpenDropdown(null);
   };
 
-
   const handleSelectLabel = (label?: Label) => {
-    if(!label) return;
+    if (!label) return;
 
-    const criteria = parseFilterQuery(viewOptions?.filtered_by)
-    const labelName = `@${label.name}`
+    const criteria = parseFilterQuery(viewOptions?.filtered_by);
+    const labelName = `@${label.name}`;
 
     // all the active labels
-    const currentLabels = extractLabelsFromList(criteria)
+    const currentLabels = extractLabelsFromList(criteria);
 
     // toggle labels
-    const updatedLabels = currentLabels.includes(labelName) ? currentLabels.filter(l => l !== labelName) : [...currentLabels, labelName]
+    const updatedLabels = currentLabels.includes(labelName)
+      ? currentLabels.filter((l) => l !== labelName)
+      : [...currentLabels, labelName];
 
     // remove labels
-    const nonLabelCriteria = criteria.filter(l => !l.startsWith("@") && !(l.startsWith("(") && l.includes("@")))
+    const nonLabelCriteria = criteria.filter(
+      (l) => !l.startsWith("@") && !(l.startsWith("(") && l.includes("@")),
+    );
 
     const finalCriteria = [...nonLabelCriteria];
 
-    if(updatedLabels.length === 1){
-      finalCriteria.push(updatedLabels[0])
+    if (updatedLabels.length === 1) {
+      finalCriteria.push(updatedLabels[0]);
     }
 
-    if(updatedLabels.length > 1){
-      finalCriteria.push(`(${updatedLabels.join(" | ")})`)
+    if (updatedLabels.length > 1) {
+      finalCriteria.push(`(${updatedLabels.join(" | ")})`);
     }
     handleUpdateViewOption({
-      filtered_by: buildFilterQuery(finalCriteria)
-    })
+      filtered_by: buildFilterQuery(finalCriteria),
+    });
     setOpenDropdown(null);
-  }
+  };
 
   useClickOutside({
     ref:
       openDropdown === "grouping"
         ? groupRef
         : openDropdown === "sorting"
-          ? sortRef : openDropdown === "direction" ? directionRef
-          : openDropdown === "date"
-            ? dateRef
-            : openDropdown === "priority"
-              ? priorityRef : openDropdown === "label" ? labelRef
-              : dummyRef,
+          ? sortRef
+          : openDropdown === "direction"
+            ? directionRef
+            : openDropdown === "date"
+              ? dateRef
+              : openDropdown === "priority"
+                ? priorityRef
+                : openDropdown === "label"
+                  ? labelRef
+                  : dummyRef,
     handler: () => setOpenDropdown(null),
     enabled: openDropdown !== null,
   });
@@ -236,7 +269,9 @@ const {mutate} = useViewOptions()
 
           <div className={"pr-1 pl-1.5 flex justify-between items-center"}>
             <p className={"text-sm"}>Completed tasks</p>
-            <CustomSwitch onChange={(e) => handleToggleCompleted(e.target.checked)}/>
+            <CustomSwitch
+              onChange={(e) => handleToggleCompleted(e.target.checked)}
+            />
           </div>
         </div>
         <hr className="border-t border-t-product-library-divider-tertiary overflow-hidden" />
@@ -266,7 +301,12 @@ const {mutate} = useViewOptions()
                 </div>
               </div>
             </button>
-            {openDropdown === "grouping" && <MyTaskFilterGroupingDropdown selectedGrouping={viewOptions?.grouped_by ?? null} onSelectGrouping={handleSelectGrouping}/>}
+            {openDropdown === "grouping" && (
+              <MyTaskFilterGroupingDropdown
+                selectedGrouping={viewOptions?.grouped_by ?? null}
+                onSelectGrouping={handleSelectGrouping}
+              />
+            )}
           </div>
           <div className={"relative"} ref={sortRef}>
             <button
@@ -287,27 +327,42 @@ const {mutate} = useViewOptions()
                 </div>
               </div>
             </button>
-            {openDropdown === "sorting" && <MyTaskFilterSortingDropdown selectedSorting={viewOptions?.sorted_by ?? null} onSelectSorting={handleSelectSorting}/>}
+            {openDropdown === "sorting" && (
+              <MyTaskFilterSortingDropdown
+                selectedSorting={viewOptions?.sorted_by ?? null}
+                onSelectSorting={handleSelectSorting}
+              />
+            )}
           </div>
 
-          {viewOptions?.sorted_by &&
-              <div className={"relative"} ref={directionRef}>
-                <button className={"py-0.5 px-1 flex items-center justify-between gap-small w-full"} onClick={() => handleToggleDropdown("direction")}>
-                  <p className={"text-sm"}>Direction</p>
-                  <div
-                      className={
-                        "cursor-pointer max-w-40 h-7 rounded-small border border-product-library-border-idle-tint pl-2.5 flex items-center justify-between hover:border-product-library-border-focus-tint w-full"
-                      }
-                  >
-                    <p className={"text-sm"}>{selectedDirectionLabel}</p>
-                    <div className={"flex justify-center items-center w-7 h-7"}>
-                      <TaskSmallArrowDownIcon />
-                    </div>
+          {viewOptions?.sorted_by && (
+            <div className={"relative"} ref={directionRef}>
+              <button
+                className={
+                  "py-0.5 px-1 flex items-center justify-between gap-small w-full"
+                }
+                onClick={() => handleToggleDropdown("direction")}
+              >
+                <p className={"text-sm"}>Direction</p>
+                <div
+                  className={
+                    "cursor-pointer max-w-40 h-7 rounded-small border border-product-library-border-idle-tint pl-2.5 flex items-center justify-between hover:border-product-library-border-focus-tint w-full"
+                  }
+                >
+                  <p className={"text-sm"}>{selectedDirectionLabel}</p>
+                  <div className={"flex justify-center items-center w-7 h-7"}>
+                    <TaskSmallArrowDownIcon />
                   </div>
-                </button>
-                {openDropdown === "direction" && <MyTaskFilterDirectionDropdown selectedDirection={viewOptions?.sort_order} onSelectDirection={handleSelectDirection}/>}
-              </div>
-          }
+                </div>
+              </button>
+              {openDropdown === "direction" && (
+                <MyTaskFilterDirectionDropdown
+                  selectedDirection={viewOptions?.sort_order}
+                  onSelectDirection={handleSelectDirection}
+                />
+              )}
+            </div>
+          )}
 
           <div className={"px-1.5 flex items-center justify-between"}>
             <p className={"text-sm font-medium"}>Filter</p>
@@ -357,21 +412,26 @@ const {mutate} = useViewOptions()
                 </div>
               </div>
             </button>
-            {openDropdown === "priority" && <MyTaskFilterPriorityDropdown selectedFilteringPriority={selectedPriority} onSelectFilteringPriority={handleSelectPriority}/>}
+            {openDropdown === "priority" && (
+              <MyTaskFilterPriorityDropdown
+                selectedFilteringPriority={selectedPriority}
+                onSelectFilteringPriority={handleSelectPriority}
+              />
+            )}
           </div>
 
           <div className={"relative"} ref={labelRef}>
             <button
-                className={
-                  "py-0.5 px-1 flex items-center justify-between gap-small w-full"
-                }
-                onClick={() => handleToggleDropdown("label")}
+              className={
+                "py-0.5 px-1 flex items-center justify-between gap-small w-full"
+              }
+              onClick={() => handleToggleDropdown("label")}
             >
               <p className={"text-sm"}>Label</p>
               <div
-                  className={
-                    "cursor-pointer max-w-40 h-7 rounded-small border border-product-library-border-idle-tint pl-2.5 flex items-center justify-between hover:border-product-library-border-focus-tint w-full"
-                  }
+                className={
+                  "cursor-pointer max-w-40 h-7 rounded-small border border-product-library-border-idle-tint pl-2.5 flex items-center justify-between hover:border-product-library-border-focus-tint w-full"
+                }
               >
                 <p className={"text-sm"}>{displayLabels}</p>
                 <div className={"flex justify-center items-center w-7 h-7"}>
@@ -379,9 +439,13 @@ const {mutate} = useViewOptions()
                 </div>
               </div>
             </button>
-            {openDropdown === "label" && <MyTaskFilterLabelDropdown selectedFilteringLabel={selectedLabelName} onSelectFilteringLabel={handleSelectLabel}/>}
+            {openDropdown === "label" && (
+              <MyTaskFilterLabelDropdown
+                selectedFilteringLabel={selectedLabelName}
+                onSelectFilteringLabel={handleSelectLabel}
+              />
+            )}
           </div>
-
         </div>
       </div>
     </div>

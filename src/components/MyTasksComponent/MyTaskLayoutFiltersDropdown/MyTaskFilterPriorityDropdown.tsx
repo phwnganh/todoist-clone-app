@@ -1,12 +1,15 @@
 import { priorityFilterData } from "../../../data/myTaskFilter.data.ts";
 import PriorityIcon from "../../icons/PriorityIcon.tsx";
-import type {Priority} from "../../../types/task.type.ts";
+import type { Priority } from "../../../types/task.type.ts";
 
 type MyTaskFilterPriorityDropdownProps = {
-    selectedFilteringPriority: string[]
-    onSelectFilteringPriority: (priority: Priority) => void
-}
-const MyTaskFilterPriorityDropdown = ({selectedFilteringPriority, onSelectFilteringPriority}: MyTaskFilterPriorityDropdownProps) => {
+  selectedFilteringPriority: string[];
+  onSelectFilteringPriority: (priority: Priority) => void;
+};
+const MyTaskFilterPriorityDropdown = ({
+  selectedFilteringPriority,
+  onSelectFilteringPriority,
+}: MyTaskFilterPriorityDropdownProps) => {
   return (
     <div
       id={"priority-listbox"}
@@ -17,7 +20,7 @@ const MyTaskFilterPriorityDropdown = ({selectedFilteringPriority, onSelectFilter
       }
     >
       {priorityFilterData.map((priority) => {
-          const isSelected = selectedFilteringPriority?.includes(priority.key)
+        const isSelected = selectedFilteringPriority?.includes(priority.key);
         return (
           <div
             key={priority.key}
@@ -28,10 +31,15 @@ const MyTaskFilterPriorityDropdown = ({selectedFilteringPriority, onSelectFilter
             }
           >
             <div className="flex items-center gap-small">
-                <input type={"checkbox"} className={"w-4 h-4"} checked={isSelected} onChange={(e) => {
-                    e.stopPropagation()
-                    onSelectFilteringPriority?.(priority)
-                }}/>
+              <input
+                type={"checkbox"}
+                className={"w-4 h-4"}
+                checked={isSelected}
+                onChange={(e) => {
+                  e.stopPropagation();
+                  onSelectFilteringPriority?.(priority);
+                }}
+              />
               <span className="flex items-center gap-1.5">
                 <div className="w-6 h-6 flex justify-center items-center shrink-0">
                   <PriorityIcon className={`text-${priority.color}`} />
