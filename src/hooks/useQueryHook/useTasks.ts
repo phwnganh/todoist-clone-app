@@ -22,6 +22,7 @@ import {
     type OptimisticUpdatesContext,
     rollbackOptimisticUpdates
 } from "../../helpers/optimisticUpdates.ts";
+import {commonTaskMutation} from "../../helpers/hookMutations.ts";
 
 export const useGetAllTasks = (query?: TaskQuery) => {
     return useQuery<TaskResponse>({
@@ -68,31 +69,20 @@ export const useAddMyTask = () => {
             })
             return {...res, tempId}
         },
-    onSuccess: (res, _, context) => {
-            const realId = res.temp_id_mapping?.[context.tempId!]
-        if(!realId) return;
-        queryClient.setQueryData<TaskResponse>(["tasks"], (old) => {
-            if(!old) return old;
-            return {
-                ...old,
-                results: old.results.map(t => t.id === context.tempId ? {...t, id: realId} : t)
-            }
-        })
-    },
-        onError: (_, __, context) => {
-            rollbackOptimisticUpdates({
-                queryClient,
-                context
-            })
-        },
-        onSettled: (error) => {
-            if(error){
-                void queryClient.invalidateQueries({
-                    queryKey: ["tasks"]
-                })
-            }
+    ...commonTaskMutation<SyncResponse, TaskPayload, OptimisticUpdatesContext>(queryClient, {
+        onSuccess: (res, _, context) => {
+            const realId = res.temp_id_mapping?.[context?.tempId ?? ""]
+            if(!realId || !context) return;
 
+            queryClient.setQueryData<TaskResponse>(["tasks"], old => {
+                if(!old) return old;
+                return {
+                    ...old,
+                    results: old.results.map(t => t.id === context.tempId ? {...t, id: realId} : t)
+                }
+            })
         }
+    })
     })
 }
 
@@ -124,31 +114,20 @@ export const useAddMySubTask = () => {
             })
             return {...res, tempId}
         },
-        onSuccess: (res, _, context) => {
-            const realId = res.temp_id_mapping?.[context.tempId!]
-            if(!realId) return;
-            queryClient.setQueryData<TaskResponse>(["tasks"], (old) => {
-                if(!old) return old;
-                return {
-                    ...old,
-                    results: old.results.map(t => t.id === context.tempId ? {...t, id: realId} : t)
-                }
-            })
-        },
-        onError: (_, __, context) => {
-            rollbackOptimisticUpdates({
-                queryClient,
-                context
-            })
-        },
-        onSettled: (error) => {
-            if(error){
-                void queryClient.invalidateQueries({
-                    queryKey: ["tasks"]
+        ...commonTaskMutation<SyncResponse, SubTaskPayload, OptimisticUpdatesContext>(queryClient, {
+            onSuccess: (res, _, context) => {
+                const realId = res.temp_id_mapping?.[context?.tempId ?? ""]
+                if(!realId || !context) return;
+
+                queryClient.setQueryData<TaskResponse>(["tasks"], old => {
+                    if(!old) return old;
+                    return {
+                        ...old,
+                        results: old.results.map(t => t.id === context.tempId ? {...t, id: realId} : t)
+                    }
                 })
             }
-
-        }
+        })
     })
 }
 
