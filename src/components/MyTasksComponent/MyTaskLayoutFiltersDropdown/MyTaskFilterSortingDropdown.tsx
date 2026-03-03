@@ -23,7 +23,7 @@ const MyTaskFilterSortingDropdown = ({selectedSorting, onSelectSorting}: MyTaskF
             key={index}
             role={"option"}
             tabIndex={-1}
-            onClick={() => onSelectSorting(sorting?.key, "ASC")}
+            onClick={() => onSelectSorting(sorting.key, "ASC")}
             className={
               "group flex flex-col py-1 px-1.5 flex-1 w-full hover:bg-product-library-selectable-secondary-hover-fill rounded-small"
             }

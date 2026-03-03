@@ -15,6 +15,8 @@ import {useProjectStore} from "../../../stores/project.store.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import {directionFilterData, groupingFilterData, sortingFilterData} from "../../../data/myTaskFilter.data.ts";
 import MyTaskFilterDirectionDropdown from "./MyTaskFilterDirectionDropdown.tsx";
+import MyTaskFilterLabelDropdown from "./MyTaskFilterLabelDropdown";
+import type {Label} from "../../../types/label.type.ts";
 
 type MyTaskLayoutFiltersDropdownProps = {
   onSelectLayout: (layoutName: string) => void;
@@ -31,6 +33,7 @@ const MyTaskLayoutFiltersDropdown = ({
   const directionRef = useRef<HTMLDivElement | null>(null)
   const dateRef = useRef<HTMLDivElement | null>(null);
   const priorityRef = useRef<HTMLDivElement | null>(null);
+  const labelRef = useRef<HTMLDivElement | null>(null);
   const dummyRef = useRef<HTMLDivElement | null>(null);
   const {projectId} = useProjectStore()
 const {mutate} = useViewOptions()
@@ -44,6 +47,9 @@ const {mutate} = useViewOptions()
   const selectedGroupingLabel = groupingFilterData.find(g => g.key === viewOptions?.grouped_by)?.label ?? "None"
   const selectedSortingLabel = sortingFilterData.find(s => s.key === viewOptions?.sorted_by)?.label ?? "Manual"
   const selectedDirectionLabel = directionFilterData.find(d => d.key === viewOptions?.sort_order)?.label ?? "Ascending"
+
+
+  const selectedLabelName = viewOptions?.filtered_by?.startsWith("@") ? viewOptions?.filtered_by.slice(1) : null
   const handleUpdateViewOption = (payload: Partial<ViewOptionsPayload>) => {
     mutate({
       view_type: "PROJECT",
@@ -102,9 +108,10 @@ const {mutate} = useViewOptions()
     setOpenDropdown(null);
   };
 
-  const handleSelectLabel = (label?: string) => {
+  const handleSelectLabel = (label?: Label) => {
+    const isSameLevel = selectedLabelName === label?.name
     handleUpdateViewOption({
-      filtered_by: `@${label}`
+      filtered_by: isSameLevel ? null : label ? `@${label.name}` : null
     })
     setOpenDropdown(null);
   }
@@ -118,7 +125,7 @@ const {mutate} = useViewOptions()
           : openDropdown === "date"
             ? dateRef
             : openDropdown === "priority"
-              ? priorityRef
+              ? priorityRef : openDropdown === "label" ? labelRef
               : dummyRef,
     handler: () => setOpenDropdown(null),
     enabled: openDropdown !== null,
@@ -221,7 +228,7 @@ const {mutate} = useViewOptions()
                 </div>
               </div>
             </button>
-            {openDropdown === "sorting" && <MyTaskFilterSortingDropdown selectedSorting={viewOptions?.sorted_by} onSelectSorting={handleSelectSorting}/>}
+            {openDropdown === "sorting" && <MyTaskFilterSortingDropdown selectedSorting={viewOptions?.sorted_by ?? null} onSelectSorting={handleSelectSorting}/>}
           </div>
 
           {viewOptions?.sorted_by &&
@@ -293,6 +300,29 @@ const {mutate} = useViewOptions()
             </button>
             {openDropdown === "priority" && <MyTaskFilterPriorityDropdown />}
           </div>
+
+          <div className={"relative"} ref={labelRef}>
+            <button
+                className={
+                  "py-0.5 px-1 flex items-center justify-between gap-small w-full"
+                }
+                onClick={() => handleToggleDropdown("label")}
+            >
+              <p className={"text-sm"}>Label</p>
+              <div
+                  className={
+                    "cursor-pointer max-w-40 h-7 rounded-small border border-product-library-border-idle-tint pl-2.5 flex items-center justify-between hover:border-product-library-border-focus-tint w-full"
+                  }
+              >
+                <p className={"text-sm"}>All</p>
+                <div className={"flex justify-center items-center w-7 h-7"}>
+                  <TaskSmallArrowDownIcon />
+                </div>
+              </div>
+            </button>
+            {openDropdown === "label" && <MyTaskFilterLabelDropdown selectedFilteringLabel={selectedLabelName} onSelectFilteringLabel={handleSelectLabel}/>}
+          </div>
+
         </div>
       </div>
     </div>

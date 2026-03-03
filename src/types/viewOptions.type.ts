@@ -14,7 +14,7 @@ export type TaskGroup = {
 export type ViewOptionsPayload = {
     view_type: ViewTypes;
     object_id: string;
-    filtered_by?: string;
+    filtered_by?: string | null;
     grouped_by?: GroupedBy | null;
     sorted_by?: SortedBy | null;
     sort_order?: SortOrder | null;
