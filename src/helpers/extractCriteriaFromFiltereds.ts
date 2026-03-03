@@ -1,18 +1,21 @@
-export const extractLabelsFromList = (criteria: string[]) => {
-    const labels: string[] = []
+export const extractByPrefixFromList = (criteria: string[], matcher: (value: string) => boolean) => {
+    const results: string[] = []
     criteria.forEach(c => {
-        // at least 1 label
+        // at least 1 prefix
         if(c.startsWith("(") && c.endsWith(")")){
             c.slice(1, -1).split("|").map(l => l.trim()).forEach(l => {
-                if(l.startsWith("@")){
-                    labels.push(l)
+                if(matcher(l)){
+                    results.push(l)
                 }
             })
         }
-        // single label
-        else if(c.startsWith("@")){
-            labels.push(c)
+        // single prefix
+        else if(matcher(c)){
+            results.push(c)
         }
     })
-    return labels;
+    return results;
 }
+
+export const extractLabelsFromList = (criteria: string[]) => extractByPrefixFromList(criteria, value => value.startsWith("@"))
+export const extractPrioritiesFromList = (criteria: string[]) => extractByPrefixFromList(criteria, value => /^p[1-4]$/.test(value))

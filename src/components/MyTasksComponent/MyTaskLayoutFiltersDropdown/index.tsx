@@ -18,7 +18,8 @@ import MyTaskFilterDirectionDropdown from "./MyTaskFilterDirectionDropdown.tsx";
 import MyTaskFilterLabelDropdown from "./MyTaskFilterLabelDropdown";
 import type {Label} from "../../../types/label.type.ts";
 import {buildFilterQuery, parseFilterQuery} from "../../../helpers/groupSortTasks.ts";
-import {extractLabelsFromList} from "../../../helpers/extractCriteriaFromFiltereds.ts";
+import {extractLabelsFromList, extractPrioritiesFromList} from "../../../helpers/extractCriteriaFromFiltereds.ts";
+import type {Priority} from "../../../types/task.type.ts";
 
 type MyTaskLayoutFiltersDropdownProps = {
   onSelectLayout: (layoutName: string) => void;
@@ -54,6 +55,7 @@ const {mutate} = useViewOptions()
 
 
   const selectedLabelName = extractLabelsFromList(parsedCriteria).map(l => l.replace("@", ""))
+  const selectedPriority = extractPrioritiesFromList(parsedCriteria)
   const getSelectedLabelToDisplay = (labels: string[]) => {
     if(labels.length === 0) return "All"
     if(labels.length === 1) return labels[0]
@@ -112,18 +114,32 @@ const {mutate} = useViewOptions()
     setOpenDropdown(null);
   };
 
-  const handleSelectPriority = (priority?: string) => {
+  const handleSelectPriority = (priority?: Priority) => {
+    if(!priority) return;
+    const labelKey = priority.key
     const criteria = parseFilterQuery(viewOptions?.filtered_by)
-    const cleanedFilteringPriority = criteria.filter(p => !/^p[1-4]$/.test(p) && p !== "No priority")
-    if(!priority){
-      handleUpdateViewOption({
-        filtered_by: buildFilterQuery(cleanedFilteringPriority)
-      })
-      return;
+    const currentPriorities = extractPrioritiesFromList(criteria)
+    const updatePriorities = currentPriorities.includes(labelKey) ? currentPriorities.filter(p => p !== labelKey) : [...currentPriorities, labelKey]
+
+    const nonPriorityCriteria = criteria.filter(p => {
+      if(/^p[1-4]$/.test(p)) return false;
+      else if(p.startsWith("(") && /p[1-4]/.test(p)) return false;
+
+      return true;
+    })
+
+    const finalCriteria = [...nonPriorityCriteria]
+
+    if(updatePriorities.length === 1){
+      finalCriteria.push(updatePriorities[0])
     }
-    const newPriorityCriteria = [...cleanedFilteringPriority, priority]
+
+    if(updatePriorities.length > 1){
+      finalCriteria.push(`(${updatePriorities.join(" | ")})`)
+    }
+
     handleUpdateViewOption({
-      filtered_by: buildFilterQuery(newPriorityCriteria)
+      filtered_by: buildFilterQuery(finalCriteria)
     })
     setOpenDropdown(null);
   };
@@ -341,7 +357,7 @@ const {mutate} = useViewOptions()
                 </div>
               </div>
             </button>
-            {openDropdown === "priority" && <MyTaskFilterPriorityDropdown/>}
+            {openDropdown === "priority" && <MyTaskFilterPriorityDropdown selectedFilteringPriority={selectedPriority} onSelectFilteringPriority={handleSelectPriority}/>}
           </div>
 
           <div className={"relative"} ref={labelRef}>

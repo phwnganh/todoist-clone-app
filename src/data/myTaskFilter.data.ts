@@ -131,7 +131,7 @@ export const priorityFilterData: Priority[] = [
         color: "product-library-priorities-p3-primary-idle-tint",
     },
     {
-        key: "No priority",
+        key: "p4",
         label: "Priority 4",
         value: 1,
         color: "product-library-selectable-primary-unselected-tint",

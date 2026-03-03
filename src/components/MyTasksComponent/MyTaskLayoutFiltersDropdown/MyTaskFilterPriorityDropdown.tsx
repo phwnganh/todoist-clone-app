@@ -1,7 +1,12 @@
 import { priorityFilterData } from "../../../data/myTaskFilter.data.ts";
-import SquareIcon from "../../../assets/square-icon.svg";
 import PriorityIcon from "../../icons/PriorityIcon.tsx";
-const MyTaskFilterPriorityDropdown = () => {
+import type {Priority} from "../../../types/task.type.ts";
+
+type MyTaskFilterPriorityDropdownProps = {
+    selectedFilteringPriority: string[]
+    onSelectFilteringPriority: (priority: Priority) => void
+}
+const MyTaskFilterPriorityDropdown = ({selectedFilteringPriority, onSelectFilteringPriority}: MyTaskFilterPriorityDropdownProps) => {
   return (
     <div
       id={"priority-listbox"}
@@ -12,6 +17,7 @@ const MyTaskFilterPriorityDropdown = () => {
       }
     >
       {priorityFilterData.map((priority) => {
+          const isSelected = selectedFilteringPriority?.includes(priority.key)
         return (
           <div
             key={priority.key}
@@ -22,9 +28,10 @@ const MyTaskFilterPriorityDropdown = () => {
             }
           >
             <div className="flex items-center gap-small">
-              <div className="flex justify-center items-center">
-                <img src={SquareIcon} alt={"square-icon"} />
-              </div>
+                <input type={"checkbox"} className={"w-4 h-4"} checked={isSelected} onChange={(e) => {
+                    e.stopPropagation()
+                    onSelectFilteringPriority?.(priority)
+                }}/>
               <span className="flex items-center gap-1.5">
                 <div className="w-6 h-6 flex justify-center items-center shrink-0">
                   <PriorityIcon className={`text-${priority.color}`} />
