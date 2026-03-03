@@ -2,6 +2,30 @@ import type {Task} from "../types/task.type.ts";
 import type {GroupedBy, SortedBy, SortOrder, TaskGroup, ViewOptionsPayload} from "../types/viewOptions.type.ts";
 
 
+export const parseFilterQuery = (query?: string | null): string[] => {
+    if(!query) return [];
+    // split each criteria by & comma
+    return query.split("&").map(q => q.trim()).filter(Boolean);
+}
+
+export const buildFilterQuery = (criteria: string[]): string | null => {
+    if(criteria.length === 0) return null;
+    const labelCriteria = criteria.filter(c => c.startsWith("@"))
+    const otherCriteria = criteria.filter(c => !c.startsWith("@"))
+
+    let finalCriteria: string[] = [];
+
+    if(labelCriteria.length === 1){
+        finalCriteria.push(labelCriteria[0])
+    }
+
+    if(labelCriteria.length > 1){
+        finalCriteria.push(`(${labelCriteria.join(" | ")})`)
+    }
+
+    finalCriteria = [...finalCriteria, ...otherCriteria]
+    return finalCriteria.join(" & ");
+}
 export const filterTasks = (tasks: Task[], view?: ViewOptionsPayload) => {
     let res = [...tasks]
     if(!view?.show_completed_tasks){

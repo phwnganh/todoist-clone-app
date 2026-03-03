@@ -17,6 +17,7 @@ import {directionFilterData, groupingFilterData, sortingFilterData} from "../../
 import MyTaskFilterDirectionDropdown from "./MyTaskFilterDirectionDropdown.tsx";
 import MyTaskFilterLabelDropdown from "./MyTaskFilterLabelDropdown";
 import type {Label} from "../../../types/label.type.ts";
+import {buildFilterQuery, parseFilterQuery} from "../../../helpers/groupSortTasks.ts";
 
 type MyTaskLayoutFiltersDropdownProps = {
   onSelectLayout: (layoutName: string) => void;
@@ -48,8 +49,29 @@ const {mutate} = useViewOptions()
   const selectedSortingLabel = sortingFilterData.find(s => s.key === viewOptions?.sorted_by)?.label ?? "Manual"
   const selectedDirectionLabel = directionFilterData.find(d => d.key === viewOptions?.sort_order)?.label ?? "Ascending"
 
+  const parsedCriteria = parseFilterQuery(viewOptions?.filtered_by)
 
-  const selectedLabelName = viewOptions?.filtered_by?.startsWith("@") ? viewOptions?.filtered_by.slice(1) : null
+  const extractLabelsFromList = (criteria: string[]) => {
+    const labels: string[] = []
+    criteria.forEach(c => {
+      // at least 1 label
+      if(c.startsWith("(") && c.endsWith(")")){
+        c.slice(1, -1).split("|").map(l => l.trim()).forEach(l => {
+          if(l.startsWith("@")){
+            labels.push(l)
+          }
+        })
+      }
+      // single label
+      else if(c.startsWith("@")){
+        labels.push(c)
+      }
+    })
+    return labels;
+  }
+
+  const selectedLabelName = extractLabelsFromList(parsedCriteria).map(l => l.replace("@", ""))
+
   const handleUpdateViewOption = (payload: Partial<ViewOptionsPayload>) => {
     mutate({
       view_type: "PROJECT",
@@ -102,16 +124,48 @@ const {mutate} = useViewOptions()
   };
 
   const handleSelectPriority = (priority?: string) => {
+    const criteria = parseFilterQuery(viewOptions?.filtered_by)
+    const cleanedFilteringPriority = criteria.filter(p => !/^p[1-4]$/.test(p) && p !== "No priority")
+    if(!priority){
+      handleUpdateViewOption({
+        filtered_by: buildFilterQuery(cleanedFilteringPriority)
+      })
+      return;
+    }
+    const newPriorityCriteria = [...cleanedFilteringPriority, priority]
     handleUpdateViewOption({
-      filtered_by: priority
+      filtered_by: buildFilterQuery(newPriorityCriteria)
     })
     setOpenDropdown(null);
   };
 
+
   const handleSelectLabel = (label?: Label) => {
-    const isSameLevel = selectedLabelName === label?.name
+    if(!label) return;
+
+    const criteria = parseFilterQuery(viewOptions?.filtered_by)
+    const labelName = `@${label.name}`
+
+    // all the active labels
+    const currentLabels = extractLabelsFromList(criteria)
+
+    // toggle labels
+    const updatedLabels = currentLabels.includes(labelName) ? currentLabels.filter(l => l !== labelName) : [...currentLabels, labelName]
+
+    // remove labels
+    const nonLabelCriteria = criteria.filter(l => !l.startsWith("@") && !(l.startsWith("(") && l.includes("@")))
+
+    const finalCriteria = [...nonLabelCriteria];
+
+    if(updatedLabels.length === 1){
+      finalCriteria.push(updatedLabels[0])
+    }
+
+    if(updatedLabels.length > 1){
+      finalCriteria.push(`(${updatedLabels.join(" | ")})`)
+    }
     handleUpdateViewOption({
-      filtered_by: isSameLevel ? null : label ? `@${label.name}` : null
+      filtered_by: buildFilterQuery(finalCriteria)
     })
     setOpenDropdown(null);
   }
@@ -298,7 +352,7 @@ const {mutate} = useViewOptions()
                 </div>
               </div>
             </button>
-            {openDropdown === "priority" && <MyTaskFilterPriorityDropdown />}
+            {openDropdown === "priority" && <MyTaskFilterPriorityDropdown/>}
           </div>
 
           <div className={"relative"} ref={labelRef}>

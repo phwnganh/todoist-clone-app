@@ -2,7 +2,7 @@ import LabelIcon from '../../../../assets/label-icon.svg'
 import type { Label } from '../../../../types/label.type';
 type FilterLabelItemProps = {
     label: Label
-    isLabelsSelected: boolean
+    isLabelsSelected?: boolean
     onFilteringLabelsSelected?: (label: Label) => void
 }
 const FilteringLabelItem = ({label, isLabelsSelected, onFilteringLabelsSelected}: FilterLabelItemProps) => {

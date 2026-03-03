@@ -6,7 +6,7 @@ import {useDebounce} from "../../../../hooks/useDebounce.ts";
 import type {Label} from "../../../../types/label.type.ts";
 
 type MyTaskFilterLabelDropdownProps = {
-    selectedFilteringLabel?: string | null
+    selectedFilteringLabel?: string[]
     onSelectFilteringLabel?: (label: Label) => void
 }
 const MyTaskFilterLabelDropdown = ({selectedFilteringLabel, onSelectFilteringLabel}: MyTaskFilterLabelDropdownProps) => {
@@ -34,7 +34,7 @@ const MyTaskFilterLabelDropdown = ({selectedFilteringLabel, onSelectFilteringLab
                             Label not found
                         </p>) : (
                             labelList?.map(label => {
-                                const isSelected = selectedFilteringLabel === label.name
+                                const isSelected = selectedFilteringLabel?.includes(label.name)
                                 return (
                                     <FilteringLabelItem key={label.id} label={label} isLabelsSelected={isSelected} onFilteringLabelsSelected={onSelectFilteringLabel}/>
                                 )
