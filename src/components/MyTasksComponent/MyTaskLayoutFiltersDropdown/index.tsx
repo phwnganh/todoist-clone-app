@@ -20,7 +20,7 @@ import { useProjectStore } from "../../../stores/project.store.ts";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   directionFilterData,
-  groupingFilterData,
+  groupingFilterData, priorityFilterData,
   sortingFilterData,
 } from "../../../data/myTaskFilter.data.ts";
 import MyTaskFilterDirectionDropdown from "./MyTaskFilterDirectionDropdown.tsx";
@@ -77,13 +77,15 @@ const MyTaskLayoutFiltersDropdown = ({
   const selectedLabelName = extractLabelsFromList(parsedCriteria).map((l) =>
     l.replace("@", ""),
   );
-  const selectedPriority = extractPrioritiesFromList(parsedCriteria);
   const getSelectedLabelToDisplay = (labels: string[]) => {
     if (labels.length === 0) return "All";
     if (labels.length === 1) return labels[0];
     return `${labels[0]} +${labels.length - 1} more`;
   };
   const displayLabels = getSelectedLabelToDisplay(selectedLabelName);
+
+  const selectedPriorityKey = extractPrioritiesFromList(parsedCriteria);
+  const displayPriorities = selectedPriorityKey.length === 0 ? "All" : selectedPriorityKey.join(" | ")
 
   const handleUpdateViewOption = (payload: Partial<ViewOptionsPayload>) => {
     mutate({
@@ -147,21 +149,19 @@ const MyTaskLayoutFiltersDropdown = ({
       ? currentPriorities.filter((p) => p !== labelKey)
       : [...currentPriorities, labelKey];
 
+    const AllPriorities = priorityFilterData.map(p => p.key)
+    const isAllSelected = updatePriorities.length === AllPriorities.length
+
     const nonPriorityCriteria = criteria.filter((p) => {
       if (/^p[1-4]$/.test(p)) return false;
       else if (p.startsWith("(") && /p[1-4]/.test(p)) return false;
-
       return true;
     });
 
     const finalCriteria = [...nonPriorityCriteria];
 
-    if (updatePriorities.length === 1) {
-      finalCriteria.push(updatePriorities[0]);
-    }
-
-    if (updatePriorities.length > 1) {
-      finalCriteria.push(`(${updatePriorities.join(" | ")})`);
+    if(!isAllSelected && updatePriorities.length > 0){
+      finalCriteria.push(updatePriorities.length === 1 ? updatePriorities[0] : `(${updatePriorities.join(" | ")})`)
     }
 
     handleUpdateViewOption({
@@ -406,7 +406,7 @@ const MyTaskLayoutFiltersDropdown = ({
                   "cursor-pointer max-w-40 h-7 rounded-small border border-product-library-border-idle-tint pl-2.5 flex items-center justify-between hover:border-product-library-border-focus-tint w-full"
                 }
               >
-                <p className={"text-sm"}>All</p>
+                <p className={"text-sm"}>{displayPriorities}</p>
                 <div className={"flex justify-center items-center w-7 h-7"}>
                   <TaskSmallArrowDownIcon />
                 </div>
@@ -414,7 +414,7 @@ const MyTaskLayoutFiltersDropdown = ({
             </button>
             {openDropdown === "priority" && (
               <MyTaskFilterPriorityDropdown
-                selectedFilteringPriority={selectedPriority}
+                selectedFilteringPriority={selectedPriorityKey}
                 onSelectFilteringPriority={handleSelectPriority}
               />
             )}
