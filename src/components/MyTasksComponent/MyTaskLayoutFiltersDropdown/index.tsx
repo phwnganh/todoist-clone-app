@@ -9,11 +9,10 @@ import MyTaskFilterGroupingDropdown from "./MyTaskFilterGroupingDropdown.tsx";
 import MyTaskFilterSortingDropdown from "./MyTaskFilterSortingDropdown.tsx";
 import MyTaskFilterDateDropdown from "./MyTaskFilterDateDropdown.tsx";
 import MyTaskFilterPriorityDropdown from "./MyTaskFilterPriorityDropdown.tsx";
-import { useViewOptions } from "../../../hooks/useQueryHook/useViewOptions.ts";
 import type {
   GroupedBy,
   SortedBy,
-  SortOrder,
+  SortOrder, ViewMode,
   ViewOptionsPayload,
 } from "../../../types/viewOptions.type.ts";
 import { useProjectStore } from "../../../stores/project.store.ts";
@@ -40,12 +39,14 @@ import {
 import type { Priority } from "../../../types/task.type.ts";
 
 type MyTaskLayoutFiltersDropdownProps = {
-  onSelectLayout: (layoutName: string) => void;
+  onSelectLayout: (layout: ViewMode) => void;
   layoutTitle: string;
+  onUpdateViewOption: (payload: Partial<ViewOptionsPayload>) => void;
 };
 const MyTaskLayoutFiltersDropdown = ({
   onSelectLayout,
   layoutTitle,
+    onUpdateViewOption,
 }: MyTaskLayoutFiltersDropdownProps) => {
   const [openDropdown, setOpenDropdown] =
     useState<OpenMyTaskFilterDropdown>(null);
@@ -57,7 +58,6 @@ const MyTaskLayoutFiltersDropdown = ({
   const labelRef = useRef<HTMLDivElement | null>(null);
   const dummyRef = useRef<HTMLDivElement | null>(null);
   const { projectId } = useProjectStore();
-  const { mutate } = useViewOptions();
   const queryClient = useQueryClient();
   const viewOptions = queryClient.getQueryData<ViewOptionsPayload>([
     "viewOptions",
@@ -93,19 +93,12 @@ const MyTaskLayoutFiltersDropdown = ({
   const selectedDateQuery = extractDateFromList(parsedCriteria)
   const displayDate = dateFilterData.find(d => buildDateFilterQuery(d.key) === selectedDateQuery)?.label ?? "All"
 
-  const handleUpdateViewOption = (payload: Partial<ViewOptionsPayload>) => {
-    mutate({
-      view_type: "PROJECT",
-      object_id: projectId,
-      ...payload,
-    });
-  };
   const handleToggleDropdown = (openDropdown: OpenMyTaskFilterDropdown) => {
     setOpenDropdown((prev) => (prev === openDropdown ? null : openDropdown));
   };
 
   const handleSelectGrouping = (group?: GroupedBy | null) => {
-    handleUpdateViewOption({
+    onUpdateViewOption({
       grouped_by: group ?? null,
     });
     setOpenDropdown(null);
@@ -116,12 +109,12 @@ const MyTaskLayoutFiltersDropdown = ({
     order: SortOrder = "ASC",
   ) => {
     if (!sort) {
-      handleUpdateViewOption({
+      onUpdateViewOption({
         sorted_by: null,
         sort_order: null,
       });
     } else {
-      handleUpdateViewOption({
+      onUpdateViewOption({
         sorted_by: sort ?? null,
         sort_order: order ?? "ASC",
       });
@@ -130,14 +123,14 @@ const MyTaskLayoutFiltersDropdown = ({
   };
 
   const handleSelectDirection = (direction?: SortOrder) => {
-    handleUpdateViewOption({
+    onUpdateViewOption({
       sort_order: direction,
     });
     setOpenDropdown(null);
   };
 
   const handleToggleCompleted = (checked: boolean) => {
-    handleUpdateViewOption({
+    onUpdateViewOption({
       show_completed_tasks: checked,
     });
   };
@@ -153,7 +146,7 @@ const MyTaskLayoutFiltersDropdown = ({
       finalCriteria.push(newDateQuery)
     }
 
-    handleUpdateViewOption({
+    onUpdateViewOption({
       filtered_by: buildFilterQuery(finalCriteria)
     })
     setOpenDropdown(null);
@@ -183,7 +176,7 @@ const MyTaskLayoutFiltersDropdown = ({
       finalCriteria.push(updatePriorities.length === 1 ? updatePriorities[0] : `(${updatePriorities.join(" | ")})`)
     }
 
-    handleUpdateViewOption({
+    onUpdateViewOption({
       filtered_by: buildFilterQuery(finalCriteria),
     });
     setOpenDropdown(null);
@@ -217,7 +210,7 @@ const MyTaskLayoutFiltersDropdown = ({
     if (updatedLabels.length > 1) {
       finalCriteria.push(`(${updatedLabels.join(" | ")})`);
     }
-    handleUpdateViewOption({
+    onUpdateViewOption({
       filtered_by: buildFilterQuery(finalCriteria),
     });
     setOpenDropdown(null);
@@ -273,7 +266,7 @@ const MyTaskLayoutFiltersDropdown = ({
                         className="sr-only"
                         value={layout.key}
                         checked={layoutTitle === layout.key}
-                        onChange={() => onSelectLayout(layout.key)}
+                        onChange={() => onSelectLayout(layout.key as ViewMode)}
                       />
                       <span className="flex flex-col gap-xsmall items-center justify-center text-xs">
                         <img src={layout.icon} alt={layout.key} />

@@ -20,7 +20,9 @@ import HeaderThreeDotsIcon from "../../components/icons/HeaderThreeDotsIcon.tsx"
 import {findSectionByIdToOrder, handleReorderSection} from "../../helpers/dragDropMySection.ts";
 import {customCollisionDetection} from "../../helpers/customCollisionDetection.ts";
 import {useDragStore} from "../../stores/dragDrop.store.ts";
-import {useTasksWithView} from "../../hooks/useQueryHook/useViewOptions.ts";
+import {useTasksWithView, useViewOptions} from "../../hooks/useQueryHook/useViewOptions.ts";
+import {useQueryClient} from "@tanstack/react-query";
+import type {ViewMode, ViewOptionsPayload} from "../../types/viewOptions.type.ts";
 
 const MyProjectDetailPage = () => {
     const {projectId} = useParams<{projectId: string}>();
@@ -36,13 +38,27 @@ const MyProjectDetailPage = () => {
     const {mutateAsync: movingTaskMutate} = useMoveMyTask()
     const {mutateAsync: reorderingTaskMutate} = useReorderTask()
     const {mutate: reorderingSectionMutate} = useReorderSection()
+    const {mutate: updateViewOptions} = useViewOptions()
     const [openLayoutDropdown, setOpenLayoutDropdown] = useState(false);
-    const [layoutName, setLayoutName] = useState("list");
+    const queryClient = useQueryClient()
+    const viewOptions = queryClient.getQueryData<ViewOptionsPayload>(["viewOptions", "PROJECT", projectId])
+    const layoutName = viewOptions?.view_mode ?? "LIST"
+
+    const handleUpdateViewOption = (payload: Partial<ViewOptionsPayload>) => {
+        updateViewOptions({
+            view_type: "PROJECT",
+            object_id: projectId!,
+            ...payload,
+        });
+    };
+
     const handleOpenLayoutDropdown = () => {
         setOpenLayoutDropdown(prev => !prev);
     }
-    const handleSelectLayout = (layoutName: string) => {
-            setLayoutName(layoutName);
+    const handleSelectLayout = (layout: ViewMode) => {
+            handleUpdateViewOption({
+                view_mode: layout
+            })
     }
     const {showCollapse, onToggleSidebar} = useOutletContext<HeaderLayoutType>()
     const navigate = useNavigate()
@@ -106,7 +122,7 @@ const MyProjectDetailPage = () => {
                             <span className="hidden md:block text-product-library-actionable-quaternary-idle-tint text-sm font-medium">Display</span>
 
                         </button>
-                        {openLayoutDropdown && (<MyTaskLayoutFiltersDropdown onSelectLayout={handleSelectLayout} layoutTitle={layoutName}/>)}
+                        {openLayoutDropdown && (<MyTaskLayoutFiltersDropdown onSelectLayout={handleSelectLayout} layoutTitle={layoutName} onUpdateViewOption={handleUpdateViewOption}/>)}
                         </div>
                     <button type={"button"} className={"flex items-center justify-center w-8 h-8 p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"}>
                         <img src={CommentIcon} alt={"comment-icon"}/>
@@ -123,7 +139,7 @@ const MyProjectDetailPage = () => {
                 <div className={"text-sm text-product-library-display-secondary-idle-tint"}>/</div>
             </div>}></HeaderLayout>
             <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver} collisionDetection={customCollisionDetection}>
-                {layoutName === "list" ? (
+                {layoutName === "LIST" ? (
                     <section className={"max-w-200 mx-auto w-full relative z-10"}>
                         <div className={"flex flex-col gap-small"}>
                             <MyTaskTitle/>

@@ -50,17 +50,17 @@ export const MENU_NAV_ITEMS: MenuNavItem[] = [
 
 export const LAYOUT_ITEMS: LayoutItem[] = [
     {
-        key: "list",
+        key: "LIST",
         label: "List",
         icon: ListItemIcon
     },
     {
-        key: "board",
+        key: "BOARD",
         label: "Board",
         icon: BoardItemIcon
     },
     {
-        key: "calendar",
+        key: "CALENDAR",
         label: "Calendar",
         icon: PremiumCalendarIcon
     }

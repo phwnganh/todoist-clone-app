@@ -4,7 +4,7 @@ export type ViewTypes = "PROJECT" | "LABEL" | "WORKSPACE_FILTER" | "FILTER" | "T
 export type GroupedBy = "ADDED_DATE" | "DUE_DATE" | "DEADLINE" | "LABEL" | "PRIORITY"
 export type SortedBy = "ALPHABETICALLY" | "ADDED_DATE" | "DUE_DATE" | "DEADLINE" | "LABEL" | "PRIORITY"
 export type SortOrder = "ASC" | "DESC"
-export type ViewMode = "list" | "board"
+export type ViewMode = "LIST" | "BOARD"
 
 export type TaskGroup = {
     title: string;
