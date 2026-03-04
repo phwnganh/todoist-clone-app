@@ -8,6 +8,7 @@ import type {
 } from "../types/viewOptions.type.ts";
 import {extractDateFromList, extractLabelsFromList, extractPrioritiesFromList} from "./extractCriteriaFromFiltereds.ts";
 import {addDays, addMonths, isBefore, parseISO, startOfMonth} from "date-fns";
+import {priorityFilterData} from "../data/myTaskFilter.data";
 
 export const parseFilterQuery = (query?: string | null): string[] => {
   if (!query) return [];
@@ -71,7 +72,14 @@ export const filterTasks = (tasks: Task[], view?: ViewOptionsPayload) => {
   // priority
   const priorities = extractPrioritiesFromList(criteria)
   if(priorities.length > 0){
-    const priorityNumbers = priorities.map(priority => Number(priority.replace("p", "")))
+    const priorityNumbers: number[] = []
+
+    priorities.forEach(key => {
+      const found = priorityFilterData.find(p => p.key === key);
+      if(found){
+        priorityNumbers.push(found.value)
+      }
+    })
     res = res.filter(task => priorityNumbers.includes(task.priority ?? 0))
   }
 

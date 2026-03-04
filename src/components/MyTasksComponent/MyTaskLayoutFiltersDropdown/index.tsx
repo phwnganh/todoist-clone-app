@@ -21,7 +21,6 @@ import {
   groupingFilterData, priorityFilterData,
   sortingFilterData,
 } from "../../../data/myTaskFilter.data.ts";
-import MyTaskFilterDirectionDropdown from "./MyTaskFilterDirectionDropdown.tsx";
 import MyTaskFilterLabelDropdown from "./MyTaskFilterLabelDropdown";
 import type { Label } from "../../../types/label.type.ts";
 import {
