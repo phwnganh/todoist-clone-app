@@ -5,8 +5,6 @@ import CustomSwitch from "../../ui/CustomSwitch.tsx";
 import TaskSmallArrowDownIcon from "../../icons/TaskSmallArrowDownIcon.tsx";
 import type { OpenMyTaskFilterDropdown } from "../../../types/menu-nav.type.ts";
 import { useClickOutside } from "../../../hooks/useClickOutside.ts";
-import MyTaskFilterGroupingDropdown from "./MyTaskFilterGroupingDropdown.tsx";
-import MyTaskFilterSortingDropdown from "./MyTaskFilterSortingDropdown.tsx";
 import MyTaskFilterDateDropdown from "./MyTaskFilterDateDropdown.tsx";
 import MyTaskFilterPriorityDropdown from "./MyTaskFilterPriorityDropdown.tsx";
 import type {
@@ -37,6 +35,9 @@ import {
   extractPrioritiesFromList, isDateCriteria,
 } from "../../../helpers/extractCriteriaFromFiltereds.ts";
 import type { Priority } from "../../../types/task.type.ts";
+import GroupingTaskSection from "./EachTaskLayoutFieldSection/GroupingTaskSection.tsx";
+import SortingTaskSection from "./EachTaskLayoutFieldSection/SortingTaskSection.tsx";
+import DirectingTaskSection from "./EachTaskLayoutFieldSection/DirectingTaskSection.tsx";
 
 type MyTaskLayoutFiltersDropdownProps = {
   onSelectLayout: (layout: ViewMode) => void;
@@ -294,86 +295,13 @@ const MyTaskLayoutFiltersDropdown = ({
               <TaskSmallArrowDownIcon />
             </div>
           </div>
-          <div className={"relative"} ref={groupRef}>
-            <button
-              className={
-                "py-0.5 px-1 flex items-center justify-between gap-small w-full"
-              }
-              onClick={() => handleToggleDropdown("grouping")}
-            >
-              <p className={"text-sm"}>Grouping</p>
-              <div
-                className={
-                  "cursor-pointer max-w-40 h-7 rounded-small border border-product-library-border-idle-tint pl-2.5 flex items-center justify-between hover:border-product-library-border-focus-tint w-full"
-                }
-              >
-                <p className={"text-sm"}>{selectedGroupingLabel}</p>
-                <div className={"flex justify-center items-center w-7 h-7"}>
-                  <TaskSmallArrowDownIcon />
-                </div>
-              </div>
-            </button>
-            {openDropdown === "grouping" && (
-              <MyTaskFilterGroupingDropdown
-                selectedGrouping={viewOptions?.grouped_by ?? null}
-                onSelectGrouping={handleSelectGrouping}
-              />
-            )}
-          </div>
-          <div className={"relative"} ref={sortRef}>
-            <button
-              className={
-                "py-0.5 px-1 flex items-center justify-between gap-small w-full"
-              }
-              onClick={() => handleToggleDropdown("sorting")}
-            >
-              <p className={"text-sm"}>Sorting</p>
-              <div
-                className={
-                  "cursor-pointer max-w-40 h-7 rounded-small border border-product-library-border-idle-tint pl-2.5 flex items-center justify-between hover:border-product-library-border-focus-tint w-full"
-                }
-              >
-                <p className={"text-sm"}>{selectedSortingLabel}</p>
-                <div className={"flex justify-center items-center w-7 h-7"}>
-                  <TaskSmallArrowDownIcon />
-                </div>
-              </div>
-            </button>
-            {openDropdown === "sorting" && (
-              <MyTaskFilterSortingDropdown
-                selectedSorting={viewOptions?.sorted_by ?? null}
-                onSelectSorting={handleSelectSorting}
-              />
-            )}
-          </div>
+
+          <GroupingTaskSection groupRef={groupRef} selectedGrouping={viewOptions?.grouped_by} displayLabel={selectedGroupingLabel} openDropdown={openDropdown} onToggleDropdown={() => handleToggleDropdown("grouping")} onSelectGroupingTask={handleSelectGrouping}/>
+          
+          <SortingTaskSection sortRef={sortRef} selectedSorting={viewOptions?.sorted_by} displayLabel={selectedSortingLabel} openDropdown={openDropdown} onToggleDropdown={() => handleToggleDropdown("sorting")} onSelectSortingTask={handleSelectSorting}/>
 
           {viewOptions?.sorted_by && (
-            <div className={"relative"} ref={directionRef}>
-              <button
-                className={
-                  "py-0.5 px-1 flex items-center justify-between gap-small w-full"
-                }
-                onClick={() => handleToggleDropdown("direction")}
-              >
-                <p className={"text-sm"}>Direction</p>
-                <div
-                  className={
-                    "cursor-pointer max-w-40 h-7 rounded-small border border-product-library-border-idle-tint pl-2.5 flex items-center justify-between hover:border-product-library-border-focus-tint w-full"
-                  }
-                >
-                  <p className={"text-sm"}>{selectedDirectionLabel}</p>
-                  <div className={"flex justify-center items-center w-7 h-7"}>
-                    <TaskSmallArrowDownIcon />
-                  </div>
-                </div>
-              </button>
-              {openDropdown === "direction" && (
-                <MyTaskFilterDirectionDropdown
-                  selectedDirection={viewOptions?.sort_order}
-                  onSelectDirection={handleSelectDirection}
-                />
-              )}
-            </div>
+            <DirectingTaskSection directRef={directionRef} selectedDirecting={viewOptions?.sort_order} displayLabel={selectedDirectionLabel} openDropdown={openDropdown} onToggleDropdown={() => handleToggleDropdown("direction")} onSelectDirectingTask={handleSelectDirection}/>
           )}
 
           <div className={"px-1.5 flex items-center justify-between"}>
