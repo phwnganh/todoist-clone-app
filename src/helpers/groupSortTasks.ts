@@ -6,6 +6,8 @@ import type {
   TaskGroup,
   ViewOptionsPayload,
 } from "../types/viewOptions.type.ts";
+import {extractDateFromList, extractLabelsFromList, extractPrioritiesFromList} from "./extractCriteriaFromFiltereds.ts";
+import {addDays, addMonths, isBefore, parseISO, startOfMonth} from "date-fns";
 
 export const parseFilterQuery = (query?: string | null): string[] => {
   if (!query) return [];
@@ -56,23 +58,56 @@ export const buildDateFilterQuery = (key: string | null): string | null => {
   }
 }
 export const filterTasks = (tasks: Task[], view?: ViewOptionsPayload) => {
-  let res = [...tasks];
-  if (!view?.show_completed_tasks) {
-    res = res.filter((task) => !task.checked);
+  let res = [...tasks]
+
+  if(!view?.show_completed_tasks){
+    res = res.filter(task => !task.checked)
   }
-  if (view?.filtered_by) {
-    const filteredValue = view.filtered_by;
 
-    if (/^p[1-4]$/.test(filteredValue)) {
-      const priorityNumber = Number(filteredValue.replace("p", ""));
+  if(!view?.filtered_by) return res;
 
-      res = res.filter((task) => task.priority === priorityNumber);
-    } else {
-      res = res.filter((task) => task.labels?.includes(filteredValue));
+  const criteria = parseFilterQuery(view.filtered_by)
+
+  // priority
+  const priorities = extractPrioritiesFromList(criteria)
+  if(priorities.length > 0){
+    const priorityNumbers = priorities.map(priority => Number(priority.replace("p", "")))
+    res = res.filter(task => priorityNumbers.includes(task.priority ?? 0))
+  }
+
+  // label
+  const labels = extractLabelsFromList(criteria)
+  if(labels.length > 0){
+    res = res.filter(task => task.labels?.some(label => labels.includes(label)))
+  }
+
+  // date
+  const dateQuery = extractDateFromList(criteria)
+  if(dateQuery){
+    const now = new Date()
+    if(dateQuery === "no date"){
+      res = res.filter(task => !task.due?.date)
+    }
+
+    if(dateQuery === "due before: next week"){
+      const nextWeek = addDays(now, 7)
+
+      res = res.filter(task => {
+        if(!task.due?.date) return false;
+        return isBefore(parseISO(task.due.date), nextWeek)
+      })
+    }
+
+    if(dateQuery === "due before: first day"){
+      const firstDayNextMonth = startOfMonth(addMonths(now, 1))
+      res = res.filter(task => {
+        if(!task.due?.date) return false;
+        return isBefore(parseISO(task.due.date), firstDayNextMonth)
+      })
     }
   }
-  return res;
-};
+  return res
+}
 export const sortTasks = (
   tasks: Task[],
   sortedBy?: SortedBy | null,
