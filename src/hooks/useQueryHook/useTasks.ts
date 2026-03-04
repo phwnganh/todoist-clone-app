@@ -5,7 +5,7 @@ import {
     apiCompleteTask,
     apiDeleteMyTask,
     apiGetAllTasks,
-    apiGetATask, apiMoveMyTask, apiReorderTask, apiSearchTaskDueDate,
+    apiGetATask, apiMoveMyTask, apiReorderTask,
     apiUpdateMyTask
 } from "../../services/task.service.ts";
 import type {
@@ -20,7 +20,6 @@ import type {ApiError, SyncResponse} from "../../types/api.type.ts";
 import {
     optimisticAddMyTask, optimisticDeleteMyTask, optimisticReorderMyTask, optimisticUpdateMyTask,
     type OptimisticUpdatesContext,
-    rollbackOptimisticUpdates
 } from "../../helpers/optimisticUpdates.ts";
 import {commonTaskMutation} from "../../helpers/hookMutations.ts";
 
@@ -35,14 +34,6 @@ export const useGetATask = (taskId: string | null) => {
     return useQuery<Task>({
         queryKey: ['task-detail', taskId],
         queryFn: () => apiGetATask(taskId)
-    })
-}
-
-export const useSearchTaskDueDate = (query: string) => {
-    return useQuery<TaskResponse>({
-        queryKey: ['tasks', query],
-        queryFn: () => apiSearchTaskDueDate(query),
-        enabled: !!query
     })
 }
 
@@ -151,17 +142,7 @@ export const useUpdateMyTask = () => {
                 }
             })
         },
-        onError: (_, __, context) => {
-            rollbackOptimisticUpdates({
-                queryClient,
-                context
-            })
-        },
-        onSettled: () => {
-            void queryClient.invalidateQueries({
-                queryKey: ["tasks"]
-            })
-        }
+        ...commonTaskMutation<SyncResponse, UpdateTaskPayload, OptimisticUpdatesContext>(queryClient)
     })
 }
 
@@ -181,17 +162,7 @@ export const useMoveMyTask = () => {
                 }
             })
         },
-        onError: (_, __, context) => {
-            rollbackOptimisticUpdates({
-                queryClient,
-                context
-            })
-        },
-        // onSettled: () => {
-        //     void queryClient.invalidateQueries({
-        //         queryKey: ["tasks"]
-        //     })
-        // }
+        ...commonTaskMutation<SyncResponse, MoveTaskPayload, OptimisticUpdatesContext>(queryClient)
     })
 }
 
@@ -205,17 +176,7 @@ export const useReorderTask = () => {
                 payload: reorderingTask
             })
         },
-        onError: (_, __, context) => {
-            rollbackOptimisticUpdates({
-                queryClient,
-                context
-            })
-        },
-        onSettled: () => {
-            void queryClient.invalidateQueries({
-                queryKey: ["tasks"]
-            })
-        }
+        ...commonTaskMutation<SyncResponse, ReorderTaskPayload, OptimisticUpdatesContext>(queryClient)
     })
 }
 export const useDeleteMyTask = () => {
@@ -228,17 +189,7 @@ export const useDeleteMyTask = () => {
                 taskId: taskId,
             })
         },
-        onError: (_, __, context) => {
-            rollbackOptimisticUpdates({
-                queryClient,
-                context
-            })
-        },
-        onSettled: () => {
-            void queryClient.invalidateQueries({
-                queryKey: ["tasks"]
-            })
-        }
+        ...commonTaskMutation<null, {taskId: string}, OptimisticUpdatesContext>(queryClient)
     })
 }
 
@@ -252,16 +203,6 @@ export const useCompleteTask = () => {
                 taskId: taskId,
             })
         },
-        onError: (_, __, context) => {
-            rollbackOptimisticUpdates({
-                queryClient,
-                context
-            })
-        },
-        onSettled: () => {
-            void queryClient.invalidateQueries({
-                queryKey: ["tasks"]
-            })
-        }
+        ...commonTaskMutation<SyncResponse, {taskId: string}, OptimisticUpdatesContext>(queryClient)
     })
 }
