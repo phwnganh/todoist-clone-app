@@ -19,6 +19,7 @@ import type {
 import { useProjectStore } from "../../../stores/project.store.ts";
 import { useQueryClient } from "@tanstack/react-query";
 import {
+  dateFilterData,
   directionFilterData,
   groupingFilterData, priorityFilterData,
   sortingFilterData,
@@ -27,12 +28,14 @@ import MyTaskFilterDirectionDropdown from "./MyTaskFilterDirectionDropdown.tsx";
 import MyTaskFilterLabelDropdown from "./MyTaskFilterLabelDropdown";
 import type { Label } from "../../../types/label.type.ts";
 import {
+  buildDateFilterQuery,
   buildFilterQuery,
   parseFilterQuery,
 } from "../../../helpers/groupSortTasks.ts";
 import {
+  extractDateFromList,
   extractLabelsFromList,
-  extractPrioritiesFromList,
+  extractPrioritiesFromList, isDateCriteria,
 } from "../../../helpers/extractCriteriaFromFiltereds.ts";
 import type { Priority } from "../../../types/task.type.ts";
 
@@ -87,6 +90,9 @@ const MyTaskLayoutFiltersDropdown = ({
   const selectedPriorityKey = extractPrioritiesFromList(parsedCriteria);
   const displayPriorities = selectedPriorityKey.length === 0 ? "All" : selectedPriorityKey.join(" | ")
 
+  const selectedDateQuery = extractDateFromList(parsedCriteria)
+  const displayDate = dateFilterData.find(d => buildDateFilterQuery(d.key) === selectedDateQuery)?.label ?? "All"
+
   const handleUpdateViewOption = (payload: Partial<ViewOptionsPayload>) => {
     mutate({
       view_type: "PROJECT",
@@ -136,7 +142,20 @@ const MyTaskLayoutFiltersDropdown = ({
     });
   };
 
-  const handleSelectDate = () => {
+  const handleSelectDate = (dateKey: string | null) => {
+    const criteria = parseFilterQuery(viewOptions?.filtered_by)
+
+    const nonDateCriteria = criteria.filter(c => !isDateCriteria(c))
+    const newDateQuery = buildDateFilterQuery(dateKey)
+    const finalCriteria = [...nonDateCriteria]
+
+    if(newDateQuery){
+      finalCriteria.push(newDateQuery)
+    }
+
+    handleUpdateViewOption({
+      filtered_by: buildFilterQuery(finalCriteria)
+    })
     setOpenDropdown(null);
   };
 
@@ -384,13 +403,13 @@ const MyTaskLayoutFiltersDropdown = ({
                   "cursor-pointer max-w-40 h-7 rounded-small border border-product-library-border-idle-tint pl-2.5 flex items-center justify-between hover:border-product-library-border-focus-tint w-full"
                 }
               >
-                <p className={"text-sm"}>All</p>
+                <p className={"text-sm"}>{displayDate}</p>
                 <div className={"flex justify-center items-center w-7 h-7"}>
                   <TaskSmallArrowDownIcon />
                 </div>
               </div>
             </button>
-            {openDropdown === "date" && <MyTaskFilterDateDropdown />}
+            {openDropdown === "date" && <MyTaskFilterDateDropdown selectedFilteringDate={selectedDateQuery} onSelectFilteringDate={handleSelectDate}/>}
           </div>
 
           <div className={"relative"} ref={priorityRef}>

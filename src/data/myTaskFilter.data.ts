@@ -82,29 +82,29 @@ export const directionFilterData: DirectionOption[] = [
 
 export const dateFilterData = [
     {
-        key: "all",
+        key: null,
         label: "All"
     },
-    {
-        key: "today",
-        label: "Today"
-    },
+    // {
+    //     key: "today",
+    //     label: "Today"
+    // },
     {
         key: "this-week",
         label: "This week"
     },
-    {
-        key: "next-7-days",
-        label: "Next 7 days"
-    },
+    // {
+    //     key: "next-7-days",
+    //     label: "Next 7 days"
+    // },
     {
         key: "this-month",
         label: "This month"
     },
-    {
-        key: "next-30-days",
-        label: "Next 30 days"
-    },
+    // {
+    //     key: "next-30-days",
+    //     label: "Next 30 days"
+    // },
     {
         key: "no-date",
         label: "No date"

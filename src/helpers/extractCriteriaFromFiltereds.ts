@@ -1,3 +1,6 @@
+import {dateFilterData} from "../data/myTaskFilter.data.ts";
+import {buildDateFilterQuery} from "./groupSortTasks.ts";
+
 export const extractByPrefixFromList = (
   criteria: string[],
   matcher: (value: string) => boolean,
@@ -27,3 +30,13 @@ export const extractLabelsFromList = (criteria: string[]) =>
   extractByPrefixFromList(criteria, (value) => value.startsWith("@"));
 export const extractPrioritiesFromList = (criteria: string[]) =>
   extractByPrefixFromList(criteria, (value) => /^p[1-4]$/.test(value));
+
+export const isDateCriteria = (value: string) => {
+  const dateQueries = dateFilterData.map(d => buildDateFilterQuery(d.key)).filter(Boolean);
+  return dateQueries.includes(value)
+}
+
+export const extractDateFromList = (criteria: string[]) => {
+  const matched = criteria.find(c => isDateCriteria(c))
+  return matched ?? null
+}

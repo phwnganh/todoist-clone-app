@@ -1,7 +1,12 @@
 import { dateFilterData } from "../../../data/myTaskFilter.data.ts";
 import VerifiedIcon from "../../../assets/verified-icon.svg";
+import {buildDateFilterQuery} from "../../../helpers/groupSortTasks.ts";
 
-const MyTaskFilterDateDropdown = () => {
+type MyTaskFilterDateDropdownProps = {
+    selectedFilteringDate: string | null;
+    onSelectFilteringDate: (selectedFilteringDate: string | null) => void;
+}
+const MyTaskFilterDateDropdown = ({selectedFilteringDate, onSelectFilteringDate}: MyTaskFilterDateDropdownProps) => {
   return (
     <div
       id={"date-listbox"}
@@ -12,21 +17,26 @@ const MyTaskFilterDateDropdown = () => {
       }
     >
       {dateFilterData.map((date) => {
+          const isSelected = buildDateFilterQuery(date.key) === selectedFilteringDate
         return (
           <div
             key={date.key}
             role={"option"}
+            onClick={() => onSelectFilteringDate(date.key)}
             tabIndex={-1}
             className={
               "group flex flex-col py-1 px-1.5 flex-1 w-full hover:bg-product-library-selectable-secondary-hover-fill rounded-small"
             }
           >
             <div className="flex items-center gap-1.5">
-              <div className="flex justify-center items-center invisible group-data-[selected=true]:visible">
-                <img src={VerifiedIcon} alt={"verified-icon"} />
-              </div>
+
               <span className="flex items-center gap-small">
-                <div className="w-4 h-4 flex justify-center items-center shrink-0"></div>
+                  {isSelected ?
+                      <div className="flex justify-center items-center w-4 h-4 shrink-0">
+                      <img src={VerifiedIcon} alt={"verified-icon"} />
+                  </div> :
+                      <div className="w-4 h-4 flex justify-center items-center shrink-0"></div>
+                  }
                 <div className="flex gap-1.5 overflow-hidden">
                   <div className="text-sm">{date.label}</div>
                 </div>

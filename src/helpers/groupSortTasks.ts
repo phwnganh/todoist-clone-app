@@ -34,6 +34,27 @@ export const buildFilterQuery = (criteria: string[]): string | null => {
   finalCriteria = [...finalCriteria, ...otherCriteria];
   return finalCriteria.join(" & ");
 };
+
+export const buildDateFilterQuery = (key: string | null): string | null => {
+  switch (key){
+    case "all":
+      return null;
+    // case "today":
+    //   return "overdue";
+    case "this-week":
+      return "due before: next week";
+    // case "next-7-days":
+    //   return "7 days";
+    case "this-month":
+      return "due before: first day";
+    // case "next-30-days":
+    //   return "30 days";
+    case "no-date":
+      return "no date";
+    default:
+      return null;
+  }
+}
 export const filterTasks = (tasks: Task[], view?: ViewOptionsPayload) => {
   let res = [...tasks];
   if (!view?.show_completed_tasks) {
