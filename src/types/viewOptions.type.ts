@@ -7,6 +7,7 @@ export type SortOrder = "ASC" | "DESC"
 export type ViewMode = "LIST" | "BOARD"
 
 export type TaskGroup = {
+    key: string;
     title: string;
     tasks: Task[]
 }

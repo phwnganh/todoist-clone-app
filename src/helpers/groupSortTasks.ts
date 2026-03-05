@@ -12,14 +12,12 @@ import {
   addMonths,
   compareAsc,
   compareDesc,
-  format,
   isBefore,
-  isToday,
-  isTomorrow,
-  parseISO, startOfDay,
+  parseISO,
   startOfMonth
 } from "date-fns";
 import {priorityFilterData} from "../data/myTaskFilter.data";
+import {getGroupKeys, getGroupsTitle, sortGroups} from "./groupTasks.ts";
 
 export const parseFilterQuery = (query?: string | null): string[] => {
   if (!query) return [];
@@ -70,22 +68,6 @@ export const buildDateFilterQuery = (key: string | null): string | null => {
   }
 }
 
-const getDateTitle = (date: Date) => {
-  const formattedDate = format(date, "d MMM")
-  const weekday = format(date, "EEEE")
-
-  if(isToday(date)){
-    return `${formattedDate} - Today - ${weekday}`;
-  }
-  if(isTomorrow(date)){
-    return `${formattedDate} - Tomorrow - ${weekday}`;
-  }
-  return `${formattedDate} - ${weekday}`;
-}
-
-const getDateGroupKey = (date: Date) => {
-  return format(date, "yyyy-MM-dd")
-}
 export const filterTasks = (tasks: Task[], view?: ViewOptionsPayload) => {
   let res = [...tasks]
 
@@ -180,6 +162,7 @@ export const groupTasks = (
   if (!grouped_by)
     return [
       {
+        key: "",
         title: "",
         tasks,
       },
@@ -187,110 +170,20 @@ export const groupTasks = (
   const groups: Record<string, Task[]> = {};
 
   tasks.forEach((task) => {
-    let key = "";
-    switch (grouped_by) {
-      case "PRIORITY": {
-        const priority = priorityFilterData.find(p => p.value === task.priority);
-        key = priority ? priority.label : ""
-        break;
-      }
-      case "DUE_DATE": {
-        if (!task.due?.date) {
-          key = "NO_DATE";
-          break;
-        }
-        const date = parseISO(task.due.date);
-        const today = startOfDay(new Date())
-
-        if (isBefore(date, today)) {
-          key = "OVERDUE"
-        } else {
-          key = getDateGroupKey(date);
-        }
-        break;
-      }
-      case "ADDED_DATE":
-      {
-        if(!task.added_at){
-          key = "NO_DATE";
-          break;
-        }
-        const date = new Date(task.added_at);
-        key = getDateGroupKey(date);
-      }
-        break;
-
-      case "LABEL":
-      {
-        const labels = task.labels?.length ? task.labels : ["No label"]
-        labels.forEach(label => {
-          if(!groups[label]) groups[label] = []
-          groups[label].push(task)
-        })
-        break;
-      }
-    }
-
-    if(grouped_by !== "LABEL") {
-      if (!groups[key]) groups[key] = [];
-      groups[key].push(task);
-    }
-
+    const keys = getGroupKeys(task, grouped_by)
+    
+    keys.forEach(key => {
+      if(!groups[key]) groups[key] = [];
+      groups[key].push(task)
+    })
   });
 
-  const res = Object.entries(groups).map(([key, tasks]) => {
-    let title = key;
-
-    if(grouped_by === "DUE_DATE" || grouped_by === "ADDED_DATE"){
-      if(key === "OVERDUE"){
-        title = "Overdue";
-      }else if(key === "NO_DATE"){
-        title = "No date";
-      }else{
-        title = getDateTitle(parseISO(key))
-      }
-    }
-    return {
-      key,
-      title,
-      tasks
-    }
-  });
-
-  if(grouped_by === "PRIORITY"){
-    res.sort((a, b) => {
-      const priorityA = priorityFilterData.find(p => p.label === a.title)
-      const priorityB = priorityFilterData.find(p => p.label === b.title)
-
-      const valueA = priorityA?.value ?? 0
-      const valueB = priorityB?.value ?? 0
-
-      return valueB - valueA
-    })
-  }
-
-  if(grouped_by === "DUE_DATE" || grouped_by === "ADDED_DATE"){
-    res.sort((a, b) => {
-      if(a.key === "OVERDUE") return -1;
-      if(b.key === "OVERDUE") return 1;
-
-      if(a.key === "NO_DATE") return 1;
-      if(b.key === "NO_DATE") return -1;
-
-      const dateA = parseISO(a.key)
-      const dateB = parseISO(b.key)
-
-      return dateA.getTime() - dateB.getTime();
-    })
-  }
-
-  if(grouped_by === "LABEL"){
-    res.sort((a, b) => {
-      if(a.key === "No label") return 1;
-      if(b.key === "No label") return -1;
-
-      return a.key.localeCompare(b.key)
-    })
-  }
+  let res: TaskGroup[] = Object.entries(groups).map(([key, tasks]) => ({
+    key,
+    title: getGroupsTitle(key, grouped_by),
+    tasks
+  }))
+  res = sortGroups(res, grouped_by)
+  
   return res;
 };
