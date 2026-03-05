@@ -70,7 +70,7 @@ export const buildDateFilterQuery = (key: string | null): string | null => {
   }
 }
 
-const getDueDateTitle = (date: Date) => {
+const getDateTitle = (date: Date) => {
   const formattedDate = format(date, "d MMM")
   const weekday = format(date, "EEEE")
 
@@ -81,6 +81,10 @@ const getDueDateTitle = (date: Date) => {
     return `${formattedDate} - Tomorrow - ${weekday}`;
   }
   return `${formattedDate} - ${weekday}`;
+}
+
+const getDateGroupKey = (date: Date) => {
+  return format(date, "yyyy-MM-dd")
 }
 export const filterTasks = (tasks: Task[], view?: ViewOptionsPayload) => {
   let res = [...tasks]
@@ -201,13 +205,21 @@ export const groupTasks = (
         if (isBefore(date, today)) {
           key = "OVERDUE"
         } else {
-          key = format(date, "yyyy-MM-dd");
+          key = getDateGroupKey(date);
         }
         break;
       }
       case "ADDED_DATE":
-        key = task.added_at ? new Date(task.added_at).toDateString() : "";
+      {
+        if(!task.added_at){
+          key = "NO_DATE";
+          break;
+        }
+        const date = new Date(task.added_at);
+        key = getDateGroupKey(date);
+      }
         break;
+
       case "LABEL":
         key = task.labels?.[0] ?? "No label";
         break;
@@ -223,16 +235,17 @@ export const groupTasks = (
   const res = Object.entries(groups).map(([key, tasks]) => {
     let title = key;
 
-    if(grouped_by === "DUE_DATE"){
+    if(grouped_by === "DUE_DATE" || grouped_by === "ADDED_DATE"){
       if(key === "OVERDUE"){
         title = "Overdue";
       }else if(key === "NO_DATE"){
         title = "No date";
       }else{
-        title = getDueDateTitle(parseISO(key))
+        title = getDateTitle(parseISO(key))
       }
     }
     return {
+      key,
       title,
       tasks
     }
@@ -250,16 +263,16 @@ export const groupTasks = (
     })
   }
 
-  if(grouped_by === "DUE_DATE"){
+  if(grouped_by === "DUE_DATE" || grouped_by === "ADDED_DATE"){
     res.sort((a, b) => {
-      if(a.title === "Overdue") return -1;
-      if(b.title === "Overdue") return 1;
+      if(a.key === "OVERDUE") return -1;
+      if(b.key === "OVERDUE") return 1;
 
-      if(a.title === "No date") return 1;
-      if(b.title === "No date") return -1;
+      if(a.key === "NO_DATE") return 1;
+      if(b.key === "NO_DATE") return -1;
 
-      const dateA = parseISO(a.title.split(" - ")[0])
-      const dateB = parseISO(b.title.split(" - ")[0])
+      const dateA = parseISO(a.key)
+      const dateB = parseISO(b.key)
 
       return dateA.getTime() - dateB.getTime();
     })
