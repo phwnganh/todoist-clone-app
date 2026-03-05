@@ -7,7 +7,18 @@ import type {
   ViewOptionsPayload,
 } from "../types/viewOptions.type.ts";
 import {extractDateFromList, extractLabelsFromList, extractPrioritiesFromList} from "./extractCriteriaFromFiltereds.ts";
-import {addDays, addMonths, compareAsc, compareDesc, isBefore, parseISO, startOfMonth} from "date-fns";
+import {
+  addDays,
+  addMonths,
+  compareAsc,
+  compareDesc,
+  format,
+  isBefore,
+  isToday,
+  isTomorrow,
+  parseISO, startOfDay,
+  startOfMonth
+} from "date-fns";
 import {priorityFilterData} from "../data/myTaskFilter.data";
 
 export const parseFilterQuery = (query?: string | null): string[] => {
@@ -57,6 +68,19 @@ export const buildDateFilterQuery = (key: string | null): string | null => {
     default:
       return null;
   }
+}
+
+const getDueDateTitle = (date: Date) => {
+  const formattedDate = format(date, "d MMM")
+  const weekday = format(date, "EEEE")
+
+  if(isToday(date)){
+    return `${formattedDate} - Today - ${weekday}`;
+  }
+  if(isTomorrow(date)){
+    return `${formattedDate} - Tomorrow - ${weekday}`;
+  }
+  return `${formattedDate} - ${weekday}`;
 }
 export const filterTasks = (tasks: Task[], view?: ViewOptionsPayload) => {
   let res = [...tasks]
@@ -166,9 +190,21 @@ export const groupTasks = (
         key = priority ? priority.label : ""
         break;
       }
-      case "DUE_DATE":
-        key = task.due?.date ?? "No date";
+      case "DUE_DATE": {
+        if (!task.due?.date) {
+          key = "NO_DATE";
+          break;
+        }
+        const date = parseISO(task.due.date);
+        const today = startOfDay(new Date())
+
+        if (isBefore(date, today)) {
+          key = "OVERDUE"
+        } else {
+          key = format(date, "yyyy-MM-dd");
+        }
         break;
+      }
       case "ADDED_DATE":
         key = task.added_at ? new Date(task.added_at).toDateString() : "";
         break;
@@ -184,10 +220,23 @@ export const groupTasks = (
     groups[key].push(task);
   });
 
-  const res = Object.entries(groups).map(([title, tasks]) => ({
-    title,
-    tasks,
-  }));
+  const res = Object.entries(groups).map(([key, tasks]) => {
+    let title = key;
+
+    if(grouped_by === "DUE_DATE"){
+      if(key === "OVERDUE"){
+        title = "Overdue";
+      }else if(key === "NO_DATE"){
+        title = "No date";
+      }else{
+        title = getDueDateTitle(parseISO(key))
+      }
+    }
+    return {
+      title,
+      tasks
+    }
+  });
 
   if(grouped_by === "PRIORITY"){
     res.sort((a, b) => {
@@ -198,6 +247,21 @@ export const groupTasks = (
       const valueB = priorityB?.value ?? 0
 
       return valueB - valueA
+    })
+  }
+
+  if(grouped_by === "DUE_DATE"){
+    res.sort((a, b) => {
+      if(a.title === "Overdue") return -1;
+      if(b.title === "Overdue") return 1;
+
+      if(a.title === "No date") return 1;
+      if(b.title === "No date") return -1;
+
+      const dateA = parseISO(a.title.split(" - ")[0])
+      const dateB = parseISO(b.title.split(" - ")[0])
+
+      return dateA.getTime() - dateB.getTime();
     })
   }
   return res;
