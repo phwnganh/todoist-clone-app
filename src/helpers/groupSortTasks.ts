@@ -7,7 +7,7 @@ import type {
   ViewOptionsPayload,
 } from "../types/viewOptions.type.ts";
 import {extractDateFromList, extractLabelsFromList, extractPrioritiesFromList} from "./extractCriteriaFromFiltereds.ts";
-import {addDays, addMonths, isBefore, parseISO, startOfMonth} from "date-fns";
+import {addDays, addMonths, compareAsc, compareDesc, isBefore, parseISO, startOfMonth} from "date-fns";
 import {priorityFilterData} from "../data/myTaskFilter.data";
 
 export const parseFilterQuery = (query?: string | null): string[] => {
@@ -124,29 +124,24 @@ export const sortTasks = (
 ): Task[] => {
   if (!sortedBy) return tasks;
 
-  const multiplier = order === "DESC" ? -1 : 1;
+  const compare = order === "DESC" ? compareDesc : compareAsc
 
   return [...tasks].sort((a, b) => {
-    let res = 0;
     switch (sortedBy) {
       case "ALPHABETICALLY":
-        res = a.content.localeCompare(b.content);
-        break;
+        return order === "ASC" ? a.content.localeCompare(b.content) : b.content.localeCompare(a.content)
       case "ADDED_DATE":
-        res =
-          new Date(a.added_at ?? 0).getTime() -
-          new Date(b.added_at ?? 0).getTime();
-        break;
+        return compare(parseISO(a.added_at ?? ""), parseISO(b.added_at ?? ""))
       case "DUE_DATE":
-        res =
-          new Date(a.due?.date ?? 0).getTime() -
-          new Date(b.due?.date ?? 0).getTime();
-        break;
+        if(!a.due?.date) return 1;
+        if(!b.due?.date) return -1;
+
+        return compare(parseISO(a.due.date), parseISO(b.due.date))
       case "PRIORITY":
-        res = (a.priority ?? 0) - (b.priority ?? 0);
-        break;
+        return order === "ASC" ? (a.priority ?? 0) - (b.priority ?? 0) : (b.priority ?? 0) - (a.priority ?? 0)
+      default:
+        return 0;
     }
-    return res * multiplier;
   });
 };
 
