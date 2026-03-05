@@ -86,7 +86,8 @@ export const filterTasks = (tasks: Task[], view?: ViewOptionsPayload) => {
   // label
   const labels = extractLabelsFromList(criteria)
   if(labels.length > 0){
-    res = res.filter(task => task.labels?.some(label => labels.includes(label)))
+    const cleanedLabels = labels.map(l => l.replace("@", ""))
+    res = res.filter(task => task.labels?.some(label => cleanedLabels.includes(label)))
   }
 
   // date
