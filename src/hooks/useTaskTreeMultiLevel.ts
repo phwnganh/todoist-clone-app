@@ -40,12 +40,12 @@ export const useTaskTreeMultiLevel = (tasks: Task[] | undefined, sectionId?: str
         })
 
         // sort tree
-        const sortTree = (nodes: TaskNode[]) => {
-            nodes.sort((a, b) => (a.task.child_order ?? 0) - (b.task.child_order ?? 0))
-            nodes.forEach(node => sortTree(node.children))
-        }
-
-        sortTree(myTaskRoots)
+        // const sortTree = (nodes: TaskNode[]) => {
+        //     nodes.sort((a, b) => (a.task.child_order ?? 0) - (b.task.child_order ?? 0))
+        //     nodes.forEach(node => sortTree(node.children))
+        // }
+        //
+        // sortTree(myTaskRoots)
         return myTaskRoots;
     }, [tasks, sectionId]);
 }

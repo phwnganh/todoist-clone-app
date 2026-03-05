@@ -145,9 +145,6 @@ export const sortTasks = (
       case "PRIORITY":
         res = (a.priority ?? 0) - (b.priority ?? 0);
         break;
-      case "LABEL":
-        res = (a.labels?.[0] ?? "").localeCompare(b.labels?.[0] ?? "");
-        break;
     }
     return res * multiplier;
   });

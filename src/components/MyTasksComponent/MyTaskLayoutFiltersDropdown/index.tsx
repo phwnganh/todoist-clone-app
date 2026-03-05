@@ -105,8 +105,7 @@ const MyTaskLayoutFiltersDropdown = ({
   };
 
   const handleSelectSorting = (
-    sort?: SortedBy | null,
-    order: SortOrder = "ASC",
+    sort?: SortedBy | null
   ) => {
     if (!sort) {
       onUpdateViewOption({
@@ -116,7 +115,7 @@ const MyTaskLayoutFiltersDropdown = ({
     } else {
       onUpdateViewOption({
         sorted_by: sort ?? null,
-        sort_order: order ?? "ASC",
+        sort_order: viewOptions?.sort_order ?? "ASC",
       });
     }
     setOpenDropdown(null);

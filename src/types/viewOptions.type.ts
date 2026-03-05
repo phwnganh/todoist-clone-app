@@ -2,7 +2,7 @@ import type {Task} from "./task.type.ts";
 
 export type ViewTypes = "PROJECT" | "LABEL" | "WORKSPACE_FILTER" | "FILTER" | "TODAY" | "UPCOMING"
 export type GroupedBy = "ADDED_DATE" | "DUE_DATE" | "DEADLINE" | "LABEL" | "PRIORITY"
-export type SortedBy = "ALPHABETICALLY" | "ADDED_DATE" | "DUE_DATE" | "DEADLINE" | "LABEL" | "PRIORITY"
+export type SortedBy = "ALPHABETICALLY" | "ADDED_DATE" | "DUE_DATE" | "DEADLINE" | "PRIORITY"
 export type SortOrder = "ASC" | "DESC"
 export type ViewMode = "LIST" | "BOARD"
 

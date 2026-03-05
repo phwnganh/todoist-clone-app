@@ -59,10 +59,10 @@ export const sortingFilterData: SortingOption[] = [
         key: "ADDED_DATE",
         label: "Date added"
     },
-    {
-        key: "DEADLINE",
-        label: "Deadline"
-    },
+    // {
+    //     key: "DEADLINE",
+    //     label: "Deadline"
+    // },
     {
         key: "PRIORITY",
         label: "Priority"
