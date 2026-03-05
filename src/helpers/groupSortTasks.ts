@@ -161,17 +161,16 @@ export const groupTasks = (
   tasks.forEach((task) => {
     let key = "";
     switch (grouped_by) {
-      case "PRIORITY":
-        key = `Priority ${task.priority}`;
+      case "PRIORITY": {
+        const priority = priorityFilterData.find(p => p.value === task.priority);
+        key = priority ? priority.label : ""
         break;
+      }
       case "DUE_DATE":
         key = task.due?.date ?? "No date";
         break;
       case "ADDED_DATE":
         key = task.added_at ? new Date(task.added_at).toDateString() : "";
-        break;
-      case "DEADLINE":
-        key = task.deadline?.property1 ?? "No deadline";
         break;
       case "LABEL":
         key = task.labels?.[0] ?? "No label";
@@ -185,8 +184,21 @@ export const groupTasks = (
     groups[key].push(task);
   });
 
-  return Object.entries(groups).map(([title, tasks]) => ({
+  const res = Object.entries(groups).map(([title, tasks]) => ({
     title,
     tasks,
   }));
+
+  if(grouped_by === "PRIORITY"){
+    res.sort((a, b) => {
+      const priorityA = priorityFilterData.find(p => p.label === a.title)
+      const priorityB = priorityFilterData.find(p => p.label === b.title)
+
+      const valueA = priorityA?.value ?? 0
+      const valueB = priorityB?.value ?? 0
+
+      return valueB - valueA
+    })
+  }
+  return res;
 };

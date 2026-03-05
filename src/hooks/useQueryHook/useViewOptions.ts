@@ -49,10 +49,10 @@ export const useTasksWithView = (query?: TaskQuery, viewType?: string, objectId?
         const filtered = filterTasks(tasksData, viewOptions)
 
         const sorted =  sortTasks(filtered, viewOptions?.sorted_by, viewOptions?.sort_order ?? "ASC")
-        console.log("sorted", sorted)
 
         const grouped = viewOptions?.grouped_by ? groupTasks(sorted, viewOptions?.grouped_by) : undefined
 
+        console.log("grouped: ", grouped)
         return {
             results: sorted,
             grouped

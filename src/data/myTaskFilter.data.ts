@@ -28,10 +28,10 @@ export const groupingFilterData: GroupingOption[] = [
         key: "ADDED_DATE",
         label: "Date added"
     },
-    {
-        key: "DEADLINE",
-        label: "Deadline"
-    },
+    // {
+    //     key: "DEADLINE",
+    //     label: "Deadline"
+    // },
     {
         key: "PRIORITY",
         label: "Priority"
