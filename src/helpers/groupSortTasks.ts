@@ -221,15 +221,21 @@ export const groupTasks = (
         break;
 
       case "LABEL":
-        key = task.labels?.[0] ?? "No label";
+      {
+        const labels = task.labels?.length ? task.labels : ["No label"]
+        labels.forEach(label => {
+          if(!groups[label]) groups[label] = []
+          groups[label].push(task)
+        })
         break;
+      }
     }
 
-    if (!groups[key]) {
-      groups[key] = [];
+    if(grouped_by !== "LABEL") {
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(task);
     }
 
-    groups[key].push(task);
   });
 
   const res = Object.entries(groups).map(([key, tasks]) => {
@@ -275,6 +281,15 @@ export const groupTasks = (
       const dateB = parseISO(b.key)
 
       return dateA.getTime() - dateB.getTime();
+    })
+  }
+
+  if(grouped_by === "LABEL"){
+    res.sort((a, b) => {
+      if(a.key === "No label") return 1;
+      if(b.key === "No label") return -1;
+
+      return a.key.localeCompare(b.key)
     })
   }
   return res;
