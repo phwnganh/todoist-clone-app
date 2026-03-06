@@ -1,12 +1,13 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import type {ApiError, SyncResponse} from "../../types/api.type.ts";
-import type {ViewOptionsPayload} from "../../types/viewOptions.type.ts";
+import type {DeleteViewOptionsPayload, ViewOptionsPayload} from "../../types/viewOptions.type.ts";
 import {
+    optimisticRemoveViewOptions,
     type OptimisticUpdatesContext,
     optimisticViewOptions,
     rollbackOptimisticUpdates
 } from "../../helpers/optimisticUpdates.ts";
-import {apiViewOptions} from "../../services/viewOptions.service.ts";
+import {apiDeleteViewOptions, apiViewOptions} from "../../services/viewOptions.service.ts";
 import {useGetAllTasks} from "./useTasks.ts";
 import type {TaskQuery} from "../../types/task.type.ts";
 import {useMemo} from "react";
@@ -31,6 +32,24 @@ export const useViewOptions = () => {
     })
 }
 
+export const useDeleteViewOptions = () => {
+    const queryClient = useQueryClient();
+    return useMutation<SyncResponse, ApiError, DeleteViewOptionsPayload, OptimisticUpdatesContext>({
+        mutationFn: apiDeleteViewOptions,
+        onMutate: async (payload) => {
+            return optimisticRemoveViewOptions({
+                queryClient,
+                optimisticDeleteViewOptions: payload
+            })
+        },
+        onError: (_, __, context) => {
+            rollbackOptimisticUpdates({
+                queryClient,
+                context
+            })
+        }
+    })
+}
 export const useTasksWithView = (query?: TaskQuery, viewType?: string, objectId?: string) => {
     const queryClient = useQueryClient();
     const tasksQuery = useGetAllTasks(query)

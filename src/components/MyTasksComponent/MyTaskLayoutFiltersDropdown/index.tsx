@@ -37,6 +37,8 @@ import type { Priority } from "../../../types/task.type.ts";
 import GroupingTaskSection from "./EachTaskLayoutFieldSection/GroupingTaskSection.tsx";
 import SortingTaskSection from "./EachTaskLayoutFieldSection/SortingTaskSection.tsx";
 import DirectingTaskSection from "./EachTaskLayoutFieldSection/DirectingTaskSection.tsx";
+import ResettingFiltersButton from "./ResettingFiltersButton.tsx";
+import {useDeleteViewOptions} from "../../../hooks/useQueryHook/useViewOptions.ts";
 
 type MyTaskLayoutFiltersDropdownProps = {
   onSelectLayout: (layout: ViewMode) => void;
@@ -58,12 +60,16 @@ const MyTaskLayoutFiltersDropdown = ({
   const labelRef = useRef<HTMLDivElement | null>(null);
   const dummyRef = useRef<HTMLDivElement | null>(null);
   const { projectId } = useProjectStore();
+
+  const {mutate: deleteViewOptions} = useDeleteViewOptions()
   const queryClient = useQueryClient();
   const viewOptions = queryClient.getQueryData<ViewOptionsPayload>([
     "viewOptions",
     "PROJECT",
     projectId,
   ]);
+
+  const hasActiveFilters = viewOptions?.grouped_by != null || viewOptions?.sorted_by != null || viewOptions?.sort_order != null || viewOptions?.filtered_by != null || viewOptions?.show_completed_tasks;
 
   const selectedGroupingLabel =
     groupingFilterData.find((g) => g.key === viewOptions?.grouped_by)?.label ??
@@ -180,6 +186,21 @@ const MyTaskLayoutFiltersDropdown = ({
     });
     setOpenDropdown(null);
   };
+
+  const handleResetFilters = () => {
+    deleteViewOptions({
+      view_type: "PROJECT",
+      object_id: projectId!
+    })
+
+    queryClient.setQueryData(['viewOptions', 'PROJECT', projectId], {
+      grouped_by: null,
+      sorted_by: null,
+      sort_order: null,
+      filtered_by: null,
+      show_completed_tasks: false,
+    })
+  }
 
   const handleSelectLabel = (label?: Label) => {
     if (!label) return;
@@ -385,6 +406,10 @@ const MyTaskLayoutFiltersDropdown = ({
             )}
           </div>
         </div>
+        <hr className="border-t border-t-product-library-divider-tertiary overflow-hidden" />
+        {hasActiveFilters &&
+            <ResettingFiltersButton onReset={handleResetFilters}/>
+        }
       </div>
     </div>
   );
