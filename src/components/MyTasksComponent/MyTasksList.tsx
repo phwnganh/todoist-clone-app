@@ -1,30 +1,15 @@
 import MyTaskListSection from "../MyTaskSectionComponent/MyTaskListSectionComponent/MyTaskListSection.tsx";
-import { useProjectStore } from "../../stores/project.store.ts";
 import type { Section } from "../../types/section.type.ts";
 import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
-import {useMemo} from "react";
-import {useTasksWithView} from "../../hooks/useQueryHook/useViewOptions.ts";
 import MyTaskListGroupSection from "./TasksGroupComponent/MyTaskListGroupSection.tsx";
-import {useGroupingTaskStore} from "../../stores/groupingTask.store.ts";
+import type { TaskGroup } from "../../types/viewOptions.type.ts";
 type MyTasksListProps = {
-  filteredSectionsByProject: Section[] | undefined;
+  filteredSectionsByProject?: Section[];
+  isGrouping: boolean;
+  groupedTasks: TaskGroup[]
+  noSection?: Section
 };
-const MyTasksList = ({ filteredSectionsByProject }: MyTasksListProps) => {
-  const projectId = useProjectStore((state) => state.projectId);
-  const {groupedBy} = useGroupingTaskStore()
-    const { data: tasks } = useTasksWithView({project_id: projectId}, "PROJECT", projectId)
-    const isGrouping = groupedBy != null
-
-    const groupedTasks = useMemo(() => {
-        if(!isGrouping) return []
-        return tasks?.grouped ?? []
-    }, [isGrouping, tasks?.grouped])
-  const NO_SECTION = {
-    id: null,
-    name: "(No section)",
-    project_id: projectId,
-  } as Section;
-
+const MyTasksList = ({ filteredSectionsByProject, isGrouping, groupedTasks, noSection }: MyTasksListProps) => {
   return (
     <>
         {isGrouping ?
@@ -33,7 +18,7 @@ const MyTasksList = ({ filteredSectionsByProject }: MyTasksListProps) => {
             )
          : (
              <>
-                <MyTaskListSection section={NO_SECTION}/>
+                <MyTaskListSection section={noSection}/>
                 <SortableContext items={(filteredSectionsByProject ?? [])?.map(s => s.id!)} strategy={verticalListSortingStrategy}>
                     {filteredSectionsByProject?.map((section) => (
                         <MyTaskListSection key={section.id} section={section}/>

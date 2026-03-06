@@ -13,7 +13,7 @@ import {useRef} from "react";
 type MyTaskSectionHeaderProps = {
   isExpanded: boolean;
   onExpanded: () => void;
-  section: Section;
+  section?: Section;
   tasks: Task[] | undefined | null;
   onOpenEditMyTaskSection: () => void;
 };
@@ -26,9 +26,9 @@ const MyTaskListSectionHeader = ({
   onOpenEditMyTaskSection,
 }: MyTaskSectionHeaderProps) => {
   const {onOpenSectionToolbarDropdown, openSectionToolbarDropdown, onCloseSectionToolbarDropdown, editingSectionId, onCloseEditSection, deleteSectionId} = useSectionStore()
-  const isOpenToolbar = openSectionToolbarDropdown === section.id
-  const isOpenEditSection = editingSectionId === section.id;
-  const isOpenDeleteSection = deleteSectionId === section.id;
+  const isOpenToolbar = openSectionToolbarDropdown === section?.id
+  const isOpenEditSection = editingSectionId === section?.id;
+  const isOpenDeleteSection = deleteSectionId === section?.id;
   const toolbarRef = useRef<HTMLDivElement | null>(null);
   useClickOutside({
     ref: toolbarRef,
@@ -59,7 +59,7 @@ const MyTaskListSectionHeader = ({
                       onClick={onOpenEditMyTaskSection}
                       className={"font-bold text-sm pt-1.5 pr-1.5 pb-1.25"}
                   >
-                    {section.name}
+                    {section?.name}
                   </div>
                   <span
                       className={
@@ -70,7 +70,7 @@ const MyTaskListSectionHeader = ({
           </span>
                 </div>
               </div>
-              <div className={"relative"} onClick={() => onOpenSectionToolbarDropdown(section.id)} ref={toolbarRef}>
+              <div className={"relative"} onClick={() => onOpenSectionToolbarDropdown(section?.id)} ref={toolbarRef}>
                 <button type={"button"}  className={"flex justify-center items-center"}>
                   <MenuIcon />
                 </button>

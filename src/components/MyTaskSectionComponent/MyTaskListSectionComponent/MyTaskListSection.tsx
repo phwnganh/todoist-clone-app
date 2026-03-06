@@ -18,13 +18,13 @@ import DragDropIcon from "../../icons/DragDropIcon.tsx";
 import {CSS} from '@dnd-kit/utilities'
 import {useTasksWithView} from "../../../hooks/useQueryHook/useViewOptions.ts";
 type MyTaskSectionProps = {
-  section: Section;
+  section?: Section;
 };
 const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
   const projectId = useProjectStore((state) => state.projectId);
   const { data: tasks, isLoading } = useTasksWithView({project_id: projectId}, "PROJECT", projectId)
   const { isExpanded, handleExpanded } = useExpanded(true);
-  const taskTree = useTaskTreeMultiLevel(tasks?.results, section.id);
+  const taskTree = useTaskTreeMultiLevel(tasks?.results, section?.id);
   const {
     editingSectionId,
     onOpenEditSection,
@@ -41,16 +41,16 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
   } = useTaskStore();
   const filteredTasks = useMemo(() => {
     return tasks?.results.filter(
-      (task) => task.section_id === section.id,
+      (task) => task.section_id === section?.id,
     );
-  }, [section.id, tasks?.results]);
+  }, [section?.id, tasks?.results]);
 
-  const {setNodeRef, attributes, listeners, transform, transition} = useSortable({id: section.id ?? "", data: {
+  const {setNodeRef, attributes, listeners, transform, transition} = useSortable({id: section?.id ?? "", data: {
     type: "section"
     }})
-  const isSectionAdding = addSectionId === section.id;
-  const isEditing = editingSectionId === section.id;
-  const isAddingTask = addingTaskId === section.id;
+  const isSectionAdding = addSectionId === section?.id;
+  const isEditing = editingSectionId === section?.id;
+  const isAddingTask = addingTaskId === section?.id;
 
   const style = {
     transition,
@@ -66,7 +66,7 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
   }
   return (
     <section className={"pb-4.5 px-3 lg:px-0"}>
-      {section.id !== null && (
+      {section?.id !== null && (
           <div className={`flex items-center gap-5`} ref={setNodeRef} style={style}>
             <button type={"button"} className={`flex justify-center items-center cursor-grab active:cursor-grabbing hover:bg-product-library-selectable-secondary-hover-fill rounded-small ${!isEditing ? "visible w-6 h-6" : "invisible"}`} {...attributes} {...listeners}>
               <DragDropIcon/>
@@ -87,7 +87,7 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
 
               ) : (
                   <MyTaskListSectionHeader
-                      onOpenEditMyTaskSection={() => onOpenEditSection(section.id)}
+                      onOpenEditMyTaskSection={() => onOpenEditSection(section?.id)}
                       isExpanded={isExpanded}
                       onExpanded={handleExpanded}
                       section={section}
@@ -121,7 +121,7 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
             ) : (
                 <AddMyTaskButtonSection
                     taskType={"task"}
-                    onOpenAddMyTask={() => onOpenAddMyTask(section.id)}
+                    onOpenAddMyTask={() => onOpenAddMyTask(section?.id)}
                 />
             )}
 
@@ -132,7 +132,7 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
 
             ) : (
                 <MyTaskListSectionFooter
-                    onAddMyTaskSectionForm={() => onOpenAddSectionForm(section.id)}
+                    onAddMyTaskSectionForm={() => onOpenAddSectionForm(section?.id)}
                 />
             )}
 

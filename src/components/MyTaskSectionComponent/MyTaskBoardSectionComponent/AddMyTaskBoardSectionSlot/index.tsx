@@ -3,7 +3,7 @@ import AddMyTaskSection from "../../AddMyTaskSectionComponent";
 import AddEachMyTaskBoardSectionButton from "./AddEachMyTaskBoardSectionButton.tsx";
 
 type AddMyTaskBoardSectionSlotProps = {
-  addedSectionId: string | null;
+  addedSectionId?: string | null;
 };
 const AddMyTaskBoardSectionSlot = ({
   addedSectionId,

@@ -8,7 +8,7 @@ import DeleteMyTaskSectionModalDialog from "../DeleteMyTaskSectionComponent/Dele
 import {useClickOutside} from "../../../hooks/useClickOutside.ts";
 
 type MyTaskBoardSectionHeaderProps = {
-  section: Section;
+  section?: Section;
   tasks: Task[] | undefined | null;
   onOpenEditMyTaskSection: () => void;
 };
@@ -19,8 +19,8 @@ const MyTaskBoardSectionHeader = ({
 }: MyTaskBoardSectionHeaderProps) => {
     const toolbarRef = useRef<HTMLDivElement | null>(null);
     const {openSectionToolbarDropdown, onOpenSectionToolbarDropdown, onCloseSectionToolbarDropdown, deleteSectionId} = useSectionStore()
-    const isOpenToolbar = openSectionToolbarDropdown === section.id;
-    const isDeleteSection = deleteSectionId === section.id;
+    const isOpenToolbar = openSectionToolbarDropdown === section?.id;
+    const isDeleteSection = deleteSectionId === section?.id;
 
     useClickOutside({
         ref: toolbarRef,
@@ -35,7 +35,7 @@ const MyTaskBoardSectionHeader = ({
           onClick={onOpenEditMyTaskSection}
           className={"font-bold text-sm pt-1.5 pr-1.5 pb-1.25 line-clamp-1"}
         >
-          {section.name}
+          {section?.name}
         </div>
         <span
           className={"text-sm text-product-library-display-secondary-idle-tint"}
@@ -44,7 +44,7 @@ const MyTaskBoardSectionHeader = ({
         </span>
       </div>
         <div className={"relative"} ref={toolbarRef}>
-            <button type={"button"} onClick={() => onOpenSectionToolbarDropdown((section.id))} className={"flex justify-center items-center"}>
+            <button type={"button"} onClick={() => onOpenSectionToolbarDropdown((section?.id))} className={"flex justify-center items-center"}>
                 <MenuIcon />
             </button>
             {isOpenToolbar && (

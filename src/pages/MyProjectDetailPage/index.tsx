@@ -8,7 +8,7 @@ import type {HeaderLayoutType} from "../../types/headerLayout.type.ts";
 import {PROJECTS} from "../../constants/routes.constants.ts";
 import MyTasksList from "../../components/MyTasksComponent/MyTasksList.tsx";
 import MyTaskTitle from "../../components/MyTasksComponent/MyTaskTitle.tsx";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import MyTaskLayoutFiltersDropdown from "../../components/MyTasksComponent/MyTaskLayoutFiltersDropdown";
 import MyTasksBoard from "../../components/MyTasksComponent/MyTasksBoard";
 import {useProjectStore} from "../../stores/project.store.ts";
@@ -24,11 +24,12 @@ import {useTasksWithView, useViewOptions} from "../../hooks/useQueryHook/useView
 import {useQueryClient} from "@tanstack/react-query";
 import type {ViewMode, ViewOptionsPayload} from "../../types/viewOptions.type.ts";
 import {useGroupingTaskStore} from "../../stores/groupingTask.store.ts";
+import type {Section} from "../../types/section.type.ts";
 
 const MyProjectDetailPage = () => {
     const {projectId} = useParams<{projectId: string}>();
     const setProjectId = useProjectStore(state => state.setProjectId);
-    const {setGroupedBy} = useGroupingTaskStore()
+    const {groupedBy, setGroupedBy} = useGroupingTaskStore()
     useEffect(() => {
         if(projectId){
             setProjectId(projectId);
@@ -43,12 +44,22 @@ const MyProjectDetailPage = () => {
     const [openLayoutDropdown, setOpenLayoutDropdown] = useState(false);
     const queryClient = useQueryClient()
     const viewOptions = queryClient.getQueryData<ViewOptionsPayload>(["viewOptions", "PROJECT", projectId])
-
+    const isGrouping = groupedBy != null;
     useEffect(() => {
         setGroupedBy(viewOptions?.grouped_by ?? null)
     }, [viewOptions?.grouped_by, setGroupedBy]);
 
+    const groupedTasks = useMemo(() => {
+        if(!isGrouping) return []
+        return allTasks?.grouped ?? []
+    }, [isGrouping, allTasks?.grouped])
     const layoutName = viewOptions?.view_mode ?? "LIST"
+
+    const NO_SECTION = {
+        id: null,
+        name: "(No section)",
+        project_id: projectId,
+    } as Section;
 
     const handleUpdateViewOption = (payload: Partial<ViewOptionsPayload>) => {
         updateViewOptions({
@@ -149,14 +160,14 @@ const MyProjectDetailPage = () => {
                     <section className={"max-w-200 mx-auto w-full relative z-10"}>
                         <div className={"flex flex-col gap-small"}>
                             <MyTaskTitle/>
-                            <MyTasksList filteredSectionsByProject={sections?.results}/>
+                            <MyTasksList filteredSectionsByProject={sections?.results} isGrouping={isGrouping} groupedTasks={groupedTasks} noSection={NO_SECTION}/>
                         </div>
                     </section>
                 ) : (
                     <section className={"px-10"}>
                         <div className={"flex flex-col gap-small"}>
                             <MyTaskTitle/>
-                            <MyTasksBoard filteredSectionsByProject={sections?.results}/>
+                            <MyTasksBoard filteredSectionsByProject={sections?.results} isGrouping={isGrouping} groupedTasks={groupedTasks} noSection={NO_SECTION}/>
                         </div>
                     </section>
                 )}

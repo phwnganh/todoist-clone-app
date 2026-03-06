@@ -7,11 +7,11 @@ type SectionStore = {
     editingSectionId: string | null;
     deleteSectionId: string | null;
     openSectionToolbarDropdown: string | null;
-    onOpenSectionToolbarDropdown: (sectionId: string | null) => void;
+    onOpenSectionToolbarDropdown: (sectionId?: string | null) => void;
     onCloseSectionToolbarDropdown: () => void;
-    onOpenAddSectionForm: (id: string | null) => void;
+    onOpenAddSectionForm: (id?: string | null) => void;
     onCloseAddSectionForm: () => void;
-    onOpenEditSection: (sectionId: string | null) => void;
+    onOpenEditSection: (sectionId?: string | null) => void;
     onCloseEditSection: () => void;
     onOpenDeleteSection: (id: string | null) => void;
     onCloseDeleteSection: () => void;

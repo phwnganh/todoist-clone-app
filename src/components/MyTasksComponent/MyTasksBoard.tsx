@@ -1,33 +1,20 @@
 import type { Section } from "../../types/section.type.ts";
 import MyTaskBoardSection from "../MyTaskSectionComponent/MyTaskBoardSectionComponent/MyTaskBoardSection.tsx";
-import { useProjectStore } from "../../stores/project.store.ts";
-import {Fragment, useMemo, useState} from "react";
+import {Fragment, useState} from "react";
 import AddMyTaskBoardSectionFinalButton from "../MyTaskSectionComponent/MyTaskBoardSectionComponent/AddMyTaskBoardSectionFinalButton.tsx";
 import AddMyTaskSection from "../MyTaskSectionComponent/AddMyTaskSectionComponent";
 import AddMyTaskBoardSectionSlot from "../MyTaskSectionComponent/MyTaskBoardSectionComponent/AddMyTaskBoardSectionSlot";
 import {horizontalListSortingStrategy, SortableContext} from "@dnd-kit/sortable";
-import {useGroupingTaskStore} from "../../stores/groupingTask.store.ts";
-import {useTasksWithView} from "../../hooks/useQueryHook/useViewOptions.ts";
 import MyTaskBoardGroupSection from "./TasksGroupComponent/MyTaskBoardGroupSection";
+import type {TaskGroup} from "../../types/viewOptions.type.ts";
 
 type MyTasksBoardProps = {
   filteredSectionsByProject: Section[] | undefined;
+  isGrouping: boolean;
+  groupedTasks: TaskGroup[];
+  noSection?: Section;
 };
-const MyTasksBoard = ({ filteredSectionsByProject }: MyTasksBoardProps) => {
-  const projectId = useProjectStore((state) => state.projectId);
-  const {groupedBy} = useGroupingTaskStore()
-  const {data: tasks} = useTasksWithView({project_id: projectId}, "PROJECT", projectId)
-  const isGrouping = groupedBy != null
-
-  const groupedTasks = useMemo(() => {
-    if(!isGrouping) return []
-    return tasks?.grouped ?? []
-  }, [isGrouping, tasks?.grouped])
-  const NO_SECTION = {
-    id: null,
-    name: "(No section)",
-    project_id: projectId,
-  } as Section;
+const MyTasksBoard = ({ filteredSectionsByProject, isGrouping, groupedTasks, noSection }: MyTasksBoardProps) => {
 
   const [
     openAddNewTaskSectionFormModalDialog,
@@ -50,8 +37,8 @@ const MyTasksBoard = ({ filteredSectionsByProject }: MyTasksBoardProps) => {
       {isGrouping ? (
           groupedTasks.map((group, index) => <MyTaskBoardGroupSection key={index} title={group.title} tasks={group.tasks} sections={filteredSectionsByProject}/>)
       ) : <>
-        <MyTaskBoardSection section={NO_SECTION} />
-        <AddMyTaskBoardSectionSlot addedSectionId={NO_SECTION.id} />
+        <MyTaskBoardSection section={noSection} />
+        <AddMyTaskBoardSectionSlot addedSectionId={noSection?.id} />
         <SortableContext items={(filteredSectionsByProject ?? []).map(s => s.id!)} strategy={horizontalListSortingStrategy}>
           {filteredSectionsByProject?.map((section) => {
             return (
