@@ -4,12 +4,14 @@ import TaskSmallArrowDownIcon from "../../icons/TaskSmallArrowDownIcon.tsx";
 import TaskSmallArrowRightIcon from "../../icons/TaskSmallArrowRightIcon.tsx";
 import MyTaskListItem from "../MyTaskListItem.tsx";
 import {useTaskStore} from "../../../stores/task.store.ts";
+import type {Section} from "../../../types/section.type.ts";
 
 type MyTaskGroupSectionProps = {
     title: string;
     tasks: Task[];
+    sections?: Section[]
 }
-const MyTaskGroupSection = ({title, tasks}: MyTaskGroupSectionProps) => {
+const MyTaskGroupSection = ({title, tasks, sections}: MyTaskGroupSectionProps) => {
     const { isExpanded, handleExpanded } = useExpanded(true);
     const { onCloseTaskDetailToolbar} = useTaskStore();
     return (
@@ -35,7 +37,9 @@ const MyTaskGroupSection = ({title, tasks}: MyTaskGroupSectionProps) => {
             {isExpanded && (
                 <ul className={"mt-1.25 flex flex-col flex-wrap"}>
                     {tasks.map(task => (
-                        <MyTaskListItem key={task.id} taskNode={{task, children: []}} level={0} onCloseTaskDetailToolbar={onCloseTaskDetailToolbar}/>
+                        <MyTaskListItem key={task.id} taskNode={{task, children: []}} level={0} onCloseTaskDetailToolbar={onCloseTaskDetailToolbar}
+                                        sections={sections}
+                        />
                     ))}
                 </ul>
             )}

@@ -23,11 +23,12 @@ import {useDragStore} from "../../stores/dragDrop.store.ts";
 import {useTasksWithView, useViewOptions} from "../../hooks/useQueryHook/useViewOptions.ts";
 import {useQueryClient} from "@tanstack/react-query";
 import type {ViewMode, ViewOptionsPayload} from "../../types/viewOptions.type.ts";
+import {useGroupingTaskStore} from "../../stores/groupingTask.store.ts";
 
 const MyProjectDetailPage = () => {
     const {projectId} = useParams<{projectId: string}>();
     const setProjectId = useProjectStore(state => state.setProjectId);
-
+    const {setGroupedBy} = useGroupingTaskStore()
     useEffect(() => {
         if(projectId){
             setProjectId(projectId);
@@ -42,6 +43,11 @@ const MyProjectDetailPage = () => {
     const [openLayoutDropdown, setOpenLayoutDropdown] = useState(false);
     const queryClient = useQueryClient()
     const viewOptions = queryClient.getQueryData<ViewOptionsPayload>(["viewOptions", "PROJECT", projectId])
+
+    useEffect(() => {
+        setGroupedBy(viewOptions?.grouped_by ?? null)
+    }, [viewOptions?.grouped_by, setGroupedBy]);
+
     const layoutName = viewOptions?.view_mode ?? "LIST"
 
     const handleUpdateViewOption = (payload: Partial<ViewOptionsPayload>) => {

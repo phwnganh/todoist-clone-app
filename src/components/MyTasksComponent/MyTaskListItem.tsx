@@ -26,32 +26,39 @@ import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-ki
 import DragDropIcon from "../icons/DragDropIcon.tsx";
 import {CSS} from "@dnd-kit/utilities";
 import {useClickOutside} from "../../hooks/useClickOutside.ts";
+import {useGroupingTaskStore} from "../../stores/groupingTask.store.ts";
+import type {Section} from "../../types/section.type.ts";
 
 type MyTaskListItemProps = {
   taskNode: TaskNode;
   level: number;
   onCloseTaskDetailToolbar: () => void;
+  sections?: Section[]
 };
 const MyTaskListItem = ({
   taskNode,
   level,
   onCloseTaskDetailToolbar,
+    sections,
 }: MyTaskListItemProps) => {
   const { task, children } = taskNode;
   const { isExpanded, handleExpanded } = useExpanded(true);
   const { editingTaskId, deleteTaskId, onOpenEditTask, onCloseEditTask, taskDetailId, onOpenTaskDetail, onCloseTaskDetail, openTaskDetailToolbar, onOpenTaskDetailToolbar } = useTaskStore();
+  const {groupedBy} = useGroupingTaskStore()
   const isEditing = editingTaskId === task.id;
   const isOpenTaskDetail = taskDetailId === task.id;
   const isDeleting = deleteTaskId === task.id;
   const isOpenTaskDetailToolbar = openTaskDetailToolbar === task.id;
   const hasChildren = children.length > 0;
   const completedChildrenLength = children.filter(child => child.task.checked || child.task.completed_at).length
+  const isGrouping = groupedBy != null
   const {category, label} = getDueInfo(task?.due?.date)
   const {setNodeRef, attributes, listeners, transition, transform} = useSortable({id: task.id, data: {
     type: "task"
   }})
   const taskToolbarRef = useRef<HTMLDivElement | null>(null)
 
+  const sectionName = sections?.find(s => s.id === task.section_id)?.name
   useClickOutside({
     ref: taskToolbarRef,
     handler: onCloseTaskDetailToolbar,
@@ -82,9 +89,11 @@ const MyTaskListItem = ({
         />
       ) : (
           <div ref={setNodeRef} style={style} className={"flex items-start gap-5 px-2 border-b border-b-product-library-divider-primary"}>
-            <button type={"button"} className={"flex justify-center items-center w-6 h-6 hover:bg-product-library-selectable-secondary-hover-fill rounded-small"} {...attributes} {...listeners}>
-              <DragDropIcon/>
-            </button>
+            {!isGrouping &&
+                <button type={"button"} className={"flex justify-center items-center w-6 h-6 hover:bg-product-library-selectable-secondary-hover-fill rounded-small"} {...attributes} {...listeners}>
+                  <DragDropIcon/>
+                </button>
+            }
             <li
                 className={`flex justify-between w-full items-start group relative ${getTaskIndentClass(level)}`}
             >
@@ -176,57 +185,63 @@ const MyTaskListItem = ({
                   </div>
                 </div>
               </div>
-              <div className={"group-hover:flex hidden mt-2 pl-4 gap-small"}>
-                <button
-                    type={"button"}
-                    onClick={() => onOpenEditTask(task.id)}
-                    aria-label={"edit"}
-                    className={
-                      "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
-                    }
-                >
-                  <EditIcon />
-                </button>
-                <button
-                    type={"button"}
-                    aria-label={"due-date"}
-                    className={
-                      "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
-                    }
-                >
-                  <DueDateIcon />
-                </button>
-                <button
-                    type={"button"}
-                    aria-label={"comment"}
-                    className={
-                      "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
-                    }
-                >
-                  <CommentIcon />
-                </button>
-                <div className={"relative"} ref={taskToolbarRef}>
+              <div className={"flex flex-col justify-between"}>
+                <div className={"group-hover:opacity-100 opacity-0 pointer-events-none group-hover:pointer-events-auto flex mt-2 pl-4 gap-small"}>
                   <button
                       type={"button"}
-                      onClick={(e) => {
-                        handleOpenTaskToolbarDropdown(e, task.id);
-                      }}
-                      aria-label={"menu"}
+                      onClick={() => onOpenEditTask(task.id)}
+                      aria-label={"edit"}
                       className={
                         "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
                       }
                   >
-                    <MenuIcon />
+                    <EditIcon />
                   </button>
-                  {isOpenTaskDetailToolbar && (
-                      <div
-                          className={"absolute right-9 z-50"}
-                          onClick={(e) => e.stopPropagation()}
-                      >
-                        <MyTasksToolbarDropdown taskId={task.id} task={task}/>
-                      </div>
-                  )}
+                  <button
+                      type={"button"}
+                      aria-label={"due-date"}
+                      className={
+                        "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
+                      }
+                  >
+                    <DueDateIcon />
+                  </button>
+                  <button
+                      type={"button"}
+                      aria-label={"comment"}
+                      className={
+                        "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
+                      }
+                  >
+                    <CommentIcon />
+                  </button>
+                  <div className={"relative"} ref={taskToolbarRef}>
+                    <button
+                        type={"button"}
+                        onClick={(e) => {
+                          handleOpenTaskToolbarDropdown(e, task.id);
+                        }}
+                        aria-label={"menu"}
+                        className={
+                          "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
+                        }
+                    >
+                      <MenuIcon />
+                    </button>
+                    {isOpenTaskDetailToolbar && (
+                        <div
+                            className={"absolute right-9 z-50"}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                          <MyTasksToolbarDropdown taskId={task.id} task={task}/>
+                        </div>
+                    )}
+                  </div>
                 </div>
+                {sectionName && isGrouping &&
+                    <p className={"self-end text-xs text-product-library-display-secondary-idle-tint"}>/{sectionName}</p>
+                }
+
               </div>
             </li>
           </div>
@@ -241,6 +256,7 @@ const MyTaskListItem = ({
                     taskNode={child}
                     level={level + 1}
                     onCloseTaskDetailToolbar={onCloseTaskDetailToolbar}
+                    sections={sections}
                 />
             ))}
           </SortableContext>
