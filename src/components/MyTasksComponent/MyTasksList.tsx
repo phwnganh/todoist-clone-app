@@ -16,7 +16,7 @@ const MyTasksList = ({ filteredSectionsByProject }: MyTasksListProps) => {
 
     const viewOptions = queryClient.getQueryData<ViewOptionsPayload>(["viewOptions", "PROJECT", projectId])
     const groupedBy = viewOptions?.grouped_by;
-    const isGrouping = groupedBy !== null
+    const isGrouping = groupedBy != null
 
     const groupedTasks = useMemo(() => {
         if(!isGrouping) return []
