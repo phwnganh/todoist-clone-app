@@ -18,23 +18,29 @@ import {DUE_COLOR_CLASS} from "../../constants/color.constants.ts";
 import {useSortable} from "@dnd-kit/sortable";
 import DragDropIcon from "../icons/DragDropIcon.tsx";
 import {CSS} from "@dnd-kit/utilities";
+import {useGroupingTaskStore} from "../../stores/groupingTask.store.ts";
+import type {Section} from "../../types/section.type.ts";
 
 type MyTaskBoardItemProps = {
   task: Task;
   isOpenTaskDetailToolbar: boolean;
   onOpenTaskDetailToolbar: (e: MouseEvent<HTMLButtonElement>) => void;
   tasks: Task[];
+  sections?: Section[];
 };
 const MyTaskBoardItem = ({
   task,
   isOpenTaskDetailToolbar,
   onOpenTaskDetailToolbar,
   tasks,
+    sections
 }: MyTaskBoardItemProps) => {
   const { editingTaskId, onCloseEditTask, deleteTaskId, taskDetailId, onOpenTaskDetail, onCloseTaskDetail } = useTaskStore();
+  const {groupedBy} = useGroupingTaskStore()
   const isEditing = editingTaskId === task.id;
   const isDeleting = deleteTaskId === task.id;
   const isOpeningTaskDetail = taskDetailId === task.id;
+  const isGrouping = groupedBy != null
   const {category, label} = getDueInfo(task?.due?.date)
   const {setNodeRef, attributes, listeners, transition, transform} = useSortable({id: task.id})
   const style = {
@@ -50,6 +56,8 @@ const MyTaskBoardItem = ({
   const childrenTasks = useMemo(() => {
     return tasks.filter((t) => t.parent_id === task.id);
   }, [tasks, task.id]);
+
+  const sectionName = sections?.find(s => s.id === task.section_id)?.name
   const completedChildrenLength = childrenTasks.filter(task => task.checked || task.completed_at).length
   return (
     <>
@@ -67,9 +75,12 @@ const MyTaskBoardItem = ({
             "flex items-start outline outline-border-idle hover:outline-border-hover shadow-sm rounded-large p-2.5 group relative"
           }
         >
-          <button type={"button"} {...attributes} {...listeners} className={"flex justify-center items-center w-6 h-6 cursor-grab active:cursor-grabbing hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}>
-            <DragDropIcon/>
-          </button>
+          {!isGrouping &&
+              <button type={"button"} {...attributes} {...listeners} className={"flex justify-center items-center w-6 h-6 cursor-grab active:cursor-grabbing hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}>
+                <DragDropIcon/>
+              </button>
+          }
+
           <button
             type={"button"}
             onClick={() => handleCompleteTask(task.id)}
@@ -110,7 +121,7 @@ const MyTaskBoardItem = ({
               {childrenTasks.length > 0 && (
                 <div
                   className={
-                    "flex gap-0.5 text-xs text-product-library-display-secondary-idle-tint"
+                    "flex gap-0.5 text-xs text-product-library-display-secondary-idle-tint shrink-0"
                   }
                 >
                   <img src={ChildrenIcon} alt={"children-icon"} />
@@ -131,6 +142,8 @@ const MyTaskBoardItem = ({
 
 
               <MyTaskBoardLabelsPreview labels={task.labels} />
+
+              {sectionName && isGrouping && <p className={"text-xs text-product-library-display-secondary-idle-tint"}>/{sectionName}</p>}
             </div>
           </div>
           <button

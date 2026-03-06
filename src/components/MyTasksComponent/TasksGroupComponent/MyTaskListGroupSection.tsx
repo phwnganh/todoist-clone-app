@@ -11,7 +11,7 @@ type MyTaskGroupSectionProps = {
     tasks: Task[];
     sections?: Section[]
 }
-const MyTaskGroupSection = ({title, tasks, sections}: MyTaskGroupSectionProps) => {
+const MyTaskListGroupSection = ({title, tasks, sections}: MyTaskGroupSectionProps) => {
     const { isExpanded, handleExpanded } = useExpanded(true);
     const { onCloseTaskDetailToolbar} = useTaskStore();
     return (
@@ -47,4 +47,4 @@ const MyTaskGroupSection = ({title, tasks, sections}: MyTaskGroupSectionProps) =
     );
 };
 
-export default MyTaskGroupSection;
+export default MyTaskListGroupSection;

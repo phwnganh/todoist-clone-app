@@ -4,7 +4,7 @@ import type { Section } from "../../types/section.type.ts";
 import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import {useMemo} from "react";
 import {useTasksWithView} from "../../hooks/useQueryHook/useViewOptions.ts";
-import MyTaskGroupSection from "./TasksGroupComponent/MyTaskGroupSection.tsx";
+import MyTaskListGroupSection from "./TasksGroupComponent/MyTaskListGroupSection.tsx";
 import {useGroupingTaskStore} from "../../stores/groupingTask.store.ts";
 type MyTasksListProps = {
   filteredSectionsByProject: Section[] | undefined;
@@ -29,7 +29,7 @@ const MyTasksList = ({ filteredSectionsByProject }: MyTasksListProps) => {
     <>
         {isGrouping ?
             (
-                groupedTasks.map((group, index) => <MyTaskGroupSection key={index} title={group.title} tasks={group.tasks} sections={filteredSectionsByProject}/>)
+                groupedTasks.map((group, index) => <MyTaskListGroupSection key={index} title={group.title} tasks={group.tasks} sections={filteredSectionsByProject}/>)
             )
          : (
              <>
