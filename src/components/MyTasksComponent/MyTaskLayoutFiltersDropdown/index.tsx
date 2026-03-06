@@ -38,6 +38,8 @@ import ResettingFiltersButton from "./ResettingFiltersButton.tsx";
 import FilteringDateSection from "./EachTaskLayoutFieldSection/FilteringDateSection.tsx";
 import FilteringPrioritiesSection from "./EachTaskLayoutFieldSection/FilteringPrioritiesSection.tsx";
 import FilteringLabelsSection from "./EachTaskLayoutFieldSection/FilteringLabelsSection.tsx";
+import {useExpanded} from "../../../hooks/useExpanded.ts";
+import TaskSmallArrowRightIcon from "../../icons/TaskSmallArrowRightIcon.tsx";
 
 type MyTaskLayoutFiltersDropdownProps = {
   onSelectLayout: (layout: ViewMode) => void;
@@ -58,6 +60,7 @@ const MyTaskLayoutFiltersDropdown = ({
   const priorityRef = useRef<HTMLDivElement | null>(null);
   const labelRef = useRef<HTMLDivElement | null>(null);
   const dummyRef = useRef<HTMLDivElement | null>(null);
+  const {isExpanded, handleExpanded} = useExpanded()
   const { projectId } = useProjectStore();
 
   const queryClient = useQueryClient();
@@ -303,35 +306,46 @@ const MyTaskLayoutFiltersDropdown = ({
         <div className={"px-1.5"}>
           <div className={"px-1.5 flex items-center justify-between"}>
             <p className={"text-sm font-medium"}>Sort</p>
-            <div className={"flex justify-center items-center w-7 h-7"}>
-              <TaskSmallArrowDownIcon />
-            </div>
+            <button type={"button"} onClick={handleExpanded} className={"flex justify-center items-center w-7 h-7"}>
+              {isExpanded ? <TaskSmallArrowDownIcon /> : <TaskSmallArrowRightIcon/>}
+
+            </button>
           </div>
+          {isExpanded && <>
+            <GroupingTaskSection groupRef={groupRef} selectedGrouping={viewOptions?.grouped_by} displayLabel={selectedGroupingLabel} openDropdown={openDropdown} onToggleDropdown={() => handleToggleDropdown("grouping")} onSelectGroupingTask={handleSelectGrouping}/>
 
-          <GroupingTaskSection groupRef={groupRef} selectedGrouping={viewOptions?.grouped_by} displayLabel={selectedGroupingLabel} openDropdown={openDropdown} onToggleDropdown={() => handleToggleDropdown("grouping")} onSelectGroupingTask={handleSelectGrouping}/>
-          
-          <SortingTaskSection sortRef={sortRef} selectedSorting={viewOptions?.sorted_by} displayLabel={selectedSortingLabel} openDropdown={openDropdown} onToggleDropdown={() => handleToggleDropdown("sorting")} onSelectSortingTask={handleSelectSorting}/>
+            <SortingTaskSection sortRef={sortRef} selectedSorting={viewOptions?.sorted_by} displayLabel={selectedSortingLabel} openDropdown={openDropdown} onToggleDropdown={() => handleToggleDropdown("sorting")} onSelectSortingTask={handleSelectSorting}/>
 
-          {viewOptions?.sorted_by && (
-            <DirectingTaskSection directRef={directionRef} selectedDirecting={viewOptions?.sort_order} displayLabel={selectedDirectionLabel} openDropdown={openDropdown} onToggleDropdown={() => handleToggleDropdown("direction")} onSelectDirectingTask={handleSelectDirection}/>
-          )}
+            {viewOptions?.sorted_by && (
+                <DirectingTaskSection directRef={directionRef} selectedDirecting={viewOptions?.sort_order} displayLabel={selectedDirectionLabel} openDropdown={openDropdown} onToggleDropdown={() => handleToggleDropdown("direction")} onSelectDirectingTask={handleSelectDirection}/>
+            )}
+          </>}
+
 
           <div className={"px-1.5 flex items-center justify-between"}>
             <p className={"text-sm font-medium"}>Filter</p>
-            <div className={"flex justify-center items-center w-7 h-7"}>
-              <TaskSmallArrowDownIcon />
-            </div>
+            <button type={"button"} onClick={handleExpanded} className={"flex justify-center items-center w-7 h-7"}>
+              {isExpanded ?
+                  <TaskSmallArrowDownIcon />
+              : <TaskSmallArrowRightIcon/>
+              }
+            </button>
           </div>
 
-          <FilteringDateSection dateRef={dateRef} selectedDateQuery={selectedDateQuery} displayDate={displayDate} openDropdown={openDropdown} onToggleDropdown={() => handleToggleDropdown("date")} onSelectFilteringDate={handleSelectDate}/>
+          {isExpanded && <>
+            <FilteringDateSection dateRef={dateRef} selectedDateQuery={selectedDateQuery} displayDate={displayDate} openDropdown={openDropdown} onToggleDropdown={() => handleToggleDropdown("date")} onSelectFilteringDate={handleSelectDate}/>
 
-          <FilteringPrioritiesSection priorityRef={priorityRef} selectedPriorityKey={selectedPriorityKey} displayPriorities={displayPriorities} openDropdown={openDropdown} onToggleDropdown={() => handleToggleDropdown("priority")} onSelectFilteringPriorities={handleSelectPriority}/>
+            <FilteringPrioritiesSection priorityRef={priorityRef} selectedPriorityKey={selectedPriorityKey} displayPriorities={displayPriorities} openDropdown={openDropdown} onToggleDropdown={() => handleToggleDropdown("priority")} onSelectFilteringPriorities={handleSelectPriority}/>
 
-          <FilteringLabelsSection labelRef={labelRef} selectedLabelName={selectedLabelName} displayLabels={displayLabels} openDropdown={openDropdown} onToggleDropdown={() => handleToggleDropdown("label")} onSelectFilteringLabels={handleSelectLabel}/>
+            <FilteringLabelsSection labelRef={labelRef} selectedLabelName={selectedLabelName} displayLabels={displayLabels} openDropdown={openDropdown} onToggleDropdown={() => handleToggleDropdown("label")} onSelectFilteringLabels={handleSelectLabel}/>
+          </>}
+
         </div>
-        <hr className="border-t border-t-product-library-divider-tertiary overflow-hidden" />
         {hasActiveFilters &&
-            <ResettingFiltersButton onReset={handleResetFilters}/>
+            <>
+              <hr className="border-t border-t-product-library-divider-tertiary overflow-hidden" />
+              <ResettingFiltersButton onReset={handleResetFilters}/>
+            </>
         }
       </div>
     </div>
