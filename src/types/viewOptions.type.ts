@@ -22,8 +22,3 @@ export type ViewOptionsPayload = {
     show_completed_tasks?: boolean;
     view_mode?: ViewMode;
 }
-
-export type DeleteViewOptionsPayload = {
-    view_type: ViewTypes;
-    object_id: string;
-}

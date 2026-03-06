@@ -38,7 +38,6 @@ import GroupingTaskSection from "./EachTaskLayoutFieldSection/GroupingTaskSectio
 import SortingTaskSection from "./EachTaskLayoutFieldSection/SortingTaskSection.tsx";
 import DirectingTaskSection from "./EachTaskLayoutFieldSection/DirectingTaskSection.tsx";
 import ResettingFiltersButton from "./ResettingFiltersButton.tsx";
-import {useDeleteViewOptions} from "../../../hooks/useQueryHook/useViewOptions.ts";
 
 type MyTaskLayoutFiltersDropdownProps = {
   onSelectLayout: (layout: ViewMode) => void;
@@ -61,7 +60,6 @@ const MyTaskLayoutFiltersDropdown = ({
   const dummyRef = useRef<HTMLDivElement | null>(null);
   const { projectId } = useProjectStore();
 
-  const {mutate: deleteViewOptions} = useDeleteViewOptions()
   const queryClient = useQueryClient();
   const viewOptions = queryClient.getQueryData<ViewOptionsPayload>([
     "viewOptions",
@@ -188,12 +186,7 @@ const MyTaskLayoutFiltersDropdown = ({
   };
 
   const handleResetFilters = () => {
-    deleteViewOptions({
-      view_type: "PROJECT",
-      object_id: projectId!
-    })
-
-    queryClient.setQueryData(['viewOptions', 'PROJECT', projectId], {
+    onUpdateViewOption({
       grouped_by: null,
       sorted_by: null,
       sort_order: null,

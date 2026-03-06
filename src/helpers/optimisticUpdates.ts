@@ -3,7 +3,7 @@ import type { Project, ProjectResponse } from "../types/project.type.ts";
 import type {ReorderTaskPayload, Task, TaskResponse} from "../types/task.type.ts";
 import type {ReorderSectionPayload, Section, SectionResponse} from "../types/section.type.ts";
 import type {Label, LabelsResponse} from "../types/label.type.ts";
-import type {DeleteViewOptionsPayload, ViewOptionsPayload} from "../types/viewOptions.type.ts";
+import type {ViewOptionsPayload} from "../types/viewOptions.type.ts";
 
 export type OptimisticUpdatesProjectContext = {
   previousData?: ProjectResponse;
@@ -266,22 +266,6 @@ export async function optimisticViewOptions({queryClient, optimisticViewOptions}
     }
   })
   return { previousData: previousData ? [[key, previousData]] : [] };
-}
-
-export async function optimisticRemoveViewOptions({queryClient, optimisticDeleteViewOptions}: {queryClient: QueryClient, optimisticDeleteViewOptions: DeleteViewOptionsPayload}): Promise<OptimisticUpdatesContext>{
-  const key: QueryKey = [
-      'viewOptions', optimisticDeleteViewOptions.view_type, optimisticDeleteViewOptions.object_id
-  ]
-  await queryClient.cancelQueries({queryKey: key});
-  const previousData = queryClient.getQueryData<DeleteViewOptionsPayload>(key)
-  queryClient.setQueryData(key, (old: DeleteViewOptionsPayload) => {
-    if(!old) return old;
-    return {
-      ...old,
-      ...optimisticDeleteViewOptions
-    }
-  })
-  return {previousData: previousData ? [[key, previousData]] : []}
 }
 
 export function rollbackOptimisticProjectUpdates({
