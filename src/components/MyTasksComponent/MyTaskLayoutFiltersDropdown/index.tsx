@@ -5,8 +5,6 @@ import CustomSwitch from "../../ui/CustomSwitch.tsx";
 import TaskSmallArrowDownIcon from "../../icons/TaskSmallArrowDownIcon.tsx";
 import type { OpenMyTaskFilterDropdown } from "../../../types/menu-nav.type.ts";
 import { useClickOutside } from "../../../hooks/useClickOutside.ts";
-import MyTaskFilterDateDropdown from "./MyTaskFilterDateDropdown.tsx";
-import MyTaskFilterPriorityDropdown from "./MyTaskFilterPriorityDropdown.tsx";
 import type {
   GroupedBy,
   SortedBy,
@@ -21,7 +19,6 @@ import {
   groupingFilterData, priorityFilterData,
   sortingFilterData,
 } from "../../../data/myTaskFilter.data.ts";
-import MyTaskFilterLabelDropdown from "./MyTaskFilterLabelDropdown";
 import type { Label } from "../../../types/label.type.ts";
 import {
   buildDateFilterQuery,
@@ -38,6 +35,9 @@ import GroupingTaskSection from "./EachTaskLayoutFieldSection/GroupingTaskSectio
 import SortingTaskSection from "./EachTaskLayoutFieldSection/SortingTaskSection.tsx";
 import DirectingTaskSection from "./EachTaskLayoutFieldSection/DirectingTaskSection.tsx";
 import ResettingFiltersButton from "./ResettingFiltersButton.tsx";
+import FilteringDateSection from "./EachTaskLayoutFieldSection/FilteringDateSection.tsx";
+import FilteringPrioritiesSection from "./EachTaskLayoutFieldSection/FilteringPrioritiesSection.tsx";
+import FilteringLabelsSection from "./EachTaskLayoutFieldSection/FilteringLabelsSection.tsx";
 
 type MyTaskLayoutFiltersDropdownProps = {
   onSelectLayout: (layout: ViewMode) => void;
@@ -323,81 +323,11 @@ const MyTaskLayoutFiltersDropdown = ({
             </div>
           </div>
 
-          <div className={"relative"} ref={dateRef}>
-            <button
-              className={
-                "py-0.5 px-1 flex items-center justify-between gap-small w-full"
-              }
-              onClick={() => handleToggleDropdown("date")}
-            >
-              <p className={"text-sm"}>Date</p>
-              <div
-                className={
-                  "cursor-pointer max-w-40 h-7 rounded-small border border-product-library-border-idle-tint pl-2.5 flex items-center justify-between hover:border-product-library-border-focus-tint w-full"
-                }
-              >
-                <p className={"text-sm"}>{displayDate}</p>
-                <div className={"flex justify-center items-center w-7 h-7"}>
-                  <TaskSmallArrowDownIcon />
-                </div>
-              </div>
-            </button>
-            {openDropdown === "date" && <MyTaskFilterDateDropdown selectedFilteringDate={selectedDateQuery} onSelectFilteringDate={handleSelectDate}/>}
-          </div>
+          <FilteringDateSection dateRef={dateRef} selectedDateQuery={selectedDateQuery} displayDate={displayDate} openDropdown={openDropdown} onToggleDropdown={() => handleToggleDropdown("date")} onSelectFilteringDate={handleSelectDate}/>
 
-          <div className={"relative"} ref={priorityRef}>
-            <button
-              className={
-                "py-0.5 px-1 flex items-center justify-between gap-small w-full"
-              }
-              onClick={() => handleToggleDropdown("priority")}
-            >
-              <p className={"text-sm"}>Priority</p>
-              <div
-                className={
-                  "cursor-pointer max-w-40 h-7 rounded-small border border-product-library-border-idle-tint pl-2.5 flex items-center justify-between hover:border-product-library-border-focus-tint w-full"
-                }
-              >
-                <p className={"text-sm"}>{displayPriorities}</p>
-                <div className={"flex justify-center items-center w-7 h-7"}>
-                  <TaskSmallArrowDownIcon />
-                </div>
-              </div>
-            </button>
-            {openDropdown === "priority" && (
-              <MyTaskFilterPriorityDropdown
-                selectedFilteringPriority={selectedPriorityKey}
-                onSelectFilteringPriority={handleSelectPriority}
-              />
-            )}
-          </div>
+          <FilteringPrioritiesSection priorityRef={priorityRef} selectedPriorityKey={selectedPriorityKey} displayPriorities={displayPriorities} openDropdown={openDropdown} onToggleDropdown={() => handleToggleDropdown("priority")} onSelectFilteringPriorities={handleSelectPriority}/>
 
-          <div className={"relative"} ref={labelRef}>
-            <button
-              className={
-                "py-0.5 px-1 flex items-center justify-between gap-small w-full"
-              }
-              onClick={() => handleToggleDropdown("label")}
-            >
-              <p className={"text-sm"}>Label</p>
-              <div
-                className={
-                  "cursor-pointer max-w-40 h-7 rounded-small border border-product-library-border-idle-tint pl-2.5 flex items-center justify-between hover:border-product-library-border-focus-tint w-full"
-                }
-              >
-                <p className={"text-sm"}>{displayLabels}</p>
-                <div className={"flex justify-center items-center w-7 h-7"}>
-                  <TaskSmallArrowDownIcon />
-                </div>
-              </div>
-            </button>
-            {openDropdown === "label" && (
-              <MyTaskFilterLabelDropdown
-                selectedFilteringLabel={selectedLabelName}
-                onSelectFilteringLabel={handleSelectLabel}
-              />
-            )}
-          </div>
+          <FilteringLabelsSection labelRef={labelRef} selectedLabelName={selectedLabelName} displayLabels={displayLabels} openDropdown={openDropdown} onToggleDropdown={() => handleToggleDropdown("label")} onSelectFilteringLabels={handleSelectLabel}/>
         </div>
         <hr className="border-t border-t-product-library-divider-tertiary overflow-hidden" />
         {hasActiveFilters &&
