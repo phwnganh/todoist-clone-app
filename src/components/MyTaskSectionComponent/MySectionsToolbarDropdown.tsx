@@ -4,6 +4,7 @@ import EditIcon from "../icons/EditIcon";
 import TaskMoveToIcon from "../icons/MoveToTaskIcon";
 import TrashIcon from "../icons/TrashIcon";
 import MyTasksMenuButton from "../ui/MyTasksMenuButton";
+import CustomMenuDropdown from "../ui/CustomMenuDropdown.tsx";
 type MySectionsToolbarDropdownProps = {
     sectionId: string | null;
 }
@@ -42,29 +43,27 @@ const MySectionsToolbarDropdown = ({sectionId}: MySectionsToolbarDropdownProps) 
         }
     ]
     return (
-        <div className="absolute top-full right-0 z-50 border border-product-library-divider-primary rounded-large shadow-sm mt-1 min-w-70 py-1.5 bg-white overflow-hidden">
-            <div className={"flex flex-col gap-1"}>
-                {MY_SECTIONS_MENU_TOOLBAR.map((item, index) => {
-                    if(item === "divider"){
-                        return (
-                            <hr
-                                key={index}
-                                className={"border-t-product-library-divider-tertiary"}
-                            />
-                        )
-                    }
+        <CustomMenuDropdown className={"min-w-70"}>
+            {MY_SECTIONS_MENU_TOOLBAR.map((item, index) => {
+                if(item === "divider"){
                     return (
-                        <MyTasksMenuButton
-                            key={item.label}
-                            label={item.label}
-                            onClick={item.onClick}
-                            danger={item.danger}
-                            icon={item.icon}
+                        <hr
+                            key={index}
+                            className={"border-t-product-library-divider-tertiary"}
                         />
                     )
-                })}
-            </div>
-        </div>
+                }
+                return (
+                    <MyTasksMenuButton
+                        key={item.label}
+                        label={item.label}
+                        onClick={item.onClick}
+                        danger={item.danger}
+                        icon={item.icon}
+                    />
+                )
+            })}
+        </CustomMenuDropdown>
     );
 };
 

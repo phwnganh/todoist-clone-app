@@ -230,7 +230,6 @@ const MyTaskListItem = ({
                     </button>
                     {isOpenTaskDetailToolbar && (
                         <div
-                            className={"absolute right-9 z-50"}
                             onClick={(e) => e.stopPropagation()}
                         >
                           <MyTasksToolbarDropdown taskId={task.id} task={task}/>

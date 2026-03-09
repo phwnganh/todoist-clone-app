@@ -10,7 +10,7 @@ import { NavLink } from "react-router-dom";
 import RightArrowIcon from "../../assets/right-arrow-icon.svg";
 import { MENU_NAV_ITEMS } from "../../data/menuNav.data.ts";
 import SidebarMyProjectList from "./SidebarMyProjectList.tsx";
-import SidebarHeader from "./SidebarHeader.tsx";
+import SidebarHeader from "./SidebarHeader";
 import PlusAddIcon from "../icons/PlusAddIcon.tsx";
 type SidebarProps = {
   open: boolean;

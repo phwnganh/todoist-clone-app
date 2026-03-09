@@ -18,6 +18,7 @@ import {useUpdateMyTask} from "../../hooks/useQueryHook/useTasks.ts";
 import {buildDue, getNextWeek, getNextWeekend, getToday, getTomorrow} from "../../helpers/formateDate.ts";
 import {isSameDay} from "date-fns";
 import NoDateIcon from "../icons/NoDateIcon.tsx";
+import CustomMenuDropdown from "../ui/CustomMenuDropdown.tsx";
 const MyTasksToolbarDropdown = ({ taskId, task }: { taskId: string; task: Task }) => {
   const { onOpenEditTask, onCloseTaskDetailToolbar, onOpenDeleteMyTask } = useTaskStore();
 
@@ -158,12 +159,7 @@ const MyTasksToolbarDropdown = ({ taskId, task }: { taskId: string; task: Task }
   ];
 
   return (
-    <div
-      className={
-        "border border-product-library-divider-primary rounded-large shadow-sm mt-1 min-w-70 py-1.5 bg-white overflow-hidden"
-      }
-    >
-      <div className={"flex flex-col gap-1"}>
+      <CustomMenuDropdown className={"min-w-70"}>
         {MY_TASKS_MENU_TOOLBAR.map((item, index) => {
           switch (item.type) {
             case "divider":
@@ -177,7 +173,7 @@ const MyTasksToolbarDropdown = ({ taskId, task }: { taskId: string; task: Task }
               return (
                   <div key={index} className={"flex gap-2 px-3 py-1"}>
                     {item.items.map((iconItem, iconIndex) => {
-                      const isActive = iconItem.active;
+                          const isActive = iconItem.active;
                           return (
                               <button type={"button"} key={iconIndex} onClick={iconItem.onClick}
                                       className={`flex justify-center items-center w-6 h-6 ${isActive && "border border-product-library-divider-primary rounded-small"}`}>{iconItem.icon}</button>
@@ -192,8 +188,7 @@ const MyTasksToolbarDropdown = ({ taskId, task }: { taskId: string; task: Task }
               )
           }
         })}
-      </div>
-    </div>
+      </CustomMenuDropdown>
   );
 };
 

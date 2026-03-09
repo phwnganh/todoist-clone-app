@@ -53,6 +53,12 @@ export type MySectionMenuToolbar = | "divider" | {
     icon: ReactNode;
 }
 
+export type SidebarHeaderDropdown = | "divider" | {
+    label: string;
+    onClick: () => void;
+    icon: ReactNode;
+}
+
 export type SuggestedTimeMenuToolbar = {
     label: string;
     onClick?: () => void;
