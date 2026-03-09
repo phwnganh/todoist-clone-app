@@ -13,7 +13,7 @@ const LoginFormSection = () => {
   const handleOAuthLogin = () => {
     const state = `${crypto.randomUUID()}`;
     sessionStorage.setItem("oauth_state", state);
-    window.location.href = `https://todoist.com/oauth/authorize?client_id=${CLIENT_ID}&scope=${encodeURIComponent(
+    window.location.href = `https://app.todoist.com/oauth/authorize?client_id=${CLIENT_ID}&scope=${encodeURIComponent(
       SCOPE
     )}&state=${state}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
   };

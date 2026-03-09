@@ -23,7 +23,7 @@ app.post('/oauth/access-token', async (req: Request<{code: string}>, res: Respon
         })
     }
         try {
-            const result = await fetch("https://todoist.com/oauth/access_token", {
+            const result = await fetch("https://api.todoist.com/oauth/access_token", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",

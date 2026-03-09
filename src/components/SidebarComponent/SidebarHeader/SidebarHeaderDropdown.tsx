@@ -4,12 +4,13 @@ import UserStatisticIcon from "../../icons/UserStatisticIcon.tsx";
 import SettingIcon from "../../icons/SettingIcon.tsx";
 import LogoutIcon from "../../icons/LogoutIcon.tsx";
 import MyTasksMenuButton from "../../ui/MyTasksMenuButton.tsx";
+import {useAuthStore} from "../../../stores/auth.store.ts";
 
 type SidebarHeaderDropdownProps = {
     userName?: string;
 }
 const SidebarHeaderDropdown = ({userName}: SidebarHeaderDropdownProps) => {
-
+    const {logout} = useAuthStore()
     const SIDEBAR_HEADER_DROPDOWN: SidebarHeaderDropdown[] = [
         {
             label: `${userName}`,
@@ -29,9 +30,7 @@ const SidebarHeaderDropdown = ({userName}: SidebarHeaderDropdownProps) => {
         "divider",
         {
             label: "Log out",
-            onClick: () => {
-                console.log("logout")
-            },
+            onClick: logout,
             icon: <LogoutIcon/>
         }
     ]
