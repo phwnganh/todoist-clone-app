@@ -1,5 +1,5 @@
-import BellIcon from "../../../assets/bell-icon.svg";
-import CollapseSideBarIcon from "../../../assets/collapse-sidebar-icon.svg";
+import BellIcon from "@/assets/bell-icon.svg";
+import CollapseSideBarIcon from "@/assets/collapse-sidebar-icon.svg";
 import UserInfoHeader from "./UserInfoHeader.tsx";
 const SidebarHeader = ({ onToggle }: { onToggle: () => void }) => {
   const buttonIconClass =

@@ -1,27 +1,25 @@
-import SmallArrowDownIcon from "../../../assets/small-arrow-down-icon.svg";
-import LoadingSpin from "../../ui/LoadingSpin.tsx";
-import ErrorDisplayed from "../../ui/ErrorDisplayed.tsx";
-import { useGetUserProfile } from "../../../hooks/useQueryHook/useUserProfile.ts";
-import {useRef, useState} from "react";
+import SmallArrowDownIcon from "@/assets/small-arrow-down-icon.svg";
+import LoadingSpin from "@/components/ui/LoadingSpin.tsx";
+import ErrorDisplayed from "@/components/ui/ErrorDisplayed.tsx";
+import { useGetUserProfile } from "@/hooks/useQueryHook/useUserProfile.ts";
+import {useRef} from "react";
 import SidebarHeaderDropdown from "./SidebarHeaderDropdown.tsx";
 import {useClickOutside} from "../../../hooks/useClickOutside.ts";
+import {useSidebarStore} from "@/stores/sidebar.store.ts";
+import SettingModalDialog from "@/components/SidebarComponent/SidebarHeader/SettingsModalDialog";
 
 const UserInfoHeader = () => {
   const { data: user, isLoading, isError } = useGetUserProfile();
   const userRef = useRef<HTMLDivElement | null>(null);
-  const [openSidebarHeaderDropdown, setOpenSidebarHeaderDropdown] = useState(false)
+  const {onOpenSidebarHeaderDropdown, openSidebarHeaderDropdown, openSettingModalDialog, onCloseSidebarHeaderDropdown} = useSidebarStore()
     const handleOpenSidebarHeaderDropdown = () => {
-      setOpenSidebarHeaderDropdown(prev => !prev)
-    }
-
-    const handleCloseSidebarHeaderDropdown = () => {
-    setOpenSidebarHeaderDropdown(false)
+      onOpenSidebarHeaderDropdown()
     }
 
     useClickOutside({
     ref: userRef,
     enabled: openSidebarHeaderDropdown,
-    handler: handleCloseSidebarHeaderDropdown,
+    handler: onCloseSidebarHeaderDropdown,
   })
   if (isLoading) {
     return <LoadingSpin />;
@@ -49,6 +47,7 @@ const UserInfoHeader = () => {
       </span>
         </button>
         {openSidebarHeaderDropdown &&  <SidebarHeaderDropdown userName={user?.full_name}/>}
+        {openSettingModalDialog && <SettingModalDialog/>}
       </div>
   );
 };

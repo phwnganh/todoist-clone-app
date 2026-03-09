@@ -1,17 +1,19 @@
-import CustomMenuDropdown from "../../ui/CustomMenuDropdown.tsx";
-import type {SidebarHeaderDropdown} from "../../../types/menu-nav.type.ts";
-import UserStatisticIcon from "../../icons/UserStatisticIcon.tsx";
-import SettingIcon from "../../icons/SettingIcon.tsx";
-import LogoutIcon from "../../icons/LogoutIcon.tsx";
-import MyTasksMenuButton from "../../ui/MyTasksMenuButton.tsx";
-import {useAuthStore} from "../../../stores/auth.store.ts";
+import CustomMenuDropdown from "@/components/ui/CustomMenuDropdown.tsx";
+import type {SidebarHeaderMenuDropdown} from "@/types/menu-nav.type.ts";
+import UserStatisticIcon from "@/components/icons/UserStatisticIcon.tsx";
+import SettingIcon from "@/components/icons/SettingIcon.tsx";
+import LogoutIcon from "@/components/icons/LogoutIcon.tsx";
+import MyTasksMenuButton from "@/components/ui/MyTasksMenuButton.tsx";
+import {useAuthStore} from "@/stores/auth.store.ts";
+import {useSidebarStore} from "@/stores/sidebar.store.ts";
 
 type SidebarHeaderDropdownProps = {
     userName?: string;
 }
 const SidebarHeaderDropdown = ({userName}: SidebarHeaderDropdownProps) => {
     const {logout} = useAuthStore()
-    const SIDEBAR_HEADER_DROPDOWN: SidebarHeaderDropdown[] = [
+    const {onCloseSidebarHeaderDropdown, onOpenSettingModalDialog} = useSidebarStore()
+    const SIDEBAR_HEADER_DROPDOWN: SidebarHeaderMenuDropdown[] = [
         {
             label: `${userName}`,
             onClick: () => {
@@ -23,7 +25,8 @@ const SidebarHeaderDropdown = ({userName}: SidebarHeaderDropdownProps) => {
         {
             label: "Settings",
             onClick: () => {
-                console.log("settings")
+                onCloseSidebarHeaderDropdown()
+                onOpenSettingModalDialog()
             },
             icon: <SettingIcon/>
         },
@@ -36,16 +39,18 @@ const SidebarHeaderDropdown = ({userName}: SidebarHeaderDropdownProps) => {
     ]
 
     return (
-        <CustomMenuDropdown className={"left-0 min-w-60"}>
-            {SIDEBAR_HEADER_DROPDOWN.map((item, index) => {
-                if(item === "divider"){
-                    return (
-                        <hr key={index} className={"border-t-product-library-divider-tertiary"}/>
-                    )
-                }
-                return <MyTasksMenuButton label={item.label} onClick={item.onClick} icon={item.icon}/>
-            })}
-        </CustomMenuDropdown>
+        <>
+            <CustomMenuDropdown className={"left-0 min-w-60"}>
+                {SIDEBAR_HEADER_DROPDOWN.map((item, index) => {
+                    if(item === "divider"){
+                        return (
+                            <hr key={index} className={"border-t-product-library-divider-tertiary"}/>
+                        )
+                    }
+                    return <MyTasksMenuButton key={index} label={item.label} onClick={item.onClick} icon={item.icon}/>
+                })}
+            </CustomMenuDropdown>
+        </>
     );
 };
 

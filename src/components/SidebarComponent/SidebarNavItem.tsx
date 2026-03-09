@@ -1,4 +1,4 @@
-import type { MenuNavItem } from "../../types/menu-nav.type.ts";
+import type { MenuNavItem } from "@/types/menu-nav.type.ts";
 import { NavLink } from "react-router-dom";
 
 type SidebarNavItemProps = {
@@ -46,7 +46,7 @@ const SidebarNavItem = ({ item, onClick }: SidebarNavItemProps) => {
     <NavLink
       to={item.getTo}
       className={({ isActive }) =>
-        `${commonClass} hover:rounded-small ${
+        `${commonClass} rounded-small ${
           isActive
             ? "bg-product-library-display-accent-secondary-fill rounded-small hover:bg-product-library-display-accent-secondary-fill"
             : "hover:bg-product-library-selectable-secondary-hover-fill"

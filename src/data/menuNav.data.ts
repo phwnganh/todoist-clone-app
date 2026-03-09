@@ -1,4 +1,4 @@
-import type {LayoutItem, MenuNavItem} from "../types/menu-nav.type.ts";
+import type {LayoutItem, MenuNavItem, SettingMenuNavItem} from "../types/menu-nav.type.ts";
 import {ACTIVITY, FILTERS_LABEL, INBOX, TODAY, UPCOMING} from "../constants/routes.constants.ts";
 import SearchIcon from '../assets/search-icon.svg'
 import InboxIcon from '../assets/inbox-icon.svg'
@@ -10,6 +10,8 @@ import CompletedIcon from '../assets/completed-icon.svg'
 import ListItemIcon from '../assets/list-item-icon.svg'
 import BoardItemIcon from '../assets/board-item-icon.svg'
 import PremiumCalendarIcon from '../assets/premium-calendar-icon.svg'
+import AccountIcon from "../assets/account-icon.svg";
+import ThemeIcon from "../assets/theme-icon.svg";
 export const MENU_NAV_ITEMS: MenuNavItem[] = [
     {
         key: "search",
@@ -45,6 +47,25 @@ export const MENU_NAV_ITEMS: MenuNavItem[] = [
         label: "Completed",
         icon: CompletedIcon,
         getTo: ACTIVITY
+    }
+]
+
+export const SETTING_MENU_NAV_ITEMS: SettingMenuNavItem[] = [
+    {
+        key: "account",
+        label: "Account",
+        icon: AccountIcon,
+        onClick: () => {
+            console.log("account")
+        }
+    },
+    {
+        key: "theme",
+        label: "Theme",
+        icon: ThemeIcon,
+        onClick: () => {
+            console.log("theme")
+        }
     }
 ]
 

@@ -1,10 +1,16 @@
 import type {ComponentType, ReactNode, SVGProps} from "react";
-
 export type MenuNavItem = {
     key: string;
     label: string;
     icon: string | ComponentType<SVGProps<SVGSVGElement>>;
     getTo?: string;
+}
+
+export type SettingMenuNavItem = {
+    key: string;
+    label: string;
+    icon: string | ComponentType<SVGProps<SVGSVGElement>>;
+    onClick: () => void;
 }
 
 export type OpenDropdown = "color" | "workspace" | "parentProject" | null;
@@ -53,7 +59,7 @@ export type MySectionMenuToolbar = | "divider" | {
     icon: ReactNode;
 }
 
-export type SidebarHeaderDropdown = | "divider" | {
+export type SidebarHeaderMenuDropdown = | "divider" | {
     label: string;
     onClick: () => void;
     icon: ReactNode;
