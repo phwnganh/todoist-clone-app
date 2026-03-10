@@ -1,13 +1,13 @@
-import {type MyTaskFormValues} from "../components/MyTasksComponent/MyTaskForm";
-import {type MyTaskSectionFormValues} from '../components/MyTaskSectionComponent/MyTaskListSectionComponent/MyTaskListSectionForm.tsx'
-import type {Task} from "../types/task.type.ts";
-import {priorityFilterData} from "../data/myTaskFilter.data.ts";
-import type {Project} from "../types/project.type.ts";
-import type {Section} from "../types/section.type.ts";
+import {type MyTaskFormValues} from "@/components/MyTasksComponent/MyTaskForm";
+import {type MyTaskSectionFormValues} from '@/components/MyTaskSectionComponent/MyTaskListSectionComponent/MyTaskListSectionForm.tsx'
+import type {Task} from "@/types/task.type.ts";
+import {priorityFilterData} from "@/data/myTaskFilter.data.ts";
+import type {Project} from "@/types/project.type.ts";
+import type {Section} from "@/types/section.type.ts";
 import type {
     TaskDetailHeaderFormValues
-} from "../components/MyTasksComponent/MyTaskDetailModalDialog/MyTaskDetailMainSection/MyTaskDetailHeaderMainSection/MyTaskDetailHeaderForm.tsx";
-import type {Label} from "../types/label.type.ts";
+} from "@/components/MyTasksComponent/MyTaskDetailModalDialog/MyTaskDetailMainSection/MyTaskDetailHeaderMainSection/MyTaskDetailHeaderForm.tsx";
+import type {Label} from "@/types/label.type.ts";
 export const updateMyTaskField = <K extends keyof MyTaskFormValues>(values: MyTaskFormValues, key: K, value: MyTaskFormValues[K]) => {
     return {
         ...values,

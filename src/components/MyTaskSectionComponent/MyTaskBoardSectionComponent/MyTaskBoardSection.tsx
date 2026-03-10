@@ -1,18 +1,18 @@
-import { useProjectStore } from "../../../stores/project.store.ts";
-import { useSectionStore } from "../../../stores/section.store.ts";
-import { useTaskStore } from "../../../stores/task.store.ts";
-import type { Section } from "../../../types/section.type.ts";
+import { useProjectStore } from "@/stores/project.store.ts";
+import { useSectionStore } from "@/stores/section.store.ts";
+import { useTaskStore } from "@/stores/task.store.ts";
+import type { Section } from "@/types/section.type.ts";
 import { Fragment, useMemo, type MouseEvent } from "react";
-import LoadingSpin from "../../ui/LoadingSpin.tsx";
+import LoadingSpin from "@/components/ui/LoadingSpin.tsx";
 import EditMyTaskSectionComponent from "../EditMyTaskSectionComponent";
 import MyTaskBoardSectionHeader from "./MyTaskBoardSectionHeader.tsx";
 import MyTaskBoardItem from "../../MyTasksComponent/MyTaskBoardItem.tsx";
 import AddMyTaskModalDialog from "../../MyTasksComponent/AddMyTaskComponent";
 import AddMyTaskButtonSection from "../../MyTasksComponent/AddMyTaskButtonSection.tsx";
 import {SortableContext, useSortable} from "@dnd-kit/sortable";
-import DragDropIcon from "../../icons/DragDropIcon.tsx";
+import DragDropIcon from "@/components/icons/DragDropIcon.tsx";
 import {CSS} from "@dnd-kit/utilities";
-import {useTasksWithView} from "../../../hooks/useQueryHook/useViewOptions.ts";
+import {useTasksWithView} from "@/hooks/useQueryHook/useViewOptions.ts";
 type MyTaskBoardSectionProps = {
   section?: Section;
 };

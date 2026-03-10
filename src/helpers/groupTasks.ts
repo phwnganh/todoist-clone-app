@@ -1,7 +1,7 @@
 import {format, isBefore, isToday, isTomorrow, parseISO, startOfDay} from "date-fns";
-import type {Task} from "../types/task.type.ts";
-import type {GroupedBy, TaskGroup} from "../types/viewOptions.type.ts";
-import {priorityFilterData} from "../data/myTaskFilter.data.ts";
+import type {Task} from "@/types/task.type.ts";
+import type {GroupedBy, TaskGroup} from "@/types/viewOptions.type.ts";
+import {priorityFilterData} from "@/data/myTaskFilter.data.ts";
 
 export const getDateTitle = (date: Date) => {
     const formattedDate = format(date, "d MMM")

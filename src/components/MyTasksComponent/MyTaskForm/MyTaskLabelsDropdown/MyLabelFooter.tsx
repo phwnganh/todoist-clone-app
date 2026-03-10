@@ -1,5 +1,5 @@
-import PlusIcon from "../../../../assets/plus-icon.svg";
-import {useCreateLabels} from "../../../../hooks/useQueryHook/useLabels.ts";
+import PlusIcon from "@/assets/plus-icon.svg";
+import {useCreateLabels} from "@/hooks/useQueryHook/useLabels.ts";
 
 type MyLabelFooterProps = {
   hasKeyword: boolean;

@@ -1,4 +1,4 @@
-import type {Task} from "../../../../types/task.type.ts";
+import type {Task} from "@/types/task.type.ts";
 
 type MyTaskBoardGroupHeaderProps = {
     title: string;

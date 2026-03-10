@@ -1,25 +1,25 @@
-import type { Task } from "../../types/task.type.ts";
-import VerifiedIcon from "../icons/VerifiedIcon.tsx";
+import type { Task } from "@/types/task.type.ts";
+import VerifiedIcon from "@/components/icons/VerifiedIcon.tsx";
 import MyTaskContent from "./MyTaskContent.tsx";
-import ChildrenIcon from "../../assets/children-icon.svg";
-import SmallCalendarIcon from "../../assets/small-calendar-icon.svg";
-import MenuIcon from "../icons/MenuIcon.tsx";
+import ChildrenIcon from "@/assets/children-icon.svg";
+import SmallCalendarIcon from "@/assets/small-calendar-icon.svg";
+import MenuIcon from "@/components/icons/MenuIcon.tsx";
 import { type MouseEvent, useMemo } from "react";
 import MyTasksToolbarDropdown from "./MyTasksToolbarDropdown.tsx";
-import { useTaskStore } from "../../stores/task.store.ts";
+import { useTaskStore } from "@/stores/task.store.ts";
 import EditMyTaskModalDialog from "./EditMyTaskComponent";
 import DeleteMyTaskModalDialog from "./DeleteMyTaskComponent";
-import {PRIORITY_BORDER_CLASS_MAPPING, PRIORITY_VERIFIED_CLASS_MAPPING} from "../../constants/priority.constants.ts";
+import {PRIORITY_BORDER_CLASS_MAPPING, PRIORITY_VERIFIED_CLASS_MAPPING} from "@/constants/priority.constants.ts";
 import MyTaskDetailModalDialog from "./MyTaskDetailModalDialog";
 import MyTaskBoardLabelsPreview from "./MyTaskForm/MyTaskLabelsDropdown/MyTaskBoardLabelsPreview.tsx";
-import {useCompleteTask} from "../../hooks/useQueryHook/useTasks.ts";
-import {getDueInfo} from "../../helpers/formateDate.ts";
-import {DUE_COLOR_CLASS} from "../../constants/color.constants.ts";
+import {useCompleteTask} from "@/hooks/useQueryHook/useTasks.ts";
+import {getDueInfo} from "@/helpers/formateDate.ts";
+import {DUE_COLOR_CLASS} from "@/constants/color.constants.ts";
 import {useSortable} from "@dnd-kit/sortable";
-import DragDropIcon from "../icons/DragDropIcon.tsx";
+import DragDropIcon from "@/components/icons/DragDropIcon.tsx";
 import {CSS} from "@dnd-kit/utilities";
-import {useGroupingTaskStore} from "../../stores/groupingTask.store.ts";
-import type {Section} from "../../types/section.type.ts";
+import {useGroupingTaskStore} from "@/stores/groupingTask.store.ts";
+import type {Section} from "@/types/section.type.ts";
 
 type MyTaskBoardItemProps = {
   task: Task;

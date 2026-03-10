@@ -1,5 +1,5 @@
 import type {ReactNode} from "react";
-import type {Label} from "../../types/label.type.ts";
+import type {Label} from "@/types/label.type.ts";
 
 type CustomLabelProps = {
     className?: string

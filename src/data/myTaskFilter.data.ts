@@ -1,5 +1,5 @@
-import type {Priority} from "../types/task.type.ts";
-import type {GroupedBy, SortedBy, SortOrder} from "../types/viewOptions.type.ts";
+import type {Priority} from "@/types/task.type.ts";
+import type {GroupedBy, SortedBy, SortOrder} from "@/types/viewOptions.type.ts";
 
 type GroupingOption = {
     key?: GroupedBy | null;

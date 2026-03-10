@@ -1,9 +1,9 @@
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
-import type { Project, ProjectResponse } from "../types/project.type.ts";
-import type {ReorderTaskPayload, Task, TaskResponse} from "../types/task.type.ts";
-import type {ReorderSectionPayload, Section, SectionResponse} from "../types/section.type.ts";
-import type {Label, LabelsResponse} from "../types/label.type.ts";
-import type {ViewOptionsPayload} from "../types/viewOptions.type.ts";
+import type { Project, ProjectResponse } from "@/types/project.type.ts";
+import type {ReorderTaskPayload, Task, TaskResponse} from "@/types/task.type.ts";
+import type {ReorderSectionPayload, Section, SectionResponse} from "@/types/section.type.ts";
+import type {Label, LabelsResponse} from "@/types/label.type.ts";
+import type {ViewOptionsPayload} from "@/types/viewOptions.type.ts";
 
 export type OptimisticUpdatesProjectContext = {
   previousData?: ProjectResponse;

@@ -1,9 +1,9 @@
-import type {Task} from "../../../../types/task.type.ts";
+import type {Task} from "@/types/task.type.ts";
 import MyTaskBoardGroupHeader from "./MyTaskBoardGroupHeader.tsx";
 import MyTaskBoardItem from "../../MyTaskBoardItem.tsx";
-import {useTaskStore} from "../../../../stores/task.store.ts";
+import {useTaskStore} from "@/stores/task.store.ts";
 import {type MouseEvent} from "react";
-import type { Section } from "../../../../types/section.type.ts";
+import type { Section } from "@/types/section.type.ts";
 
 type MyTaskBoardGroupSectionProps = {
     title: string;

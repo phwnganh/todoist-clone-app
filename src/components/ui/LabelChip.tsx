@@ -1,4 +1,4 @@
-import type {Label} from "../../types/label.type.ts";
+import type {Label} from "@/types/label.type.ts";
 
 type LabelChipProps = {
     label: Label;

@@ -1,13 +1,13 @@
-import TaskSmallArrowDownIcon from "../../icons/TaskSmallArrowDownIcon.tsx";
-import TaskSmallArrowRightIcon from "../../icons/TaskSmallArrowRightIcon.tsx";
-import MenuIcon from "../../icons/MenuIcon.tsx";
-import type { Task } from "../../../types/task.type.ts";
-import {useSectionStore} from "../../../stores/section.store";
-import {type Section} from "../../../types/section.type";
+import TaskSmallArrowDownIcon from "@/components/icons/TaskSmallArrowDownIcon.tsx";
+import TaskSmallArrowRightIcon from "@/components/icons/TaskSmallArrowRightIcon.tsx";
+import MenuIcon from "@/components/icons/MenuIcon.tsx";
+import type { Task } from "@/types/task.type.ts";
+import {useSectionStore} from "@/stores/section.store";
+import {type Section} from "@/types/section.type";
 import MySectionsToolbarDropdown from "../MySectionsToolbarDropdown";
 import EditMyTaskSectionComponent from "../EditMyTaskSectionComponent";
-import DeleteMyTaskSectionModalDialog from "../DeleteMyTaskSectionComponent/DeleteMyTaskSection.tsx";
-import {useClickOutside} from "../../../hooks/useClickOutside.ts";
+import DeleteMyTaskSectionModalDialog from "../DeleteMyTaskSectionComponent";
+import {useClickOutside} from "@/hooks/useClickOutside.ts";
 import {useRef} from "react";
 
 type MyTaskSectionHeaderProps = {

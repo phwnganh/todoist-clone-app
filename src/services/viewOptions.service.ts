@@ -1,6 +1,6 @@
-import type {ViewOptionsPayload} from "../types/viewOptions.type.ts";
+import type {ViewOptionsPayload} from "@/types/viewOptions.type.ts";
 import {api} from "./api.ts";
-import type {SyncResponse} from "../types/api.type.ts";
+import type {SyncResponse} from "@/types/api.type.ts";
 
 export const apiViewOptions = async (payload: ViewOptionsPayload) => {
     const uuid = crypto.randomUUID()

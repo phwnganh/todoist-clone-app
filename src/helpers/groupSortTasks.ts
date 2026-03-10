@@ -1,11 +1,11 @@
-import type { Task } from "../types/task.type.ts";
+import type { Task } from "@/types/task.type.ts";
 import type {
   GroupedBy,
   SortedBy,
   SortOrder,
   TaskGroup,
   ViewOptionsPayload,
-} from "../types/viewOptions.type.ts";
+} from "@/types/viewOptions.type.ts";
 import {extractDateFromList, extractLabelsFromList, extractPrioritiesFromList} from "./extractCriteriaFromFiltereds.ts";
 import {
   addDays,
@@ -16,7 +16,7 @@ import {
   parseISO,
   startOfMonth
 } from "date-fns";
-import {priorityFilterData} from "../data/myTaskFilter.data";
+import {priorityFilterData} from "@/data/myTaskFilter.data";
 import {getGroupKeys, getGroupsTitle, sortGroups} from "./groupTasks.ts";
 
 export const parseFilterQuery = (query?: string | null): string[] => {

@@ -1,4 +1,4 @@
-import {useAddProject} from "../../../../hooks/useQueryHook/useProjects.ts";
+import {useAddProject} from "@/hooks/useQueryHook/useProjects.ts";
 import {type MouseEvent} from "react";
 
 type DropdownFooterProps = {

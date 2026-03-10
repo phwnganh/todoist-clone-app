@@ -1,13 +1,13 @@
-import TaskSmallArrowDownIcon from "../../../../icons/TaskSmallArrowDownIcon.tsx";
+import TaskSmallArrowDownIcon from "@/components/icons/TaskSmallArrowDownIcon.tsx";
 
 import AddMyTaskButtonSection from "../../../AddMyTaskButtonSection.tsx";
-import { useTaskStore } from "../../../../../stores/task.store.ts";
-import type { Task } from "../../../../../types/task.type.ts";
+import { useTaskStore } from "@/stores/task.store.ts";
+import type { Task } from "@/types/task.type.ts";
 import { Fragment, useMemo } from "react";
 import ChildrenTaskItem from "./ChildrenTaskItem.tsx";
 import AddMyTaskDetailMainSubChildrenForm from "../AddMyTaskDetailMainSubChildrenForm";
-import { useExpanded } from "../../../../../hooks/useExpanded.ts";
-import TaskSmallArrowRightIcon from "../../../../icons/TaskSmallArrowRightIcon.tsx";
+import { useExpanded } from "@/hooks/useExpanded.ts";
+import TaskSmallArrowRightIcon from "@/components/icons/TaskSmallArrowRightIcon.tsx";
 import { type MouseEvent } from "react";
 import {
   SortableContext,

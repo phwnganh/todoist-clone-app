@@ -1,4 +1,4 @@
-import type {Label} from "../types/label.type.ts";
+import type {Label} from "@/types/label.type.ts";
 
 export const insertLabelCommasFirst = (content: string) => {
     if(content.endsWith("@")) return content;

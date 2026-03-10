@@ -1,16 +1,16 @@
 import { type FormEvent, useEffect, useState } from "react";
 import MyTaskForm, { type MyTaskFormValues } from "../../../MyTaskForm";
-import { priorityFilterData } from "../../../../../data/myTaskFilter.data.ts";
+import { priorityFilterData } from "@/data/myTaskFilter.data.ts";
 import type {
   Task,
   UpdateTaskPayload,
-} from "../../../../../types/task.type.ts";
-import { useTaskStore } from "../../../../../stores/task.store.ts";
-import { getTaskValuesByMappingDataType } from "../../../../../helpers/updateMyTaskField.ts";
-import { useGetAllProjects } from "../../../../../hooks/useQueryHook/useProjects.ts";
-import { useGetAllSections } from "../../../../../hooks/useQueryHook/useSections.ts";
-import { useUpdateMyTask } from "../../../../../hooks/useQueryHook/useTasks.ts";
-import { useGetAllLabels } from "../../../../../hooks/useQueryHook/useLabels.ts";
+} from "@/types/task.type.ts";
+import { useTaskStore } from "@/stores/task.store.ts";
+import { getTaskValuesByMappingDataType } from "@/helpers/updateMyTaskField.ts";
+import { useGetAllProjects } from "@/hooks/useQueryHook/useProjects.ts";
+import { useGetAllSections } from "@/hooks/useQueryHook/useSections.ts";
+import { useUpdateMyTask } from "@/hooks/useQueryHook/useTasks.ts";
+import { useGetAllLabels } from "@/hooks/useQueryHook/useLabels.ts";
 
 type EditMyTaskDetailMainSubChildrenFormProps = {
   onCloseEditMySubTask: () => void;

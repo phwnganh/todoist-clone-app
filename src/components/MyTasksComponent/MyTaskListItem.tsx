@@ -1,33 +1,33 @@
-import type { TaskNode } from "../../types/task.type.ts";
-import SmallCalendarIcon from "../../assets/small-calendar-icon.svg";
-import EditIcon from "../icons/EditIcon.tsx";
-import DueDateIcon from "../icons/DueDateIcon.tsx";
-import CommentIcon from "../icons/CommentIcon.tsx";
-import MenuIcon from "../icons/MenuIcon.tsx";
+import type { TaskNode } from "@/types/task.type.ts";
+import SmallCalendarIcon from "@/assets/small-calendar-icon.svg";
+import EditIcon from "@/components/icons/EditIcon.tsx";
+import DueDateIcon from "@/components/icons/DueDateIcon.tsx";
+import CommentIcon from "@/components/icons/CommentIcon.tsx";
+import MenuIcon from "@/components/icons/MenuIcon.tsx";
 import MyTaskContent from "./MyTaskContent";
-import TaskSmallArrowDownIcon from "../icons/TaskSmallArrowDownIcon.tsx";
-import TaskSmallArrowRightIcon from "../icons/TaskSmallArrowRightIcon.tsx";
-import { getTaskIndentClass } from "../../helpers/getTaskIndentClass.ts";
+import TaskSmallArrowDownIcon from "@/components/icons/TaskSmallArrowDownIcon.tsx";
+import TaskSmallArrowRightIcon from "@/components/icons/TaskSmallArrowRightIcon.tsx";
+import { getTaskIndentClass } from "@/helpers/getTaskIndentClass.ts";
 import EditMyTaskModalDialog from "./EditMyTaskComponent";
-import { useTaskStore } from "../../stores/task.store.ts";
-import VerifiedIcon from "../icons/VerifiedIcon.tsx";
-import ChildrenIcon from "../../assets/children-icon.svg";
-import LabelIcon from '../../assets/label-icon.svg'
-import { useExpanded } from "../../hooks/useExpanded.ts";
+import { useTaskStore } from "@/stores/task.store.ts";
+import VerifiedIcon from "@/components/icons/VerifiedIcon.tsx";
+import ChildrenIcon from "@/assets/children-icon.svg";
+import LabelIcon from '@/assets/label-icon.svg'
+import { useExpanded } from "@/hooks/useExpanded.ts";
 import {type MouseEvent, useRef} from "react";
 import MyTasksToolbarDropdown from "./MyTasksToolbarDropdown.tsx";
 import MyTaskDetailModalDialog from "./MyTaskDetailModalDialog";
 import DeleteMyTaskModalDialog from "./DeleteMyTaskComponent";
-import {PRIORITY_BORDER_CLASS_MAPPING, PRIORITY_VERIFIED_CLASS_MAPPING} from "../../constants/priority.constants";
-import {useCompleteTask} from "../../hooks/useQueryHook/useTasks.ts";
-import {getDueInfo} from "../../helpers/formateDate.ts";
-import {DUE_COLOR_CLASS} from "../../constants/color.constants.ts";
+import {PRIORITY_BORDER_CLASS_MAPPING, PRIORITY_VERIFIED_CLASS_MAPPING} from "@/constants/priority.constants";
+import {useCompleteTask} from "@/hooks/useQueryHook/useTasks.ts";
+import {getDueInfo} from "@/helpers/formateDate.ts";
+import {DUE_COLOR_CLASS} from "@/constants/color.constants.ts";
 import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";
-import DragDropIcon from "../icons/DragDropIcon.tsx";
+import DragDropIcon from "@/components/icons/DragDropIcon.tsx";
 import {CSS} from "@dnd-kit/utilities";
-import {useClickOutside} from "../../hooks/useClickOutside.ts";
-import {useGroupingTaskStore} from "../../stores/groupingTask.store.ts";
-import type {Section} from "../../types/section.type.ts";
+import {useClickOutside} from "@/hooks/useClickOutside.ts";
+import {useGroupingTaskStore} from "@/stores/groupingTask.store.ts";
+import type {Section} from "@/types/section.type.ts";
 
 type MyTaskListItemProps = {
   taskNode: TaskNode;

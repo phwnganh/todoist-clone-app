@@ -1,7 +1,7 @@
 import type {RefObject} from "react";
-import type {OpenMyTaskFilterDropdown} from "../../../../types/menu-nav.type.ts";
-import type {Label} from "../../../../types/label.type.ts";
-import TaskSmallArrowDownIcon from "../../../icons/TaskSmallArrowDownIcon.tsx";
+import type {OpenMyTaskFilterDropdown} from "@/types/menu-nav.type.ts";
+import type {Label} from "@/types/label.type.ts";
+import TaskSmallArrowDownIcon from "@/components/icons/TaskSmallArrowDownIcon.tsx";
 import MyTaskFilterLabelDropdown from "../MyTaskFilterLabelDropdown";
 
 type FilteringLabelsSectionProps = {

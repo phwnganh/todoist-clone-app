@@ -1,6 +1,6 @@
-import {useAuthStore} from "../stores/auth.store.ts";
-import {BASE_URL, BASE_URL_SYNC, VIEW_OPTIONS_BASE_URL_SYNC} from "../constants/api.constants.ts";
-import type {ApiError, ApiOptions, SyncCommand, SyncPayload} from "../types/api.type.ts";
+import {useAuthStore} from "@/stores/auth.store.ts";
+import {BASE_URL, BASE_URL_SYNC, VIEW_OPTIONS_BASE_URL_SYNC} from "@/constants/api.constants.ts";
+import type {ApiError, ApiOptions, SyncCommand, SyncPayload} from "@/types/api.type.ts";
 
 async function handleError(res: Response): Promise<ApiError>{
 

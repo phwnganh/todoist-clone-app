@@ -1,7 +1,7 @@
 import type {RefObject} from "react";
-import type {OpenMyTaskFilterDropdown} from "../../../../types/menu-nav.type.ts";
-import type {Priority} from "../../../../types/task.type.ts";
-import TaskSmallArrowDownIcon from "../../../icons/TaskSmallArrowDownIcon.tsx";
+import type {OpenMyTaskFilterDropdown} from "@/types/menu-nav.type.ts";
+import type {Priority} from "@/types/task.type.ts";
+import TaskSmallArrowDownIcon from "@/components/icons/TaskSmallArrowDownIcon.tsx";
 import MyTaskFilterPriorityDropdown from "../MyTaskFilterPriorityDropdown.tsx";
 
 type FilteringPrioritiesSectionProps = {

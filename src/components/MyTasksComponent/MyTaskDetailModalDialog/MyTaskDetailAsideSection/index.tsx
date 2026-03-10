@@ -1,19 +1,19 @@
-import type { Project } from "../../../../types/project.type.ts";
-import type { OpenMyTaskDetailAsideDropdown } from "../../../../types/menu-nav.type.ts";
+import type { Project } from "@/types/project.type.ts";
+import type { OpenMyTaskDetailAsideDropdown } from "@/types/menu-nav.type.ts";
 import { useMemo, useRef, useState } from "react";
-import type { Section } from "../../../../types/section.type.ts";
-import type { Due, Priority, Task } from "../../../../types/task.type.ts";
-import { useClickOutside } from "../../../../hooks/useClickOutside.ts";
-import { getTaskValuesByMappingDataType } from "../../../../helpers/updateMyTaskField.ts";
-import { useGetAllProjects } from "../../../../hooks/useQueryHook/useProjects.ts";
-import { useGetAllSections } from "../../../../hooks/useQueryHook/useSections.ts";
+import type { Section } from "@/types/section.type.ts";
+import type { Due, Priority, Task } from "@/types/task.type.ts";
+import { useClickOutside } from "@/hooks/useClickOutside.ts";
+import { getTaskValuesByMappingDataType } from "@/helpers/updateMyTaskField.ts";
+import { useGetAllProjects } from "@/hooks/useQueryHook/useProjects.ts";
+import { useGetAllSections } from "@/hooks/useQueryHook/useSections.ts";
 import {
   useMoveMyTask,
   useUpdateMyTask,
-} from "../../../../hooks/useQueryHook/useTasks.ts";
-import type { Label } from "../../../../types/label.type.ts";
-import { useGetAllLabels } from "../../../../hooks/useQueryHook/useLabels.ts";
-import { getDueInfo } from "../../../../helpers/formateDate.ts";
+} from "@/hooks/useQueryHook/useTasks.ts";
+import type { Label } from "@/types/label.type.ts";
+import { useGetAllLabels } from "@/hooks/useQueryHook/useLabels.ts";
+import { getDueInfo } from "@/helpers/formateDate.ts";
 import TaskDetailAsideProjectSection from "./TaskDetailAsideProjectSection.tsx";
 import TaskDetailAsideDateSection from "./TaskDetailAsideDateSection.tsx";
 import TaskDetailAsidePrioritySection from "./TaskDetailAsidePrioritySection.tsx";

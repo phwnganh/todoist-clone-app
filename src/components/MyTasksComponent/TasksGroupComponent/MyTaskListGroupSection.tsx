@@ -1,10 +1,10 @@
-import type {Task} from "../../../types/task.type.ts";
-import {useExpanded} from "../../../hooks/useExpanded.ts";
+import type {Task} from "@/types/task.type.ts";
+import {useExpanded} from "@/hooks/useExpanded.ts";
 import TaskSmallArrowDownIcon from "../../icons/TaskSmallArrowDownIcon.tsx";
 import TaskSmallArrowRightIcon from "../../icons/TaskSmallArrowRightIcon.tsx";
 import MyTaskListItem from "../MyTaskListItem.tsx";
-import {useTaskStore} from "../../../stores/task.store.ts";
-import type {Section} from "../../../types/section.type.ts";
+import {useTaskStore} from "@/stores/task.store.ts";
+import type {Section} from "@/types/section.type.ts";
 
 type MyTaskGroupSectionProps = {
     title: string;

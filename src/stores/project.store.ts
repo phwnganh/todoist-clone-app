@@ -1,5 +1,5 @@
 import {create} from "zustand/react";
-import type {Project} from "../types/project.type.ts";
+import type {Project} from "@/types/project.type.ts";
 
 type ProjectState = {
     projectId: string;

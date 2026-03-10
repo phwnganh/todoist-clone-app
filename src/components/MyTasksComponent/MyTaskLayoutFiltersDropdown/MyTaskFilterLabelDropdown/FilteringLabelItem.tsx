@@ -1,5 +1,5 @@
-import LabelIcon from "../../../../assets/label-icon.svg";
-import type { Label } from "../../../../types/label.type";
+import LabelIcon from "@/assets/label-icon.svg";
+import type { Label } from "@/types/label.type";
 type FilterLabelItemProps = {
   label: Label;
   isLabelsSelected?: boolean;

@@ -1,7 +1,7 @@
-import PlusAddIcon from "../../../../assets/add-icon.svg";
-import { useTaskStore } from "../../../../stores/task.store.ts";
+import PlusAddIcon from "@/assets/add-icon.svg";
+import { useTaskStore } from "@/stores/task.store.ts";
 import AddMyTaskDetailMainSubChildrenForm from "./AddMyTaskDetailMainSubChildrenForm";
-import type { Task } from "../../../../types/task.type.ts";
+import type { Task } from "@/types/task.type.ts";
 const MyNoChildrenTaskDetailAddSubtaskButtonSection = ({
   taskId,
   taskDetail,

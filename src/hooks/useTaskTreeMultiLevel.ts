@@ -1,4 +1,4 @@
-import type {FlattenTask, Task, TaskNode} from "../types/task.type.ts";
+import type {FlattenTask, Task, TaskNode} from "@/types/task.type.ts";
 import {useMemo} from "react";
 
 export const useTaskTreeMultiLevel = (tasks: Task[] | undefined, sectionId?: string | null): TaskNode[] => {

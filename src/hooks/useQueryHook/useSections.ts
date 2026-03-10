@@ -5,7 +5,7 @@ import type {
   SectionPayload, SectionQuery,
   SectionResponse,
   UpdateSectionPayload,
-} from "../../types/section.type.ts";
+} from "@/types/section.type.ts";
 import {
   apiAddNewSection,
   apiDeleteSection,
@@ -13,8 +13,8 @@ import {
   apiGetASection,
   apiReorderSection,
   apiUpdateSection,
-} from "../../services/section.service.ts";
-import type { ApiError, SyncResponse } from "../../types/api.type.ts";
+} from "@/services/section.service.ts";
+import type { ApiError, SyncResponse } from "@/types/api.type.ts";
 import {
   optimisticAddSection,
   optimisticDeleteSection,
@@ -22,7 +22,7 @@ import {
   optimisticUpdateSection,
   rollbackOptimisticUpdates,
   type OptimisticUpdatesContext,
-} from "../../helpers/optimisticUpdates.ts";
+} from "@/helpers/optimisticUpdates.ts";
 
 export const useGetAllSections = (query?: SectionQuery) => {
   return useQuery<SectionResponse>({

@@ -1,36 +1,36 @@
-import QuestionIcon from "../../../assets/question-icon.svg";
-import { LAYOUT_ITEMS } from "../../../data/menuNav.data.ts";
+import QuestionIcon from "@/assets/question-icon.svg";
+import { LAYOUT_ITEMS } from "@/data/menuNav.data.ts";
 import { Fragment, useRef, useState } from "react";
-import CustomSwitch from "../../ui/CustomSwitch.tsx";
-import TaskSmallArrowDownIcon from "../../icons/TaskSmallArrowDownIcon.tsx";
-import type { OpenMyTaskFilterDropdown } from "../../../types/menu-nav.type.ts";
-import { useClickOutside } from "../../../hooks/useClickOutside.ts";
+import CustomSwitch from "@/components/ui/CustomSwitch.tsx";
+import TaskSmallArrowDownIcon from "@/components/icons/TaskSmallArrowDownIcon.tsx";
+import type { OpenMyTaskFilterDropdown } from "@/types/menu-nav.type.ts";
+import { useClickOutside } from "@/hooks/useClickOutside.ts";
 import type {
   GroupedBy,
   SortedBy,
   SortOrder, ViewMode,
   ViewOptionsPayload,
-} from "../../../types/viewOptions.type.ts";
-import { useProjectStore } from "../../../stores/project.store.ts";
+} from "@/types/viewOptions.type.ts";
+import { useProjectStore } from "@/stores/project.store.ts";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   dateFilterData,
   directionFilterData,
   groupingFilterData, priorityFilterData,
   sortingFilterData,
-} from "../../../data/myTaskFilter.data.ts";
-import type { Label } from "../../../types/label.type.ts";
+} from "@/data/myTaskFilter.data.ts";
+import type { Label } from "@/types/label.type.ts";
 import {
   buildDateFilterQuery,
   buildFilterQuery,
   parseFilterQuery,
-} from "../../../helpers/groupSortTasks.ts";
+} from "@/helpers/groupSortTasks.ts";
 import {
   extractDateFromList,
   extractLabelsFromList,
   extractPrioritiesFromList, isDateCriteria,
-} from "../../../helpers/extractCriteriaFromFiltereds.ts";
-import type { Priority } from "../../../types/task.type.ts";
+} from "@/helpers/extractCriteriaFromFiltereds.ts";
+import type { Priority } from "@/types/task.type.ts";
 import GroupingTaskSection from "./EachTaskLayoutFieldSection/GroupingTaskSection.tsx";
 import SortingTaskSection from "./EachTaskLayoutFieldSection/SortingTaskSection.tsx";
 import DirectingTaskSection from "./EachTaskLayoutFieldSection/DirectingTaskSection.tsx";
@@ -38,8 +38,8 @@ import ResettingFiltersButton from "./ResettingFiltersButton.tsx";
 import FilteringDateSection from "./EachTaskLayoutFieldSection/FilteringDateSection.tsx";
 import FilteringPrioritiesSection from "./EachTaskLayoutFieldSection/FilteringPrioritiesSection.tsx";
 import FilteringLabelsSection from "./EachTaskLayoutFieldSection/FilteringLabelsSection.tsx";
-import {useExpanded} from "../../../hooks/useExpanded.ts";
-import TaskSmallArrowRightIcon from "../../icons/TaskSmallArrowRightIcon.tsx";
+import {useExpanded} from "@/hooks/useExpanded.ts";
+import TaskSmallArrowRightIcon from "@/components/icons/TaskSmallArrowRightIcon.tsx";
 
 type MyTaskLayoutFiltersDropdownProps = {
   onSelectLayout: (layout: ViewMode) => void;

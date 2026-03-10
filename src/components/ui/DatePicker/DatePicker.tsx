@@ -1,6 +1,6 @@
 import {DayPicker} from "react-day-picker"
 import {parseISO, startOfToday} from "date-fns";
-import {formatOnlyDate} from "../../../helpers/formateDate.ts";
+import {formatOnlyDate} from "@/helpers/formateDate.ts";
 
 type DatePickerProps = {
     value: string | null;

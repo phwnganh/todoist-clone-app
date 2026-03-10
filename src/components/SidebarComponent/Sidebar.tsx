@@ -1,17 +1,17 @@
-import type { MenuNavItem } from "../../types/menu-nav.type.ts";
-import AddIcon from "../../assets/add-icon.svg";
-import ArrowDownIcon from "../../assets/arrow-down-icon.svg";
-import QuestionIcon from "../../assets/question-icon.svg";
-import { PROJECTS } from "../../constants/routes.constants.ts";
+import type { MenuNavItem } from "@/types/menu-nav.type.ts";
+import AddIcon from "@/assets/add-icon.svg";
+import ArrowDownIcon from "@/assets/arrow-down-icon.svg";
+import QuestionIcon from "@/assets/question-icon.svg";
+import { PROJECTS } from "@/constants/routes.constants.ts";
 import SidebarNavItem from "./SidebarNavItem.tsx";
 import { useState } from "react";
 import SearchModalDialog from "../SearchModalDialog.tsx";
 import { NavLink } from "react-router-dom";
-import RightArrowIcon from "../../assets/right-arrow-icon.svg";
-import { MENU_NAV_ITEMS } from "../../data/menuNav.data.ts";
+import RightArrowIcon from "@/assets/right-arrow-icon.svg";
+import { MENU_NAV_ITEMS } from "@/data/menuNav.data.ts";
 import SidebarMyProjectList from "./SidebarMyProjectList.tsx";
 import SidebarHeader from "./SidebarHeader";
-import PlusAddIcon from "../icons/PlusAddIcon.tsx";
+import PlusAddIcon from "@/components/icons/PlusAddIcon.tsx";
 type SidebarProps = {
   open: boolean;
   isMobile: boolean;

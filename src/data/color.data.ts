@@ -1,4 +1,4 @@
-import type {Color, HashtagColor} from "../types/color.type.ts";
+import type {Color, HashtagColor} from "@/types/color.type.ts";
 
 export const colorData: Color[] = [
     {

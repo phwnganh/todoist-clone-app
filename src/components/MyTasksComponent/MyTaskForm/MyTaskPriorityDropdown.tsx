@@ -1,7 +1,7 @@
-import { priorityFilterData } from "../../../data/myTaskFilter.data.ts";
-import PriorityIcon from "../../icons/PriorityIcon.tsx";
-import VerifiedIcon from "../../icons/VerifiedIcon.tsx";
-import type {Priority} from "../../../types/task.type.ts";
+import { priorityFilterData } from "@/data/myTaskFilter.data.ts";
+import PriorityIcon from "@/components/icons/PriorityIcon.tsx";
+import VerifiedIcon from "@/components/icons/VerifiedIcon.tsx";
+import type {Priority} from "@/types/task.type.ts";
 
 type MyTaskPriorityDropdownProps = {
     selectedPriority: Priority | null;

@@ -1,4 +1,4 @@
-import PlusIcon from "../../../../assets/plus-icon.svg";
+import PlusIcon from "@/assets/plus-icon.svg";
 type ProjectDropdownFooterProps = {
   hasKeyword: boolean;
   keyword: string;

@@ -1,9 +1,9 @@
-import HashtagIcon from "../../icons/HashtagIcon.tsx";
-import { getProjectColorClass } from "../../../helpers/getProjectColorClass.ts";
-import type { Project } from "../../../types/project.type.ts";
-import LargeCloseIcon from "../../../assets/large-close-icon.svg";
-import type { Section } from "../../../types/section.type.ts";
-import SectionIcon from "../../icons/SectionIcon.tsx";
+import HashtagIcon from "@/components/icons/HashtagIcon.tsx";
+import { getProjectColorClass } from "@/helpers/getProjectColorClass.ts";
+import type { Project } from "@/types/project.type.ts";
+import LargeCloseIcon from "@/assets/large-close-icon.svg";
+import type { Section } from "@/types/section.type.ts";
+import SectionIcon from "@/components/icons/SectionIcon.tsx";
 type MyTaskDetailTitleSectionProps = {
   projectDetail: Project | undefined;
   sectionDetail?: Section | null;

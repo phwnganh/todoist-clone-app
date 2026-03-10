@@ -1,8 +1,8 @@
 import { createPortal } from "react-dom";
-import { useTaskStore } from "../../../stores/task.store.ts";
-import { useDeleteMyTask } from "../../../hooks/useQueryHook/useTasks.ts";
+import { useTaskStore } from "@/stores/task.store.ts";
+import { useDeleteMyTask } from "@/hooks/useQueryHook/useTasks.ts";
 import { type MouseEvent } from "react";
-import type { Task } from "../../../types/task.type.ts";
+import type { Task } from "@/types/task.type.ts";
 
 const DeleteMyTaskModalDialog = ({ task }: { task: Task }) => {
   const { deleteTaskId, onCloseDeleteMyTask } = useTaskStore();

@@ -1,5 +1,5 @@
-import HashtagIcon from "../../assets/hashtag-icon.svg";
-import TemplateIcon from "../../assets/template-icon.svg";
+import HashtagIcon from "@/assets/hashtag-icon.svg";
+import TemplateIcon from "@/assets/template-icon.svg";
 
 const MyProjectsDropdown = ({
   onOpenAddProjectModal,

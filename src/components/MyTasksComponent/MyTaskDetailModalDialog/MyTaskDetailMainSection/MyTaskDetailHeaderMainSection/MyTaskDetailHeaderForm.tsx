@@ -1,8 +1,8 @@
-import DescriptionIcon from "../../../../../assets/description-icon.svg";
-import type { Task } from "../../../../../types/task.type.ts";
+import DescriptionIcon from "@/assets/description-icon.svg";
+import type { Task } from "@/types/task.type.ts";
 import { type ChangeEvent, type FormEvent, useState } from "react";
-import { useUpdateMyTask } from "../../../../../hooks/useQueryHook/useTasks.ts";
-import { updateMyTaskDetailHeader } from "../../../../../helpers/updateMyTaskField.ts";
+import { useUpdateMyTask } from "@/hooks/useQueryHook/useTasks.ts";
+import { updateMyTaskDetailHeader } from "@/helpers/updateMyTaskField.ts";
 
 export type TaskDetailHeaderFormValues = {
   content: string;

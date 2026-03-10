@@ -1,8 +1,8 @@
 import MyTaskListSection from "../MyTaskSectionComponent/MyTaskListSectionComponent/MyTaskListSection.tsx";
-import type { Section } from "../../types/section.type.ts";
+import type { Section } from "@/types/section.type.ts";
 import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import MyTaskListGroupSection from "./TasksGroupComponent/MyTaskListGroupSection.tsx";
-import type { TaskGroup } from "../../types/viewOptions.type.ts";
+import type { TaskGroup } from "@/types/viewOptions.type.ts";
 type MyTasksListProps = {
   filteredSectionsByProject?: Section[];
   isGrouping: boolean;

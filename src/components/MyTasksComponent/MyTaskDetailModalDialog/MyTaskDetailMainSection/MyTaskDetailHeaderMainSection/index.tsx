@@ -1,13 +1,13 @@
-import VerifiedIcon from "../../../../icons/VerifiedIcon.tsx";
-import type { Task } from "../../../../../types/task.type.ts";
+import VerifiedIcon from "@/components/icons/VerifiedIcon.tsx";
+import type { Task } from "@/types/task.type.ts";
 import { useState } from "react";
 import MyTaskDetailHeaderForm from "./MyTaskDetailHeaderForm.tsx";
 import MyTaskDetailHeaderTitle from "./MyTaskDetailHeaderTitle.tsx";
 import {
   PRIORITY_BORDER_CLASS_MAPPING,
   PRIORITY_VERIFIED_CLASS_MAPPING,
-} from "../../../../../constants/priority.constants";
-import { useCompleteTask } from "../../../../../hooks/useQueryHook/useTasks.ts";
+} from "@/constants/priority.constants";
+import { useCompleteTask } from "@/hooks/useQueryHook/useTasks.ts";
 
 type MyTaskDetailHeaderMainSectionProps = {
   taskDetail?: Task;

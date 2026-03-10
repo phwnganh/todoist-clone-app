@@ -6,9 +6,9 @@ import type {
     TaskPayload,
     TaskResponse,
     UpdateTaskPayload
-} from "../types/task.type.ts";
-import type {SyncResponse} from "../types/api.type.ts";
-import type {SectionQuery} from "../types/section.type.ts";
+} from "@/types/task.type.ts";
+import type {SyncResponse} from "@/types/api.type.ts";
+import type {SectionQuery} from "@/types/section.type.ts";
 
 const buildSectionQuery = (query?: SectionQuery): string => {
     if(!query) return "";

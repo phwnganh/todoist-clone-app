@@ -2,14 +2,14 @@ import {
   useCreateLabels,
   useGetAllLabels,
   useSearchLabels,
-} from "../../../../hooks/useQueryHook/useLabels.ts";
-import LoadingSpin from "../../../ui/LoadingSpin.tsx";
+} from "@/hooks/useQueryHook/useLabels.ts";
+import LoadingSpin from "@/components/ui/LoadingSpin.tsx";
 import MyLabelListItem from "./MyLabelListItem.tsx";
 import AddNewLabelButton from "./AddNewLabelButton.tsx";
-import type {Label, LabelsResponse} from "../../../../types/label.type.ts";
-import { shouldShowLabel } from "../../../../helpers/handleCommasTag.ts";
-import { useDebounce } from "../../../../hooks/useDebounce.ts";
-import {queryClient} from "../../../../main.tsx";
+import type {Label, LabelsResponse} from "@/types/label.type.ts";
+import { shouldShowLabel } from "@/helpers/handleCommasTag.ts";
+import { useDebounce } from "@/hooks/useDebounce.ts";
+import {queryClient} from "@/main.tsx";
 
 type MyTaskLabelsDropdownProps = {
   selectedLabels: Label[];

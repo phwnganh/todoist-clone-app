@@ -1,5 +1,5 @@
-import LoginBanner from "../../assets/login-banner.svg";
-import QRIcon from "../../assets/qr-icon.svg";
+import LoginBanner from "@/assets/login-banner.svg";
+import QRIcon from "@/assets/qr-icon.svg";
 const NewFeatureBannerSection = () => {
   return (
     <section className="p-3">

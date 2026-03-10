@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { useDebounce } from "../../../../hooks/useDebounce.ts";
+import { useDebounce } from "@/hooks/useDebounce.ts";
 import {
   useGetAllLabels,
   useSearchLabels,
-} from "../../../../hooks/useQueryHook/useLabels.ts";
+} from "@/hooks/useQueryHook/useLabels.ts";
 import LabelsSearchInput from "./LabelsSearchInput.tsx";
 import LabelOptions from "./LabelOptions.tsx";
-import type { Label } from "../../../../types/label.type.ts";
+import type { Label } from "@/types/label.type.ts";
 import MyLabelFooter from "../../MyTaskForm/MyTaskLabelsDropdown/MyLabelFooter.tsx";
 
 type MyTaskAvailableLabelsDropdownProps = {

@@ -1,7 +1,7 @@
-import type {Priority} from "../../../../types/task.type.ts";
+import type {Priority} from "@/types/task.type.ts";
 import type {RefObject} from "react";
-import PriorityIcon from "../../../icons/PriorityIcon.tsx";
-import TaskSmallArrowDownIcon from "../../../icons/TaskSmallArrowDownIcon.tsx";
+import PriorityIcon from "@/components/icons/PriorityIcon.tsx";
+import TaskSmallArrowDownIcon from "@/components/icons/TaskSmallArrowDownIcon.tsx";
 import MyTaskPriorityDropdown from "../../MyTaskForm/MyTaskPriorityDropdown.tsx";
 
 type TaskDetailAsidePrioritySectionProps = {

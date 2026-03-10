@@ -1,5 +1,5 @@
-import LoginFormSection from "../../components/LoginComponent/LoginFormSection";
-import NewFeatureBannerSection from "../../components/LoginComponent/NewFeatureBannerSection";
+import LoginFormSection from "@/components/LoginComponent/LoginFormSection";
+import NewFeatureBannerSection from "@/components/LoginComponent/NewFeatureBannerSection";
 
 const LoginPage = () => {
     return (

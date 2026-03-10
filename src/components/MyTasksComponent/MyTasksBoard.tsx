@@ -1,4 +1,4 @@
-import type { Section } from "../../types/section.type.ts";
+import type { Section } from "@/types/section.type.ts";
 import MyTaskBoardSection from "../MyTaskSectionComponent/MyTaskBoardSectionComponent/MyTaskBoardSection.tsx";
 import {Fragment, useState} from "react";
 import AddMyTaskBoardSectionFinalButton from "../MyTaskSectionComponent/MyTaskBoardSectionComponent/AddMyTaskBoardSectionFinalButton.tsx";
@@ -6,7 +6,7 @@ import AddMyTaskSection from "../MyTaskSectionComponent/AddMyTaskSectionComponen
 import AddMyTaskBoardSectionSlot from "../MyTaskSectionComponent/MyTaskBoardSectionComponent/AddMyTaskBoardSectionSlot";
 import {horizontalListSortingStrategy, SortableContext} from "@dnd-kit/sortable";
 import MyTaskBoardGroupSection from "./TasksGroupComponent/MyTaskBoardGroupSection";
-import type {TaskGroup} from "../../types/viewOptions.type.ts";
+import type {TaskGroup} from "@/types/viewOptions.type.ts";
 
 type MyTasksBoardProps = {
   filteredSectionsByProject: Section[] | undefined;

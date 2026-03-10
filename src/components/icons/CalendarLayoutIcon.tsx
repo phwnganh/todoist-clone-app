@@ -1,5 +1,5 @@
-import PremiumCalendarIcon from "../../assets/premium-calendar-icon.svg";
-import PremiumStarIcon from "../../assets/premium-star-icon.svg";
+import PremiumCalendarIcon from "@/assets/premium-calendar-icon.svg";
+import PremiumStarIcon from "@/assets/premium-star-icon.svg";
 
 const CalendarLayoutIcon = () => {
     return (

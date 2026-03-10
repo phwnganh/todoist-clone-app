@@ -1,5 +1,5 @@
-import type {Project} from "../../types/project.type.ts";
-import type {Section} from "../../types/section.type.ts";
+import type {Project} from "@/types/project.type.ts";
+import type {Section} from "@/types/section.type.ts";
 
 type ProjectChipProps = {
     project: Project;

@@ -1,5 +1,5 @@
-import MyProjectsMenuButton from "../ui/MyProjectsMenuButton.tsx";
-import type { MyProjectMenuToolbar } from "../../types/menu-nav.type.ts";
+import MyProjectsMenuButton from "@/components/ui/MyProjectsMenuButton.tsx";
+import type { MyProjectMenuToolbar } from "@/types/menu-nav.type.ts";
 
 type MyProjectsToolbarDropdownProps = {
   handleOpenEditProjectModalDialog: () => void;

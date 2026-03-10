@@ -1,10 +1,10 @@
 import { type FormEvent, useState } from "react";
 import MyTaskForm, { type MyTaskFormValues } from "../MyTaskForm";
-import { priorityFilterData } from "../../../data/myTaskFilter.data.ts";
-import { useAddMyTask } from "../../../hooks/useQueryHook/useTasks.ts";
-import type { TaskPayload } from "../../../types/task.type.ts";
-import { useProjectStore } from "../../../stores/project.store.ts";
-import { useTaskStore } from "../../../stores/task.store.ts";
+import { priorityFilterData } from "@/data/myTaskFilter.data.ts";
+import { useAddMyTask } from "@/hooks/useQueryHook/useTasks.ts";
+import type { TaskPayload } from "@/types/task.type.ts";
+import { useProjectStore } from "@/stores/project.store.ts";
+import { useTaskStore } from "@/stores/task.store.ts";
 
 type AddMyTaskModalDialogProps = {
   onCloseAddMyTask: () => void;

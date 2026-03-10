@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useDebounce } from "../../../../hooks/useDebounce.ts";
-import { useGetAllProjects } from "../../../../hooks/useQueryHook/useProjects.ts";
-import LoadingSpin from "../../../ui/LoadingSpin.tsx";
+import { useDebounce } from "@/hooks/useDebounce.ts";
+import { useGetAllProjects } from "@/hooks/useQueryHook/useProjects.ts";
+import LoadingSpin from "@/components/ui/LoadingSpin.tsx";
 import ProjectSearchInput from "./ProjectSearchInput.tsx";
-import UserAvatar from "../../../../assets/User-avatar.png";
+import UserAvatar from "@/assets/User-avatar.png";
 import ProjectOptions from "./ProjectOptions.tsx";
 import ProjectDropdownFooter from "./ProjectDropdownFooter.tsx";
-import type { Project } from "../../../../types/project.type.ts";
-import {useGetAllSections} from "../../../../hooks/useQueryHook/useSections.ts";
-import type {Section} from "../../../../types/section.type.ts";
+import type { Project } from "@/types/project.type.ts";
+import {useGetAllSections} from "@/hooks/useQueryHook/useSections.ts";
+import type {Section} from "@/types/section.type.ts";
 
 type AddMyTaskProjectDropdownProps = {
   selectedProject: Project | null;

@@ -1,6 +1,6 @@
 import {api} from "./api.ts";
-import type {Project, ProjectPayload, ProjectResponse, UpdateProjectPayload} from "../types/project.type.ts";
-import type {SyncResponse} from "../types/api.type.ts";
+import type {Project, ProjectPayload, ProjectResponse, UpdateProjectPayload} from "@/types/project.type.ts";
+import type {SyncResponse} from "@/types/api.type.ts";
 
 export const apiGetAllProjects =  () => {
     return api.get<ProjectResponse>(`/projects`);

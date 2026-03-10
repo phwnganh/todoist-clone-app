@@ -4,13 +4,13 @@ import {
     apiDeleteMyProject,
     apiGetAllProjects, apiGetAProject,
     apiUpdateMyProject
-} from "../../services/project.service.ts";
-import type {Project, ProjectPayload, ProjectResponse, UpdateProjectPayload} from "../../types/project.type.ts";
-import type {ApiError, SyncResponse} from "../../types/api.type.ts";
+} from "@/services/project.service.ts";
+import type {Project, ProjectPayload, ProjectResponse, UpdateProjectPayload} from "@/types/project.type.ts";
+import type {ApiError, SyncResponse} from "@/types/api.type.ts";
 import {
     optimisticAddProject, optimisticDeleteProject, optimisticUpdateProject, type OptimisticUpdatesProjectContext,
     rollbackOptimisticProjectUpdates,
-} from "../../helpers/optimisticUpdates.ts";
+} from "@/helpers/optimisticUpdates.ts";
 
 export const useGetAllProjects = () => {
     return useQuery<ProjectResponse>({

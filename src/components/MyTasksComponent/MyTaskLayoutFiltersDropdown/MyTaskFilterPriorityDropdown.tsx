@@ -1,6 +1,6 @@
-import { priorityFilterData } from "../../../data/myTaskFilter.data.ts";
-import PriorityIcon from "../../icons/PriorityIcon.tsx";
-import type { Priority } from "../../../types/task.type.ts";
+import { priorityFilterData } from "@/data/myTaskFilter.data.ts";
+import PriorityIcon from "@/components/icons/PriorityIcon.tsx";
+import type { Priority } from "@/types/task.type.ts";
 
 type MyTaskFilterPriorityDropdownProps = {
   selectedFilteringPriority: string[];

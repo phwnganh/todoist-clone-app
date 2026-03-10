@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "react-day-picker/dist/style.css"
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
-import AppRoutes from "./routes/AppRoutes.tsx";
+import AppRoutes from "@/routes/AppRoutes.tsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 export const queryClient = new QueryClient({
     defaultOptions: {

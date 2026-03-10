@@ -1,8 +1,8 @@
 import MyProjectForm, { type MyProjectFormValues } from "../MyProjectForm";
 import { type FormEvent, useEffect, useState } from "react";
-import {useUpdateProject } from "../../../hooks/useQueryHook/useProjects.ts";
-import { getValuesByMappingDataType } from "../../../helpers/updateMyProjectField";
-import type {Project} from "../../../types/project.type.ts";
+import {useUpdateProject } from "@/hooks/useQueryHook/useProjects.ts";
+import { getValuesByMappingDataType } from "@/helpers/updateMyProjectField";
+import type {Project} from "@/types/project.type.ts";
 const EditProjectModalDialog = ({
   onClose,
   project,

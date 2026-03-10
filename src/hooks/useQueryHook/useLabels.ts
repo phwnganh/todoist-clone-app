@@ -1,12 +1,12 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import type {Label, LabelPayload, LabelsResponse} from "../../types/label.type.ts";
-import {apiCreateLabel, apiGetAllLabels, apiSearchLabels} from "../../services/label.service.ts";
-import type {ApiError, SyncResponse} from "../../types/api.type.ts";
+import type {Label, LabelPayload, LabelsResponse} from "@/types/label.type.ts";
+import {apiCreateLabel, apiGetAllLabels, apiSearchLabels} from "@/services/label.service.ts";
+import type {ApiError, SyncResponse} from "@/types/api.type.ts";
 import {
     optimisticCreateLabel,
     type OptimisticUpdatesContext,
     rollbackOptimisticUpdates
-} from "../../helpers/optimisticUpdates.ts";
+} from "@/helpers/optimisticUpdates.ts";
 
 export const useGetAllLabels = () => {
     return useQuery<LabelsResponse>({

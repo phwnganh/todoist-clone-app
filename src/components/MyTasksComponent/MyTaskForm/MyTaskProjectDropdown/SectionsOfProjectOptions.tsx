@@ -1,7 +1,7 @@
-import VerifiedIcon from "../../../icons/VerifiedIcon.tsx";
-import type {Section} from "../../../../types/section.type.ts";
-import SectionIcon from "../../../icons/SectionIcon.tsx";
-import type {Project} from "../../../../types/project.type.ts";
+import VerifiedIcon from "@/components/icons/VerifiedIcon.tsx";
+import type {Section} from "@/types/section.type.ts";
+import SectionIcon from "@/components/icons/SectionIcon.tsx";
+import type {Project} from "@/types/project.type.ts";
 
 type SectionsOfProjectOptionsProps = {
     section: Section;

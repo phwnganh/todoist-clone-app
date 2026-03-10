@@ -1,16 +1,16 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import type {ApiError, SyncResponse} from "../../types/api.type.ts";
-import type {ViewOptionsPayload} from "../../types/viewOptions.type.ts";
+import type {ApiError, SyncResponse} from "@/types/api.type.ts";
+import type {ViewOptionsPayload} from "@/types/viewOptions.type.ts";
 import {
     type OptimisticUpdatesContext,
     optimisticViewOptions,
     rollbackOptimisticUpdates
-} from "../../helpers/optimisticUpdates.ts";
-import {apiViewOptions} from "../../services/viewOptions.service.ts";
+} from "@/helpers/optimisticUpdates.ts";
+import {apiViewOptions} from "@/services/viewOptions.service.ts";
 import {useGetAllTasks} from "./useTasks.ts";
-import type {TaskQuery} from "../../types/task.type.ts";
+import type {TaskQuery} from "@/types/task.type.ts";
 import {useMemo} from "react";
-import {filterTasks, groupTasks, sortTasks} from "../../helpers/groupSortTasks.ts";
+import {filterTasks, groupTasks, sortTasks} from "@/helpers/groupSortTasks.ts";
 
 export const useViewOptions = () => {
     const queryClient = useQueryClient();

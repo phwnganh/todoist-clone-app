@@ -1,6 +1,6 @@
-import {useAuthStore} from "../stores/auth.store.ts";
+import {useAuthStore} from "@/stores/auth.store.ts";
 import {Navigate} from "react-router-dom";
-import {LOGIN} from "../constants/routes.constants.ts";
+import {LOGIN} from "@/constants/routes.constants.ts";
 import type {ReactNode} from "react";
 
 const ProtectedRoute = ({children}: {children: ReactNode}) => {

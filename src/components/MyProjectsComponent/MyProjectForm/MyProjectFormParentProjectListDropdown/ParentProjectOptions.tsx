@@ -1,7 +1,7 @@
-import type { Project } from "../../../../types/project.type.ts";
-import VerifiedIcon from "../../../../assets/verified-icon.svg";
-import HashtagIcon from "../../../icons/HashtagIcon.tsx";
-import {getProjectColorClass} from "../../../../helpers/getProjectColorClass.ts";
+import type { Project } from "@/types/project.type.ts";
+import VerifiedIcon from "@/assets/verified-icon.svg";
+import HashtagIcon from "@/components/icons/HashtagIcon.tsx";
+import {getProjectColorClass} from "@/helpers/getProjectColorClass.ts";
 
 type ParentProjectOptionsProps = {
   project: Project;

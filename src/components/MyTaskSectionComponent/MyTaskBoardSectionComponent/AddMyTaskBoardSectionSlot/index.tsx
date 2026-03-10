@@ -1,4 +1,4 @@
-import { useSectionStore } from "../../../../stores/section.store.ts";
+import { useSectionStore } from "@/stores/section.store.ts";
 import AddMyTaskSection from "../../AddMyTaskSectionComponent";
 import AddEachMyTaskBoardSectionButton from "./AddEachMyTaskBoardSectionButton.tsx";
 

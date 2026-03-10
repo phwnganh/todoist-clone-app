@@ -1,4 +1,4 @@
-import type {ReorderSectionPayload, Section} from "../types/section.type.ts";
+import type {ReorderSectionPayload, Section} from "@/types/section.type.ts";
 import {arrayMove} from "@dnd-kit/sortable";
 
 export const findSectionByIdToOrder = (sections: Section[], id: string) => {

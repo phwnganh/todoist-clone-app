@@ -1,4 +1,4 @@
-import LargeCloseIcon from '../../../../../assets/large-close-icon.svg'
+import LargeCloseIcon from '@/assets/large-close-icon.svg'
 import {useSidebarStore} from "@/stores/sidebar.store.ts";
 const SettingsModalMainHeaderSection = () => {
     const {onCloseSettingModalDialog} = useSidebarStore()

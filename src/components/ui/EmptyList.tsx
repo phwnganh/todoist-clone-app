@@ -1,4 +1,4 @@
-import EmptyImage from "../../assets/not-found-list.avif";
+import EmptyImage from "@/assets/not-found-list.avif";
 const EmptyList = () => {
   return (
     <div className={"flex flex-col justify-center items-center"}>

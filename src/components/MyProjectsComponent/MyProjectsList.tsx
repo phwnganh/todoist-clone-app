@@ -1,15 +1,15 @@
 import MyProjectsItem from "./MyProjectsItem.tsx";
-import { useGetAllProjects } from "../../hooks/useQueryHook/useProjects.ts";
-import LoadingSpin from "../ui/LoadingSpin.tsx";
-import ErrorDisplayed from "../ui/ErrorDisplayed.tsx";
+import { useGetAllProjects } from "@/hooks/useQueryHook/useProjects.ts";
+import LoadingSpin from "@/components/ui/LoadingSpin.tsx";
+import ErrorDisplayed from "@/components/ui/ErrorDisplayed.tsx";
 import { useMemo } from "react";
-import EmptyList from "../ui/EmptyList.tsx";
+import EmptyList from "@/components/ui/EmptyList.tsx";
 import EditProjectModalDialog from "./EditProjectModalDialog";
 import { useNavigate } from "react-router-dom";
-import { PROJECT_DETAILS } from "../../constants/routes.constants.ts";
+import { PROJECT_DETAILS } from "@/constants/routes.constants.ts";
 import { type MouseEvent } from "react";
 import DeleteProjectsModalDialog from "./DeleteProjectsModalDialog";
-import {useProjectStore} from "../../stores/project.store.ts";
+import {useProjectStore} from "@/stores/project.store.ts";
 
 type MyProjectsListProps = {
   search: string;

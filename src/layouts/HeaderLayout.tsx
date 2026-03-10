@@ -1,4 +1,4 @@
-import CollapseSideBarIcon from "../assets/collapse-sidebar-icon.svg";
+import CollapseSideBarIcon from "@/assets/collapse-sidebar-icon.svg";
 import {type ReactNode} from "react";
 
 type HeaderLayoutProps = {

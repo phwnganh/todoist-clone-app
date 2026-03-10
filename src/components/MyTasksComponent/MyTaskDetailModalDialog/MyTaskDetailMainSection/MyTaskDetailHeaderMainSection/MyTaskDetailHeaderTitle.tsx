@@ -1,6 +1,6 @@
 import MyTaskContent from "../../../MyTaskContent.tsx";
-import DescriptionIcon from "../../../../../assets/description-icon.svg";
-import type { Task } from "../../../../../types/task.type.ts";
+import DescriptionIcon from "@/assets/description-icon.svg";
+import type { Task } from "@/types/task.type.ts";
 
 type MyTaskDetailHeaderTitleProps = {
   taskDetail?: Task | null;

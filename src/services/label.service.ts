@@ -1,6 +1,6 @@
 import {api} from "./api.ts";
-import type {LabelPayload, LabelsResponse} from "../types/label.type.ts";
-import type {SyncResponse} from "../types/api.type.ts";
+import type {LabelPayload, LabelsResponse} from "@/types/label.type.ts";
+import type {SyncResponse} from "@/types/api.type.ts";
 
 export const apiGetAllLabels = () => {
     return api.get<LabelsResponse>(`/labels`);

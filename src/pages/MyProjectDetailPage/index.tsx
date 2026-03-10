@@ -1,30 +1,30 @@
 import {useNavigate, useOutletContext, useParams} from "react-router-dom";
-import HeaderLayout from "../../layouts/HeaderLayout.tsx";
-import UserAdded from '../../assets/user-added-icon.svg'
-import SmallListIcon from '../../assets/small-list-icon.svg'
-import CommentIcon from '../../assets/comment-icon.svg'
-import ThreeDotsIcon from '../../assets/three-dots-icon.svg'
-import type {HeaderLayoutType} from "../../types/headerLayout.type.ts";
-import {PROJECTS} from "../../constants/routes.constants.ts";
-import MyTasksList from "../../components/MyTasksComponent/MyTasksList.tsx";
-import MyTaskTitle from "../../components/MyTasksComponent/MyTaskTitle.tsx";
+import HeaderLayout from "@/layouts/HeaderLayout.tsx";
+import UserAdded from '@/assets/user-added-icon.svg'
+import SmallListIcon from '@/assets/small-list-icon.svg'
+import CommentIcon from '@/assets/comment-icon.svg'
+import ThreeDotsIcon from '@/assets/three-dots-icon.svg'
+import type {HeaderLayoutType} from "@/types/headerLayout.type.ts";
+import {PROJECTS} from "@/constants/routes.constants.ts";
+import MyTasksList from "@/components/MyTasksComponent/MyTasksList.tsx";
+import MyTaskTitle from "@/components/MyTasksComponent/MyTaskTitle.tsx";
 import {useEffect, useMemo, useState} from "react";
-import MyTaskLayoutFiltersDropdown from "../../components/MyTasksComponent/MyTaskLayoutFiltersDropdown";
-import MyTasksBoard from "../../components/MyTasksComponent/MyTasksBoard";
-import {useProjectStore} from "../../stores/project.store.ts";
-import {useGetAllSections, useReorderSection} from "../../hooks/useQueryHook/useSections.ts";
+import MyTaskLayoutFiltersDropdown from "@/components/MyTasksComponent/MyTaskLayoutFiltersDropdown";
+import MyTasksBoard from "@/components/MyTasksComponent/MyTasksBoard";
+import {useProjectStore} from "@/stores/project.store.ts";
+import {useGetAllSections, useReorderSection} from "@/hooks/useQueryHook/useSections.ts";
 import {DndContext, type DragEndEvent, type DragOverEvent} from "@dnd-kit/core";
-import {useMoveMyTask, useReorderTask} from "../../hooks/useQueryHook/useTasks.ts";
-import {findTaskByIdToOrder, handleReorderTask} from "../../helpers/dragDropMyTasks.ts";
-import HeaderThreeDotsIcon from "../../components/icons/HeaderThreeDotsIcon.tsx";
-import {findSectionByIdToOrder, handleReorderSection} from "../../helpers/dragDropMySection.ts";
-import {customCollisionDetection} from "../../helpers/customCollisionDetection.ts";
-import {useDragStore} from "../../stores/dragDrop.store.ts";
-import {useTasksWithView, useViewOptions} from "../../hooks/useQueryHook/useViewOptions.ts";
+import {useMoveMyTask, useReorderTask} from "@/hooks/useQueryHook/useTasks.ts";
+import {findTaskByIdToOrder, handleReorderTask} from "@/helpers/dragDropMyTasks.ts";
+import HeaderThreeDotsIcon from "@/components/icons/HeaderThreeDotsIcon.tsx";
+import {findSectionByIdToOrder, handleReorderSection} from "@/helpers/dragDropMySection.ts";
+import {customCollisionDetection} from "@/helpers/customCollisionDetection.ts";
+import {useDragStore} from "@/stores/dragDrop.store.ts";
+import {useTasksWithView, useViewOptions} from "@/hooks/useQueryHook/useViewOptions.ts";
 import {useQueryClient} from "@tanstack/react-query";
-import type {ViewMode, ViewOptionsPayload} from "../../types/viewOptions.type.ts";
-import {useGroupingTaskStore} from "../../stores/groupingTask.store.ts";
-import type {Section} from "../../types/section.type.ts";
+import type {ViewMode, ViewOptionsPayload} from "@/types/viewOptions.type.ts";
+import {useGroupingTaskStore} from "@/stores/groupingTask.store.ts";
+import type {Section} from "@/types/section.type.ts";
 
 const MyProjectDetailPage = () => {
     const {projectId} = useParams<{projectId: string}>();

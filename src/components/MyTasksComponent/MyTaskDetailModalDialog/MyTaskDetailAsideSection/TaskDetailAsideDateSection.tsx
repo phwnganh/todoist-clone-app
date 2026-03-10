@@ -1,8 +1,8 @@
-import type {Due} from "../../../../types/task.type.ts";
+import type {Due} from "@/types/task.type.ts";
 import type {RefObject} from "react";
-import SmallCalendarIcon from "../../../../assets/small-calendar-icon.svg";
-import SmallPlusAddIcon from "../../../icons/SmallPlusAddIcon.tsx";
-import {DUE_COLOR_CLASS} from "../../../../constants/color.constants.ts";
+import SmallCalendarIcon from "@/assets/small-calendar-icon.svg";
+import SmallPlusAddIcon from "@/components/icons/SmallPlusAddIcon.tsx";
+import {DUE_COLOR_CLASS} from "@/constants/color.constants.ts";
 import MyTaskDateDropdown from "../../MyTaskForm/MyTaskDateDropdown";
 
 type TaskDetailAsideDateSectionProps = {

@@ -1,40 +1,40 @@
-import TaskSmallCalendarIcon from "../../../assets/task-small-calendar-icon.svg";
-import TaskFlagIcon from "../../../assets/task-flag-priority-icon.svg";
-import TaskClockIcon from "../../../assets/task-clock-reminders-icon.svg";
-import TaskSmallDropdownIcon from "../../../assets/task-small-dropdown-icon.svg";
+import TaskSmallCalendarIcon from "@/assets/task-small-calendar-icon.svg";
+import TaskFlagIcon from "@/assets/task-flag-priority-icon.svg";
+import TaskClockIcon from "@/assets/task-clock-reminders-icon.svg";
+import TaskSmallDropdownIcon from "@/assets/task-small-dropdown-icon.svg";
 import { type ChangeEvent, type FormEvent, useRef, useState } from "react";
-import type { OpenMyTaskFormDropdown } from "../../../types/menu-nav.type.ts";
-import { useClickOutside } from "../../../hooks/useClickOutside.ts";
+import type { OpenMyTaskFormDropdown } from "@/types/menu-nav.type.ts";
+import { useClickOutside } from "@/hooks/useClickOutside.ts";
 import MyTaskProjectDropdown from "./MyTaskProjectDropdown";
-import { updateMyTaskField } from "../../../helpers/updateMyTaskField.ts";
+import { updateMyTaskField } from "@/helpers/updateMyTaskField.ts";
 import MyTaskPriorityDropdown from "./MyTaskPriorityDropdown.tsx";
-import LabelIcon from "../../../assets/label-icon.svg";
-import HashtagIcon from "../../icons/HashtagIcon.tsx";
-import { getProjectColorClass } from "../../../helpers/getProjectColorClass.ts";
-import type { Project } from "../../../types/project.type.ts";
-import { useProjectStore } from "../../../stores/project.store.ts";
+import LabelIcon from "@/assets/label-icon.svg";
+import HashtagIcon from "@/components/icons/HashtagIcon.tsx";
+import { getProjectColorClass } from "@/helpers/getProjectColorClass.ts";
+import type { Project } from "@/types/project.type.ts";
+import { useProjectStore } from "@/stores/project.store.ts";
 import {
   useGetAllProjects,
   useGetAProject,
-} from "../../../hooks/useQueryHook/useProjects.ts";
-import CloseIcon from "../../../assets/close-icon.svg";
-import SubmitIcon from "../../icons/SubmitIcon.tsx";
-import type {Due, Priority, Task} from "../../../types/task.type.ts";
-import type { Section } from "../../../types/section.type.ts";
-import ProjectChip from "../../ui/ProjectChip.tsx";
-import SectionIcon from "../../icons/SectionIcon.tsx";
+} from "@/hooks/useQueryHook/useProjects.ts";
+import CloseIcon from "@/assets/close-icon.svg";
+import SubmitIcon from "@/components/icons/SubmitIcon.tsx";
+import type {Due, Priority, Task} from "@/types/task.type.ts";
+import type { Section } from "@/types/section.type.ts";
+import ProjectChip from "@/components/ui/ProjectChip.tsx";
+import SectionIcon from "@/components/icons/SectionIcon.tsx";
 import MyTaskLabelsDropdown from "./MyTaskLabelsDropdown";
-import type { Label } from "../../../types/label.type.ts";
-import LabelChip from "../../ui/LabelChip.tsx";
+import type { Label } from "@/types/label.type.ts";
+import LabelChip from "@/components/ui/LabelChip.tsx";
 import {
   getLabelKeyword,
   insertLabelCommasFirst,
   removeLabelCommasFirst,
-} from "../../../helpers/handleCommasTag.ts";
-import CustomLabel from "../../ui/CustomLabel.tsx";
+} from "@/helpers/handleCommasTag.ts";
+import CustomLabel from "@/components/ui/CustomLabel.tsx";
 import MyTaskDateDropdown from "./MyTaskDateDropdown";
-import DateChip from "../../ui/DateChip.tsx";
-import PriorityIcon from "../../icons/PriorityIcon.tsx";
+import DateChip from "@/components/ui/DateChip.tsx";
+import PriorityIcon from "@/components/icons/PriorityIcon.tsx";
 
 export type MyTaskFormValues = {
   content: string;

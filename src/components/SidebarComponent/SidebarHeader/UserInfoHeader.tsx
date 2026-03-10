@@ -4,7 +4,7 @@ import ErrorDisplayed from "@/components/ui/ErrorDisplayed.tsx";
 import { useGetUserProfile } from "@/hooks/useQueryHook/useUserProfile.ts";
 import {useRef} from "react";
 import SidebarHeaderDropdown from "./SidebarHeaderDropdown.tsx";
-import {useClickOutside} from "../../../hooks/useClickOutside.ts";
+import {useClickOutside} from "@/hooks/useClickOutside.ts";
 import {useSidebarStore} from "@/stores/sidebar.store.ts";
 import SettingModalDialog from "@/components/SidebarComponent/SidebarHeader/SettingsModalDialog";
 

@@ -1,7 +1,7 @@
 import { createPortal } from "react-dom";
-import { useDeleteProject } from "../../../hooks/useQueryHook/useProjects.ts";
+import { useDeleteProject } from "@/hooks/useQueryHook/useProjects.ts";
 import { type MouseEvent } from "react";
-import type {Project} from "../../../types/project.type.ts";
+import type {Project} from "@/types/project.type.ts";
 
 type DeleteProjectModalDialogProps = {
   project: Project;

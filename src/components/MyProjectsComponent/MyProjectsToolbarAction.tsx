@@ -1,9 +1,9 @@
-import PlusIcon from "../../assets/plus-icon.svg";
-import SmallArrowDownIcon from "../../assets/small-arrow-down-icon.svg";
+import PlusIcon from "@/assets/plus-icon.svg";
+import SmallArrowDownIcon from "@/assets/small-arrow-down-icon.svg";
 import MyProjectsDropdown from "./MyProjectsDropdown.tsx";
 import { useRef, useState } from "react";
-import CustomSwitch from "../ui/CustomSwitch.tsx";
-import { useClickOutside } from "../../hooks/useClickOutside.ts";
+import CustomSwitch from "@/components/ui/CustomSwitch.tsx";
+import { useClickOutside } from "@/hooks/useClickOutside.ts";
 import AddProjectsModalDialog from "./AddProjectsModalDialog";
 
 const MyProjectsToolbarAction = () => {

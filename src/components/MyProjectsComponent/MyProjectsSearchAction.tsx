@@ -1,6 +1,6 @@
 import { useRef } from "react";
-import SearchIcon from "../../assets/search-icon.svg";
-import CloseIcon from "../../assets/close-icon.svg";
+import SearchIcon from "@/assets/search-icon.svg";
+import CloseIcon from "@/assets/close-icon.svg";
 type MyProjectsSearchActionProps = {
   value: string;
   onSearchChange: (value: string) => void;

@@ -1,6 +1,6 @@
-import { sortingFilterData } from "../../../data/myTaskFilter.data.ts";
-import VerifiedIcon from "../../../assets/verified-icon.svg";
-import type { SortedBy, SortOrder } from "../../../types/viewOptions.type.ts";
+import { sortingFilterData } from "@/data/myTaskFilter.data.ts";
+import VerifiedIcon from "@/assets/verified-icon.svg";
+import type { SortedBy, SortOrder } from "@/types/viewOptions.type.ts";
 
 type MyTaskFilterSortingDropdownProps = {
   selectedSorting?: SortedBy | null;

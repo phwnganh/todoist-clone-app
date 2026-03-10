@@ -1,12 +1,12 @@
 import {useOutletContext} from "react-router-dom";
-import { type HeaderLayoutType } from "../../types/headerLayout.type.ts";
-import HeaderLayout from "../../layouts/HeaderLayout.tsx";
-import SettingsIcon from "../../assets/settings-icon.svg";
-import MyProjectsSearchAction from "../../components/MyProjectsComponent/MyProjectsSearchAction.tsx";
-import MyProjectsToolbarAction from "../../components/MyProjectsComponent/MyProjectsToolbarAction.tsx";
-import MyProjectsList from "../../components/MyProjectsComponent/MyProjectsList.tsx";
+import { type HeaderLayoutType } from "@/types/headerLayout.type.ts";
+import HeaderLayout from "@/layouts/HeaderLayout.tsx";
+import SettingsIcon from "@/assets/settings-icon.svg";
+import MyProjectsSearchAction from "@/components/MyProjectsComponent/MyProjectsSearchAction.tsx";
+import MyProjectsToolbarAction from "@/components/MyProjectsComponent/MyProjectsToolbarAction.tsx";
+import MyProjectsList from "@/components/MyProjectsComponent/MyProjectsList.tsx";
 import {useState} from "react";
-import {useDebounce} from "../../hooks/useDebounce.ts";
+import {useDebounce} from "@/hooks/useDebounce.ts";
 
 const MyProjectsPage = () => {
   const { showCollapse, onToggleSidebar } =

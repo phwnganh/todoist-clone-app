@@ -1,6 +1,6 @@
-import { groupingFilterData } from "../../../data/myTaskFilter.data.ts";
-import VerifiedIcon from "../../../assets/verified-icon.svg";
-import { type GroupedBy } from "../../../types/viewOptions.type.ts";
+import { groupingFilterData } from "@/data/myTaskFilter.data.ts";
+import VerifiedIcon from "@/assets/verified-icon.svg";
+import { type GroupedBy } from "@/types/viewOptions.type.ts";
 
 type MyTaskFilterGroupingDropdownProps = {
   selectedGrouping?: GroupedBy | null;

@@ -1,4 +1,4 @@
-import AddSectionIcon from "../../../assets/add-section-icon.svg";
+import AddSectionIcon from "@/assets/add-section-icon.svg";
 
 type AddMyTaskBoardSectionButtonProps = {
   onOpenAddNewTaskSectionForm: () => void;

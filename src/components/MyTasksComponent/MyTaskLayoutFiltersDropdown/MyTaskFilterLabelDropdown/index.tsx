@@ -1,12 +1,12 @@
 import {
   useGetAllLabels,
   useSearchLabels,
-} from "../../../../hooks/useQueryHook/useLabels.ts";
+} from "@/hooks/useQueryHook/useLabels.ts";
 import SearchingLabelInput from "./SearchingLabelInput.tsx";
 import FilteringLabelItem from "./FilteringLabelItem.tsx";
 import { useEffect, useRef, useState } from "react";
-import { useDebounce } from "../../../../hooks/useDebounce.ts";
-import type { Label } from "../../../../types/label.type.ts";
+import { useDebounce } from "@/hooks/useDebounce.ts";
+import type { Label } from "@/types/label.type.ts";
 
 type MyTaskFilterLabelDropdownProps = {
   selectedFilteringLabel?: string[];

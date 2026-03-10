@@ -1,11 +1,11 @@
-import { type Section } from "../../../types/section.type.ts";
+import { type Section } from "@/types/section.type.ts";
 import {type FormEvent, useEffect, useState} from "react";
 import MyTaskListSectionForm, {
   type MyTaskSectionFormValues,
 } from "../MyTaskListSectionComponent/MyTaskListSectionForm.tsx";
-import {useSectionStore} from "../../../stores/section.store.ts";
-import {useUpdateSection} from "../../../hooks/useQueryHook/useSections.ts";
-import {useProjectStore} from "../../../stores/project.store.ts";
+import {useSectionStore} from "@/stores/section.store.ts";
+import {useUpdateSection} from "@/hooks/useQueryHook/useSections.ts";
+import {useProjectStore} from "@/stores/project.store.ts";
 
 type EditMyTaskSectionProps = {
   onCancelEditMyTaskSection: () => void;

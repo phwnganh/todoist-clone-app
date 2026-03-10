@@ -1,10 +1,10 @@
-import {useSectionStore} from "../../stores/section.store";
-import {type MySectionMenuToolbar} from "../../types/menu-nav.type";
-import EditIcon from "../icons/EditIcon";
-import TaskMoveToIcon from "../icons/MoveToTaskIcon";
-import TrashIcon from "../icons/TrashIcon";
-import MyTasksMenuButton from "../ui/MyTasksMenuButton";
-import CustomMenuDropdown from "../ui/CustomMenuDropdown.tsx";
+import {useSectionStore} from "@/stores/section.store";
+import {type MySectionMenuToolbar} from "@/types/menu-nav.type";
+import EditIcon from "@/components/icons/EditIcon";
+import TaskMoveToIcon from "@/components/icons/MoveToTaskIcon";
+import TrashIcon from "@/components/icons/TrashIcon";
+import MyTasksMenuButton from "@/components/ui/MyTasksMenuButton";
+import CustomMenuDropdown from "@/components/ui/CustomMenuDropdown.tsx";
 type MySectionsToolbarDropdownProps = {
     sectionId: string | null;
 }

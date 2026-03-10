@@ -1,6 +1,6 @@
-import { directionFilterData } from "../../../data/myTaskFilter.data.ts";
-import type { SortOrder } from "../../../types/viewOptions.type.ts";
-import VerifiedIcon from "../../../assets/verified-icon.svg";
+import { directionFilterData } from "@/data/myTaskFilter.data.ts";
+import type { SortOrder } from "@/types/viewOptions.type.ts";
+import VerifiedIcon from "@/assets/verified-icon.svg";
 
 type MyTaskFilterDirectionDropdownProps = {
   selectedDirection?: SortOrder | null;

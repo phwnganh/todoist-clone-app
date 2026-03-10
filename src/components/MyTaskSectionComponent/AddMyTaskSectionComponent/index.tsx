@@ -2,8 +2,8 @@ import { type FormEvent, useState } from "react";
 import MyTaskListSectionForm, {
   type MyTaskSectionFormValues,
 } from "../MyTaskListSectionComponent/MyTaskListSectionForm.tsx";
-import {useAddSection} from "../../../hooks/useQueryHook/useSections";
-import {useProjectStore} from "../../../stores/project.store";
+import {useAddSection} from "@/hooks/useQueryHook/useSections";
+import {useProjectStore} from "@/stores/project.store";
 
 type AddMyTaskSectionProps = {
   onCancelAddMyTaskSection: () => void;

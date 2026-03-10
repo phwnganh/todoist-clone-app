@@ -1,11 +1,11 @@
-import HashtagIcon from "../icons/HashtagIcon.tsx";
-import IndicatorDots from "../ui/IndicatorDots.tsx";
+import HashtagIcon from "@/components/icons/HashtagIcon.tsx";
+import IndicatorDots from "@/components/ui/IndicatorDots.tsx";
 import { useRef, useState } from "react";
 import MyProjectsToolbarDropdown from "./MyProjectsToolbarDropdown.tsx";
-import type { Project } from "../../types/project.type.ts";
-import { useClickOutside } from "../../hooks/useClickOutside.ts";
+import type { Project } from "@/types/project.type.ts";
+import { useClickOutside } from "@/hooks/useClickOutside.ts";
 import { type MouseEvent } from "react";
-import { getProjectColorClass } from "../../helpers/getProjectColorClass.ts";
+import { getProjectColorClass } from "@/helpers/getProjectColorClass.ts";
 
 type MyProjectsItemProps = {
   project: Project;

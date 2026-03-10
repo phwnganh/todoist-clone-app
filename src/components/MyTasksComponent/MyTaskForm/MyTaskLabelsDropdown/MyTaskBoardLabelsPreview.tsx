@@ -1,4 +1,4 @@
-import LabelIcon from "../../../../assets/label-icon.svg";
+import LabelIcon from "@/assets/label-icon.svg";
 
 type MyTaskBoardLabelsPreviewProps = {
   labels?: string[];

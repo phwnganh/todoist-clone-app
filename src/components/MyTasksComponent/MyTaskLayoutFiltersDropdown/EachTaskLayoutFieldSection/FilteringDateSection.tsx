@@ -1,6 +1,6 @@
 import type {RefObject} from "react";
-import type {OpenMyTaskFilterDropdown} from "../../../../types/menu-nav.type.ts";
-import TaskSmallArrowDownIcon from "../../../icons/TaskSmallArrowDownIcon.tsx";
+import type {OpenMyTaskFilterDropdown} from "@/types/menu-nav.type.ts";
+import TaskSmallArrowDownIcon from "@/components/icons/TaskSmallArrowDownIcon.tsx";
 import MyTaskFilterDateDropdown from "../MyTaskFilterDateDropdown.tsx";
 
 type FilteringDateSectionProps = {

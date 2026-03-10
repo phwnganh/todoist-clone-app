@@ -1,15 +1,15 @@
 import { createPortal } from "react-dom";
-import QuestionIcon from "../../../assets/question-icon.svg";
-import LargeCloseIcon from "../../../assets/large-close-icon.svg";
-import FormSmallArrowDownIcon from "../../../assets/form-small-arrow-down-icon.svg";
+import QuestionIcon from "@/assets/question-icon.svg";
+import LargeCloseIcon from "@/assets/large-close-icon.svg";
+import FormSmallArrowDownIcon from "@/assets/form-small-arrow-down-icon.svg";
 import MyProjectFormColorListDropdown from "./MyProjectFormColorListDropdown.tsx";
-import type { Color } from "../../../types/color.type.ts";
-import UserAvatar from "../../../assets/User-avatar.png";
+import type { Color } from "@/types/color.type.ts";
+import UserAvatar from "@/assets/User-avatar.png";
 import MyProjectFormWorkspaceListDropdown from "./MyProjectFormWorkspaceListDropdown.tsx";
-import HashtagIcon from "../../../assets/hashtag-icon.svg";
+import HashtagIcon from "@/assets/hashtag-icon.svg";
 import AddProjectsParentProjectListDropdown from "./MyProjectFormParentProjectListDropdown";
-import CustomSwitch from "../../ui/CustomSwitch.tsx";
-import { LAYOUT_ITEMS } from "../../../data/menuNav.data.ts";
+import CustomSwitch from "@/components/ui/CustomSwitch.tsx";
+import { LAYOUT_ITEMS } from "@/data/menuNav.data.ts";
 import {
   type FormEvent,
   Fragment,
@@ -17,9 +17,9 @@ import {
   type ChangeEvent,
   useRef,
 } from "react";
-import type { OpenDropdown } from "../../../types/menu-nav.type.ts";
-import { updateMyProjectField } from "../../../helpers/updateMyProjectField.ts";
-import { useClickOutside } from "../../../hooks/useClickOutside.ts";
+import type { OpenDropdown } from "@/types/menu-nav.type.ts";
+import { updateMyProjectField } from "@/helpers/updateMyProjectField.ts";
+import { useClickOutside } from "@/hooks/useClickOutside.ts";
 
 export type MyProjectFormValues = {
   name: string;

@@ -1,4 +1,4 @@
-import type { SuggestedTimeMenuToolbar } from "../../../../types/menu-nav.type.ts";
+import type { SuggestedTimeMenuToolbar } from "@/types/menu-nav.type.ts";
 
 type SuggestedTimeProps = {
   item: SuggestedTimeMenuToolbar;

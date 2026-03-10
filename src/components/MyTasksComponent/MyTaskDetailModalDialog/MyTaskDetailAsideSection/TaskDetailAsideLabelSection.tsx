@@ -1,8 +1,8 @@
-import type {Label} from "../../../../types/label.type.ts";
+import type {Label} from "@/types/label.type.ts";
 import type {RefObject} from "react";
-import SmallPlusAddIcon from "../../../icons/SmallPlusAddIcon.tsx";
+import SmallPlusAddIcon from "@/components/icons/SmallPlusAddIcon.tsx";
 import MyTaskAvailableLabelsDropdown from "../MyTaskAvailableLabelsDropdown";
-import CustomLabel from "../../../ui/CustomLabel.tsx";
+import CustomLabel from "@/components/ui/CustomLabel.tsx";
 
 type TaskDetailAsideLabelSectionProps = {
     selectedLabels: Label[];

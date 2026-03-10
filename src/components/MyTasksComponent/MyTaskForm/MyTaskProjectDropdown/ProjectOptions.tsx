@@ -1,11 +1,11 @@
-import type { Project } from "../../../../types/project.type.ts";
-import HashtagIcon from "../../../icons/HashtagIcon.tsx";
-import { getProjectColorClass } from "../../../../helpers/getProjectColorClass.ts";
-import VerifiedIcon from "../../../icons/VerifiedIcon.tsx";
+import type { Project } from "@/types/project.type.ts";
+import HashtagIcon from "@/components/icons/HashtagIcon.tsx";
+import { getProjectColorClass } from "@/helpers/getProjectColorClass.ts";
+import VerifiedIcon from "@/components/icons/VerifiedIcon.tsx";
 import SectionsOfProjectOptions from "./SectionsOfProjectOptions.tsx";
-import {useGetAllSections} from "../../../../hooks/useQueryHook/useSections.ts";
+import {useGetAllSections} from "@/hooks/useQueryHook/useSections.ts";
 import {useMemo} from "react";
-import type {Section} from "../../../../types/section.type.ts";
+import type {Section} from "@/types/section.type.ts";
 
 type ProjectOptionsProps = {
   project: Project;

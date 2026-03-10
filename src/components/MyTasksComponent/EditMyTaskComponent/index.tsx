@@ -1,15 +1,15 @@
 import { type FormEvent, useEffect, useRef, useState } from "react";
 import MyTaskForm, { type MyTaskFormValues } from "../MyTaskForm";
-import type { Task } from "../../../types/task.type.ts";
-import { useGetAllProjects } from "../../../hooks/useQueryHook/useProjects.ts";
+import type { Task } from "@/types/task.type.ts";
+import { useGetAllProjects } from "@/hooks/useQueryHook/useProjects.ts";
 import {
   useMoveMyTask,
   useUpdateMyTask,
-} from "../../../hooks/useQueryHook/useTasks.ts";
-import { useTaskStore } from "../../../stores/task.store.ts";
-import { getTaskValuesByMappingDataType } from "../../../helpers/updateMyTaskField.ts";
-import { useGetAllSections } from "../../../hooks/useQueryHook/useSections.ts";
-import { useGetAllLabels } from "../../../hooks/useQueryHook/useLabels.ts";
+} from "@/hooks/useQueryHook/useTasks.ts";
+import { useTaskStore } from "@/stores/task.store.ts";
+import { getTaskValuesByMappingDataType } from "@/helpers/updateMyTaskField.ts";
+import { useGetAllSections } from "@/hooks/useQueryHook/useSections.ts";
+import { useGetAllLabels } from "@/hooks/useQueryHook/useLabels.ts";
 
 type EditMyTaskModalDialogProps = {
   onCloseEditMyTask: () => void;

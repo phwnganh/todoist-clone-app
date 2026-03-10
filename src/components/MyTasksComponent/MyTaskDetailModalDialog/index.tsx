@@ -1,13 +1,13 @@
 import { createPortal } from "react-dom";
-import { useProjectStore } from "../../../stores/project.store.ts";
-import { useGetAProject } from "../../../hooks/useQueryHook/useProjects.ts";
+import { useProjectStore } from "@/stores/project.store.ts";
+import { useGetAProject } from "@/hooks/useQueryHook/useProjects.ts";
 import MyTaskDetailAside from "./MyTaskDetailAsideSection";
 import MyTaskDetailMainSection from "./MyTaskDetailMainSection";
 import MyTaskDetailTitleSection from "./MyTaskDetailTitleSection.tsx";
-import { useGetAllTasks } from "../../../hooks/useQueryHook/useTasks.ts";
+import { useGetAllTasks } from "@/hooks/useQueryHook/useTasks.ts";
 import { useMemo } from "react";
-import { useTaskStore } from "../../../stores/task.store.ts";
-import { useGetAllSections } from "../../../hooks/useQueryHook/useSections.ts";
+import { useTaskStore } from "@/stores/task.store.ts";
+import { useGetAllSections } from "@/hooks/useQueryHook/useSections.ts";
 
 type MyTaskDetailModalDialogProps = {
   onCloseTaskDetail: () => void;

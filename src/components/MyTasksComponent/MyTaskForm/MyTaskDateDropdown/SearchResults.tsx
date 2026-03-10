@@ -1,6 +1,6 @@
-import TaskSmallCalendarIcon from '../../../../assets/task-small-calendar-icon.svg'
-import {buildDue, formatFullDate} from "../../../../helpers/formateDate.ts";
-import type {Due} from "../../../../types/task.type.ts";
+import TaskSmallCalendarIcon from '@/assets/task-small-calendar-icon.svg'
+import {buildDue, formatFullDate} from "@/helpers/formateDate.ts";
+import type {Due} from "@/types/task.type.ts";
 
 type SearchResultsProps = {
     results: Date[]

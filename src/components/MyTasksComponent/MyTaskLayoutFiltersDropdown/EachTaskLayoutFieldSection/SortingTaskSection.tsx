@@ -1,7 +1,7 @@
 import type {RefObject} from "react";
-import type {SortedBy} from "../../../../types/viewOptions.type.ts";
-import type {OpenMyTaskFilterDropdown} from "../../../../types/menu-nav.type.ts";
-import TaskSmallArrowDownIcon from "../../../icons/TaskSmallArrowDownIcon.tsx";
+import type {SortedBy} from "@/types/viewOptions.type.ts";
+import type {OpenMyTaskFilterDropdown} from "@/types/menu-nav.type.ts";
+import TaskSmallArrowDownIcon from "@/components/icons/TaskSmallArrowDownIcon.tsx";
 import MyTaskFilterSortingDropdown from "../MyTaskFilterSortingDropdown.tsx";
 
 type SortingTaskSectionProps = {

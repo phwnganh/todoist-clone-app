@@ -1,9 +1,9 @@
 import { type FormEvent, useState } from "react";
 import MyTaskForm, { type MyTaskFormValues } from "../../../MyTaskForm";
-import { priorityFilterData } from "../../../../../data/myTaskFilter.data.ts";
-import { useAddMySubTask } from "../../../../../hooks/useQueryHook/useTasks.ts";
-import { useTaskStore } from "../../../../../stores/task.store.ts";
-import type { SubTaskPayload, Task } from "../../../../../types/task.type.ts";
+import { priorityFilterData } from "@/data/myTaskFilter.data.ts";
+import { useAddMySubTask } from "@/hooks/useQueryHook/useTasks.ts";
+import { useTaskStore } from "@/stores/task.store.ts";
+import type { SubTaskPayload, Task } from "@/types/task.type.ts";
 type AddMyTaskDetailMainSubChildrenFormProps = {
   onCloseAddMySubTask: () => void;
   taskDetail?: Task;

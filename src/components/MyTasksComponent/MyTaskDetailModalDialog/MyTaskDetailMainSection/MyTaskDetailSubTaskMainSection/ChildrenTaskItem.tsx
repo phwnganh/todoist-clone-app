@@ -1,26 +1,26 @@
-import VerifiedIcon from "../../../../icons/VerifiedIcon.tsx";
-import ChildrenIcon from "../../../../../assets/children-icon.svg";
-import type { Task } from "../../../../../types/task.type.ts";
-import EditIcon from "../../../../icons/EditIcon.tsx";
-import DueDateIcon from "../../../../icons/DueDateIcon.tsx";
-import CommentIcon from "../../../../icons/CommentIcon.tsx";
-import MenuIcon from "../../../../icons/MenuIcon.tsx";
-import { useTaskStore } from "../../../../../stores/task.store.ts";
+import VerifiedIcon from "@/components/icons/VerifiedIcon.tsx";
+import ChildrenIcon from "@/assets/children-icon.svg";
+import type { Task } from "@/types/task.type.ts";
+import EditIcon from "@/components/icons/EditIcon.tsx";
+import DueDateIcon from "@/components/icons/DueDateIcon.tsx";
+import CommentIcon from "@/components/icons/CommentIcon.tsx";
+import MenuIcon from "@/components/icons/MenuIcon.tsx";
+import { useTaskStore } from "@/stores/task.store.ts";
 import EditMyTaskDetailMainSubChildrenForm from "../EditMyTaskDetailMainSubChildrenForm";
 import type { MouseEvent } from "react";
 import {
   PRIORITY_BORDER_CLASS_MAPPING,
   PRIORITY_VERIFIED_CLASS_MAPPING,
-} from "../../../../../constants/priority.constants";
-import { useCompleteTask } from "../../../../../hooks/useQueryHook/useTasks.ts";
-import { getDueInfo } from "../../../../../helpers/formateDate.ts";
-import { DUE_COLOR_CLASS } from "../../../../../constants/color.constants.ts";
-import SmallCalendarIcon from "../../../../../assets/small-calendar-icon.svg";
-import LabelIcon from "../../../../../assets/label-icon.svg";
+} from "@/constants/priority.constants";
+import { useCompleteTask } from "@/hooks/useQueryHook/useTasks.ts";
+import { getDueInfo } from "@/helpers/formateDate.ts";
+import { DUE_COLOR_CLASS } from "@/constants/color.constants.ts";
+import SmallCalendarIcon from "@/assets/small-calendar-icon.svg";
+import LabelIcon from "@/assets/label-icon.svg";
 import MyTasksToolbarDropdown from "../../../MyTasksToolbarDropdown.tsx";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import DragDropIcon from "../../../../icons/DragDropIcon.tsx";
+import DragDropIcon from "@/components/icons/DragDropIcon.tsx";
 type ChildrenTaskItemProps = {
   hasSubChildren: boolean;
   childrenTask: Task;

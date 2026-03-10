@@ -1,8 +1,8 @@
-import TodoistLogo from "../../assets/todoist-logo.svg";
-import GoogleIcon from "../../assets/google-icon.svg";
-import FacebookIcon from "../../assets/facebook-icon.svg";
-import AppleIcon from "../../assets/apple-icon.svg";
-import HiddenEyeIcon from "../../assets/hidden-eye-icon.svg";
+import TodoistLogo from "@/assets/todoist-logo.svg";
+import GoogleIcon from "@/assets/google-icon.svg";
+import FacebookIcon from "@/assets/facebook-icon.svg";
+import AppleIcon from "@/assets/apple-icon.svg";
+import HiddenEyeIcon from "@/assets/hidden-eye-icon.svg";
 import { Link } from "react-router-dom";
 import { type FormEvent } from "react";
 const LoginFormSection = () => {

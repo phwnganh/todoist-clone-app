@@ -1,11 +1,11 @@
-import type { Task } from "../../../types/task.type.ts";
-import MenuIcon from "../../icons/MenuIcon.tsx";
+import type { Task } from "@/types/task.type.ts";
+import MenuIcon from "@/components/icons/MenuIcon.tsx";
 import {useRef} from "react";
-import {useSectionStore} from "../../../stores/section.store.ts";
-import type {Section} from "../../../types/section.type.ts";
+import {useSectionStore} from "@/stores/section.store.ts";
+import type {Section} from "@/types/section.type.ts";
 import MySectionsToolbarDropdown from "../MySectionsToolbarDropdown.tsx";
-import DeleteMyTaskSectionModalDialog from "../DeleteMyTaskSectionComponent/DeleteMyTaskSection.tsx";
-import {useClickOutside} from "../../../hooks/useClickOutside.ts";
+import DeleteMyTaskSectionModalDialog from "../DeleteMyTaskSectionComponent";
+import {useClickOutside} from "@/hooks/useClickOutside.ts";
 
 type MyTaskBoardSectionHeaderProps = {
   section?: Section;

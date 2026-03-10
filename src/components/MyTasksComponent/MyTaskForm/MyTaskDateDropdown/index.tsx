@@ -1,9 +1,9 @@
 import SearchDateInput from "./SearchDateInput.tsx";
-import type { SuggestedTimeMenuToolbar } from "../../../../types/menu-nav.type.ts";
-import CalendarIcon from "../../../icons/CalendarIcon.tsx";
-import TomorrowIcon from "../../../icons/TomorrowIcon.tsx";
-import NextWeekIcon from "../../../icons/NextWeekIcon.tsx";
-import NextWeekendIcon from "../../../icons/NextWeekendIcon.tsx";
+import type { SuggestedTimeMenuToolbar } from "@/types/menu-nav.type.ts";
+import CalendarIcon from "@/components/icons/CalendarIcon.tsx";
+import TomorrowIcon from "@/components/icons/TomorrowIcon.tsx";
+import NextWeekIcon from "@/components/icons/NextWeekIcon.tsx";
+import NextWeekendIcon from "@/components/icons/NextWeekendIcon.tsx";
 import SuggestedTime from "./SuggestedTime.tsx";
 import {
   buildDue,
@@ -13,14 +13,14 @@ import {
   getNextWeekend,
   getToday,
   getTomorrow,
-} from "../../../../helpers/formateDate.ts";
-import type { Due } from "../../../../types/task.type.ts";
+} from "@/helpers/formateDate.ts";
+import type { Due } from "@/types/task.type.ts";
 import DatePicker from "../../../ui/DatePicker/DatePicker.tsx";
 import { parseISO } from "date-fns";
 import SearchResults from "./SearchResults.tsx";
 import {useMemo, useState} from "react";
-import {useDebounce} from "../../../../hooks/useDebounce.ts";
-import {dateSuggestions} from "../../../../helpers/dateSuggestions.ts";
+import {useDebounce} from "@/hooks/useDebounce.ts";
+import {dateSuggestions} from "@/helpers/dateSuggestions.ts";
 
 type MyTaskDateDropdownProps = {
   onSelectDate: (date: Due) => void;

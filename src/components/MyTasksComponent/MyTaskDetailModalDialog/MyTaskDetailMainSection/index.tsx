@@ -1,8 +1,8 @@
 import MyTaskDetailHeaderMainSection from "./MyTaskDetailHeaderMainSection";
 import MyTaskDetailSubTaskMainSection from "./MyTaskDetailSubTaskMainSection";
 import MyNoChildrenTaskDetailAddSubtaskButtonSection from "./MyNoChildrenTaskDetailAddSubtaskButtonSection.tsx";
-import { useTaskStore } from "../../../../stores/task.store.ts";
-import type { Task, TaskResponse } from "../../../../types/task.type.ts";
+import { useTaskStore } from "@/stores/task.store.ts";
+import type { Task, TaskResponse } from "@/types/task.type.ts";
 import AddMyTaskDetailMainSubChildrenForm from "./AddMyTaskDetailMainSubChildrenForm";
 
 type MyTaskDetailMainSectionProps = {

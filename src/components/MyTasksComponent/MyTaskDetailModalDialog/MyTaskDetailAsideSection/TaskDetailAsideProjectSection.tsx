@@ -1,9 +1,9 @@
-import type {Project} from "../../../../types/project.type.ts";
-import type {Section} from "../../../../types/section.type.ts";
+import type {Project} from "@/types/project.type.ts";
+import type {Section} from "@/types/section.type.ts";
 import type {RefObject} from "react";
-import HashtagIcon from "../../../icons/HashtagIcon.tsx";
-import {getProjectColorClass} from "../../../../helpers/getProjectColorClass.ts";
-import TaskSmallArrowDownIcon from "../../../icons/TaskSmallArrowDownIcon.tsx";
+import HashtagIcon from "@/components/icons/HashtagIcon.tsx";
+import {getProjectColorClass} from "@/helpers/getProjectColorClass.ts";
+import TaskSmallArrowDownIcon from "@/components/icons/TaskSmallArrowDownIcon.tsx";
 import MyTaskProjectDropdown from "../../MyTaskForm/MyTaskProjectDropdown";
 
 type TaskDetailAsideProjectSectionProps = {

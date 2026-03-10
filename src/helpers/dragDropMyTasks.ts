@@ -1,4 +1,4 @@
-import type {MoveTaskPayload, ReorderTaskPayload, Task} from "../types/task.type.ts";
+import type {MoveTaskPayload, ReorderTaskPayload, Task} from "@/types/task.type.ts";
 import {arrayMove} from "@dnd-kit/sortable";
 
 export const findTaskByIdToOrder = (tasks: Task[], id: string) => {

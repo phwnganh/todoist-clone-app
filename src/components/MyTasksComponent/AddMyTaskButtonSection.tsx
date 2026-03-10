@@ -1,4 +1,4 @@
-import SmallPlusAddIcon from "../icons/SmallPlusAddIcon.tsx";
+import SmallPlusAddIcon from "@/components/icons/SmallPlusAddIcon.tsx";
 
 type AddMyTaskSectionProps = {
   onOpenAddMyTask: () => void;

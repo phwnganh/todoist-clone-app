@@ -1,5 +1,5 @@
-import type { Label } from "../../../../types/label.type.ts";
-import LabelIcon from "../../../../assets/label-icon.svg";
+import type { Label } from "@/types/label.type.ts";
+import LabelIcon from "@/assets/label-icon.svg";
 type LabelOptionsProps = {
   label: Label;
   isLabelsSelected: boolean;

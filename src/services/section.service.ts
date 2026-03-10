@@ -6,8 +6,8 @@ import type {
     SectionQuery,
     SectionResponse,
     UpdateSectionPayload
-} from "../types/section.type.ts";
-import type {SyncResponse} from "../types/api.type.ts";
+} from "@/types/section.type.ts";
+import type {SyncResponse} from "@/types/api.type.ts";
 
 const buildSectionQuery = (query?: SectionQuery): string => {
     if(!query) return "";

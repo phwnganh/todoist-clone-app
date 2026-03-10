@@ -1,6 +1,6 @@
-import { dateFilterData } from "../../../data/myTaskFilter.data.ts";
-import VerifiedIcon from "../../../assets/verified-icon.svg";
-import {buildDateFilterQuery} from "../../../helpers/groupSortTasks.ts";
+import { dateFilterData } from "@/data/myTaskFilter.data.ts";
+import VerifiedIcon from "@/assets/verified-icon.svg";
+import {buildDateFilterQuery} from "@/helpers/groupSortTasks.ts";
 
 type MyTaskFilterDateDropdownProps = {
     selectedFilteringDate: string | null;

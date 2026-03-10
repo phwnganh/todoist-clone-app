@@ -8,17 +8,17 @@ import {
     PROJECTS,
     TODAY,
     UPCOMING
-} from "../constants/routes.constants";
-import LoginPage from "../pages/LoginPage";
-import MainLayout from "../layouts/MainLayout.tsx";
-import MyProjectsPage from "../pages/MyProjectsPage";
-import InboxPage from "../pages/InboxPage";
-import TodayPage from "../pages/TodayPage";
-import UpcomingPage from "../pages/UpcomingPage";
-import FiltersPage from "../pages/FiltersPage";
-import ActivityPage from "../pages/ActivityPage";
-import MyProjectDetailPage from "../pages/MyProjectDetailPage";
-import GoogleRedirectPage from "../pages/GoogleRedirectPage";
+} from "@/constants/routes.constants";
+import LoginPage from "@/pages/LoginPage";
+import MainLayout from "@/layouts/MainLayout.tsx";
+import MyProjectsPage from "@/pages/MyProjectsPage";
+import InboxPage from "@/pages/InboxPage";
+import TodayPage from "@/pages/TodayPage";
+import UpcomingPage from "@/pages/UpcomingPage";
+import FiltersPage from "@/pages/FiltersPage";
+import ActivityPage from "@/pages/ActivityPage";
+import MyProjectDetailPage from "@/pages/MyProjectDetailPage";
+import GoogleRedirectPage from "@/pages/GoogleRedirectPage";
 import PublicRoute from "./PublicRoute.tsx";
 
 const AppRoutes = () => {

@@ -1,8 +1,8 @@
-import HashtagIcon from "../icons/HashtagIcon.tsx";
-import type { Project } from "../../types/project.type.ts";
-import { PROJECT_DETAILS } from "../../constants/routes.constants.ts";
+import HashtagIcon from "@/components/icons/HashtagIcon.tsx";
+import type { Project } from "@/types/project.type.ts";
+import { PROJECT_DETAILS } from "@/constants/routes.constants.ts";
 import { NavLink } from "react-router-dom";
-import { getProjectColorClass } from "../../helpers/getProjectColorClass.ts";
+import { getProjectColorClass } from "@/helpers/getProjectColorClass.ts";
 
 const SidebarMyProjectsItem = ({ project }: { project: Project }) => {
   return (

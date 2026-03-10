@@ -1,10 +1,10 @@
 import {
   useGetAProject,
   useUpdateProject,
-} from "../../hooks/useQueryHook/useProjects.ts";
-import LoadingSpin from "../ui/LoadingSpin.tsx";
+} from "@/hooks/useQueryHook/useProjects.ts";
+import LoadingSpin from "@/components/ui/LoadingSpin.tsx";
 import { useEffect, useRef, useState } from "react";
-import { useProjectStore } from "../../stores/project.store.ts";
+import { useProjectStore } from "@/stores/project.store.ts";
 
 const MyTaskTitle = () => {
   const projectId = useProjectStore((state) => state.projectId);

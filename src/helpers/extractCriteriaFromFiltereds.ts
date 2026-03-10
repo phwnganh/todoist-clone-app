@@ -1,4 +1,4 @@
-import {dateFilterData} from "../data/myTaskFilter.data.ts";
+import {dateFilterData} from "@/data/myTaskFilter.data.ts";
 import {buildDateFilterQuery} from "./groupSortTasks.ts";
 
 export const extractByPrefixFromList = (

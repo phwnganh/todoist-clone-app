@@ -1,5 +1,5 @@
 import { type ChangeEvent, type FormEvent } from "react";
-import { updateMyTaskSectionField } from "../../../helpers/updateMyTaskField.ts";
+import { updateMyTaskSectionField } from "@/helpers/updateMyTaskField.ts";
 
 export type MyTaskSectionFormValues = {
   name: string;

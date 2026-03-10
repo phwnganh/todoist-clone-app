@@ -7,7 +7,7 @@ import {
     apiGetAllTasks,
     apiGetATask, apiMoveMyTask, apiReorderTask,
     apiUpdateMyTask
-} from "../../services/task.service.ts";
+} from "@/services/task.service.ts";
 import type {
     MoveTaskPayload, ReorderTaskPayload,
     SubTaskPayload,
@@ -15,13 +15,13 @@ import type {
     TaskPayload, TaskQuery,
     TaskResponse,
     UpdateTaskPayload
-} from "../../types/task.type.ts";
-import type {ApiError, SyncResponse} from "../../types/api.type.ts";
+} from "@/types/task.type.ts";
+import type {ApiError, SyncResponse} from "@/types/api.type.ts";
 import {
     optimisticAddMyTask, optimisticDeleteMyTask, optimisticReorderMyTask, optimisticUpdateMyTask,
     type OptimisticUpdatesContext,
-} from "../../helpers/optimisticUpdates.ts";
-import {commonTaskMutation} from "../../helpers/hookMutations.ts";
+} from "@/helpers/optimisticUpdates.ts";
+import {commonTaskMutation} from "@/helpers/hookMutations.ts";
 
 export const useGetAllTasks = (query?: TaskQuery) => {
     return useQuery<TaskResponse>({

@@ -1,7 +1,7 @@
-import Sidebar from "../components/SidebarComponent/Sidebar.tsx";
+import Sidebar from "@/components/SidebarComponent/Sidebar.tsx";
 import {Outlet} from "react-router-dom";
 import {useCallback, useEffect, useState} from "react";
-import ProtectedRoute from "../routes/ProtectedRoute.tsx";
+import ProtectedRoute from "@/routes/ProtectedRoute.tsx";
 
 const MainLayout = () => {
     const [openSidebar, setOpenSidebar] = useState(true);
