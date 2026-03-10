@@ -4,11 +4,17 @@ import type {ReorderTaskPayload, Task, TaskResponse} from "@/types/task.type.ts"
 import type {ReorderSectionPayload, Section, SectionResponse} from "@/types/section.type.ts";
 import type {Label, LabelsResponse} from "@/types/label.type.ts";
 import type {ViewOptionsPayload} from "@/types/viewOptions.type.ts";
+import type {User} from "@/types/user.type.ts";
 
 export type OptimisticUpdatesProjectContext = {
   previousData?: ProjectResponse;
   tempId?: string;
 };
+
+export type OptimisticUpdatesUserContext = {
+  previousData?: User;
+  tempId?: string;
+}
 
 export type OptimisticUpdatesContext = {
   previousData?: [QueryKey, unknown][];
@@ -268,12 +274,26 @@ export async function optimisticViewOptions({queryClient, optimisticViewOptions}
   return { previousData: previousData ? [[key, previousData]] : [] };
 }
 
+export async function optimisticUpdateUserProfile({queryClient, optimisticUpdateUserProfile}: {queryClient: QueryClient, optimisticUpdateUserProfile: User}): Promise<OptimisticUpdatesUserContext>{
+  await queryClient.cancelQueries({queryKey: ['user']})
+  const previousData = queryClient.getQueryData<User>(['user'])
+  queryClient.setQueryData<User>(['user'], (old) => old ? {...old, optimisticUpdateUserProfile} : optimisticUpdateUserProfile
+  )
+  return {previousData}
+}
+
 export function rollbackOptimisticProjectUpdates({
     queryClient,
     context}: {queryClient: QueryClient; context?: OptimisticUpdatesProjectContext}){
       if(context?.previousData){
         queryClient.setQueryData(['projects'], context.previousData)
       }
+}
+
+export function rollbackOptimisticUserUpdates({queryClient, context}: {queryClient: QueryClient, context?: OptimisticUpdatesUserContext}){
+  if(context?.previousData){
+    queryClient.setQueryData(['user'], context.previousData)
+  }
 }
 
 export function rollbackOptimisticUpdates({
