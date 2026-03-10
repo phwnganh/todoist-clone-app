@@ -37,7 +37,7 @@ const MyTaskDetailModalDialog = ({
     >
       <div
         className={
-          "w-216 max-w-full h-full md:h-200 mx-auto rounded-large bg-white flex flex-col"
+          "w-216 max-w-full h-full md:h-200 mx-auto rounded-large bg-product-library-background-base-primary flex flex-col"
         }
       >
         <MyTaskDetailTitleSection

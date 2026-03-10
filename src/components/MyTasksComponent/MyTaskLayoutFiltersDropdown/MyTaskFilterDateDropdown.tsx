@@ -13,7 +13,7 @@ const MyTaskFilterDateDropdown = ({selectedFilteringDate, onSelectFilteringDate}
       aria-labelledby={"date-trigger"}
       role={"listbox"}
       className={
-        "absolute top-full right-0 z-50 border border-product-library-divider-primary rounded-large shadow-sm max-h-70 max-w-40 w-full bg-white p-1.5 cursor-pointer"
+        "absolute top-full right-0 z-50 border border-product-library-divider-primary rounded-large shadow-sm max-h-70 max-w-40 w-full bg-product-library-background-base-primary p-1.5 cursor-pointer"
       }
     >
       {dateFilterData.map((date) => {

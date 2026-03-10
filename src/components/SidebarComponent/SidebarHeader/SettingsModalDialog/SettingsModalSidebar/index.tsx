@@ -8,7 +8,7 @@ import {useSidebarStore} from "@/stores/sidebar.store.ts";
 const SettingsModalSidebar = () => {
     const {activeKey, handleChangeActiveKey} = useSidebarStore()
     return (
-        <aside className={"p-medium md:bg-product-library-background-base-secondary flex flex-col w-full gap-small md:w-80 shrink-0"}>
+        <aside className={"p-medium md:bg-product-library-background-base-primary flex flex-col w-full gap-small md:w-80 shrink-0"}>
             <SettingsModalHeaderSidebar/>
             <ul className={"flex flex-col list-none"}>
                 {SETTING_MENU_NAV_ITEMS.map((item: SettingMenuNavItem) => (

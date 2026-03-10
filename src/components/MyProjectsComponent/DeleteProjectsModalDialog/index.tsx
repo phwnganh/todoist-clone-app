@@ -29,7 +29,7 @@ const DeleteProjectsModalDialog = ({
     >
       <div
         className={
-          "w-md max-w-full mx-auto rounded-large bg-white transition-all duration-500 ease-in-out px-4"
+          "w-md max-w-full mx-auto rounded-large bg-product-library-background-base-primary transition-all duration-500 ease-in-out px-4"
         }
       >
         <header className={"pt-4 pb-2"}>

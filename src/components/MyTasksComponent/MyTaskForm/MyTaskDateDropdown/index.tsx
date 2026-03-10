@@ -81,7 +81,7 @@ const MyTaskDateDropdown = ({
       role={"listbox"}
       aria-labelledby={"date-trigger"}
       className={
-        "absolute top-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom min-w-62.5 bg-white mt-1"
+        "absolute top-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom min-w-62.5 bg-product-library-background-base-primary mt-1"
       }
     >
       <div className={"flex flex-col gap-xsmall"}>

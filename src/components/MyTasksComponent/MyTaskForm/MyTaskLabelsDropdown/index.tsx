@@ -60,7 +60,7 @@ const MyTaskLabelsDropdown = ({
       role={"listbox"}
       aria-labelledby={"label-trigger"}
       className={
-        "absolute top-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom w-195.5 bg-white mt-1"
+        "absolute top-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom w-195.5 bg-product-library-background-base-primary mt-1"
       }
     >
       {filteredLabels.length > 0 ? (

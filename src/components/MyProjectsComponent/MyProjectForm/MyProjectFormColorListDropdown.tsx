@@ -16,7 +16,7 @@ const MyProjectFormColorListDropdown = ({
       id="color-listbox"
       role="listbox"
       aria-labelledby="color-trigger"
-      className="absolute top-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom max-h-70 w-full mt-1 bg-white p-1.5"
+      className="absolute top-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom max-h-70 w-full mt-1 bg-product-library-background-base-primary p-1.5"
     >
       {colorData.map((color) => {
         const isSelected = selectedColor === color;

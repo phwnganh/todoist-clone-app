@@ -49,7 +49,7 @@ const MyProjectsToolbarDropdown = ({
   ];
 
   return (
-    <div className="border border-product-library-divider-primary rounded-large shadow-sm mt-1 min-w-70 py-1.5 bg-white overflow-hidden">
+    <div className="border border-product-library-divider-primary rounded-large shadow-sm mt-1 min-w-70 py-1.5 bg-product-library-background-base-primary overflow-hidden">
       <div className="flex flex-col gap-1">
         {MY_PROJECTS_MENU_TOOLBAR.map((item, index) => {
           if (item === "divider") {

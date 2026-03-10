@@ -41,7 +41,7 @@ const MyTaskFilterLabelDropdown = ({
       aria-labelledby={"filtering-label-trigger"}
       role={"listbox"}
       className={
-        "absolute top-full right-0 z-50 border border-product-library-divider-primary rounded-large shadow-sm max-w-214.75 w-full bg-white p-1.5 cursor-pointer"
+        "absolute top-full right-0 z-50 border border-product-library-divider-primary rounded-large shadow-sm max-w-214.75 w-full bg-product-library-background-base-primary p-1.5 cursor-pointer"
       }
     >
       <div className={"flex flex-col py-1 px-1.5 w-full"}>

@@ -62,7 +62,7 @@ const MyProjectFormParentProjectListDropdown = ({
       id="parentProject-listbox"
       role="listbox"
       aria-labelledby="parentProject-trigger"
-      className="absolute top-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom max-h-70 w-full mt-1 bg-white"
+      className="absolute top-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom max-h-70 w-full mt-1 bg-product-library-background-base-primary"
     >
       <SearchInput
         parentProjectValue={typedParentProject}

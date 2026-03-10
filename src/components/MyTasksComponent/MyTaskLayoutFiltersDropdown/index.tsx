@@ -253,13 +253,13 @@ const MyTaskLayoutFiltersDropdown = ({
   const layoutItemClass = (layoutName: string) => `
     pt-xsmall px-xsmall pb-small w-full cursor-pointer ${
       layoutTitle === layoutName
-        ? "bg-white rounded-large text-product-library-display-primary-idle-tint"
+        ? "bg-product-library-background-base-primary rounded-large text-product-library-display-primary-idle-tint"
         : "hover:text-product-library-display-primary-idle-tint"
     }`;
   return (
     <div
       className={
-        "absolute top-full right-0 z-50 rounded-large w-75 shadow-product-library-shadow-raised-1 border border-product-library-divider-primary bg-white"
+        "absolute top-full right-0 z-50 rounded-large w-75 shadow-product-library-shadow-raised-1 border border-product-library-divider-primary bg-product-library-background-base-primary"
       }
     >
       <div className={"flex flex-col gap-1.5"}>

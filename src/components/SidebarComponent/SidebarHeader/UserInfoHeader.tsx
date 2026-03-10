@@ -32,7 +32,7 @@ const UserInfoHeader = () => {
   return (
       <div className={"relative"} ref={userRef}>
         <button type={"button"} onClick={handleOpenSidebarHeaderDropdown} className="flex items-center py-0.75 -ml-0.75 hover:bg-product-library-selectable-secondary-hover-fill rounded-small relative">
-          <div className="w-6.5 h-6.5 bg-white -ml-1.5 mr-1.5">
+          <div className="w-6.5 h-6.5 bg-product-library-background-base-primary -ml-1.5 mr-1.5">
             <img
                 src={user?.avatar_medium}
                 alt={user?.full_name}

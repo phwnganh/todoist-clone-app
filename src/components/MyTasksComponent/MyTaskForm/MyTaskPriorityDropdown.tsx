@@ -14,7 +14,7 @@ const MyTaskPriorityDropdown = ({selectedPriority, onSelect}: MyTaskPriorityDrop
       aria-labelledby={"priority-trigger"}
       role={"listbox"}
       className={
-        "absolute top-full z-1000 border border-product-library-border-idle-tint rounded-small w-max bg-white"
+        "absolute top-full z-1000 border border-product-library-border-idle-tint rounded-small w-max bg-product-library-background-base-primary"
       }
     >
       {priorityFilterData.map((priority) => {

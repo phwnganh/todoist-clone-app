@@ -7,7 +7,7 @@ const MyProjectFormWorkspaceListDropdown = () => {
       id="workspace-listbox"
       role="listbox"
       aria-labelledby="workspace-trigger"
-      className="absolute top-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom max-h-70 w-full mt-1 bg-white p-1.5"
+      className="absolute top-full z-1000 border border-product-library-divider-primary rounded-large shadow-sm overflow-y-auto scrollbar-thin scrollbar-custom max-h-70 w-full mt-1 bg-product-library-background-base-primary p-1.5"
     >
       <div className="flex flex-col">
         <div
@@ -20,7 +20,7 @@ const MyProjectFormWorkspaceListDropdown = () => {
           </div>
           <span className="flex items-center gap-small">
             <div className="flex gap-1.5 overflow-hidden">
-              <div className="flex justify-center items-center w-4.5 h-4.5 rounded-small bg-white">
+              <div className="flex justify-center items-center w-4.5 h-4.5 rounded-small bg-product-library-background-base-primary">
                 <img
                   src={UserAvatar}
                   alt="user-avatar"
