@@ -261,6 +261,23 @@
   --color-product-library-selectable-tertiary-on-unselected-enabled-fill: #aaa;
   --color-product-library-selectable-tertiary-on-unselected-enabled-tint: #666;
 
+  --color-theme-card-sidebar-color: #fcf9f9;
+  --color-theme-card-accent-color: #dc4c3e;
+  --color-theme-card-sidebar-hover-color: #f6efee;
+  --color-theme-card-sidebar-selected-color: #fee6e3;
+  --color-theme-card-border-color: #e5e5e5;
+  --color-theme-card-background-color: #fff;
+  --color-theme-card-priority-color: #666;
+  --color-theme-card-content-color: #e5e5e5;
+
+  --color-theme-card-sidebar-color-dark: #282828;
+  --color-theme-card-accent-color-dark: #bd4337;
+  --color-theme-card-sidebar-hover-color-dark: #363636;
+  --color-theme-card-sidebar-selected-color-dark: #4f2929;
+  --color-theme-card-background-color-dark: #1e1e1e;
+  --color-theme-card-priority-color-dark: #b3b3b3;
+  --color-theme-card-content-color-dark: #4d4d4d;
+
 
   --color-product-library-shadow-raised-1: 0px 4px 10px 0px rgba(0, 0, 0, .1), 0px 8px 18px 4px rgba(0, 0, 0, .05);
   --color-product-library-shadow-raised-2: 0px 8px 32px 2px rgba(0, 0, 0, .14), 0px 4px 7px 6px rgba(0, 0, 0, .09);
@@ -355,4 +372,5 @@
     scrollbar-color: var(--color-scrollbar-thumb-idle) var(--color-scrollbar-thumb-track);
   }
 }
+
 
