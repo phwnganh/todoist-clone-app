@@ -1,10 +1,6 @@
 import { createPortal } from "react-dom";
 import LargeCloseIcon from "@/assets/large-close-icon.svg";
-import FormSmallArrowDownIcon from "@/assets/form-small-arrow-down-icon.svg";
-import MyProjectFormColorListDropdown from "./MyProjectFormColorListDropdown.tsx";
 import type { Color } from "@/types/color.type.ts";
-import UserAvatar from "@/assets/User-avatar.png";
-import MyProjectFormWorkspaceListDropdown from "./MyProjectFormWorkspaceListDropdown.tsx";
 import AddProjectsParentProjectListDropdown from "./MyProjectFormParentProjectListDropdown";
 import CustomSwitch from "@/components/ui/CustomSwitch.tsx";
 import { LAYOUT_ITEMS } from "@/data/menuNav.data.ts";
@@ -20,6 +16,12 @@ import { updateMyProjectField } from "@/helpers/updateMyProjectField.ts";
 import { useClickOutside } from "@/hooks/useClickOutside.ts";
 import QuestionIcon from "@/components/icons/QuestionIcon.tsx";
 import HashtagIcon from "@/components/icons/HashtagIcon.tsx";
+import ProjectNameSection from "@/components/MyProjectsComponent/EachProjectFieldSection/ProjectNameSection.tsx";
+import ProjectColorSection from "@/components/MyProjectsComponent/EachProjectFieldSection/ProjectColorSection.tsx";
+import FormSmallArrowDownIcon from "@/components/icons/FormSmallArrowDownIcon.tsx";
+import ProjectWorkspaceSection
+  from "@/components/MyProjectsComponent/EachProjectFieldSection/ProjectWorkspaceSection.tsx";
+import ParentProjectSection from "@/components/MyProjectsComponent/EachProjectFieldSection/ParentProjectSection.tsx";
 
 export type MyProjectFormValues = {
   name: string;
@@ -128,163 +130,15 @@ const MyProjectForm = ({
         <form onSubmit={onSubmit}>
           <div className="p-4 flex flex-col gap-large">
             {/*name section*/}
-            <div>
-              <label
-                htmlFor="project-name"
-                className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5"
-              >
-                Name
-              </label>
-              <div className="border border-product-library-border-idle-tint rounded-small flex items-center justify-between hover:border-product-library-border-focus-tint">
-                <input
-                  id="project-name"
-                  name="name"
-                  type="text"
-                  maxLength={120}
-                  className="py-1.5 px-2 w-full outline-none text-sm"
-                  onChange={handleNameChange}
-                  value={values.name}
-                />
-                {values.name.length < 120 ? (
-                  <div className="mr-xsmall -ml-xsmall text-sm text-product-library-display-secondary-idle-tint">
-                    {values.name.length}/120
-                  </div>
-                ) : (
-                  <div className="mr-xsmall -ml-xsmall text-sm text-product-library-actionable-destructive-idle-tint">
-                    {values.name.length}/120
-                  </div>
-                )}
-              </div>
-            </div>
+            <ProjectNameSection onNameChange={handleNameChange} nameValue={values.name}/>
 
             {/*color section*/}
-            <div className="relative" ref={colorRef}>
-              <label
-                htmlFor="project-color"
-                className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5"
-              >
-                Color
-              </label>
-              <button
-                type="button"
-                aria-haspopup="listbox"
-                aria-expanded={isOpenDropdown === "color"}
-                aria-controls="color-listbox"
-                id="color-trigger"
-                onClick={() => handleToggleDropdown("color")}
-                className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 hover:border-product-library-border-focus-tint w-full"
-              >
-                <div className="flex items-center justify-center w-6 h-6">
-                  <div
-                    className={`rounded-xl w-3 h-3 ${
-                      values.color?.hexadecimal ?? "bg-charcoal"
-                    }`}
-                  ></div>
-                </div>
-                <div className="flex-1">
-                  <div className="text-product-library-display-primary-idle-tint text-sm text-start">
-                    {values.color?.label ?? "Charcoal"}
-                  </div>
-                </div>
-                <div className="flex items-center justify-center">
-                  <img
-                    src={FormSmallArrowDownIcon}
-                    alt={"form-small-arrow-down-icon"}
-                  />
-                </div>
-              </button>
-              {isOpenDropdown === "color" && (
-                <MyProjectFormColorListDropdown
-                  selectedColor={values.color}
-                  onSelect={(color: Color) => handleSelectColor(color)}
-                />
-              )}
-            </div>
-
+            <ProjectColorSection colorRef={colorRef} openDropdown={isOpenDropdown} onToggleDropdown={handleToggleDropdown} colorValue={values.color} onSelectColor={handleSelectColor}/>
             {/*workspace section*/}
-            <div className="relative" ref={workspaceRef}>
-              <label
-                htmlFor="project-workspace"
-                className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5"
-              >
-                Workspace
-              </label>
-              <button
-                type="button"
-                aria-haspopup="listbox"
-                aria-expanded={isOpenDropdown === "workspace"}
-                aria-controls="workspace-listbox"
-                onClick={() => handleToggleDropdown("workspace")}
-                className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 hover:border-product-library-border-focus-tint w-full"
-              >
-                <div className="flex items-center justify-center w-4.5 h-4.5 rounded-small">
-                  <img
-                    src={UserAvatar}
-                    alt="user-avatar"
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-                <div className="flex-1">
-                  <div className="text-product-library-display-primary-idle-tint text-sm text-start">
-                    My Projects
-                  </div>
-                </div>
-                <div className="flex items-center justify-center">
-                  <img
-                    src={FormSmallArrowDownIcon}
-                    alt={"form-small-arrow-down-icon"}
-                  />
-                </div>
-              </button>
-              {isOpenDropdown === "workspace" && (
-                <MyProjectFormWorkspaceListDropdown />
-              )}
-            </div>
+            <ProjectWorkspaceSection workspaceRef={workspaceRef} openDropdown={isOpenDropdown} onToggleDropdown={handleToggleDropdown}/>
 
             {/*parent project*/}
-            <div className="relative" ref={parentProjectRef}>
-              <label
-                htmlFor="parent-project"
-                className="text-product-library-display-primary-idle-tint text-sm font-strong pb-1.5"
-              >
-                Parent project
-              </label>
-              <button
-                type="button"
-                aria-haspopup="listbox"
-                aria-expanded={isOpenDropdown === "parentProject"}
-                aria-controls="parentProject-listbox"
-                onClick={() => handleToggleDropdown("parentProject")}
-                className="border border-product-library-border-idle-tint rounded-small flex items-center gap-1.5 pr-1.5 pl-2.5 h-8 justify-between hover:border-product-library-border-focus-tint w-full"
-              >
-                <div className="flex items-center gap-1.5">
-                  {values.parentProject !== "No Parent" && (
-                    <div className="flex justify-center items-center">
-                      <HashtagIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
-                    </div>
-                  )}
-
-                  <div className="text-product-library-display-primary-idle-tint text-sm text-start">
-                    {values.parentProject ?? "No Parent"}
-                  </div>
-                </div>
-                <div className="flex items-center justify-center">
-                  <img
-                    src={FormSmallArrowDownIcon}
-                    alt={"form-small-arrow-down-icon"}
-                  />
-                </div>
-              </button>
-              {isOpenDropdown === "parentProject" && (
-                <AddProjectsParentProjectListDropdown
-                  selectedProject={values.parentProject}
-                  onSelect={(parentProject: string) =>
-                    handleSelectParentProjects(parentProject)
-                  }
-                  onCloseDropdown={() => setIsOpenDropdown(null)}
-                />
-              )}
-            </div>
+            <ParentProjectSection parentProjectRef={parentProjectRef} openDropdown={isOpenDropdown} onToggleDropdown={handleToggleDropdown} parentProjectValue={values.parentProject} onSelectParentProject={handleSelectParentProjects} onCloseDropdown={() => setIsOpenDropdown(null)}/>
 
             {/*add to favorites*/}
             <div className="flex items-center">
@@ -318,7 +172,7 @@ const MyProjectForm = ({
                           onChange={() => handleSelectLayout(layout.key)}
                         />
                         <span className="flex flex-col gap-xsmall items-center justify-center text-xs">
-                          <img src={layout.icon} alt={layout.key} />
+                          <layout.icon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                           {layout.label}
                         </span>
                       </label>

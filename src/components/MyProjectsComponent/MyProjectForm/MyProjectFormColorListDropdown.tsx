@@ -44,7 +44,7 @@ const MyProjectFormColorListDropdown = ({
                       className={`rounded-xl w-3 h-3 ${color.hexadecimal}`}
                     ></div>
                   </div>
-                  <div className="text-sm">{color.label}</div>
+                  <div className="text-sm text-product-library-display-primary-idle-tint">{color.label}</div>
                 </div>
               </span>
             </div>

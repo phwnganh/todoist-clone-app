@@ -1,7 +1,10 @@
-import UserAvatar from "@/assets/User-avatar.png";
 import VerifiedIcon from "@/components/icons/VerifiedIcon.tsx";
+import type {User} from "@/types/user.type.ts";
 
-const MyProjectFormWorkspaceListDropdown = () => {
+type MyProjectFormWorkspaceListDropdownProps = {
+  user?: User
+}
+const MyProjectFormWorkspaceListDropdown = ({user}: MyProjectFormWorkspaceListDropdownProps) => {
   return (
     <div
       id="workspace-listbox"
@@ -22,12 +25,12 @@ const MyProjectFormWorkspaceListDropdown = () => {
             <div className="flex gap-1.5 overflow-hidden">
               <div className="flex justify-center items-center w-4.5 h-4.5 rounded-small bg-product-library-background-base-primary">
                 <img
-                  src={UserAvatar}
-                  alt="user-avatar"
-                  className="object-cover w-full h-full"
+                    src={user?.avatar_small}
+                    alt={user?.full_name}
+                    className={"rounded-small"}
                 />
               </div>
-              <div className="text-sm">My Projects</div>
+              <div className="text-sm text-product-library-display-primary-idle-tint">My Projects</div>
             </div>
           </span>
         </div>
