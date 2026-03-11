@@ -1,6 +1,6 @@
 import { colorData } from "@/data/color.data.ts";
-import VerifiedIcon from "@/assets/verified-icon.svg";
 import type { Color } from "@/types/color.type.ts";
+import VerifiedIcon from "@/components/icons/VerifiedIcon.tsx";
 
 type AddProjectsColorListDropdownProps = {
   selectedColor: Color | null;
@@ -34,7 +34,7 @@ const MyProjectFormColorListDropdown = ({
           >
             <div className="flex items-center gap-1.5">
               <div className="flex justify-center items-center invisible group-data-[selected=true]:visible">
-                <img src={VerifiedIcon} alt={"verified-icon"} />
+                <VerifiedIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
               </div>
               <span className="flex items-center gap-small">
                 <div className="w-4 h-4 flex justify-center items-center shrink-0"></div>

@@ -20,7 +20,7 @@ const FilteringLabelItem = ({
     >
       <input
         type={"checkbox"}
-        className={"w-4 h-4"}
+        className={"w-4 h-4 accent-product-library-selectable-primary-selected-fill"}
         checked={isLabelsSelected}
         onChange={(e) => {
           e.stopPropagation();
