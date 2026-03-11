@@ -2,9 +2,6 @@ import type {LayoutItem, MenuNavItem, SettingMenuNavItem} from "@/types/menu-nav
 import {ACTIVITY, FILTERS_LABEL, INBOX, TODAY, UPCOMING} from "@/constants/routes.constants.ts";
 import CalendarIcon from '@/components/icons/CalendarIcon.tsx'
 
-import ListItemIcon from '@/assets/list-item-icon.svg'
-import BoardItemIcon from '@/assets/board-item-icon.svg'
-import PremiumCalendarIcon from '@/assets/premium-calendar-icon.svg'
 import SearchIcon from "@/components/icons/SearchIcon.tsx";
 import InboxIcon from "@/components/icons/InboxIcon.tsx";
 import UpcomingCalendarIcon from "@/components/icons/UpcomingCalendarIcon.tsx";
@@ -12,6 +9,9 @@ import FilterIcon from "@/components/icons/FilterIcon.tsx";
 import CompletedIcon from "@/components/icons/CompletedIcon.tsx";
 import AccountIcon from "@/components/icons/AccountIcon.tsx";
 import ThemeIcon from "@/components/icons/ThemeIcon.tsx";
+import ListItemIcon from "@/components/icons/ListItemIcon.tsx";
+import BoardItemIcon from "@/components/icons/BoardItemIcon.tsx";
+import PremiumCalendarIcon from "@/components/icons/PremiumCalendarIcon.tsx";
 export const MENU_NAV_ITEMS: MenuNavItem[] = [
     {
         key: "search",

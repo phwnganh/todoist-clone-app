@@ -1,6 +1,6 @@
 import { groupingFilterData } from "@/data/myTaskFilter.data.ts";
-import VerifiedIcon from "@/assets/verified-icon.svg";
 import { type GroupedBy } from "@/types/viewOptions.type.ts";
+import VerifiedIcon from "@/components/icons/VerifiedIcon.tsx";
 
 type MyTaskFilterGroupingDropdownProps = {
   selectedGrouping?: GroupedBy | null;
@@ -33,7 +33,7 @@ const MyTaskFilterGroupingDropdown = ({
               <span className="flex items-center gap-small">
                 {isSelected ? (
                   <div className="w-4 h-4 flex justify-center items-center shrink-0">
-                    <img src={VerifiedIcon} alt={"verified-icon"} />
+                    <VerifiedIcon className={"text-product-library-display-primary-idle-tint"}/>
                   </div>
                 ) : (
                   <div

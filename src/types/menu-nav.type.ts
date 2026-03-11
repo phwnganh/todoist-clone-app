@@ -23,7 +23,7 @@ export type OpenMyTaskFilterDropdown = "grouping" | "sorting" | "direction" | "d
 export type LayoutItem = {
     key: string;
     label: string;
-    icon: string;
+    icon: ComponentType<{className: string}>;
 }
 
 export type MyProjectMenuToolbar = | "divider" | {

@@ -285,7 +285,7 @@ const MyTaskLayoutFiltersDropdown = ({
                         onChange={() => onSelectLayout(layout.key as ViewMode)}
                       />
                       <span className="flex flex-col gap-xsmall items-center justify-center text-xs">
-                        <img src={layout.icon} alt={layout.key} />
+                        <layout.icon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                         {layout.label}
                       </span>
                     </label>

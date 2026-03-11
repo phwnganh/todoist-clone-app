@@ -1,6 +1,6 @@
 import { dateFilterData } from "@/data/myTaskFilter.data.ts";
-import VerifiedIcon from "@/assets/verified-icon.svg";
 import {buildDateFilterQuery} from "@/helpers/groupSortTasks.ts";
+import VerifiedIcon from "@/components/icons/VerifiedIcon.tsx";
 
 type MyTaskFilterDateDropdownProps = {
     selectedFilteringDate: string | null;
@@ -33,7 +33,7 @@ const MyTaskFilterDateDropdown = ({selectedFilteringDate, onSelectFilteringDate}
               <span className="flex items-center gap-small">
                   {isSelected ?
                       <div className="flex justify-center items-center w-4 h-4 shrink-0">
-                      <img src={VerifiedIcon} alt={"verified-icon"} />
+                          <VerifiedIcon className={"text-product-library-display-primary-idle-tint"}/>
                   </div> :
                       <div className="w-4 h-4 flex justify-center items-center shrink-0"></div>
                   }
