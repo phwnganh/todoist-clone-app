@@ -1,4 +1,5 @@
-import PlusIcon from "@/assets/plus-icon.svg";
+import PlusIcon from "@/components/icons/PlusIcon.tsx";
+
 type ProjectDropdownFooterProps = {
   hasKeyword: boolean;
   keyword: string;
@@ -19,7 +20,7 @@ const ProjectDropdownFooter = ({
       )}
       <button className={"flex items-center gap-1.5 py-1 px-2"}>
         <div className={"flex items-center justify-center"}>
-          <img src={PlusIcon} alt="plus-icon" />
+          <PlusIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
         </div>
         <span className={"font-medium text-sm"}>Create "{keyword}"</span>
       </button>

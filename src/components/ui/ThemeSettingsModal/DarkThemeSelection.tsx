@@ -11,7 +11,7 @@ const DarkThemeSelection = () => {
                     </span>
             <span className={"px-small pb-small flex flex-col gap-small bg-theme-card-background-color-dark"}>
                         <span className={"flex items-center justify-between"}>
-                            <p className={"text-xs font-strong text-theme-card-accent-color-dark"}>Todoist</p>
+                            <p className={"text-xs font-strong text-theme-card-accent-color-dark"}>Dark</p>
                             <div className={"flex justify-center items-center w-6 h-6 shrink-0"}>
                                 <img src={TodoistVerifiedIcon} alt={"verified"}/>
                             </div>

@@ -1,7 +1,7 @@
 
-const SettingIcon = () => {
+const SettingIcon = ({className}: {className: string}) => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" aria-hidden="true" className="svg_icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" aria-hidden="true" className={className}>
             <g fill="none" fillRule="evenodd">
                 <path d="M3 3h18v18H3z"></path>
                 <path fill="currentColor" fillRule="nonzero"

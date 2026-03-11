@@ -69,7 +69,7 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
       {section?.id !== null && (
           <div className={`flex items-center gap-5`} ref={setNodeRef} style={style}>
             <button type={"button"} className={`flex justify-center items-center cursor-grab active:cursor-grabbing hover:bg-product-library-selectable-secondary-hover-fill rounded-small ${!isEditing ? "visible w-6 h-6" : "invisible"}`} {...attributes} {...listeners}>
-              <DragDropIcon/>
+              <DragDropIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
             </button>
             <div
                 className={

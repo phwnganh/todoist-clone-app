@@ -12,15 +12,11 @@ const SettingsModalNavItemSidebar = ({item, onClick, active}: SettingsNavItemPro
         <li onClick={onClick} className={`${commonClass} rounded-small ${active ? "bg-product-library-display-accent-secondary-fill rounded-small hover:bg-product-library-display-accent-secondary-fill"
             : "hover:bg-product-library-selectable-secondary-hover-fill"} cursor-pointer`}>
             <div className={`flex justify-center items-center ${active ? "text-product-library-actionable-tertiary-idle-tint" : ""}`}>
-                {typeof item.icon === "string" ? (
-                    <img src={item.icon} alt={item.label} />
-                ) : (
-                    <item.icon />
-                )}
+                <item.icon className={`${active ? "text-product-library-actionable-tertiary-idle-tint" : "text-product-library-actionable-quaternary-idle-tint"}`}/>
             </div>
             <span
                 className={`text-sm wrap-break-word py-0.75 pl-1.25 ${
-                    active ? "text-product-library-actionable-tertiary-idle-tint" : ""
+                    active ? "text-product-library-actionable-tertiary-idle-tint" : "text-product-library-display-primary-idle-tint"
                 }`}
             >
         {item.label}

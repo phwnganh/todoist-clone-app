@@ -1,5 +1,5 @@
-import CollapseSideBarIcon from "@/assets/collapse-sidebar-icon.svg";
 import {type ReactNode} from "react";
+import CollapseSidebarIcon from "@/components/icons/CollapseSidebarIcon.tsx";
 
 type HeaderLayoutProps = {
     showCollapse: boolean;
@@ -13,7 +13,7 @@ const HeaderLayout = ({showCollapse, onToggleSidebar, left, right}: HeaderLayout
             <div className="flex items-center">
                 {showCollapse && (
                     <button className="w-8 h-8 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small" onClick={onToggleSidebar}>
-                        <img src={CollapseSideBarIcon} alt={"collapse-side-bar-icon"}/>
+                        <CollapseSidebarIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                 </button>
                 )}
             </div>

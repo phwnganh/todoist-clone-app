@@ -18,7 +18,7 @@ const MySectionsToolbarDropdown = ({sectionId}: MySectionsToolbarDropdownProps) 
                 onOpenEditSection(sectionId)
 
             },
-            icon: <EditIcon/>
+            icon: <EditIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
         },
         {
             label: "Move to...",

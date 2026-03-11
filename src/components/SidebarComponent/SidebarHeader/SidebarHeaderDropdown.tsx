@@ -19,7 +19,7 @@ const SidebarHeaderDropdown = ({userName}: SidebarHeaderDropdownProps) => {
             onClick: () => {
                 console.log("username")
             },
-            icon: <UserStatisticIcon/>
+            icon: <UserStatisticIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
         },
         "divider",
         {
@@ -28,13 +28,13 @@ const SidebarHeaderDropdown = ({userName}: SidebarHeaderDropdownProps) => {
                 onCloseSidebarHeaderDropdown()
                 onOpenSettingModalDialog()
             },
-            icon: <SettingIcon/>
+            icon: <SettingIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
         },
         "divider",
         {
             label: "Log out",
             onClick: logout,
-            icon: <LogoutIcon/>
+            icon: <LogoutIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
         }
     ]
 

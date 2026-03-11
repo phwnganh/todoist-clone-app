@@ -29,7 +29,7 @@ const FilteringPrioritiesSection = ({priorityRef, selectedPriorityKey, displayPr
                 >
                     <p className={"text-sm"}>{displayPriorities}</p>
                     <div className={"flex justify-center items-center w-7 h-7"}>
-                        <TaskSmallArrowDownIcon />
+                        <TaskSmallArrowDownIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                     </div>
                 </div>
             </button>

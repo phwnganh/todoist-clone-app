@@ -17,7 +17,6 @@ import {
   useGetAllProjects,
   useGetAProject,
 } from "@/hooks/useQueryHook/useProjects.ts";
-import CloseIcon from "@/assets/close-icon.svg";
 import SubmitIcon from "@/components/icons/SubmitIcon.tsx";
 import type {Due, Priority, Task} from "@/types/task.type.ts";
 import type { Section } from "@/types/section.type.ts";
@@ -35,6 +34,7 @@ import CustomLabel from "@/components/ui/CustomLabel.tsx";
 import MyTaskDateDropdown from "./MyTaskDateDropdown";
 import DateChip from "@/components/ui/DateChip.tsx";
 import PriorityIcon from "@/components/icons/PriorityIcon.tsx";
+import CloseIcon from "@/components/icons/CloseIcon.tsx";
 
 export type MyTaskFormValues = {
   content: string;
@@ -497,7 +497,7 @@ const MyTaskForm = ({
                     "flex md:hidden w-6 h-6 justify-center items-center"
                   }
                 >
-                  <img src={CloseIcon} alt={"close-icon"} />
+                  <CloseIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                 </span>
                 <span className="hidden md:inline text-sm font-medium text-product-library-actionable-secondary-on-idle-tint">
                   Cancel
@@ -505,7 +505,7 @@ const MyTaskForm = ({
               </>
             ) : (
               <span className={"w-6 h-6 flex justify-center items-center"}>
-                <img src={CloseIcon} alt={"close-icon"} />
+                <CloseIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
               </span>
             )}
           </button>

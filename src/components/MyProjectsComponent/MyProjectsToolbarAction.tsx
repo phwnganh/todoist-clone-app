@@ -1,10 +1,10 @@
-import PlusIcon from "@/assets/plus-icon.svg";
-import SmallArrowDownIcon from "@/assets/small-arrow-down-icon.svg";
 import MyProjectsDropdown from "./MyProjectsDropdown.tsx";
 import { useRef, useState } from "react";
 import CustomSwitch from "@/components/ui/CustomSwitch.tsx";
 import { useClickOutside } from "@/hooks/useClickOutside.ts";
 import AddProjectsModalDialog from "./AddProjectsModalDialog";
+import SmallArrowDownIcon from "@/components/icons/SmallArrowDownIcon.tsx";
+import PlusIcon from "@/components/icons/PlusIcon.tsx";
 
 const MyProjectsToolbarAction = () => {
   const [isOpenAddProjectsDropdown, setOpenAddProjectsDropdown] =
@@ -43,13 +43,13 @@ const MyProjectsToolbarAction = () => {
           className="px-3 h-8 flex items-center bg-product-library-actionable-secondary-idle-fill rounded-small hover:bg-product-library-border-hover-tint"
         >
           <div className="mr-1.5 flex justify-center items-center">
-            <img src={PlusIcon} alt={"plus-icon"} />
+            <PlusIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
           </div>
           <span className="text-product-library-actionable-secondary-on-idle-tint overflow-hidden text-sm font-medium">
             Add
           </span>
           <div className="ml-1.5 flex justify-center items-center">
-            <img src={SmallArrowDownIcon} alt={"small-arrow-down-icon"} />
+            <SmallArrowDownIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
           </div>
         </button>
         {isOpenAddProjectsDropdown && (

@@ -80,7 +80,7 @@ const ChildrenTaskItem = ({
             {...attributes}
             {...listeners}
           >
-            <DragDropIcon />
+            <DragDropIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
           </button>
           <div
             className={
@@ -173,7 +173,7 @@ const ChildrenTaskItem = ({
                   "w-6 h-6 rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
                 }
               >
-                <EditIcon />
+                <EditIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
               </button>
               <button
                 type={"button"}
@@ -182,7 +182,7 @@ const ChildrenTaskItem = ({
                   "w-6 h-6 rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
                 }
               >
-                <DueDateIcon />
+                <DueDateIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
               </button>
               <button
                 type={"button"}
@@ -191,7 +191,7 @@ const ChildrenTaskItem = ({
                   "w-6 h-6 rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
                 }
               >
-                <CommentIcon />
+                <CommentIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
               </button>
               <div className={"relative"}>
                 <button
@@ -202,7 +202,7 @@ const ChildrenTaskItem = ({
                     "w-6 h-6 rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
                   }
                 >
-                  <MenuIcon />
+                  <MenuIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                 </button>
                 {isOpenSubTaskDetailToolbar && (
                   <div

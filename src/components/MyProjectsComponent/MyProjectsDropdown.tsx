@@ -1,5 +1,5 @@
-import HashtagIcon from "@/assets/hashtag-icon.svg";
-import TemplateIcon from "@/assets/template-icon.svg";
+import HashtagIcon from "@/components/icons/HashtagIcon.tsx";
+import TemplateIcon from "@/components/icons/TemplateIcon.tsx";
 
 const MyProjectsDropdown = ({
   onOpenAddProjectModal,
@@ -14,7 +14,7 @@ const MyProjectsDropdown = ({
           onClick={onOpenAddProjectModal}
         >
           <div className="flex justify-center items-center mr-2.5 shrink-0">
-            <img src={HashtagIcon} alt={"hashtag-icon"} />
+            <HashtagIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
           </div>
           <div className="text-sm font-regular text-product-library-display-primary-idle-tint whitespace-nowrap">
             Add projects
@@ -23,7 +23,7 @@ const MyProjectsDropdown = ({
 
         <button className="flex items-center min-h-8 w-full hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
           <div className="flex justify-center items-center mr-2.5 shrink-0">
-            <img src={TemplateIcon} alt={"template-icon"} />
+            <TemplateIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
           </div>
           <div className="text-sm font-regular text-product-library-display-primary-idle-tint whitespace-nowrap">
             Browse templates

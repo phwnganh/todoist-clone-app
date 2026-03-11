@@ -55,7 +55,7 @@ const TaskDetailAsideProjectSection = ({project, section, selectedProject, selec
                             "group-hover/project:flex justify-center items-center hidden"
                         }
                     >
-                        <TaskSmallArrowDownIcon />
+                        <TaskSmallArrowDownIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                     </div>
                 </div>
                 {isOpenMyTaskDetailAside && (

@@ -38,7 +38,7 @@ const TaskDetailAsideDateSection = ({selectedDue, category, label, isOpenMyTaskD
                             type={"button"}
                             className={"flex justify-center items-center"}
                         >
-                            <SmallPlusAddIcon />
+                            <SmallPlusAddIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                         </button>
                     </div>
                 ) : (

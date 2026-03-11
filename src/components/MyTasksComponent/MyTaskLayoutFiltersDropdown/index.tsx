@@ -1,4 +1,3 @@
-import QuestionIcon from "@/assets/question-icon.svg";
 import { LAYOUT_ITEMS } from "@/data/menuNav.data.ts";
 import { Fragment, useRef, useState } from "react";
 import CustomSwitch from "@/components/ui/CustomSwitch.tsx";
@@ -40,6 +39,7 @@ import FilteringPrioritiesSection from "./EachTaskLayoutFieldSection/FilteringPr
 import FilteringLabelsSection from "./EachTaskLayoutFieldSection/FilteringLabelsSection.tsx";
 import {useExpanded} from "@/hooks/useExpanded.ts";
 import TaskSmallArrowRightIcon from "@/components/icons/TaskSmallArrowRightIcon.tsx";
+import QuestionIcon from "@/components/icons/QuestionIcon.tsx";
 
 type MyTaskLayoutFiltersDropdownProps = {
   onSelectLayout: (layout: ViewMode) => void;
@@ -267,7 +267,7 @@ const MyTaskLayoutFiltersDropdown = ({
           <div className={"px-1.5 flex justify-between items-center"}>
             <p className={"text-sm font-medium"}>Layout</p>
             <div className={"w-6 h-6 flex justify-center items-center"}>
-              <img src={QuestionIcon} alt={"question-icon"} />
+              <QuestionIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
             </div>
           </div>
 
@@ -307,7 +307,7 @@ const MyTaskLayoutFiltersDropdown = ({
           <div className={"px-1.5 flex items-center justify-between"}>
             <p className={"text-sm font-medium"}>Sort</p>
             <button type={"button"} onClick={handleExpanded} className={"flex justify-center items-center w-7 h-7"}>
-              {isExpanded ? <TaskSmallArrowDownIcon /> : <TaskSmallArrowRightIcon/>}
+              {isExpanded ? <TaskSmallArrowDownIcon className={"text-product-library-actionable-quaternary-idle-tint"}/> : <TaskSmallArrowRightIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>}
 
             </button>
           </div>
@@ -326,8 +326,8 @@ const MyTaskLayoutFiltersDropdown = ({
             <p className={"text-sm font-medium"}>Filter</p>
             <button type={"button"} onClick={handleExpanded} className={"flex justify-center items-center w-7 h-7"}>
               {isExpanded ?
-                  <TaskSmallArrowDownIcon />
-              : <TaskSmallArrowRightIcon/>
+                  <TaskSmallArrowDownIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
+              : <TaskSmallArrowRightIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
               }
             </button>
           </div>

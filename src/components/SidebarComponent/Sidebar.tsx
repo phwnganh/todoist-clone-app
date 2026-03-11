@@ -1,17 +1,18 @@
 import type { MenuNavItem } from "@/types/menu-nav.type.ts";
-import AddIcon from "@/assets/add-icon.svg";
-import ArrowDownIcon from "@/assets/arrow-down-icon.svg";
-import QuestionIcon from "@/assets/question-icon.svg";
 import { PROJECTS } from "@/constants/routes.constants.ts";
 import SidebarNavItem from "./SidebarNavItem.tsx";
 import { useState } from "react";
 import SearchModalDialog from "../SearchModalDialog.tsx";
 import { NavLink } from "react-router-dom";
-import RightArrowIcon from "@/assets/right-arrow-icon.svg";
 import { MENU_NAV_ITEMS } from "@/data/menuNav.data.ts";
 import SidebarMyProjectList from "./SidebarMyProjectList.tsx";
 import SidebarHeader from "./SidebarHeader";
 import PlusAddIcon from "@/components/icons/PlusAddIcon.tsx";
+import {useExpanded} from "@/hooks/useExpanded.ts";
+import TaskSmallArrowDownIcon from "@/components/icons/TaskSmallArrowDownIcon.tsx";
+import TaskSmallArrowRightIcon from "@/components/icons/TaskSmallArrowRightIcon.tsx";
+import AddIcon from "@/components/icons/AddIcon.tsx";
+import QuestionIcon from "@/components/icons/QuestionIcon.tsx";
 type SidebarProps = {
   open: boolean;
   isMobile: boolean;
@@ -19,13 +20,9 @@ type SidebarProps = {
 };
 const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
   const [openSearchModal, setOpenSearchModal] = useState(false);
-  const [isProjectListOpen, setIsProjectListOpen] = useState(false);
+  const {isExpanded, handleExpanded} = useExpanded()
   const handleSearchClick = () => {
     setOpenSearchModal(true);
-  };
-
-  const handleToggleProjectList = () => {
-    setIsProjectListOpen((prev) => !prev);
   };
 
   return (
@@ -62,7 +59,7 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
             className={({ isActive }) =>
               `group flex items-center hover:rounded-small py-0.75 ${
                 isActive
-                  ? "bg-product-library-priorities-p2-secondary-hover-fill rounded-small hover:bg-product-library-priorities-p2-secondary-hover-fill"
+                  ? "bg-product-library-display-accent-secondary-fill rounded-small hover:bg-product-library-display-accent-secondary-fill"
                   : "hover:bg-product-library-selectable-secondary-hover-fill"
               }`
             }
@@ -79,17 +76,17 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
                   My Projects
                 </p>
                 <div className="flex items-center ml-auto shrink-0">
-                  <button className="w-7 h-7 hidden group-hover:flex justify-center items-center hover:bg-product-library-border-idle-tint hover:rounded-small">
-                    <img src={AddIcon} alt={"add-icon"} />
+                  <button className="w-7 h-7 hidden group-hover:flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill rounded-small">
+                    <AddIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                   </button>
                   <button
-                    onClick={handleToggleProjectList}
-                    className="w-7 h-7 flex justify-center items-center hover:bg-product-library-border-idle-tint hover:rounded-small"
+                    onClick={handleExpanded}
+                    className="w-7 h-7 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill rounded-small"
                   >
-                    {isProjectListOpen ? (
-                      <img src={ArrowDownIcon} alt={"arrow-down-icon"} />
+                    {isExpanded ? (
+                        <TaskSmallArrowDownIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                     ) : (
-                      <img src={RightArrowIcon} alt={"right-arrow-icon"} />
+                        <TaskSmallArrowRightIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                     )}
                   </button>
                 </div>
@@ -97,14 +94,14 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
             )}
           </NavLink>
 
-          {!isProjectListOpen && <SidebarMyProjectList />}
+          {isExpanded && <SidebarMyProjectList />}
         </div>
       </div>
 
       <div className="flex flex-col gap-small my-2 px-3 mt-auto">
         <button className="px-2.5 py-0.75 flex items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
           <div className="w-6 h-6 flex justify-center items-center mr-1.5 ">
-            <img src={AddIcon} alt={"add-icon"} />
+            <AddIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
           </div>
           <span className="text-sm text-product-library-display-secondary-idle-tint font-medium">
             Add a team
@@ -112,7 +109,7 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
         </button>
         <button className="px-2.5 py-0.75 flex items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
           <div className="w-6 h-6 flex justify-center items-center mr-1.5">
-            <img src={QuestionIcon} alt={"question-icon"} />
+            <QuestionIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
           </div>
           <span className="text-sm text-product-library-display-secondary-idle-tint font-medium">
             Help & resources

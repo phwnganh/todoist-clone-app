@@ -30,7 +30,7 @@ const GroupingTaskSection = ({groupRef, selectedGrouping, displayLabel, openDrop
                 >
                     <p className={"text-sm"}>{displayLabel}</p>
                     <div className={"flex justify-center items-center w-7 h-7"}>
-                        <TaskSmallArrowDownIcon />
+                        <TaskSmallArrowDownIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                     </div>
                 </div>
             </button>

@@ -71,7 +71,7 @@ const MyTaskBoardSection = ({ section }: MyTaskBoardSectionProps) => {
         {section?.id !== null ? (
           <div className={"relative flex items-center"} ref={setNodeRef} style={style}>
             <button type={"button"} className={`flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill rounded-small ${!isEditing ? "w-6 h-6 visible" : "invisible"}`} {...attributes} {...listeners}>
-              <DragDropIcon/>
+              <DragDropIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
             </button>
             {/*click to edit section here*/}
             {isEditing ? (

@@ -76,7 +76,7 @@ const MyTasksToolbarDropdown = ({ taskId, task }: { taskId: string; task: Task }
         console.log("task id: ", taskId);
         onOpenEditTask(taskId);
       },
-      icon: <EditIcon />,
+      icon: <EditIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>,
     },
     {type: "divider"},
     {

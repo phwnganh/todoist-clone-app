@@ -1,7 +1,7 @@
-import PlusAddIcon from "@/assets/add-icon.svg";
 import { useTaskStore } from "@/stores/task.store.ts";
 import AddMyTaskDetailMainSubChildrenForm from "./AddMyTaskDetailMainSubChildrenForm";
 import type { Task } from "@/types/task.type.ts";
+import AddIcon from "@/components/icons/AddIcon.tsx";
 const MyNoChildrenTaskDetailAddSubtaskButtonSection = ({
   taskId,
   taskDetail,
@@ -22,7 +22,7 @@ const MyNoChildrenTaskDetailAddSubtaskButtonSection = ({
         }
       >
         <div className={"flex justify-center items-center w-6 h-6"}>
-          <img src={PlusAddIcon} alt="plus-icon" />
+          <AddIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
         </div>
         <p>Add sub-task</p>
       </button>

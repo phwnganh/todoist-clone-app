@@ -91,7 +91,7 @@ const MyTaskListItem = ({
           <div ref={setNodeRef} style={style} className={"flex items-start gap-5 px-2 border-b border-b-product-library-divider-primary"}>
             {!isGrouping &&
                 <button type={"button"} className={"flex justify-center items-center w-6 h-6 hover:bg-product-library-selectable-secondary-hover-fill rounded-small"} {...attributes} {...listeners}>
-                  <DragDropIcon/>
+                  <DragDropIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                 </button>
             }
             <li
@@ -107,9 +107,9 @@ const MyTaskListItem = ({
                         }
                     >
                       {isExpanded ? (
-                          <TaskSmallArrowDownIcon />
+                          <TaskSmallArrowDownIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                       ) : (
-                          <TaskSmallArrowRightIcon />
+                          <TaskSmallArrowRightIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                       )}
                     </button>
                 )}
@@ -195,7 +195,7 @@ const MyTaskListItem = ({
                         "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
                       }
                   >
-                    <EditIcon />
+                    <EditIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                   </button>
                   <button
                       type={"button"}
@@ -204,7 +204,7 @@ const MyTaskListItem = ({
                         "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
                       }
                   >
-                    <DueDateIcon />
+                    <DueDateIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                   </button>
                   <button
                       type={"button"}
@@ -213,7 +213,7 @@ const MyTaskListItem = ({
                         "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
                       }
                   >
-                    <CommentIcon />
+                    <CommentIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                   </button>
                   <div className={"relative"} ref={taskToolbarRef}>
                     <button
@@ -226,7 +226,7 @@ const MyTaskListItem = ({
                           "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
                         }
                     >
-                      <MenuIcon />
+                      <MenuIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                     </button>
                     {isOpenTaskDetailToolbar && (
                         <div

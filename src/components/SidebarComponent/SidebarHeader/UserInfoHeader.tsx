@@ -1,4 +1,3 @@
-import SmallArrowDownIcon from "@/assets/small-arrow-down-icon.svg";
 import LoadingSpin from "@/components/ui/LoadingSpin.tsx";
 import ErrorDisplayed from "@/components/ui/ErrorDisplayed.tsx";
 import { useGetUserProfile } from "@/hooks/useQueryHook/useUserProfile.ts";
@@ -7,6 +6,7 @@ import SidebarHeaderDropdown from "./SidebarHeaderDropdown.tsx";
 import {useClickOutside} from "@/hooks/useClickOutside.ts";
 import {useSidebarStore} from "@/stores/sidebar.store.ts";
 import SettingModalDialog from "@/components/SidebarComponent/SidebarHeader/SettingsModalDialog";
+import SmallArrowDownIcon from "@/components/icons/SmallArrowDownIcon.tsx";
 
 const UserInfoHeader = () => {
   const { data: user, isLoading, isError } = useGetUserProfile();
@@ -43,7 +43,7 @@ const UserInfoHeader = () => {
         <span className="whitespace-nowrap text-product-library-display-primary-idle-tint overflow-hidden">
           {user?.full_name?.trim().split(" ")[0]}
         </span>
-        <img src={SmallArrowDownIcon} alt={"small-arrow-down-icon"} />
+        <SmallArrowDownIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
       </span>
         </button>
         {openSidebarHeaderDropdown &&  <SidebarHeaderDropdown userName={user?.full_name}/>}

@@ -1,8 +1,8 @@
 
-const LogoutIcon = () => {
+const LogoutIcon = ({className}: {className: string}) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" aria-hidden="true"
-             className="custom-cursor-on-hover">
+             className={className}>
             <g fill="none" fillRule="evenodd">
                 <path stroke="currentColor"
                       d="M6.5 8.3V5.63c0-1.17.9-2.13 2-2.13h7c1.1 0 2 .95 2 2.13v11.74c0 1.17-.9 2.13-2 2.13h-7c-1.1 0-2-.95-2-2.13V14.7"></path>

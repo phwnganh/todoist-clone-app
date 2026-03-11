@@ -28,7 +28,7 @@ const FilteringDateSection = ({dateRef, selectedDateQuery, displayDate, openDrop
                 >
                     <p className={"text-sm"}>{displayDate}</p>
                     <div className={"flex justify-center items-center w-7 h-7"}>
-                        <TaskSmallArrowDownIcon />
+                        <TaskSmallArrowDownIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                     </div>
                 </div>
             </button>

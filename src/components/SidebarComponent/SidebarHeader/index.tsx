@@ -1,6 +1,6 @@
-import BellIcon from "@/assets/bell-icon.svg";
-import CollapseSideBarIcon from "@/assets/collapse-sidebar-icon.svg";
 import UserInfoHeader from "./UserInfoHeader.tsx";
+import BellIcon from "@/components/icons/BellIcon.tsx";
+import CollapseSidebarIcon from "@/components/icons/CollapseSidebarIcon.tsx";
 const SidebarHeader = ({ onToggle }: { onToggle: () => void }) => {
   const buttonIconClass =
     "w-8 h-8 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small";
@@ -9,10 +9,10 @@ const SidebarHeader = ({ onToggle }: { onToggle: () => void }) => {
       <UserInfoHeader />
       <div className="flex items-center gap-xsmall">
         <button className={buttonIconClass}>
-          <img src={BellIcon} alt={"bell-icon"} />
+          <BellIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
         </button>
         <button onClick={onToggle} className={buttonIconClass}>
-          <img src={CollapseSideBarIcon} alt={"collapse-side-bar-icon"} />
+          <CollapseSidebarIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
         </button>
       </div>
     </div>

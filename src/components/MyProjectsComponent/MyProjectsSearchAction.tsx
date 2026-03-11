@@ -1,6 +1,6 @@
 import { useRef } from "react";
-import SearchIcon from "@/assets/search-icon.svg";
-import CloseIcon from "@/assets/close-icon.svg";
+import SearchIcon from "@/components/icons/SearchIcon.tsx";
+import CloseIcon from "@/components/icons/CloseIcon.tsx";
 type MyProjectsSearchActionProps = {
   value: string;
   onSearchChange: (value: string) => void;
@@ -18,7 +18,7 @@ const MyProjectsSearchAction = ({
   return (
     <div className="mt-2 flex items-center border border-product-library-border-idle-tint hover:border-product-library-border-focus-tint rounded-small">
       <div className="ml-xsmall">
-        <img src={SearchIcon} alt={"search-icon"} />
+        <SearchIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
       </div>
       <input
         type="text"
@@ -33,7 +33,7 @@ const MyProjectsSearchAction = ({
           onClick={handleClearSearch}
           className="flex items-center justify-center mr-1 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"
         >
-          <img src={CloseIcon} alt={"close-icon"} />
+          <CloseIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
         </button>
       )}
     </div>

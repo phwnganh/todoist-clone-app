@@ -25,9 +25,9 @@ const MyTaskListGroupSection = ({title, tasks, sections}: MyTaskGroupSectionProp
                     onClick={handleExpanded}
                 >
                     {isExpanded ? (
-                        <TaskSmallArrowDownIcon />
+                        <TaskSmallArrowDownIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                     ) : (
-                        <TaskSmallArrowRightIcon />
+                        <TaskSmallArrowRightIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                     )}
                 </button>
                 <p className={"font-bold text-sm pt-1.5 pr-1.5 pb-1.25"}>{title}</p>

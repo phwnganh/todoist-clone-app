@@ -1,17 +1,17 @@
 import type {LayoutItem, MenuNavItem, SettingMenuNavItem} from "@/types/menu-nav.type.ts";
 import {ACTIVITY, FILTERS_LABEL, INBOX, TODAY, UPCOMING} from "@/constants/routes.constants.ts";
-import SearchIcon from '@/assets/search-icon.svg'
-import InboxIcon from '@/assets/inbox-icon.svg'
 import CalendarIcon from '@/components/icons/CalendarIcon.tsx'
-import UpcomingCalendarIcon from '@/assets/upcoming-calendar-icon.svg'
-import FilterIcon from '@/assets/filter-icon.svg'
-import CompletedIcon from '@/assets/completed-icon.svg'
 
 import ListItemIcon from '@/assets/list-item-icon.svg'
 import BoardItemIcon from '@/assets/board-item-icon.svg'
 import PremiumCalendarIcon from '@/assets/premium-calendar-icon.svg'
-import AccountIcon from "@/assets/account-icon.svg";
-import ThemeIcon from "@/assets/theme-icon.svg";
+import SearchIcon from "@/components/icons/SearchIcon.tsx";
+import InboxIcon from "@/components/icons/InboxIcon.tsx";
+import UpcomingCalendarIcon from "@/components/icons/UpcomingCalendarIcon.tsx";
+import FilterIcon from "@/components/icons/FilterIcon.tsx";
+import CompletedIcon from "@/components/icons/CompletedIcon.tsx";
+import AccountIcon from "@/components/icons/AccountIcon.tsx";
+import ThemeIcon from "@/components/icons/ThemeIcon.tsx";
 export const MENU_NAV_ITEMS: MenuNavItem[] = [
     {
         key: "search",

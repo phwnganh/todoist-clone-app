@@ -19,10 +19,10 @@ const SidebarMyProjectsItem = ({ project }: { project: Project }) => {
       {({ isActive }) => (
         <>
           <div
-            className={`p-1.25 flex items-center text-product-library-display-primary-idle-tint ${
+            className={`p-1.25 flex items-center ${
               isActive
                 ? "text-product-library-actionable-tertiary-idle-tint"
-                : ""
+                : "text-product-library-display-primary-idle-tint"
             }`}
           >
             <div className="flex justify-center items-center">
@@ -30,7 +30,7 @@ const SidebarMyProjectsItem = ({ project }: { project: Project }) => {
                 className={`${getProjectColorClass(project.color)}`}
               />
             </div>
-            <div className="py-0.75 pl-1.25 text-sm">{project.name}</div>
+            <div className={`py-0.75 pl-1.25 text-sm`}>{project.name}</div>
           </div>
           <div className="w-7 h-7 flex justify-center items-center ml-auto"></div>
         </>

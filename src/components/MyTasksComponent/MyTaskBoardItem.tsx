@@ -77,7 +77,7 @@ const MyTaskBoardItem = ({
         >
           {!isGrouping &&
               <button type={"button"} {...attributes} {...listeners} className={"flex justify-center items-center w-6 h-6 cursor-grab active:cursor-grabbing hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}>
-                <DragDropIcon/>
+                <DragDropIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
               </button>
           }
 

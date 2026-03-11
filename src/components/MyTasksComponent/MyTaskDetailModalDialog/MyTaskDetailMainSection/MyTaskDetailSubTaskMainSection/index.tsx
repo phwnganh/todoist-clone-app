@@ -55,9 +55,9 @@ const MyTaskDetailSubTaskMainSection = ({
           className={"flex justify-center items-center w-6 h-6"}
         >
           {isExpanded ? (
-            <TaskSmallArrowDownIcon />
+            <TaskSmallArrowDownIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
           ) : (
-            <TaskSmallArrowRightIcon />
+            <TaskSmallArrowRightIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
           )}
         </button>
 

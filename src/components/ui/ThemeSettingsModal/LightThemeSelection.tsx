@@ -9,7 +9,7 @@ const LightThemeSelection = () => {
                         <span className={"w-9 h-2 rounded-3xl bg-theme-card-sidebar-hover-color"}></span>
                         <span className={"w-9 h-2 rounded-3xl bg-theme-card-sidebar-hover-color"}></span>
                     </span>
-            <span className={"px-small pb-small flex flex-col gap-small"}>
+            <span className={"px-small pb-small flex flex-col gap-small bg-white"}>
                         <span className={"flex items-center justify-between"}>
                             <p className={"text-xs font-strong text-theme-card-accent-color"}>Todoist</p>
                             <div className={"flex justify-center items-center w-6 h-6 shrink-0"}>

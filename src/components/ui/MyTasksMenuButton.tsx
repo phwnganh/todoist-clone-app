@@ -14,7 +14,7 @@ const MyTasksMenuButton = ({label, danger, onClick, icon}: MyTasksMenuButtonProp
             <div className={"w-6 h-6 flex justify-center items-center"}>
                 {icon}
             </div>
-            <span className={"text-sm"}>{label}</span>
+            <span className={"text-sm text-product-library-display-primary-idle-tint"}>{label}</span>
         </button>
     );
 };

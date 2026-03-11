@@ -1,12 +1,10 @@
 import { createPortal } from "react-dom";
-import QuestionIcon from "@/assets/question-icon.svg";
 import LargeCloseIcon from "@/assets/large-close-icon.svg";
 import FormSmallArrowDownIcon from "@/assets/form-small-arrow-down-icon.svg";
 import MyProjectFormColorListDropdown from "./MyProjectFormColorListDropdown.tsx";
 import type { Color } from "@/types/color.type.ts";
 import UserAvatar from "@/assets/User-avatar.png";
 import MyProjectFormWorkspaceListDropdown from "./MyProjectFormWorkspaceListDropdown.tsx";
-import HashtagIcon from "@/assets/hashtag-icon.svg";
 import AddProjectsParentProjectListDropdown from "./MyProjectFormParentProjectListDropdown";
 import CustomSwitch from "@/components/ui/CustomSwitch.tsx";
 import { LAYOUT_ITEMS } from "@/data/menuNav.data.ts";
@@ -20,6 +18,8 @@ import {
 import type { OpenDropdown } from "@/types/menu-nav.type.ts";
 import { updateMyProjectField } from "@/helpers/updateMyProjectField.ts";
 import { useClickOutside } from "@/hooks/useClickOutside.ts";
+import QuestionIcon from "@/components/icons/QuestionIcon.tsx";
+import HashtagIcon from "@/components/icons/HashtagIcon.tsx";
 
 export type MyProjectFormValues = {
   name: string;
@@ -113,7 +113,7 @@ const MyProjectForm = ({
               {title}
             </h1>
             <div className="flex justify-center items-center">
-              <img src={QuestionIcon} alt={"question-icon"} />
+              <QuestionIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
             </div>
           </div>
           <button
@@ -260,7 +260,7 @@ const MyProjectForm = ({
                 <div className="flex items-center gap-1.5">
                   {values.parentProject !== "No Parent" && (
                     <div className="flex justify-center items-center">
-                      <img src={HashtagIcon} alt={"hashtag-icon"} />
+                      <HashtagIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                     </div>
                   )}
 

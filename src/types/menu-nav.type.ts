@@ -1,15 +1,15 @@
-import type {ComponentType, ReactNode, SVGProps} from "react";
+import type {ComponentType, ReactNode} from "react";
 export type MenuNavItem = {
     key: string;
     label: string;
-    icon: string | ComponentType<SVGProps<SVGSVGElement>>;
+    icon: ComponentType<{className: string}>;
     getTo?: string;
 }
 
 export type SettingMenuNavItem = {
     key: string;
     label: string;
-    icon: string | ComponentType<SVGProps<SVGSVGElement>>;
+    icon: ComponentType<{className: string}>;
     onClick: () => void;
 }
 

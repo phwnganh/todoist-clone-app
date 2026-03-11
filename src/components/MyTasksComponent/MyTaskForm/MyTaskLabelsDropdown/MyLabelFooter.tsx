@@ -1,5 +1,5 @@
-import PlusIcon from "@/assets/plus-icon.svg";
 import {useCreateLabels} from "@/hooks/useQueryHook/useLabels.ts";
+import PlusIcon from "@/components/icons/PlusIcon.tsx";
 
 type MyLabelFooterProps = {
   hasKeyword: boolean;
@@ -30,7 +30,7 @@ const MyLabelFooter = ({
             </p>
             <button type={"button"} className={"flex items-center gap-1.5 py-1 px-2 w-full hover:bg-product-library-selectable-secondary-hover-fill rounded-small"} onClick={handleCreateLabel}>
               <div className={"flex items-center justify-center"}>
-                <img src={PlusIcon} alt="plus-icon" />
+                <PlusIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
               </div>
               <span className={"font-medium text-sm"}>Create "{keyword}"</span>
             </button>
