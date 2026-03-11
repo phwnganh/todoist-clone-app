@@ -34,7 +34,7 @@ const TaskDetailAsidePrioritySection = ({selectedPriority, priorityRef, isOpenMy
                             <div className={"flex justify-center items-center w-4 h-4"}>
                                 <PriorityIcon className={`text-${selectedPriority?.color}`} />
                             </div>
-                            <div className={"ml-xsmall text-sm pr-xsmall"}>
+                            <div className={"ml-xsmall text-sm pr-xsmall text-product-library-display-primary-idle-tint"}>
                                 {selectedPriority?.label}
                             </div>
                         </div>

@@ -61,7 +61,7 @@ const TaskDetailAsideDateSection = ({selectedDue, category, label, isOpenMyTaskD
                                 <div
                                     className={`flex gap-1.5 text-xs ${DUE_COLOR_CLASS[category]}`}
                                 >
-                                    <SmallCalendarIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
+                                    <SmallCalendarIcon className={`${DUE_COLOR_CLASS[category]}`}/>
                                     <span>{label}</span>
                                 </div>
                             </div>

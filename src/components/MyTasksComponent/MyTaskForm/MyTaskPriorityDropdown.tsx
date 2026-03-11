@@ -38,7 +38,7 @@ const MyTaskPriorityDropdown = ({selectedPriority, onSelect}: MyTaskPriorityDrop
                 <PriorityIcon className={`text-${priority.color}`} />
               </div>
               <div className={"flex items-center gap-1.5"}>
-                <div className="text-sm mx-2.5">{priority.label}</div>
+                <div className="text-sm mx-2.5 text-product-library-actionable-quaternary-idle-tint">{priority.label}</div>
                 <div className={"flex justify-center items-center invisible group-data-[selected=true]:visible"}>
                   <VerifiedIcon
                     className={

@@ -109,7 +109,7 @@ const ChildrenTaskItem = ({
                 </div>
               </button>
               <div className={"flex flex-col gap-1"}>
-                <p className={"text-sm"}>{childrenTask.content}</p>
+                <p className={"text-sm text-product-library-display-primary-idle-tint"}>{childrenTask.content}</p>
                 <p
                   className={
                     "text-xs text-product-library-display-secondary-idle-tint line-clamp-1"

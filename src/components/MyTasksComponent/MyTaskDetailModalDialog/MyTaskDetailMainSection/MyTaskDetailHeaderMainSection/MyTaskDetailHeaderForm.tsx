@@ -1,8 +1,8 @@
-import DescriptionIcon from "@/assets/description-icon.svg";
 import type { Task } from "@/types/task.type.ts";
 import { type ChangeEvent, type FormEvent, useState } from "react";
 import { useUpdateMyTask } from "@/hooks/useQueryHook/useTasks.ts";
 import { updateMyTaskDetailHeader } from "@/helpers/updateMyTaskField.ts";
+import DescriptionIcon from "@/components/icons/DescriptionIcon.tsx";
 
 export type TaskDetailHeaderFormValues = {
   content: string;
@@ -48,14 +48,14 @@ const MyTaskDetailHeaderForm = ({
       >
         <input
           type={"text"}
-          className={"outline-none font-medium text-header"}
+          className={"outline-none font-medium text-header text-product-library-display-primary-idle-tint"}
           placeholder={"Content"}
           value={values?.content}
           onChange={handleContentChange}
         />
         <div className={"flex mt-small mb-xsmall ml-px"}>
           <div className={"flex justify-center items-center"}>
-            <img src={DescriptionIcon} alt={"description-icon"} />
+            <DescriptionIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
           </div>
           <input
             type={"text"}

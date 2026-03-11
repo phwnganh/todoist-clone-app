@@ -1,9 +1,9 @@
 import HashtagIcon from "@/components/icons/HashtagIcon.tsx";
 import { getProjectColorClass } from "@/helpers/getProjectColorClass.ts";
 import type { Project } from "@/types/project.type.ts";
-import LargeCloseIcon from "@/assets/large-close-icon.svg";
 import type { Section } from "@/types/section.type.ts";
 import SectionIcon from "@/components/icons/SectionIcon.tsx";
+import LargeCloseIcon from "@/components/icons/LargeCloseIcon.tsx";
 type MyTaskDetailTitleSectionProps = {
   projectDetail: Project | undefined;
   sectionDetail?: Section | null;
@@ -60,7 +60,7 @@ const MyTaskDetailTitleSection = ({
         className="flex justify-center items-center"
         onClick={onCloseTaskDetail}
       >
-        <img src={LargeCloseIcon} alt={"large-close-icon"} />
+        <LargeCloseIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
       </button>
     </header>
   );

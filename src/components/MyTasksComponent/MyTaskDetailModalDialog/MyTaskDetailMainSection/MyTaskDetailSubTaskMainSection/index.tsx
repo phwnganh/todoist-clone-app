@@ -61,7 +61,7 @@ const MyTaskDetailSubTaskMainSection = ({
           )}
         </button>
 
-        <p className={"text-sm font-medium"}>Sub-tasks</p>
+        <p className={"text-sm font-medium text-product-library-display-primary-idle-tint"}>Sub-tasks</p>
         <p
           className={"text-sm text-product-library-display-secondary-idle-tint"}
         >

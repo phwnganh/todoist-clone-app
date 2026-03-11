@@ -17,10 +17,10 @@ const CustomLabel = ({className, icon, onRemove, label}: CustomLabelProps) => {
                         {icon}
                     </div>
                 }
-                <span>{label.name}</span>
+                <span className={"text-sm text-product-library-display-primary-idle-tint"}>{label.name}</span>
             </div>
 
-            <button type={"button"} onClick={() => onRemove(label.id)} className={"w-4 h-4 flex justify-center items-center"}>x</button>
+            <button type={"button"} onClick={() => onRemove(label.id)} className={"w-4 h-4 flex justify-center items-center text-product-library-display-primary-idle-tint"}>x</button>
         </div>
     );
 };

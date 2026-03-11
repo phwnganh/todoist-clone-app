@@ -1,6 +1,6 @@
 import MyTaskContent from "../../../MyTaskContent.tsx";
-import DescriptionIcon from "@/assets/description-icon.svg";
 import type { Task } from "@/types/task.type.ts";
+import DescriptionIcon from "@/components/icons/DescriptionIcon.tsx";
 
 type MyTaskDetailHeaderTitleProps = {
   taskDetail?: Task | null;
@@ -16,12 +16,12 @@ const MyTaskDetailHeaderTitle = ({
       className={"flex flex-col"}
       onClick={onOpenMyTaskDetailForm}
     >
-      <div className={"text-header font-medium"}>
+      <div className={"text-header font-medium text-product-library-display-primary-idle-tint"}>
         <MyTaskContent content={taskDetail?.content} />
       </div>
       <div className={"mt-small mb-xsmall ml-px flex"}>
         <div className={"flex justify-center items-center"}>
-          <img src={DescriptionIcon} alt={"description-icon"} />
+          <DescriptionIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
         </div>
         <p
           className={"text-sm text-product-library-display-tertiary-idle-tint"}
