@@ -1,4 +1,4 @@
-import AddSectionIcon from "@/assets/add-section-icon.svg";
+import AddSectionIcon from "@/components/icons/AddSectionIcon.tsx";
 
 type AddMyTaskBoardSectionButtonProps = {
   onOpenAddNewTaskSectionForm: () => void;
@@ -15,7 +15,7 @@ const AddMyTaskBoardSectionFinalButton = ({
       }
     >
       <div className={"flex justify-center items-center shrink-0 w-6 h-6"}>
-        <img src={AddSectionIcon} alt="add-section-icon" />
+        <AddSectionIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
       </div>
       <span
         className={"text-product-library-display-secondary-idle-tint text-sm"}

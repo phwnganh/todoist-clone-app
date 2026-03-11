@@ -8,7 +8,6 @@ import { useClickOutside } from "@/hooks/useClickOutside.ts";
 import MyTaskProjectDropdown from "./MyTaskProjectDropdown";
 import { updateMyTaskField } from "@/helpers/updateMyTaskField.ts";
 import MyTaskPriorityDropdown from "./MyTaskPriorityDropdown.tsx";
-import LabelIcon from "@/assets/label-icon.svg";
 import HashtagIcon from "@/components/icons/HashtagIcon.tsx";
 import { getProjectColorClass } from "@/helpers/getProjectColorClass.ts";
 import type { Project } from "@/types/project.type.ts";
@@ -35,6 +34,7 @@ import MyTaskDateDropdown from "./MyTaskDateDropdown";
 import DateChip from "@/components/ui/DateChip.tsx";
 import PriorityIcon from "@/components/icons/PriorityIcon.tsx";
 import CloseIcon from "@/components/icons/CloseIcon.tsx";
+import LabelIcon from "@/components/icons/LabelIcon.tsx";
 
 export type MyTaskFormValues = {
   content: string;
@@ -377,7 +377,7 @@ const MyTaskForm = ({
                 onClick={handleOpenLabels}
               >
                 <div className={"w-4 h-4 flex justify-center items-center"}>
-                  <img src={LabelIcon} alt={"label-icon"} />
+                  <LabelIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                 </div>
                 {variant === "list" && (
                   <p
@@ -398,7 +398,7 @@ const MyTaskForm = ({
                     "border border-product-library-border-idle-tint rounded-small hover:bg-product-library-selectable-secondary-hover-fill text-sm text-product-library-display-secondary-idle-tint"
                   }
                   label={label}
-                  icon={<img src={LabelIcon} alt={"label-icon"} />}
+                  icon={<LabelIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>}
                 />
               ))
             )}

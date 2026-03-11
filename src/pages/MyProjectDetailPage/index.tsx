@@ -1,9 +1,5 @@
 import {useNavigate, useOutletContext, useParams} from "react-router-dom";
 import HeaderLayout from "@/layouts/HeaderLayout.tsx";
-import UserAdded from '@/assets/user-added-icon.svg'
-import SmallListIcon from '@/assets/small-list-icon.svg'
-import CommentIcon from '@/assets/comment-icon.svg'
-import ThreeDotsIcon from '@/assets/three-dots-icon.svg'
 import type {HeaderLayoutType} from "@/types/headerLayout.type.ts";
 import {PROJECTS} from "@/constants/routes.constants.ts";
 import MyTasksList from "@/components/MyTasksComponent/MyTasksList.tsx";
@@ -25,6 +21,10 @@ import {useQueryClient} from "@tanstack/react-query";
 import type {ViewMode, ViewOptionsPayload} from "@/types/viewOptions.type.ts";
 import {useGroupingTaskStore} from "@/stores/groupingTask.store.ts";
 import type {Section} from "@/types/section.type.ts";
+import UserAddedIcon from "@/components/icons/UserAddedIcon.tsx";
+import SmallListIcon from "@/components/icons/SmallListIcon.tsx";
+import CommentIcon from "@/components/icons/CommentIcon.tsx";
+import ThreeDotsIcon from "@/components/icons/ThreeDotsIcon.tsx";
 
 const MyProjectDetailPage = () => {
     const {projectId} = useParams<{projectId: string}>();
@@ -126,26 +126,26 @@ const MyProjectDetailPage = () => {
             <HeaderLayout showCollapse={showCollapse} onToggleSidebar={onToggleSidebar} right={
                 <div className={"flex justify-end items-center"}>
                     <button type={"button"} className="flex items-center justify-center p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
-                        <div className={"mr-1.5"}>
-                            <img src={UserAdded} alt={"user-added-icon"}/>
+                        <div className={"mr-1.5 flex justify-center items-center shrink-0"}>
+                            <UserAddedIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                         </div>
                         <span className="hidden md:block text-product-library-actionable-quaternary-idle-tint text-sm font-medium">Share</span>
                     </button>
                         <div className={"relative p-1 md:p-2.5"}>
                         <button type={"button"} className={"flex items-center px-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"} onClick={handleOpenLayoutDropdown}>
-                            <div className={"flex items-center justify-center w-8 h-8"}>
-                                <img src={SmallListIcon} alt={"small-list-icon"}/>
+                            <div className={"flex items-center justify-center w-9 h-9 shrink-0"}>
+                                <SmallListIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                             </div>
                             <span className="hidden md:block text-product-library-actionable-quaternary-idle-tint text-sm font-medium">Display</span>
 
                         </button>
                         {openLayoutDropdown && (<MyTaskLayoutFiltersDropdown onSelectLayout={handleSelectLayout} layoutTitle={layoutName} onUpdateViewOption={handleUpdateViewOption}/>)}
                         </div>
-                    <button type={"button"} className={"flex items-center justify-center w-8 h-8 p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"}>
-                        <img src={CommentIcon} alt={"comment-icon"}/>
+                    <button type={"button"} className={"flex items-center justify-center w-9 h-9 shrink-0 p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"}>
+                        <CommentIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                     </button>
-                    <button type={"button"} className={"flex items-center justify-center w-8 h-8 p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"}>
-                        <img src={ThreeDotsIcon} alt={"three-dots-icon"}/>
+                    <button type={"button"} className={"flex items-center justify-center w-9 h-9 shrink-0 p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"}>
+                        <ThreeDotsIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                     </button>
                 </div>
             } left={<div className={"flex items-center mr-auto"}>

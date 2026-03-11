@@ -1,5 +1,4 @@
 import type { TaskNode } from "@/types/task.type.ts";
-import SmallCalendarIcon from "@/assets/small-calendar-icon.svg";
 import EditIcon from "@/components/icons/EditIcon.tsx";
 import DueDateIcon from "@/components/icons/DueDateIcon.tsx";
 import CommentIcon from "@/components/icons/CommentIcon.tsx";
@@ -11,8 +10,6 @@ import { getTaskIndentClass } from "@/helpers/getTaskIndentClass.ts";
 import EditMyTaskModalDialog from "./EditMyTaskComponent";
 import { useTaskStore } from "@/stores/task.store.ts";
 import VerifiedIcon from "@/components/icons/VerifiedIcon.tsx";
-import ChildrenIcon from "@/assets/children-icon.svg";
-import LabelIcon from '@/assets/label-icon.svg'
 import { useExpanded } from "@/hooks/useExpanded.ts";
 import {type MouseEvent, useRef} from "react";
 import MyTasksToolbarDropdown from "./MyTasksToolbarDropdown.tsx";
@@ -28,6 +25,9 @@ import {CSS} from "@dnd-kit/utilities";
 import {useClickOutside} from "@/hooks/useClickOutside.ts";
 import {useGroupingTaskStore} from "@/stores/groupingTask.store.ts";
 import type {Section} from "@/types/section.type.ts";
+import SmallCalendarIcon from "@/components/icons/SmallCalendarIcon.tsx";
+import LabelIcon from "@/components/icons/LabelIcon.tsx";
+import ChildrenIcon from "@/components/icons/ChildrenIcon.tsx";
 
 type MyTaskListItemProps = {
   taskNode: TaskNode;
@@ -159,7 +159,7 @@ const MyTaskListItem = ({
                               "flex gap-0.5 text-xs text-product-library-display-secondary-idle-tint"
                             }
                         >
-                          <img src={ChildrenIcon} alt={"children-icon"} />
+                          <ChildrenIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                           <span>{completedChildrenLength}/{children.length}</span>
                         </div>
                     )}
@@ -167,17 +167,17 @@ const MyTaskListItem = ({
                         <button
                             type={"button"}
                             className={
-                              `flex gap-0.5 text-xs ${DUE_COLOR_CLASS[category]}`
+                              `flex gap-0.5 items-center text-xs ${DUE_COLOR_CLASS[category]}`
                             }
                         >
-                          <img src={SmallCalendarIcon} alt={"small-calendar-icon"} />
+                          <SmallCalendarIcon className={`${DUE_COLOR_CLASS[category]}`}/>
                           <span>{label}</span>
                         </button>}
 
                     {task.labels?.map((label) => (
                         <div key={label} className={"flex gap-0.5 text-xs text-product-library-display-secondary-idle-tint"}>
                           <div className={"w-4 h-4 flex justify-center items-center"}>
-                            <img src={LabelIcon} alt={"label-icon"} />
+                            <LabelIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                           </div>
                           <span>{label}</span>
                         </div>

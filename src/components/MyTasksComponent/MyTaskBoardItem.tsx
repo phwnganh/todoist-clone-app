@@ -1,10 +1,8 @@
 import type { Task } from "@/types/task.type.ts";
 import VerifiedIcon from "@/components/icons/VerifiedIcon.tsx";
 import MyTaskContent from "./MyTaskContent.tsx";
-import ChildrenIcon from "@/assets/children-icon.svg";
-import SmallCalendarIcon from "@/assets/small-calendar-icon.svg";
 import MenuIcon from "@/components/icons/MenuIcon.tsx";
-import { type MouseEvent, useMemo } from "react";
+import {type MouseEvent, useMemo, useRef} from "react";
 import MyTasksToolbarDropdown from "./MyTasksToolbarDropdown.tsx";
 import { useTaskStore } from "@/stores/task.store.ts";
 import EditMyTaskModalDialog from "./EditMyTaskComponent";
@@ -20,6 +18,9 @@ import DragDropIcon from "@/components/icons/DragDropIcon.tsx";
 import {CSS} from "@dnd-kit/utilities";
 import {useGroupingTaskStore} from "@/stores/groupingTask.store.ts";
 import type {Section} from "@/types/section.type.ts";
+import SmallCalendarIcon from "@/components/icons/SmallCalendarIcon.tsx";
+import ChildrenIcon from "@/components/icons/ChildrenIcon.tsx";
+import {useClickOutside} from "@/hooks/useClickOutside.ts";
 
 type MyTaskBoardItemProps = {
   task: Task;
@@ -35,13 +36,15 @@ const MyTaskBoardItem = ({
   tasks,
     sections
 }: MyTaskBoardItemProps) => {
-  const { editingTaskId, onCloseEditTask, deleteTaskId, taskDetailId, onOpenTaskDetail, onCloseTaskDetail } = useTaskStore();
+  const { editingTaskId, onCloseEditTask, deleteTaskId, taskDetailId, onOpenTaskDetail, onCloseTaskDetail, onCloseTaskDetailToolbar, openTaskDetailToolbar } = useTaskStore();
   const {groupedBy} = useGroupingTaskStore()
   const isEditing = editingTaskId === task.id;
   const isDeleting = deleteTaskId === task.id;
   const isOpeningTaskDetail = taskDetailId === task.id;
+  const isOpenTaskToolbar = openTaskDetailToolbar === task.id;
   const isGrouping = groupedBy != null
   const {category, label} = getDueInfo(task?.due?.date)
+  const taskToolbarRef = useRef<HTMLDivElement>(null);
   const {setNodeRef, attributes, listeners, transition, transform} = useSortable({id: task.id})
   const style = {
     transition,
@@ -59,6 +62,12 @@ const MyTaskBoardItem = ({
 
   const sectionName = sections?.find(s => s.id === task.section_id)?.name
   const completedChildrenLength = childrenTasks.filter(task => task.checked || task.completed_at).length
+
+  useClickOutside({
+    ref: taskToolbarRef,
+    handler: onCloseTaskDetailToolbar,
+    enabled: isOpenTaskToolbar
+  })
   return (
     <>
       {isEditing ? (
@@ -72,7 +81,7 @@ const MyTaskBoardItem = ({
             ref={setNodeRef}
             style={style}
           className={
-            "flex items-start outline outline-border-idle hover:outline-border-hover shadow-sm rounded-large p-2.5 group relative"
+            "flex items-start outline outline-product-library-divider-primary hover:outline-product-library-divider-on-dark shadow-sm rounded-large p-2.5 group relative"
           }
         >
           {!isGrouping &&
@@ -124,7 +133,7 @@ const MyTaskBoardItem = ({
                     "flex gap-0.5 text-xs text-product-library-display-secondary-idle-tint shrink-0"
                   }
                 >
-                  <img src={ChildrenIcon} alt={"children-icon"} />
+                  <ChildrenIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                   <span>{completedChildrenLength}/{childrenTasks.length}</span>
                 </div>
               )}
@@ -136,10 +145,9 @@ const MyTaskBoardItem = ({
                         `flex gap-0.5 text-xs ${DUE_COLOR_CLASS[category]}`
                       }
                   >
-                    <img src={SmallCalendarIcon} alt={"small-calendar-icon"} />
+                    <SmallCalendarIcon className={`${DUE_COLOR_CLASS[category]}`}/>
                     <span>{label}</span>
                   </button>}
-
 
               <MyTaskBoardLabelsPreview labels={task.labels} />
 
@@ -157,7 +165,7 @@ const MyTaskBoardItem = ({
             <MenuIcon />
           </button>
           {isOpenTaskDetailToolbar && (
-            <div
+            <div ref={taskToolbarRef}
               className={"absolute top-9 right-9 left-6 z-50"}
               onClick={(e) => e.stopPropagation()}
             >

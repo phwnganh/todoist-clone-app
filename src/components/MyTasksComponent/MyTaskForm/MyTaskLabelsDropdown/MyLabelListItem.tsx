@@ -1,5 +1,5 @@
 import type { Label } from "@/types/label.type.ts";
-import LabelIcon from "@/assets/label-icon.svg";
+import LabelIcon from "@/components/icons/LabelIcon.tsx";
 
 type MyLabelListItemProps = {
   label: Label;
@@ -19,7 +19,7 @@ const MyLabelListItem = ({ label, onSelectLabel }: MyLabelListItemProps) => {
       }
     >
       <div className={"w-6 h-6 flex justify-center items-center"}>
-        <img src={LabelIcon} alt={"label-icon"} />
+        <LabelIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
       </div>
       <p className={"text-sm"}>{label.name}</p>
     </div>

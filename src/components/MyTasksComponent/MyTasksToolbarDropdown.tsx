@@ -167,7 +167,7 @@ const MyTasksToolbarDropdown = ({ taskId, task }: { taskId: string; task: Task }
 
             case "section":
               return (
-                  <div key={index} className={"px-3 py-1 text-xs font-medium text-gray-700"}>{item.label}</div>
+                  <div key={index} className={"px-3 py-1 text-xs font-medium text-product-library-display-primary-idle-tint"}>{item.label}</div>
               )
             case "icon-row":
               return (

@@ -1,5 +1,4 @@
 import VerifiedIcon from "@/components/icons/VerifiedIcon.tsx";
-import ChildrenIcon from "@/assets/children-icon.svg";
 import type { Task } from "@/types/task.type.ts";
 import EditIcon from "@/components/icons/EditIcon.tsx";
 import DueDateIcon from "@/components/icons/DueDateIcon.tsx";
@@ -15,12 +14,13 @@ import {
 import { useCompleteTask } from "@/hooks/useQueryHook/useTasks.ts";
 import { getDueInfo } from "@/helpers/formateDate.ts";
 import { DUE_COLOR_CLASS } from "@/constants/color.constants.ts";
-import SmallCalendarIcon from "@/assets/small-calendar-icon.svg";
-import LabelIcon from "@/assets/label-icon.svg";
 import MyTasksToolbarDropdown from "../../../MyTasksToolbarDropdown.tsx";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import DragDropIcon from "@/components/icons/DragDropIcon.tsx";
+import SmallCalendarIcon from "@/components/icons/SmallCalendarIcon.tsx";
+import LabelIcon from "@/components/icons/LabelIcon.tsx";
+import ChildrenIcon from "@/components/icons/ChildrenIcon.tsx";
 type ChildrenTaskItemProps = {
   hasSubChildren: boolean;
   childrenTask: Task;
@@ -124,7 +124,7 @@ const ChildrenTaskItem = ({
                         "flex gap-0.5 text-xs text-product-library-display-secondary-idle-tint"
                       }
                     >
-                      <img src={ChildrenIcon} alt={"children-icon"} />
+                      <ChildrenIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                       <span>
                         {completedSubChildrenLength}/{subChildren?.length}
                       </span>
@@ -135,10 +135,7 @@ const ChildrenTaskItem = ({
                       type={"button"}
                       className={`flex gap-0.5 text-xs ${DUE_COLOR_CLASS[category]}`}
                     >
-                      <img
-                        src={SmallCalendarIcon}
-                        alt={"small-calendar-icon"}
-                      />
+                      <SmallCalendarIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                       <span>{label}</span>
                     </button>
                   )}
@@ -152,7 +149,7 @@ const ChildrenTaskItem = ({
                       <div
                         className={"w-4 h-4 flex justify-center items-center"}
                       >
-                        <img src={LabelIcon} alt={"label-icon"} />
+                        <LabelIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                       </div>
                       <span>{label}</span>
                     </div>

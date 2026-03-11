@@ -1,5 +1,5 @@
-import LabelIcon from "@/assets/label-icon.svg";
 import type { Label } from "@/types/label.type";
+import LabelIcon from "@/components/icons/LabelIcon.tsx";
 type FilterLabelItemProps = {
   label: Label;
   isLabelsSelected?: boolean;
@@ -30,7 +30,7 @@ const FilteringLabelItem = ({
 
       <div className={"flex items-center gap-1.5"}>
         <div className={"flex justify-center items-center shrink-0"}>
-          <img src={LabelIcon} alt={"label-icon"} />
+          <LabelIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
         </div>
         <div className={"text-sm"}>{label.name}</div>
       </div>

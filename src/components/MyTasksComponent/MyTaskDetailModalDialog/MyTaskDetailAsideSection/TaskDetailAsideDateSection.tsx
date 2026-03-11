@@ -1,9 +1,9 @@
 import type {Due} from "@/types/task.type.ts";
 import type {RefObject} from "react";
-import SmallCalendarIcon from "@/assets/small-calendar-icon.svg";
 import SmallPlusAddIcon from "@/components/icons/SmallPlusAddIcon.tsx";
 import {DUE_COLOR_CLASS} from "@/constants/color.constants.ts";
 import MyTaskDateDropdown from "../../MyTaskForm/MyTaskDateDropdown";
+import SmallCalendarIcon from "@/components/icons/SmallCalendarIcon.tsx";
 
 type TaskDetailAsideDateSectionProps = {
     selectedDue: Due | null;
@@ -61,7 +61,7 @@ const TaskDetailAsideDateSection = ({selectedDue, category, label, isOpenMyTaskD
                                 <div
                                     className={`flex gap-1.5 text-xs ${DUE_COLOR_CLASS[category]}`}
                                 >
-                                    <img src={SmallCalendarIcon} alt={"small-calendar-icon"} />
+                                    <SmallCalendarIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                                     <span>{label}</span>
                                 </div>
                             </div>

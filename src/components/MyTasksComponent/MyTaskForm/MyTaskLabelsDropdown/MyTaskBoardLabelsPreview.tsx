@@ -1,4 +1,4 @@
-import LabelIcon from "@/assets/label-icon.svg";
+import LabelIcon from "@/components/icons/LabelIcon.tsx";
 
 type MyTaskBoardLabelsPreviewProps = {
   labels?: string[];
@@ -18,7 +18,7 @@ const MyTaskBoardLabelsPreview = ({
         }
       >
         <div className={"w-4 h-4 flex justify-center items-center"}>
-          <img src={LabelIcon} alt={"label-icon"} />
+          <LabelIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
         </div>
         <span>{firstLabel}</span>
       </div>
