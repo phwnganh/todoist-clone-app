@@ -25,7 +25,7 @@ const DeleteProjectsModalDialog = ({
     <div
       role={"alertdialog"}
       aria-label={"delete-projects"}
-      className={"fixed inset-0 bg-black/40 z-50 pt-[13vh]"}
+      className={"fixed inset-0 bg-product-library-background-overlay z-50 pt-[13vh]"}
     >
       <div
         className={

@@ -16,7 +16,7 @@ const AddMyTaskButtonSection = ({
     >
       <div
         className={
-          "w-4 h-4 flex justify-center items-center rounded-full text-product-library-display-accent-primary-tint mr-3 group-hover:bg-product-library-display-accent-primary-fill group-hover:text-white"
+          "w-4 h-4 flex justify-center items-center rounded-full text-product-library-display-accent-primary-tint mr-3 group-hover:bg-product-library-display-accent-primary-fill group-hover:text-product-library-background-base-primary"
         }
       >
         <SmallPlusAddIcon />

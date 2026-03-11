@@ -20,7 +20,7 @@ const DeleteMyTaskModalDialog = ({ task }: { task: Task }) => {
     <div
       role={"alertdialog"}
       aria-label={"delete-task"}
-      className={"fixed inset-0 bg-black/40 z-50 pt-[13vh]"}
+      className={"fixed inset-0 bg-product-library-background-overlay z-50 pt-[13vh]"}
     >
       <div className={"w-md max-w-full mx-auto rounded-large bg-product-library-background-base-primary px-4"}>
         <header className={"pt-4 pb-2"}>

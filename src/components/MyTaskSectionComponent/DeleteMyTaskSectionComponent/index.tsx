@@ -15,7 +15,7 @@ const DeleteMyTaskSectionModalDialog = ({section}: {section: Section}) => {
         })
     }
     return createPortal(
-        <div role={"alertdialog"} aria-label={"delete-section"} className={"fixed inset-0 bg-black/40 z-50 pt-[13vh]"}>
+        <div role={"alertdialog"} aria-label={"delete-section"} className={"fixed inset-0 bg-product-library-background-overlay z-50 pt-[13vh]"}>
             <div className={"w-md max-w-full mx-auto rounded-large bg-product-library-background-base-primary px-4"}>
                 <header className={"pt-4 pb-2"}>
                     <h1 id={"delete-task-title"} className={"font-medium text-product-library-display-primary-idle-tint"}>

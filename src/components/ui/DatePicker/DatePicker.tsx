@@ -26,7 +26,7 @@ const DatePicker = ({value, onChange}: DatePickerProps) => {
             disabled: "text-sm text-gray-400 cursor-not-allowed",
             today: "font-bold text-red-500",
             day: "text-sm",
-            selected: "text-sm font-bold bg-red-500 rounded-full text-white"
+            selected: "text-sm font-bold bg-red-500 rounded-full text-product-library-background-base-primary"
 
         }}
         />

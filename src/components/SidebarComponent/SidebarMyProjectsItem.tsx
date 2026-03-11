@@ -19,7 +19,7 @@ const SidebarMyProjectsItem = ({ project }: { project: Project }) => {
       {({ isActive }) => (
         <>
           <div
-            className={`p-1.25 flex items-center ${
+            className={`p-1.25 flex items-center text-product-library-display-primary-idle-tint ${
               isActive
                 ? "text-product-library-actionable-tertiary-idle-tint"
                 : ""

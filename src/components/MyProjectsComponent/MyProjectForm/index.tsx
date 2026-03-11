@@ -101,7 +101,7 @@ const MyProjectForm = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="add-project-title"
-      className="fixed inset-0 bg-black/40 z-50 pt-[13vh]"
+      className="fixed inset-0 bg-product-library-background-overlay z-50 pt-[13vh]"
     >
       <div className="w-120 max-w-full mx-auto rounded-large bg-product-library-background-base-primary transition-all duration-500 ease-in-out">
         <header className="flex justify-between py-2 pr-2 pl-4">

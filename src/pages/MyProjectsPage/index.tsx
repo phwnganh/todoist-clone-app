@@ -19,7 +19,7 @@ const MyProjectsPage = () => {
         showCollapse={showCollapse}
         onToggleSidebar={onToggleSidebar}
         right={
-          <button className="flex items-center justify-center p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+          <button className="flex items-center justify-center p-1.5 hover:bg-product-library-selectable-secondary-hover-fill rounded-small">
             <div className="mr-1.5">
               <img src={SettingsIcon} alt={"settings-icon"}/>
             </div>

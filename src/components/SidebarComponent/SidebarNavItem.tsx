@@ -21,7 +21,7 @@ const SidebarNavItem = ({ item, onClick }: SidebarNavItemProps) => {
         )}
       </div>
       <span
-        className={`text-sm wrap-break-word py-0.75 pl-1.25 ${
+        className={`text-sm wrap-break-word py-0.75 pl-1.25 text-product-library-display-primary-idle-tint ${
           isActive ? "text-product-library-actionable-tertiary-idle-tint" : ""
         }`}
       >

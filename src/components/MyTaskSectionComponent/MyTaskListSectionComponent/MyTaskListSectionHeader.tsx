@@ -57,7 +57,7 @@ const MyTaskListSectionHeader = ({
                   <div
                       role={"button"}
                       onClick={onOpenEditMyTaskSection}
-                      className={"font-bold text-sm pt-1.5 pr-1.5 pb-1.25"}
+                      className={"font-bold text-sm pt-1.5 pr-1.5 pb-1.25 text-product-library-display-primary-idle-tint"}
                   >
                     {section?.name}
                   </div>

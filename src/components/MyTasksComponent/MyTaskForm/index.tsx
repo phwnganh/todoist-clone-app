@@ -526,7 +526,7 @@ const MyTaskForm = ({
                     "w-6 h-6 flex md:hidden justify-center items-center"
                   }
                 >
-                  <SubmitIcon className={"text-white"} />
+                  <SubmitIcon className={"text-product-library-background-base-primary"} />
                 </span>
                 <span className="hidden md:inline text-sm font-medium text-product-library-actionable-primary-on-idle-tint">
                   {isPending ? submittingLabel : submitLabel}
@@ -534,7 +534,7 @@ const MyTaskForm = ({
               </>
             ) : (
               <span className={"w-6 h-6 flex justify-center items-center"}>
-                <SubmitIcon className={"text-white"} />
+                <SubmitIcon className={"text-product-library-background-base-primary"} />
               </span>
             )}
           </button>

@@ -46,7 +46,7 @@ const MyTaskListSectionForm = ({
             isAddButtonDisabled
               ? "bg-product-library-actionable-primary-disabled-fill cursor-not-allowed"
               : "bg-product-library-actionable-primary-idle-fill hover:bg-product-library-actionable-primary-hover-fill"
-          } text-white font-medium rounded-small`}
+          } text-product-library-background-base-primary font-medium rounded-small`}
         >
           {isPending ? submittingLabel : submitLabel}
         </button>

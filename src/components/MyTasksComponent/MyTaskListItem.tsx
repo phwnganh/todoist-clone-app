@@ -142,7 +142,7 @@ const MyTaskListItem = ({
                 {/*task list item*/}
                 <div role={"button"} className={"py-2 mr-7.5 flex flex-col cursor-pointer"}
                      onClick={() => onOpenTaskDetail(task.id)}>
-                  <div className={"mb-0.75 text-sm"}>
+                  <div className={"mb-0.75 text-sm text-product-library-display-primary-idle-tint"}>
                     <MyTaskContent content={task.content} />
                   </div>
                   <p

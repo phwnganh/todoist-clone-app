@@ -13,6 +13,10 @@ export const queryClient = new QueryClient({
     }
 })
 
+const savedTheme = localStorage.getItem("theme");
+if(savedTheme === "dark") {
+    document.documentElement.classList.add("dark");
+}
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
       <QueryClientProvider client={queryClient}>

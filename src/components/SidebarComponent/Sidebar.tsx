@@ -72,7 +72,7 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
                 <p
                   className={`font-medium text-sm pl-xsmall py-xsmall ${
                     isActive
-                      ? "text-black"
+                      ? "text-product-library-display-primary-idle-tint"
                       : "text-product-library-display-secondary-idle-tint"
                   }`}
                 >

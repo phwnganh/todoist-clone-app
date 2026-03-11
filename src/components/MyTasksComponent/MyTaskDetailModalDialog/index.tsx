@@ -33,7 +33,7 @@ const MyTaskDetailModalDialog = ({
       role={"dialog"}
       aria-modal={"true"}
       aria-labelledby={"task-detail"}
-      className={"fixed inset-0 bg-black/40 z-50 md:pt-16"}
+      className={"fixed inset-0 bg-product-library-background-overlay z-50 md:pt-16"}
     >
       <div
         className={
