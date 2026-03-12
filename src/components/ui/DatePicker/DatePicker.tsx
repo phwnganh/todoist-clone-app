@@ -22,11 +22,11 @@ const DatePicker = ({value, onChange}: DatePickerProps) => {
             button_previous: "hover:bg-product-library-selectable-secondary-hover-fill rounded-small flex justify-center items-center h-6 w-6",
             button_next: "hover:bg-product-library-selectable-secondary-hover-fill  rounded-small flex justify-center items-center h-6 w-6",
             chevron: "stroke-product-library-display-primary-idle-tint",
-            weekday: "text-gray-700 text-xs",
+            weekday: "text-product-library-display-secondary-idle-tint text-xs",
             disabled: "text-sm text-gray-400 cursor-not-allowed",
             today: "font-bold text-red-500",
             day: "text-sm",
-            selected: "text-sm font-bold bg-red-500 rounded-full text-product-library-display-primary-idle-tint"
+            selected: "text-sm font-bold bg-red-500 rounded-full text-white"
 
         }}
         />
