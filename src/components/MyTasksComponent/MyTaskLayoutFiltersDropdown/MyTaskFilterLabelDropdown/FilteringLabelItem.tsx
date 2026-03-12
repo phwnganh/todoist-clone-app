@@ -13,7 +13,7 @@ const FilteringLabelItem = ({
   return (
     <div
       className={
-        "flex items-center gap-small py-1 px-1.5 hover:bg-product-library-selectable-secondary-hover-fill rounded-small"
+        "flex items-center gap-small py-1 px-1.5 max-h-70 hover:bg-product-library-selectable-secondary-hover-fill rounded-small overflow-y-auto scrollbar-thin scrollbar-custom"
       }
       role={"option"}
       tabIndex={-1}

@@ -363,16 +363,6 @@
   --spacing-level-4: 104px;
 }
 
-@layer utilities{
-  .scrollbar-thin{
-    scrollbar-width: thin;
-  }
-
-  .scrollbar-custom{
-    scrollbar-color: var(--color-scrollbar-thumb-idle) var(--color-scrollbar-thumb-track);
-  }
-}
-
 @layer base {
   .dark {
     --color-product-library-actionable-destructive-disabled-fill: #774640;
@@ -629,6 +619,16 @@
     --color-product-library-selectable-tertiary-on-unselected-enabled-fill: #242424;
     --color-product-library-selectable-tertiary-on-unselected-enabled-tint: #d6d6d6;
 
+  }
+}
+
+@layer utilities{
+  .scrollbar-thin{
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-custom{
+    scrollbar-color: var(--color-scrollbar-thumb-idle) var(--color-scrollbar-thumb-track);
   }
 }
 
