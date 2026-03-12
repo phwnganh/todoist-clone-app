@@ -8,11 +8,11 @@ import ThemeSettingsSection
 const SettingsModalMain = () => {
     const {activeKey} = useSidebarStore();
     return (
-        <div className={"w-full"}>
+        <main className={"w-full"}>
             <SettingsModalMainHeaderSection/>
             {activeKey === "account" && <AccountSettingsSection/>}
             {activeKey === "theme" && <ThemeSettingsSection/>}
-        </div>
+        </main>
     );
 };
 
