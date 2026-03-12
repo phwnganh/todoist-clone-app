@@ -3,9 +3,11 @@ import GoogleIcon from "@/assets/google-icon.svg";
 import FacebookIcon from "@/assets/facebook-icon.svg";
 import AppleIcon from "@/assets/apple-icon.svg";
 import HiddenEyeIcon from "@/assets/hidden-eye-icon.svg";
+import AppearanceEyeIcon from "@/assets/appearance-eye-icon.svg";
 import { Link } from "react-router-dom";
-import { type FormEvent } from "react";
+import {type FormEvent, useState} from "react";
 const LoginFormSection = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const CLIENT_ID = "99176cc6e6af4dee9508f6422eb3216f";
   const SCOPE = "data:read_write,data:delete";
   const REDIRECT_URI = "http://localhost:5173/google-redirect";
@@ -20,13 +22,17 @@ const LoginFormSection = () => {
   const handleLogin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
+
+  const handleTogglePassword = () => {
+    setShowPassword(prev => !prev)
+  }
   return (
-    <section className="min-h-screen flex items-center justify-center pt-8 px-4 md:px-0">
+    <section className="min-h-screen flex items-center justify-center pt-8 px-4 md:px-0 ">
       <div className="max-w-132.5 mx-auto w-full">
         <img src={TodoistLogo} alt="todoist-logo" className="self-start" />
         <div className="pt-8 flex flex-col gap-large flex-wrap">
           {/* <h1 className="text-product-library-display-primary-idle-tint">Welcome back!</h1> */}
-          <h1 className="text-library-display-primary-idle-tint font-bold text-header-xlarge">
+          <h1 className="text-product-library-display-primary-idle-tint font-bold text-header-xlarge">
             Welcome back!
           </h1>
           <div className="p-xsmall"></div>
@@ -40,21 +46,21 @@ const LoginFormSection = () => {
               className="px-4 rounded-lg border border-product-library-border-idle-tint font-bold text-sm sm:text-large h-12 flex justify-center items-center gap-4"
             >
               <img src={GoogleIcon} alt="google" />
-              <p>Continue with Google</p>
+              <p className={"text-product-library-display-primary-idle-tint"}>Continue with Google</p>
             </button>
             <button
               type="button"
               className="px-4 rounded-lg border border-product-library-border-idle-tint font-bold text-sm sm:text-large h-12 flex justify-center items-center gap-4"
             >
               <img src={FacebookIcon} alt="facebook" />
-              <p>Continue with Facebook</p>
+              <p className={"text-product-library-display-primary-idle-tint"}>Continue with Facebook</p>
             </button>
             <button
               type="button"
               className="px-4 rounded-lg border border-product-library-border-idle-tint font-bold text-sm sm:text-large h-12 flex justify-center items-center gap-4"
             >
               <img src={AppleIcon} alt="apple" />
-              <p>Continue with Apple</p>
+              <p className={"text-product-library-display-primary-idle-tint"}>Continue with Apple</p>
             </button>
           </div>
           <hr className="border-t border-t-product-library-divider-tertiary" />
@@ -73,7 +79,7 @@ const LoginFormSection = () => {
                 type="email"
                 placeholder="Enter your email..."
                 autoComplete="email"
-                className="text-base font-medium outline-none"
+                className="text-base font-medium outline-none text-product-library-display-primary-idle-tint"
               />
             </div>
 
@@ -86,14 +92,16 @@ const LoginFormSection = () => {
               </label>
               <div className="flex justify-between">
                 <input
-                  type="password"
+                  type={`${showPassword ? "text" : "password"}`}
                   placeholder="Enter your password..."
                   autoComplete="current-password"
                   minLength={8}
-                  className="text-base font-medium outline-none"
+                  className="text-base font-medium outline-none text-product-library-display-primary-idle-tint"
                 />
-                <button className="-mr-1" type="button">
-                  <img src={HiddenEyeIcon} alt="hidden-eye-icon" />
+                <button className="-mr-1" type="button" onClick={handleTogglePassword}>
+                  {showPassword ?
+                      <img src={AppearanceEyeIcon} alt={"appearance-eye-icon"}/> :
+                      <img src={HiddenEyeIcon} alt="hidden-eye-icon" />}
                 </button>
               </div>
             </div>
