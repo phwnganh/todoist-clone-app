@@ -155,7 +155,7 @@ const MyTaskDetailAside = ({ taskDetail }: MyTaskDetailAsideProps) => {
   return (
     <aside
       className={
-        "p-large mt-3 md:mt-0 md:bg-product-library-background-base-secondary flex flex-col w-full gap-small md:w-80 shrink-0 border-t-6 border-t-product-library-divider-tertiary md:border-t-0"
+        "p-large mt-3 md:mt-0 md:bg-product-library-background-base-secondary flex flex-col w-full gap-small md:w-80 shrink-0 border-t-6 border-t-product-library-divider-tertiary md:border-t-0 text-product-library-display-primary-idle-tint"
       }
     >
       <div className={"flex flex-col gap-1.5"}>

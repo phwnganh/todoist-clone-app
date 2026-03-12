@@ -30,7 +30,7 @@ const MyTaskDetailMainSection = ({
         ) : (
           <div className={"pt-2"}>
             {isTaskAdding ? (
-              <div className={"pl-8"}>
+              <div className={"pl-8 text-product-library-display-primary-idle-tint"}>
                 <AddMyTaskDetailMainSubChildrenForm
                   onCloseAddMySubTask={onCloseAddSubTask}
                   taskDetail={taskDetail}

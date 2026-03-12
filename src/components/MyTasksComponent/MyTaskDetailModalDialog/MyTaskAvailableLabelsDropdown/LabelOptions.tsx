@@ -28,7 +28,7 @@ const LabelOptions = ({
       </div>
       <input
         type={"checkbox"}
-        className={"w-5 h-5"}
+        className={"w-5 h-5 accent-product-library-selectable-primary-selected-fill"}
         checked={isLabelsSelected}
         onChange={(e) => {
           console.log("checked", e.target.checked);
