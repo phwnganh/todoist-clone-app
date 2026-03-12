@@ -6,13 +6,16 @@ import SettingsModalHeaderSidebar
 import {useSidebarStore} from "@/stores/sidebar.store.ts";
 
 const SettingsModalSidebar = () => {
-    const {activeKey, handleChangeActiveKey} = useSidebarStore()
+    const {activeKey, handleChangeActiveKey, isMobileSidebarOpen, onCloseMobileSidebar} = useSidebarStore()
     return (
-        <aside className={"p-medium md:bg-product-library-background-base-secondary hidden md:flex flex-col w-full gap-small md:w-55 shrink-0"}>
+        <aside className={`rounded-l-large p-medium md:bg-product-library-background-base-secondary md:flex flex-col w-full gap-small md:w-55 shrink-0 fixed inset-0 z-50 bg-product-library-background-base-primary transition-transform duration-300 ${isMobileSidebarOpen ? "translate-x-0" : "-translate-x-full"} md:static md:translate-x-0`}>
             <SettingsModalHeaderSidebar/>
             <ul className={"flex flex-col list-none"}>
                 {SETTING_MENU_NAV_ITEMS.map((item: SettingMenuNavItem) => (
-                    <SettingsModalNavItemSidebar key={item.key} item={item} active={activeKey === item.key} onClick={() => handleChangeActiveKey(item.key)}/>
+                    <SettingsModalNavItemSidebar key={item.key} item={item} active={activeKey === item.key} onClick={() => {
+                        handleChangeActiveKey(item.key)
+                        onCloseMobileSidebar()
+                    }}/>
                 ))}
             </ul>
         </aside>
