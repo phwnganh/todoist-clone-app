@@ -76,11 +76,14 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
                   My Projects
                 </p>
                 <div className="flex items-center ml-auto shrink-0">
-                  <button className="w-7 h-7 hidden group-hover:flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill rounded-small">
+                  <button onClick={(e) => e.preventDefault()} className="w-7 h-7 hidden group-hover:flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill rounded-small">
                     <AddIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                   </button>
                   <button
-                    onClick={handleExpanded}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      handleExpanded()
+                    }}
                     className="w-7 h-7 flex justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill rounded-small"
                   >
                     {isExpanded ? (
