@@ -1,5 +1,4 @@
 import { createPortal } from "react-dom";
-import LargeCloseIcon from "@/assets/large-close-icon.svg";
 import type { Color } from "@/types/color.type.ts";
 import CustomSwitch from "@/components/ui/CustomSwitch.tsx";
 import { LAYOUT_ITEMS } from "@/data/menuNav.data.ts";
@@ -19,6 +18,7 @@ import ProjectColorSection from "@/components/MyProjectsComponent/EachProjectFie
 import ProjectWorkspaceSection
   from "@/components/MyProjectsComponent/EachProjectFieldSection/ProjectWorkspaceSection.tsx";
 import ParentProjectSection from "@/components/MyProjectsComponent/EachProjectFieldSection/ParentProjectSection.tsx";
+import LargeCloseIcon from "@/components/icons/LargeCloseIcon.tsx";
 
 export type MyProjectFormValues = {
   name: string;
@@ -120,7 +120,7 @@ const MyProjectForm = ({
             className="flex justify-center items-center"
             onClick={onClose}
           >
-            <img src={LargeCloseIcon} alt={"large-close-icon"} />
+            <LargeCloseIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
           </button>
         </header>
         <hr className="border-t border-t-product-library-divider-tertiary" />

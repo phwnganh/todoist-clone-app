@@ -7,10 +7,12 @@ import MyProjectsList from "@/components/MyProjectsComponent/MyProjectsList.tsx"
 import {useState} from "react";
 import {useDebounce} from "@/hooks/useDebounce.ts";
 import SettingIcon from "@/components/icons/SettingIcon.tsx";
+import {useSidebarStore} from "@/stores/sidebar.store.ts";
 
 const MyProjectsPage = () => {
   const { showCollapse, onToggleSidebar } =
     useOutletContext<HeaderLayoutType>();
+  const {onOpenSettingModalDialog} = useSidebarStore()
     const [searchValue, setSearchValue] = useState("")
     const debouncedSearch = useDebounce(searchValue, 500);
   return (
@@ -19,7 +21,7 @@ const MyProjectsPage = () => {
         showCollapse={showCollapse}
         onToggleSidebar={onToggleSidebar}
         right={
-          <button className="flex items-center justify-center p-1.5 hover:bg-product-library-selectable-secondary-hover-fill rounded-small">
+          <button onClick={onOpenSettingModalDialog} type={"button"} className="flex items-center justify-center p-1.5 hover:bg-product-library-selectable-secondary-hover-fill rounded-small">
             <div className="mr-1.5">
               <SettingIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
             </div>
