@@ -1,7 +1,6 @@
 import { createPortal } from "react-dom";
 import LargeCloseIcon from "@/assets/large-close-icon.svg";
 import type { Color } from "@/types/color.type.ts";
-import AddProjectsParentProjectListDropdown from "./MyProjectFormParentProjectListDropdown";
 import CustomSwitch from "@/components/ui/CustomSwitch.tsx";
 import { LAYOUT_ITEMS } from "@/data/menuNav.data.ts";
 import {
@@ -15,10 +14,8 @@ import type { OpenDropdown } from "@/types/menu-nav.type.ts";
 import { updateMyProjectField } from "@/helpers/updateMyProjectField.ts";
 import { useClickOutside } from "@/hooks/useClickOutside.ts";
 import QuestionIcon from "@/components/icons/QuestionIcon.tsx";
-import HashtagIcon from "@/components/icons/HashtagIcon.tsx";
 import ProjectNameSection from "@/components/MyProjectsComponent/EachProjectFieldSection/ProjectNameSection.tsx";
 import ProjectColorSection from "@/components/MyProjectsComponent/EachProjectFieldSection/ProjectColorSection.tsx";
-import FormSmallArrowDownIcon from "@/components/icons/FormSmallArrowDownIcon.tsx";
 import ProjectWorkspaceSection
   from "@/components/MyProjectsComponent/EachProjectFieldSection/ProjectWorkspaceSection.tsx";
 import ParentProjectSection from "@/components/MyProjectsComponent/EachProjectFieldSection/ParentProjectSection.tsx";

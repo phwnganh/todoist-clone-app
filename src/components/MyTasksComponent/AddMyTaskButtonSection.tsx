@@ -19,7 +19,7 @@ const AddMyTaskButtonSection = ({
           "w-4 h-4 flex justify-center items-center rounded-full text-product-library-display-accent-primary-tint mr-3 group-hover:bg-product-library-display-accent-primary-fill group-hover:text-product-library-background-base-primary"
         }
       >
-        <SmallPlusAddIcon className={"group-hover:text-product-library-display-primary-idle-tint"}/>
+        <SmallPlusAddIcon className={"group-hover:text-white"}/>
       </div>
       <p
         className={

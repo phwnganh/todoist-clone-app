@@ -18,7 +18,7 @@ const ProjectDropdownFooter = ({
           Project not found
         </p>
       )}
-      <button className={"flex items-center gap-1.5 py-1 px-2"}>
+      <button className={"flex items-center gap-1.5 py-1 px-2 hover:bg-product-library-display-accent-secondary-fill"}>
         <div className={"flex items-center justify-center"}>
           <PlusIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
         </div>

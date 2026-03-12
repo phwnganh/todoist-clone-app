@@ -1,15 +1,7 @@
-import TaskSmallCalendarIcon from "@/assets/task-small-calendar-icon.svg";
-import TaskFlagIcon from "@/assets/task-flag-priority-icon.svg";
-import TaskClockIcon from "@/assets/task-clock-reminders-icon.svg";
-import TaskSmallDropdownIcon from "@/assets/task-small-dropdown-icon.svg";
 import { type ChangeEvent, type FormEvent, useRef, useState } from "react";
 import type { OpenMyTaskFormDropdown } from "@/types/menu-nav.type.ts";
 import { useClickOutside } from "@/hooks/useClickOutside.ts";
-import MyTaskProjectDropdown from "./MyTaskProjectDropdown";
 import { updateMyTaskField } from "@/helpers/updateMyTaskField.ts";
-import MyTaskPriorityDropdown from "./MyTaskPriorityDropdown.tsx";
-import HashtagIcon from "@/components/icons/HashtagIcon.tsx";
-import { getProjectColorClass } from "@/helpers/getProjectColorClass.ts";
 import type { Project } from "@/types/project.type.ts";
 import { useProjectStore } from "@/stores/project.store.ts";
 import {
@@ -19,22 +11,21 @@ import {
 import SubmitIcon from "@/components/icons/SubmitIcon.tsx";
 import type {Due, Priority, Task} from "@/types/task.type.ts";
 import type { Section } from "@/types/section.type.ts";
-import ProjectChip from "@/components/ui/ProjectChip.tsx";
-import SectionIcon from "@/components/icons/SectionIcon.tsx";
-import MyTaskLabelsDropdown from "./MyTaskLabelsDropdown";
 import type { Label } from "@/types/label.type.ts";
-import LabelChip from "@/components/ui/LabelChip.tsx";
 import {
   getLabelKeyword,
   insertLabelCommasFirst,
   removeLabelCommasFirst,
 } from "@/helpers/handleCommasTag.ts";
-import CustomLabel from "@/components/ui/CustomLabel.tsx";
-import MyTaskDateDropdown from "./MyTaskDateDropdown";
-import DateChip from "@/components/ui/DateChip.tsx";
-import PriorityIcon from "@/components/icons/PriorityIcon.tsx";
 import CloseIcon from "@/components/icons/CloseIcon.tsx";
-import LabelIcon from "@/components/icons/LabelIcon.tsx";
+import TaskContentSection from "@/components/MyTasksComponent/MyTaskForm/EachTaskFieldSection/TaskContentSection.tsx";
+import TaskDescriptionSection
+  from "@/components/MyTasksComponent/MyTaskForm/EachTaskFieldSection/TaskDescriptionSection.tsx";
+import TaskDateSection from "@/components/MyTasksComponent/MyTaskForm/EachTaskFieldSection/TaskDateSection.tsx";
+import TaskPrioritySection from "@/components/MyTasksComponent/MyTaskForm/EachTaskFieldSection/TaskPrioritySection.tsx";
+import TaskReminderSection from "@/components/MyTasksComponent/MyTaskForm/EachTaskFieldSection/TaskReminderSection.tsx";
+import TaskLabelSection from "@/components/MyTasksComponent/MyTaskForm/EachTaskFieldSection/TaskLabelSection.tsx";
+import TaskProjectSection from "@/components/MyTasksComponent/MyTaskForm/EachTaskFieldSection/TaskProjectSection.tsx";
 
 export type MyTaskFormValues = {
   content: string;
@@ -196,212 +187,16 @@ const MyTaskForm = ({
     >
       <div className={"pt-small px-small rounded-large"}>
         <div className={"max-h-50 mb-small flex flex-col gap-xsmall"}>
-          <div className={"flex items-center gap-1 relative"} ref={labelRef}>
-            {values.project && (
-              <ProjectChip
-                project={values.project}
-                section={values.section}
-                onRemove={() =>
-                  onChange({ ...values, project: null, section: null })
-                }
-              />
-            )}
-
-            {values.labels.map((label) => (
-              <LabelChip
-                key={label.id}
-                label={label}
-                onRemove={() => handleRemoveLabel(label.id)}
-              />
-            ))}
-            {values.due &&
-                <DateChip date={values.due.string} onRemove={handleRemoveDate}/>
-            }
-            <input
-              type={"text"}
-              value={values.content}
-              onChange={handleContentChange}
-              className={
-                "flex-1 min-w-30 outline-none text-sm text-product-library-display-primary-idle-tint"
-              }
-              placeholder={"Content"}
-            />
-            {isOpenAddMyTaskDropdown === "labels" && (
-              <MyTaskLabelsDropdown
-                selectedLabels={values.labels}
-                onSelect={handleSelectLabel}
-                keyword={labelKeyword}
-                onCloseLabelsDropdown={() => setIsOpenAddMyTaskDropdown(null)}
-              />
-            )}
-          </div>
-          <input
-            type={"text"}
-            className={
-              "text-xs leading-tight text-product-library-display-primary-idle-tint my-0.5 outline-none"
-            }
-            placeholder={"Description"}
-            value={values.description}
-            onChange={(e) =>
-              onChange(updateMyTaskField(values, "description", e.target.value))
-            }
-          />
+          <TaskContentSection labelRef={labelRef} onRemoveTaskProject={() => onChange({...values, project: null, section: null})} onRemoveTaskLabel={handleRemoveLabel} onRemoveDate={handleRemoveDate} contentValue={values.content} onContentChange={handleContentChange} openDropdown={isOpenAddMyTaskDropdown} sectionsValue={values.section} projectsValue={values.project} labelsValue={values.labels} dueValue={values.due} onSelectLabel={handleSelectLabel} labelKeyword={labelKeyword} onCloseLabelDropdown={() => setIsOpenAddMyTaskDropdown(null)}/>
+          <TaskDescriptionSection descriptionValue={values.description} onChange={(e) => updateMyTaskField(values, "description", e.target.value)}/>
           <div className={"mb-small flex gap-small flex-wrap"}>
             {/*date*/}
-            <div className={"relative"} ref={dateRef}>
-              <div
-                  role={"button"}
-                  onClick={() => handleToggleDropdown("date")}
-                  className={
-                    "px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"
-                  }
-              >
-                {values.due ? (
-                    <div className={"flex justify-between items-start"}>
-                      <div className={"flex items-center"}>
-                        <div className={"w-4 h-4 flex justify-center items-center"}>
-                          <img src={TaskSmallCalendarIcon} alt={"calendar"} />
-                        </div>
-                        {variant === "list" && (
-                            <div className={"ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"}>{values.due.string}</div>
-                        )}
-                      </div>
-                      <button type={"button"} onClick={handleRemoveDate} className={"w-5 h-5 flex justify-center items-center"}>x</button>
-
-                    </div>
-                ) : (
-                    <div className={"flex items-center"}>
-                      <div className={"w-4 h-4 flex justify-center items-center"}>
-                        <img src={TaskSmallCalendarIcon} alt={"calendar"} />
-                      </div>
-                      {variant === "list" && (
-                          <div
-                              className={
-                                "ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"
-                              }
-                          >
-                            Date
-                          </div>
-                      )}
-                    </div>
-                )}
-
-              </div>
-              {isOpenAddMyTaskDropdown === "date" && <MyTaskDateDropdown selectedDate={values.due} onSelectDate={handleSelectDate}/>}
-            </div>
-
-
+            <TaskDateSection dateRef={dateRef} onToggleDropdown={handleToggleDropdown} dueValue={values.due} onRemoveDate={handleRemoveDate} openDropdown={isOpenAddMyTaskDropdown} onSelectDate={handleSelectDate} variant={variant}/>
             {/*priority*/}
-            <div className={"relative"} ref={priorityRef}>
-              <div
-                role={"button"}
-                onClick={() => handleToggleDropdown("priority")}
-                className={
-                  "px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"
-                }
-              >
-                {values.priority ? (
-                    <div className={"flex justify-between items-start"}>
-                      <div className={"flex items-center"}>
-                        <div className={"w-4 h-4 flex justify-center items-center"}>
-                          <PriorityIcon className={`text-${values.priority.color}`} />
-                        </div>
-                        {variant === "list" && (
-                            <div
-                                className={
-                                  "ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"
-                                }
-                            >
-                              {values.priority.label}
-                            </div>
-                        )}
-                      </div>
-                      <button type={"button"} onClick={() => handleRemovePriority()} className={"w-5 h-5 flex justify-center items-center"}>x</button>
-
-                    </div>
-                ) : (
-                    <div className={"flex items-center"}>
-                      <div className={"w-4 h-4 flex justify-center items-center"}>
-                        <img src={TaskFlagIcon} alt={"flag-icon"} />
-                      </div>
-                      {variant === "list" && (
-                          <div
-                              className={
-                                "ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"
-                              }
-                          >
-                            Priority
-                          </div>
-                      )}
-                    </div>
-                )}
-              </div>
-              {isOpenAddMyTaskDropdown === "priority" && (
-                <MyTaskPriorityDropdown
-                  selectedPriority={values.priority}
-                  onSelect={(priority: Priority) =>
-                    handleSelectPriority(priority)
-                  }
-                />
-              )}
-            </div>
-
+            <TaskPrioritySection priorityRef={priorityRef} onToggleDropdown={handleToggleDropdown} priorityValue={values.priority} onRemovePriority={handleRemovePriority} openDropdown={isOpenAddMyTaskDropdown} onSelectPriority={handleSelectPriority} variant={variant}/>
             {/*reminders*/}
-            <div
-              role={"button"}
-              className={
-                "px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"
-              }
-            >
-              <div className={"flex items-center"}>
-                <div className={"w-4 h-4 flex justify-center items-center"}>
-                  <img src={TaskClockIcon} alt={"clock-icon"} />
-                </div>
-                {variant === "list" && (
-                  <div
-                    className={
-                      "ml-xsmall text-sm text-product-library-display-secondary-idle-tint pr-xsmall"
-                    }
-                  >
-                    Reminders
-                  </div>
-                )}
-              </div>
-            </div>
-            {!values.labels.length ? (
-              <div
-                role={"button"}
-                className={
-                  "px-1.5 flex justify-center items-center border border-product-library-border-idle-tint rounded-small h-7 hover:bg-product-library-selectable-secondary-hover-fill cursor-pointer"
-                }
-                onClick={handleOpenLabels}
-              >
-                <div className={"w-4 h-4 flex justify-center items-center"}>
-                  <LabelIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
-                </div>
-                {variant === "list" && (
-                  <p
-                    className={
-                      "text-sm text-product-library-display-secondary-idle-tint"
-                    }
-                  >
-                    Labels
-                  </p>
-                )}
-              </div>
-            ) : (
-              values.labels.map((label) => (
-                <CustomLabel
-                  key={label.id}
-                  onRemove={handleRemoveLabel}
-                  className={
-                    "border border-product-library-border-idle-tint rounded-small hover:bg-product-library-selectable-secondary-hover-fill text-sm text-product-library-display-secondary-idle-tint"
-                  }
-                  label={label}
-                  icon={<LabelIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>}
-                />
-              ))
-            )}
+            <TaskReminderSection variant={variant}/>
+            <TaskLabelSection labelsValue={values.labels} onOpenLabel={handleOpenLabels} onRemoveLabels={handleRemoveLabel} variant={variant}/>
           </div>
         </div>
       </div>
@@ -410,70 +205,7 @@ const MyTaskForm = ({
           "mt-small flex items-center justify-between border-t border-t-product-library-border-idle-tint p-small"
         }
       >
-        <div className={"relative"} ref={projectRef}>
-          <button
-            type={"button"}
-            aria-haspopup={"listbox"}
-            aria-expanded={isOpenAddMyTaskDropdown === "project"}
-            aria-controls={"project-listbox"}
-            onClick={() => handleToggleDropdown("project")}
-            className={
-              "mr-small pl-xsmall pr-small py-1.5 flex items-center gap-xsmall text-sm hover:bg-product-library-selectable-secondary-hover-fill rounded-small cursor-pointer"
-            }
-          >
-            <div className={"flex justify-center items-center w-4 h-4"}>
-              <HashtagIcon
-                className={getProjectColorClass(projectDetail?.color)}
-              />
-            </div>
-            <span
-              className={
-                "text-product-library-display-secondary-idle-tint font-medium"
-              }
-            >
-              {projectDetail?.name}
-            </span>
-            {values.section && (
-              <>
-                <div
-                  className={
-                    "text-sm text-product-library-display-secondary-idle-tint"
-                  }
-                >
-                  /
-                </div>
-                <span className={"flex items-center gap-1.5"}>
-                  <div className={"flex justify-center items-center"}>
-                    <SectionIcon />
-                  </div>
-                  <p
-                    className={
-                      "text-product-library-display-secondary-idle-tint font-medium"
-                    }
-                  >
-                    {values.section?.name}
-                  </p>
-                </span>
-              </>
-            )}
-
-            <div className={"flex justify-center items-center"}>
-              <img
-                src={TaskSmallDropdownIcon}
-                alt={"task-small-dropdown-icon"}
-              />
-            </div>
-          </button>
-          {isOpenAddMyTaskDropdown === "project" && (
-            <MyTaskProjectDropdown
-              selectedProject={values.project}
-              selectedSection={values.section}
-              onSelect={handleSelectProject}
-              onSelectedSection={handleSelectSection}
-            />
-          )}
-        </div>
-
+        <TaskProjectSection projectRef={projectRef} openDropdown={isOpenAddMyTaskDropdown} onToggleDropdown={handleToggleDropdown} projectDetail={projectDetail} sectionValue={values.section} projectValue={values.project} onSelectProject={handleSelectProject} onSelectSection={handleSelectSection}/>
         {errorMessage && (
           <div
             className={
