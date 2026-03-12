@@ -3,12 +3,12 @@ import { useDebounce } from "@/hooks/useDebounce.ts";
 import { useGetAllProjects } from "@/hooks/useQueryHook/useProjects.ts";
 import LoadingSpin from "@/components/ui/LoadingSpin.tsx";
 import ProjectSearchInput from "./ProjectSearchInput.tsx";
-import UserAvatar from "@/assets/User-avatar.png";
 import ProjectOptions from "./ProjectOptions.tsx";
 import ProjectDropdownFooter from "./ProjectDropdownFooter.tsx";
 import type { Project } from "@/types/project.type.ts";
 import {useGetAllSections} from "@/hooks/useQueryHook/useSections.ts";
 import type {Section} from "@/types/section.type.ts";
+import {useGetUserProfile} from "@/hooks/useQueryHook/useUserProfile.ts";
 
 type AddMyTaskProjectDropdownProps = {
   selectedProject: Project | null;
@@ -32,6 +32,8 @@ const MyTaskFormProjectDropdown = ({
 
   const { data: projects, isLoading } = useGetAllProjects();
   const {data: sections} = useGetAllSections()
+  const { data: user} = useGetUserProfile();
+
   const filteredProjects = useMemo(() => {
     if (!hasKeyword) return projects?.results;
     return projects?.results.filter((project) => {
@@ -75,11 +77,11 @@ const MyTaskFormProjectDropdown = ({
       <div className={"pt-1.5 flex flex-col"}>
         {trimmedProjectValue.length === 0 && (
           <div className={"py-1.5 px-2.5 flex items-center gap-1.5"}>
-            <div className={"flex justify-center items-center w-4 h-4"}>
+            <div className={"flex justify-center items-center w-4 h-4 shrink-0"}>
               <img
-                src={UserAvatar}
-                alt={"user-avatar"}
-                className={"rounded-full"}
+                  src={user?.avatar_medium}
+                  alt={user?.full_name}
+                  className={"rounded-full"}
               />
             </div>
             <div
