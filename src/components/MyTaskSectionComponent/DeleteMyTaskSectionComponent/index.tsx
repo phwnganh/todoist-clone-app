@@ -23,7 +23,7 @@ const DeleteMyTaskSectionModalDialog = ({section}: {section: Section}) => {
                     </h1>
                 </header>
                 <main>
-                    <p className={"text-xs"}>
+                    <p className={"text-xs text-product-library-display-primary-idle-tint"}>
                         The <span className={"font-strong"}>{section.name}</span> section will be permanently deleted.
                     </p>
                 </main>

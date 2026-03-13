@@ -34,7 +34,7 @@ const DeleteMyTaskModalDialog = ({ task }: { task: Task }) => {
           </h1>
         </header>
         <main>
-          <p className={"text-xs"}>
+          <p className={"text-xs text-product-library-display-primary-idle-tint"}>
             The <span className={"font-strong"}>{task?.content}</span> task will
             be permanently deleted.
           </p>

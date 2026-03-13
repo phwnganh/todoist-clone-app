@@ -43,7 +43,7 @@ const DeleteProjectsModalDialog = ({
           </h1>
         </header>
         <main>
-          <p className={"text-xs"}>
+          <p className={"text-xs text-product-library-display-primary-idle-tint"}>
             The <span className={"font-strong"}>{project?.name}</span>{" "}
             project and all of its tasks will be permanently deleted.
           </p>
