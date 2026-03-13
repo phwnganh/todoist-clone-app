@@ -36,25 +36,25 @@ const MyTaskDateDropdown = ({
   const nextWeekend = getNextWeekend();
   const SUGGEST_TIME_MENU_TOOLBAR: SuggestedTimeMenuToolbar[] = [
     {
-      icon: <CalendarIcon />,
+      icon: <CalendarIcon className={"text-product-library-schedule-today-fill"}/>,
       label: "Today",
       time: formatWeekday(today),
       onClick: () => onSelectDate(buildDue(today)),
     },
     {
-      icon: <TomorrowIcon />,
+      icon: <TomorrowIcon className={"text-product-library-schedule-tomorrow-fill"}/>,
       label: "Tomorrow",
       time: formatWeekday(tomorrow),
       onClick: () => onSelectDate(buildDue(tomorrow)),
     },
     {
-      icon: <NextWeekIcon />,
+      icon: <NextWeekIcon className={"text-product-library-schedule-next-week-fill"}/>,
       label: "Next week",
       time: formatFullDate(nextWeek),
       onClick: () => onSelectDate(buildDue(nextWeek)),
     },
     {
-      icon: <NextWeekendIcon />,
+      icon: <NextWeekendIcon className={"text-product-library-schedule-weekend-fill"}/>,
       label: "Next weekend",
       time: formatFullDate(nextWeekend),
       onClick: () => onSelectDate(buildDue(nextWeekend)),

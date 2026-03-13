@@ -86,17 +86,17 @@ const MyTasksToolbarDropdown = ({ taskId, task }: { taskId: string; task: Task }
     {
       type: "icon-row",
       items: [
-        {icon: <CalendarIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small text-product-library-actionable-quaternary-idle-tint"}/>,
+        {icon: <CalendarIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small text-product-library-schedule-today-fill"}/>,
           active: currentDueDate && isSameDay(new Date(currentDueDate), today),
           onClick: () => handleSelectDueDate(buildDue(today))
         },
-        {icon: <TomorrowIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small text-product-library-actionable-quaternary-idle-tint"}/>,
+        {icon: <TomorrowIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small text-product-library-schedule-tomorrow-fill"}/>,
         active: currentDueDate && isSameDay(new Date(currentDueDate), tomorrow),
           onClick: () => handleSelectDueDate(buildDue(tomorrow))},
-        {icon: <NextWeekIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small text-product-library-actionable-quaternary-idle-tint"}/>,
+        {icon: <NextWeekIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small text-product-library-schedule-next-week-fill"}/>,
         active: currentDueDate && isSameDay(new Date(currentDueDate), nextWeek),
           onClick: () => handleSelectDueDate(buildDue(nextWeek))},
-        {icon: <NextWeekendIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small text-product-library-actionable-quaternary-idle-tint"}/>,
+        {icon: <NextWeekendIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small text-product-library-schedule-weekend-fill"}/>,
         active: currentDueDate && isSameDay(new Date(currentDueDate), nextWeekend),
           onClick: () => handleSelectDueDate(buildDue(nextWeekend))},
           ...(currentDue ? [{
