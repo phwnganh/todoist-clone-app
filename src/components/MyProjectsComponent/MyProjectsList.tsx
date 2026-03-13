@@ -29,13 +29,15 @@ const MyProjectsList = ({ search }: MyProjectsListProps) => {
     if (!projects?.results) {
       return [];
     }
+
+    const filteredProjects = projects.results.filter(p => p.name !== "Inbox")
     if (!search) {
-      return projects.results;
+      return filteredProjects;
     }
-    return projects?.results.filter((project) =>
+    return filteredProjects.filter((project) =>
       project.name.toLowerCase().includes(search.toLowerCase())
     );
-  }, [projects?.results, search]);
+  }, [projects, search]);
 
   if (isLoading) {
     return (

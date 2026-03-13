@@ -1,9 +1,7 @@
-import { useProjectStore } from "@/stores/project.store.ts";
 import { useSectionStore } from "@/stores/section.store.ts";
 import { useTaskStore } from "@/stores/task.store.ts";
 import type { Section } from "@/types/section.type.ts";
 import { Fragment, useMemo, type MouseEvent } from "react";
-import LoadingSpin from "@/components/ui/LoadingSpin.tsx";
 import EditMyTaskSectionComponent from "../EditMyTaskSectionComponent";
 import MyTaskBoardSectionHeader from "./MyTaskBoardSectionHeader.tsx";
 import MyTaskBoardItem from "../../MyTasksComponent/MyTaskBoardItem.tsx";
@@ -12,13 +10,14 @@ import AddMyTaskButtonSection from "../../MyTasksComponent/AddMyTaskButtonSectio
 import {SortableContext, useSortable} from "@dnd-kit/sortable";
 import DragDropIcon from "@/components/icons/DragDropIcon.tsx";
 import {CSS} from "@dnd-kit/utilities";
-import {useTasksWithView} from "@/hooks/useQueryHook/useViewOptions.ts";
+import type {Task} from "@/types/task.type.ts";
+import LoadingSpin from "@/components/ui/LoadingSpin.tsx";
 type MyTaskBoardSectionProps = {
   section?: Section;
+  tasks: Task[];
+  isLoading: boolean;
 };
-const MyTaskBoardSection = ({ section }: MyTaskBoardSectionProps) => {
-  const projectId = useProjectStore((state) => state.projectId);
-  const { data: tasks, isLoading } = useTasksWithView({project_id: projectId}, "PROJECT", projectId)
+const MyTaskBoardSection = ({ section, tasks, isLoading }: MyTaskBoardSectionProps) => {
   const { editingSectionId, onOpenEditSection, onCloseEditSection } =
     useSectionStore();
   const {
@@ -30,12 +29,12 @@ const MyTaskBoardSection = ({ section }: MyTaskBoardSectionProps) => {
   } = useTaskStore();
 
   const filteredTasksNoParent = useMemo(() => {
-    return tasks?.results.filter(
+    return tasks.filter(
       (task) =>
         task.section_id === section?.id &&
         task.parent_id === null,
     );
-  }, [section?.id, tasks?.results]);
+  }, [section?.id, tasks]);
 
   const {setNodeRef, attributes, listeners, transition, transform} = useSortable({id: section?.id ?? "", data: {
     type: "section"
@@ -114,7 +113,7 @@ const MyTaskBoardSection = ({ section }: MyTaskBoardSectionProps) => {
                       onOpenTaskDetailToolbar={(e) => {
                         handleOpenTaskDetailToolbar(task.id, e);
                       }}
-                      tasks={tasks?.results || []}
+                      tasks={tasks || []}
                   />
                 </Fragment>
             );

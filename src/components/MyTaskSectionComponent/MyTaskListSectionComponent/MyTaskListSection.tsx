@@ -3,8 +3,6 @@ import MyTaskListItem from "../../MyTasksComponent/MyTaskListItem.tsx";
 import AddMyTaskModalDialog from "../../MyTasksComponent/AddMyTaskComponent";
 import AddMyTaskButtonSection from "../../MyTasksComponent/AddMyTaskButtonSection.tsx";
 import {useTaskTreeMultiLevel} from "@/hooks/useTaskTreeMultiLevel.ts";
-import { useProjectStore } from "@/stores/project.store.ts";
-import LoadingSpin from "@/components/ui/LoadingSpin.tsx";
 import type { Section } from "@/types/section.type.ts";
 import { useExpanded } from "@/hooks/useExpanded.ts";
 import MyTaskListSectionHeader from "./MyTaskListSectionHeader.tsx";
@@ -16,15 +14,16 @@ import { useTaskStore } from "@/stores/task.store.ts";
 import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import DragDropIcon from "@/components/icons/DragDropIcon.tsx";
 import {CSS} from '@dnd-kit/utilities'
-import {useTasksWithView} from "@/hooks/useQueryHook/useViewOptions.ts";
+import type {Task} from "@/types/task.type.ts";
+import LoadingSpin from "@/components/ui/LoadingSpin.tsx";
 type MyTaskSectionProps = {
   section?: Section;
+  tasks: Task[];
+  isLoading: boolean;
 };
-const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
-  const projectId = useProjectStore((state) => state.projectId);
-  const { data: tasks, isLoading } = useTasksWithView({project_id: projectId}, "PROJECT", projectId)
+const MyTaskListSection = ({ section, tasks, isLoading }: MyTaskSectionProps) => {
   const { isExpanded, handleExpanded } = useExpanded(true);
-  const taskTree = useTaskTreeMultiLevel(tasks?.results, section?.id);
+  const taskTree = useTaskTreeMultiLevel(tasks, section?.id);
   const {
     editingSectionId,
     onOpenEditSection,
@@ -40,10 +39,10 @@ const MyTaskListSection = ({ section }: MyTaskSectionProps) => {
     onCloseTaskDetailToolbar,
   } = useTaskStore();
   const filteredTasks = useMemo(() => {
-    return tasks?.results.filter(
+    return tasks.filter(
       (task) => task.section_id === section?.id,
     );
-  }, [section?.id, tasks?.results]);
+  }, [section?.id, tasks]);
 
   const {setNodeRef, attributes, listeners, transform, transition} = useSortable({id: section?.id ?? "", data: {
     type: "section"

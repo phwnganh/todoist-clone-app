@@ -6,6 +6,7 @@ import ErrorDisplayed from "@/components/ui/ErrorDisplayed.tsx";
 
 const SidebarMyProjectList = () => {
   const { data: projects, isLoading, isError } = useGetAllProjects();
+  const filterProjects = projects?.results?.filter(p => p.name !== "Inbox")
   if (isLoading) {
     return (
       <div className={"mt-medium"}>
@@ -19,7 +20,7 @@ const SidebarMyProjectList = () => {
   }
   return (
     <>
-      {projects?.results.map((project) => (
+      {filterProjects?.map((project) => (
         <Fragment key={project.id}>
           <SidebarMyProjectsItem project={project} />
         </Fragment>

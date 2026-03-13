@@ -7,14 +7,17 @@ import AddMyTaskBoardSectionSlot from "../MyTaskSectionComponent/MyTaskBoardSect
 import {horizontalListSortingStrategy, SortableContext} from "@dnd-kit/sortable";
 import MyTaskBoardGroupSection from "./TasksGroupComponent/MyTaskBoardGroupSection";
 import type {TaskGroup} from "@/types/viewOptions.type.ts";
+import type {Task} from "@/types/task.type.ts";
 
 type MyTasksBoardProps = {
   filteredSectionsByProject: Section[] | undefined;
   isGrouping: boolean;
   groupedTasks: TaskGroup[];
   noSection?: Section;
+  tasks: Task[]
+  isLoading: boolean;
 };
-const MyTasksBoard = ({ filteredSectionsByProject, isGrouping, groupedTasks, noSection }: MyTasksBoardProps) => {
+const MyTasksBoard = ({ filteredSectionsByProject, isGrouping, groupedTasks, tasks, noSection, isLoading }: MyTasksBoardProps) => {
 
   const [
     openAddNewTaskSectionFormModalDialog,
@@ -37,13 +40,13 @@ const MyTasksBoard = ({ filteredSectionsByProject, isGrouping, groupedTasks, noS
       {isGrouping ? (
           groupedTasks.map((group, index) => <MyTaskBoardGroupSection key={index} title={group.title} tasks={group.tasks} sections={filteredSectionsByProject}/>)
       ) : <>
-        <MyTaskBoardSection section={noSection} />
+        <MyTaskBoardSection section={noSection} tasks={tasks} isLoading={isLoading}/>
         <AddMyTaskBoardSectionSlot addedSectionId={noSection?.id} />
         <SortableContext items={(filteredSectionsByProject ?? []).map(s => s.id!)} strategy={horizontalListSortingStrategy}>
           {filteredSectionsByProject?.map((section) => {
             return (
                 <Fragment key={section.id}>
-                  <MyTaskBoardSection section={section} />
+                  <MyTaskBoardSection section={section} tasks={tasks} isLoading={isLoading}/>
                   <AddMyTaskBoardSectionSlot addedSectionId={section.id} />
                 </Fragment>
             );

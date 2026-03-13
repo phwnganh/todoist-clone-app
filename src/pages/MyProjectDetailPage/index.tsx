@@ -36,7 +36,7 @@ const MyProjectDetailPage = () => {
         }
     }, [projectId, setProjectId]);
     const {data: sections} = useGetAllSections({project_id: projectId});
-    const {data: allTasks} = useTasksWithView({project_id: projectId}, "PROJECT", projectId);
+    const {data: allTasks, isLoading} = useTasksWithView({project_id: projectId}, "PROJECT", projectId);
     const {mutateAsync: movingTaskMutate} = useMoveMyTask()
     const {mutateAsync: reorderingTaskMutate} = useReorderTask()
     const {mutate: reorderingSectionMutate} = useReorderSection()
@@ -160,14 +160,14 @@ const MyProjectDetailPage = () => {
                     <section className={"max-w-200 mx-auto w-full relative z-10"}>
                         <div className={"flex flex-col gap-small"}>
                             <MyTaskTitle/>
-                            <MyTasksList filteredSectionsByProject={sections?.results} isGrouping={isGrouping} groupedTasks={groupedTasks} noSection={NO_SECTION}/>
+                            <MyTasksList filteredSectionsByProject={sections?.results} isGrouping={isGrouping} groupedTasks={groupedTasks} tasks={allTasks?.results ?? []} noSection={NO_SECTION} isLoading={isLoading}/>
                         </div>
                     </section>
                 ) : (
                     <section className={"px-10"}>
                         <div className={"flex flex-col gap-small"}>
                             <MyTaskTitle/>
-                            <MyTasksBoard filteredSectionsByProject={sections?.results} isGrouping={isGrouping} groupedTasks={groupedTasks} noSection={NO_SECTION}/>
+                            <MyTasksBoard filteredSectionsByProject={sections?.results} isGrouping={isGrouping} groupedTasks={groupedTasks} tasks={allTasks?.results ?? []} noSection={NO_SECTION} isLoading={isLoading}/>
                         </div>
                     </section>
                 )}

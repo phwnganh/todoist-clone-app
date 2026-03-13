@@ -26,7 +26,7 @@ import {commonTaskMutation} from "@/helpers/hookMutations.ts";
 export const useGetAllTasks = (query?: TaskQuery) => {
     return useQuery<TaskResponse>({
         queryKey: ['tasks', query],
-        queryFn: () => apiGetAllTasks(query)
+        queryFn: () => apiGetAllTasks(query),
     })
 }
 
