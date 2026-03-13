@@ -22,7 +22,6 @@ const EditMyTaskModalDialog = ({
   variant,
 }: EditMyTaskModalDialogProps) => {
   const { editingTaskId } = useTaskStore();
-  const isEditMode = !!task.id;
   const { data: projects } = useGetAllProjects();
   const { data: sections } = useGetAllSections();
   const { data: labels } = useGetAllLabels();
@@ -107,7 +106,6 @@ const EditMyTaskModalDialog = ({
       onSubmit={handleUpdateMyTask}
       submitLabel={"Save"}
       submittingLabel={"Saving..."}
-      isEditMode={isEditMode}
       isPending={isPending}
       errorMessage={isError ? error?.message : null}
     />

@@ -32,18 +32,16 @@ import ChildrenIcon from "@/components/icons/ChildrenIcon.tsx";
 type MyTaskListItemProps = {
   taskNode: TaskNode;
   level: number;
-  onCloseTaskDetailToolbar: () => void;
   sections?: Section[]
 };
 const MyTaskListItem = ({
   taskNode,
   level,
-  onCloseTaskDetailToolbar,
     sections,
 }: MyTaskListItemProps) => {
   const { task, children } = taskNode;
   const { isExpanded, handleExpanded } = useExpanded(true);
-  const { editingTaskId, deleteTaskId, onOpenEditTask, onCloseEditTask, taskDetailId, onOpenTaskDetail, onCloseTaskDetail, openTaskDetailToolbar, onOpenTaskDetailToolbar } = useTaskStore();
+  const { editingTaskId, deleteTaskId, onOpenEditTask, onCloseEditTask, taskDetailId, onOpenTaskDetail, onCloseTaskDetail, openTaskDetailToolbar, onOpenTaskDetailToolbar, onCloseTaskDetailToolbar } = useTaskStore();
   const {groupedBy} = useGroupingTaskStore()
   const isEditing = editingTaskId === task.id;
   const isOpenTaskDetail = taskDetailId === task.id;
@@ -186,7 +184,7 @@ const MyTaskListItem = ({
                 </div>
               </div>
               <div className={"flex flex-col justify-between"}>
-                <div className={"group-hover:opacity-100 opacity-0 pointer-events-none group-hover:pointer-events-auto flex mt-2 pl-4 gap-small"}>
+                <div className={`${isOpenTaskDetailToolbar ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"} flex mt-2 pl-4 gap-small`}>
                   <button
                       type={"button"}
                       onClick={() => onOpenEditTask(task.id)}
@@ -254,7 +252,6 @@ const MyTaskListItem = ({
                     key={child.task.id}
                     taskNode={child}
                     level={level + 1}
-                    onCloseTaskDetailToolbar={onCloseTaskDetailToolbar}
                     sections={sections}
                 />
             ))}

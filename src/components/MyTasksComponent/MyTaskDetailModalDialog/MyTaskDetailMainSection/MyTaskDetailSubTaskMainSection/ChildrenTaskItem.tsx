@@ -6,7 +6,7 @@ import CommentIcon from "@/components/icons/CommentIcon.tsx";
 import MenuIcon from "@/components/icons/MenuIcon.tsx";
 import { useTaskStore } from "@/stores/task.store.ts";
 import EditMyTaskDetailMainSubChildrenForm from "../EditMyTaskDetailMainSubChildrenForm";
-import type { MouseEvent } from "react";
+import {type MouseEvent, useRef} from "react";
 import {
   PRIORITY_BORDER_CLASS_MAPPING,
   PRIORITY_VERIFIED_CLASS_MAPPING,
@@ -21,32 +21,42 @@ import DragDropIcon from "@/components/icons/DragDropIcon.tsx";
 import SmallCalendarIcon from "@/components/icons/SmallCalendarIcon.tsx";
 import LabelIcon from "@/components/icons/LabelIcon.tsx";
 import ChildrenIcon from "@/components/icons/ChildrenIcon.tsx";
+import {useClickOutside} from "@/hooks/useClickOutside.ts";
 type ChildrenTaskItemProps = {
   hasSubChildren: boolean;
   childrenTask: Task;
   subChildren: Task[];
-  onOpenSubTaskDetailToolbar: (e: MouseEvent<HTMLButtonElement>) => void;
-  isOpenSubTaskDetailToolbar: boolean;
 };
 const ChildrenTaskItem = ({
   hasSubChildren,
   childrenTask,
   subChildren,
-  onOpenSubTaskDetailToolbar,
-  isOpenSubTaskDetailToolbar,
 }: ChildrenTaskItemProps) => {
-  const { editingTaskId, onOpenEditTask, onCloseEditTask } = useTaskStore();
+  const { editingTaskId, onOpenEditTask, onCloseEditTask, onOpenSubTaskDetailToolbar, onCloseSubTaskDetailToolbar, openSubTaskDetailToolbar } = useTaskStore();
   const isEditing = editingTaskId === childrenTask.id;
+  const isOpenSubtaskDetailToolbar = openSubTaskDetailToolbar === childrenTask.id
   const { mutate } = useCompleteTask();
+  const subTaskRef = useRef<HTMLDivElement | null>(null)
   const handleCompleteTask = (taskId: string) => {
     mutate({
       taskId: taskId,
     });
   };
+
+  const handleOpenSubTaskDetailToolbar = (e: MouseEvent, subTaskId: string) => {
+    e.stopPropagation()
+    onOpenSubTaskDetailToolbar(subTaskId)
+  }
   const completedSubChildrenLength = subChildren.filter(
     (task) => task.checked || task.completed_at,
   ).length;
   const { category, label } = getDueInfo(childrenTask.due?.date);
+
+  useClickOutside({
+    ref: subTaskRef,
+    handler: onCloseSubTaskDetailToolbar,
+    enabled: isOpenSubtaskDetailToolbar
+  })
   const { setNodeRef, attributes, listeners, transition, transform } =
     useSortable({
       id: childrenTask.id,
@@ -159,8 +169,10 @@ const ChildrenTaskItem = ({
             </div>
             <div
               className={
-                "flex pl-4 gap-small opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"
-              }
+                `flex pl-4 gap-small ${isOpenSubtaskDetailToolbar
+                    ? "opacity-100 pointer-events-auto"
+                    : "opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"}
+              `}
             >
               <button
                 onClick={() => onOpenEditTask(childrenTask.id)}
@@ -190,9 +202,11 @@ const ChildrenTaskItem = ({
               >
                 <CommentIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
               </button>
-              <div className={"relative"}>
+              <div className={"relative"} ref={subTaskRef}>
                 <button
-                  onClick={onOpenSubTaskDetailToolbar}
+                  onClick={e => {
+                    handleOpenSubTaskDetailToolbar(e, childrenTask.id)
+                  }}
                   type={"button"}
                   aria-label={"menu"}
                   className={
@@ -201,9 +215,9 @@ const ChildrenTaskItem = ({
                 >
                   <MenuIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                 </button>
-                {isOpenSubTaskDetailToolbar && (
+                {isOpenSubtaskDetailToolbar && (
                   <div
-                    className={"absolute right-9 z-50"}
+                    className={"absolute right-0 z-50"}
                     onClick={(e) => e.stopPropagation()}
                   >
                     <MyTasksToolbarDropdown

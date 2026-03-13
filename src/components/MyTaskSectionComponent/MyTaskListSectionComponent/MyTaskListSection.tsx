@@ -36,7 +36,6 @@ const MyTaskListSection = ({ section, tasks, isLoading }: MyTaskSectionProps) =>
     addingTaskId,
     onOpenAddMyTask,
     onCloseAddMyTask,
-    onCloseTaskDetailToolbar,
   } = useTaskStore();
   const filteredTasks = useMemo(() => {
     return tasks.filter(
@@ -106,7 +105,6 @@ const MyTaskListSection = ({ section, tasks, isLoading }: MyTaskSectionProps) =>
                   <MyTaskListItem
                       taskNode={taskNode}
                       level={0}
-                      onCloseTaskDetailToolbar={onCloseTaskDetailToolbar}
                   />
                 </Fragment>
             ))}

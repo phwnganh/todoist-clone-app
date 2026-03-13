@@ -42,7 +42,7 @@ const MyTaskDetailTitleSection = ({
             </div>
             <span className={"flex items-center"}>
               <div className={"flex justify-center items-center"}>
-                <SectionIcon />
+                <SectionIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
               </div>
               <p
                 className={

@@ -31,7 +31,6 @@ const EditMyTaskDetailMainSubChildrenForm = ({
     labels: [],
   });
   const { editingTaskId } = useTaskStore();
-  const isEditMode = !!taskDetail?.id;
   const { data: projects } = useGetAllProjects();
   const { data: sections } = useGetAllSections();
   const { data: labels } = useGetAllLabels();
@@ -78,7 +77,6 @@ const EditMyTaskDetailMainSubChildrenForm = ({
       values={values}
       onChange={setValues}
       variant={"list"}
-      isEditMode={isEditMode}
     />
   );
 };

@@ -59,13 +59,13 @@ const MyTasksToolbarDropdown = ({ taskId, task }: { taskId: string; task: Task }
       type: "item",
       label: "Add task above",
       onClick: () => {},
-      icon: <TaskAboveIcon />,
+      icon: <TaskAboveIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>,
     },
     {
       type: "item",
       label: "Add task below",
       onClick: () => {},
-      icon: <TaskBelowIcon />,
+      icon: <TaskBelowIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>,
     },
     {type: "divider"},
     {
@@ -86,24 +86,24 @@ const MyTasksToolbarDropdown = ({ taskId, task }: { taskId: string; task: Task }
     {
       type: "icon-row",
       items: [
-        {icon: <CalendarIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+        {icon: <CalendarIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small text-product-library-actionable-quaternary-idle-tint"}/>,
           active: currentDueDate && isSameDay(new Date(currentDueDate), today),
           onClick: () => handleSelectDueDate(buildDue(today))
         },
-        {icon: <TomorrowIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+        {icon: <TomorrowIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small text-product-library-actionable-quaternary-idle-tint"}/>,
         active: currentDueDate && isSameDay(new Date(currentDueDate), tomorrow),
           onClick: () => handleSelectDueDate(buildDue(tomorrow))},
-        {icon: <NextWeekIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+        {icon: <NextWeekIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small text-product-library-actionable-quaternary-idle-tint"}/>,
         active: currentDueDate && isSameDay(new Date(currentDueDate), nextWeek),
           onClick: () => handleSelectDueDate(buildDue(nextWeek))},
-        {icon: <NextWeekendIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+        {icon: <NextWeekendIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small text-product-library-actionable-quaternary-idle-tint"}/>,
         active: currentDueDate && isSameDay(new Date(currentDueDate), nextWeekend),
           onClick: () => handleSelectDueDate(buildDue(nextWeekend))},
           ...(currentDue ? [{
-            icon: <NoDateIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>,
+            icon: <NoDateIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small text-product-library-actionable-quaternary-idle-tint"}/>,
             onClick: handleRemoveDueDate
           }]: []),
-        {icon: <MenuIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}/>}
+        {icon: <MenuIcon className={"hover:bg-product-library-selectable-secondary-hover-fill rounded-small text-product-library-actionable-quaternary-idle-tint"}/>}
       ]
     },
     {type: "divider"},
@@ -133,13 +133,13 @@ const MyTasksToolbarDropdown = ({ taskId, task }: { taskId: string; task: Task }
       type: "item",
       label: "Move to...",
       onClick: () => {},
-      icon: <TaskMoveToIcon />,
+      icon: <TaskMoveToIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>,
     },
     {
       type: "item",
       label: "Duplicate",
       onClick: () => {},
-      icon: <DuplicateIcon />,
+      icon: <DuplicateIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>,
     },
     {type: "divider"},
     {

@@ -47,7 +47,6 @@ type MyTaskFormProps = {
   isPending?: boolean;
   errorMessage?: string | null;
   variant?: string;
-  isEditMode?: boolean;
 };
 const MyTaskForm = ({
   onCloseMyTaskForm,
@@ -59,7 +58,6 @@ const MyTaskForm = ({
   isPending,
   errorMessage,
   variant,
-  isEditMode,
 }: MyTaskFormProps) => {
   const [isOpenAddMyTaskDropdown, setIsOpenAddMyTaskDropdown] =
     useState<OpenMyTaskFormDropdown>(null);
@@ -182,7 +180,7 @@ const MyTaskForm = ({
   const isAddButtonDisabled = values.content.trim() === "" || isPending;
   return (
     <form
-      className={"border border-product-library-border-idle-tint rounded-large"}
+      className={"border border-product-library-border-idle-tint rounded-large text-product-library-display-primary-idle-tint"}
       onSubmit={onSubmit}
     >
       <div className={"pt-small px-small rounded-large"}>

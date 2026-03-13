@@ -25,7 +25,7 @@ const MySectionsToolbarDropdown = ({sectionId}: MySectionsToolbarDropdownProps) 
             onClick: () => {
 
             },
-            icon: <TaskMoveToIcon/>
+            icon: <TaskMoveToIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
         },
         "divider",
         {

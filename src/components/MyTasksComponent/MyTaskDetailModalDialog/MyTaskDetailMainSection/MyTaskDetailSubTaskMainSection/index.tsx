@@ -8,7 +8,6 @@ import ChildrenTaskItem from "./ChildrenTaskItem.tsx";
 import AddMyTaskDetailMainSubChildrenForm from "../AddMyTaskDetailMainSubChildrenForm";
 import { useExpanded } from "@/hooks/useExpanded.ts";
 import TaskSmallArrowRightIcon from "@/components/icons/TaskSmallArrowRightIcon.tsx";
-import { type MouseEvent } from "react";
 import {
   SortableContext,
   verticalListSortingStrategy,
@@ -26,8 +25,6 @@ const MyTaskDetailSubTaskMainSection = ({
     onOpenAddSubTask,
     addingSubTaskId,
     onCloseAddSubTask,
-    openSubTaskDetailToolbar,
-    onOpenSubTaskDetailToolbar,
   } = useTaskStore();
   const isTaskAdding = addingSubTaskId === taskDetail?.id;
   const { isExpanded, handleExpanded } = useExpanded(true);
@@ -35,13 +32,6 @@ const MyTaskDetailSubTaskMainSection = ({
     return tasks?.filter((t) => t.parent_id === taskDetail?.id);
   }, [tasks, taskDetail?.id]);
   if (!childrenTasks) return null;
-  const handleOpenSubTaskDetailToolbar = (
-    id: string,
-    e: MouseEvent<HTMLButtonElement>,
-  ) => {
-    e.stopPropagation();
-    onOpenSubTaskDetailToolbar(id);
-  };
 
   const completedChildrenLength = childrenTasks.filter(
     (task) => task.checked || task.completed_at,
@@ -90,12 +80,6 @@ const MyTaskDetailSubTaskMainSection = ({
                   hasSubChildren={hasSubChildren}
                   childrenTask={children}
                   subChildren={subChildren}
-                  onOpenSubTaskDetailToolbar={(e) => {
-                    handleOpenSubTaskDetailToolbar(children.id, e);
-                  }}
-                  isOpenSubTaskDetailToolbar={
-                    openSubTaskDetailToolbar === children.id
-                  }
                 />
               </Fragment>
             );

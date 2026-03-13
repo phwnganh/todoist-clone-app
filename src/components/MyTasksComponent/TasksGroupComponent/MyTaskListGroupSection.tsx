@@ -3,7 +3,6 @@ import {useExpanded} from "@/hooks/useExpanded.ts";
 import TaskSmallArrowDownIcon from "../../icons/TaskSmallArrowDownIcon.tsx";
 import TaskSmallArrowRightIcon from "../../icons/TaskSmallArrowRightIcon.tsx";
 import MyTaskListItem from "../MyTaskListItem.tsx";
-import {useTaskStore} from "@/stores/task.store.ts";
 import type {Section} from "@/types/section.type.ts";
 
 type MyTaskGroupSectionProps = {
@@ -13,7 +12,6 @@ type MyTaskGroupSectionProps = {
 }
 const MyTaskListGroupSection = ({title, tasks, sections}: MyTaskGroupSectionProps) => {
     const { isExpanded, handleExpanded } = useExpanded(true);
-    const { onCloseTaskDetailToolbar} = useTaskStore();
     return (
         <section className={"pb-4.5 px-3 lg:px-0"}>
             <div className={"flex items-center gap-1.5"}>
@@ -37,7 +35,7 @@ const MyTaskListGroupSection = ({title, tasks, sections}: MyTaskGroupSectionProp
             {isExpanded && (
                 <ul className={"mt-1.25 flex flex-col flex-wrap"}>
                     {tasks.map(task => (
-                        <MyTaskListItem key={task.id} taskNode={{task, children: []}} level={0} onCloseTaskDetailToolbar={onCloseTaskDetailToolbar}
+                        <MyTaskListItem key={task.id} taskNode={{task, children: []}} level={0}
                                         sections={sections}
                         />
                     ))}

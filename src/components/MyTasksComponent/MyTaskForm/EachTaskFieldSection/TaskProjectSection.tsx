@@ -54,7 +54,7 @@ const TaskProjectSection = ({projectRef, openDropdown, onToggleDropdown, project
                         </div>
                         <span className={"flex items-center gap-1.5"}>
                   <div className={"flex justify-center items-center"}>
-                    <SectionIcon />
+                    <SectionIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                   </div>
                   <p
                       className={

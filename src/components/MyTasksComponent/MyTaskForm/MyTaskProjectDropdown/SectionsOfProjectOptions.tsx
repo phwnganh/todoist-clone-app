@@ -21,7 +21,7 @@ const SectionsOfProjectOptions = ({section, onSelectedSection, isSectionsSelecte
         }} className={"group/section flex items-center gap-1.5 pl-6 py-1 ml-small justify-between data-[section-selected=true]:bg-product-library-selectable-secondary-hover-fill hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}>
             <div className={"flex items-center gap-1.5"}>
                 <div className={"flex justify-center items-center w-6 h-6"}>
-                    <SectionIcon/>
+                    <SectionIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                 </div>
                 <div className={"text-sm"}>{section.name}</div>
             </div>
