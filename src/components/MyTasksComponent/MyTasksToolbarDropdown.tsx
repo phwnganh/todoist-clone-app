@@ -6,7 +6,7 @@ import TaskMoveToIcon from "@/components/icons/MoveToTaskIcon.tsx";
 import DuplicateIcon from "@/components/icons/TaskDuplicateIcon.tsx";
 import { useTaskStore } from "@/stores/task.store.ts";
 import TrashIcon from "@/components/icons/TrashIcon.tsx";
-import MyTasksMenuButton from "@/components/ui/MyTasksMenuButton.tsx";
+import MenuButton from "@/components/ui/MenuButton.tsx";
 import CalendarIcon from "@/components/icons/CalendarIcon.tsx";
 import TomorrowIcon from "@/components/icons/TomorrowIcon.tsx";
 import NextWeekIcon from "@/components/icons/NextWeekIcon.tsx";
@@ -184,7 +184,7 @@ const MyTasksToolbarDropdown = ({ taskId, task }: { taskId: string; task: Task }
               )
             case "item":
               return (
-                  <MyTasksMenuButton key={item.label} label={item.label} onClick={item.onClick} icon={item.icon}/>
+                  <MenuButton key={item.label} label={item.label} onClick={item.onClick} icon={item.icon}/>
               )
           }
         })}

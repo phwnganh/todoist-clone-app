@@ -8,6 +8,7 @@ import { useGetAllTasks } from "@/hooks/useQueryHook/useTasks.ts";
 import { useMemo } from "react";
 import { useTaskStore } from "@/stores/task.store.ts";
 import { useGetAllSections } from "@/hooks/useQueryHook/useSections.ts";
+import CustomDetailModalDialog from "@/components/ui/CustomDetailModalDialog.tsx";
 
 type MyTaskDetailModalDialogProps = {
   onCloseTaskDetail: () => void;
@@ -28,30 +29,18 @@ const MyTaskDetailModalDialog = ({
     return sections?.results.find((sec) => sec.id === taskDetail?.section_id);
   }, [taskDetail?.section_id, sections?.results]);
 
-  return createPortal(
-    <div
-      role={"dialog"}
-      aria-modal={"true"}
-      aria-labelledby={"task-detail"}
-      className={"fixed inset-0 bg-product-library-background-overlay z-50 md:pt-16"}
-    >
-      <div
-        className={
-          "w-216 max-w-full h-full md:h-200 mx-auto rounded-large bg-product-library-background-base-primary flex flex-col"
-        }
-      >
-        <MyTaskDetailTitleSection
+  return (
+    <CustomDetailModalDialog aria-labelledby={"task-detail"} className={"flex flex-col"}>
+      <MyTaskDetailTitleSection
           sectionDetail={sectionDetail}
           projectDetail={projectDetail}
           onCloseTaskDetail={onCloseTaskDetail}
-        />
-        <main className={"flex md:flex-1 flex-col md:flex-row"}>
-          <MyTaskDetailMainSection taskDetail={taskDetail} tasks={tasks} />
-          <MyTaskDetailAside taskDetail={taskDetail} />
-        </main>
-      </div>
-    </div>,
-    document.body,
+      />
+      <main className={"flex md:flex-1 flex-col md:flex-row"}>
+        <MyTaskDetailMainSection taskDetail={taskDetail} tasks={tasks} />
+        <MyTaskDetailAside taskDetail={taskDetail} />
+      </main>
+    </CustomDetailModalDialog>
   );
 };
 

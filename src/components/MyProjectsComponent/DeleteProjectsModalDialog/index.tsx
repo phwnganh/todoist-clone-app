@@ -2,6 +2,7 @@ import { createPortal } from "react-dom";
 import { useDeleteProject } from "@/hooks/useQueryHook/useProjects.ts";
 import { type MouseEvent } from "react";
 import type {Project} from "@/types/project.type.ts";
+import CustomDialog from "@/components/ui/CustomDialog.tsx";
 
 type DeleteProjectModalDialogProps = {
   project: Project;
@@ -21,17 +22,8 @@ const DeleteProjectsModalDialog = ({
     onClose();
 
   };
-  return createPortal(
-    <div
-      role={"alertdialog"}
-      aria-label={"delete-projects"}
-      className={"fixed inset-0 bg-product-library-background-overlay z-50 pt-[13vh]"}
-    >
-      <div
-        className={
-          "w-md max-w-full mx-auto rounded-large bg-product-library-background-base-primary transition-all duration-500 ease-in-out px-4"
-        }
-      >
+  return (
+    <CustomDialog role={"alertdialog"} labelTitle={"delete-projects"} className={"w-md px-4"}>
         <header className={"pt-4 pb-2"}>
           <h1
             id={"delete-project-title"}
@@ -70,9 +62,7 @@ const DeleteProjectsModalDialog = ({
             </span>
           </button>
         </footer>
-      </div>
-    </div>,
-    document.body
+    </CustomDialog>
   );
 };
 

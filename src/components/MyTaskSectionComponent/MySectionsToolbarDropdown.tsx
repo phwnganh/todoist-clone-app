@@ -3,7 +3,7 @@ import {type MySectionMenuToolbar} from "@/types/menu-nav.type";
 import EditIcon from "@/components/icons/EditIcon";
 import TaskMoveToIcon from "@/components/icons/MoveToTaskIcon";
 import TrashIcon from "@/components/icons/TrashIcon";
-import MyTasksMenuButton from "@/components/ui/MyTasksMenuButton";
+import MenuButton from "@/components/ui/MenuButton.tsx";
 import CustomMenuDropdown from "@/components/ui/CustomMenuDropdown.tsx";
 type MySectionsToolbarDropdownProps = {
     sectionId: string | null;
@@ -54,7 +54,7 @@ const MySectionsToolbarDropdown = ({sectionId}: MySectionsToolbarDropdownProps) 
                     )
                 }
                 return (
-                    <MyTasksMenuButton
+                    <MenuButton
                         key={item.label}
                         label={item.label}
                         onClick={item.onClick}

@@ -19,6 +19,7 @@ import ProjectWorkspaceSection
   from "@/components/MyProjectsComponent/EachProjectFieldSection/ProjectWorkspaceSection.tsx";
 import ParentProjectSection from "@/components/MyProjectsComponent/EachProjectFieldSection/ParentProjectSection.tsx";
 import LargeCloseIcon from "@/components/icons/LargeCloseIcon.tsx";
+import CustomDialog from "@/components/ui/CustomDialog.tsx";
 
 export type MyProjectFormValues = {
   name: string;
@@ -95,19 +96,13 @@ const MyProjectForm = ({
     }`;
 
   const isAddButtonDisabled = values.name.trim() === "" || isPending;
-  return createPortal(
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="add-project-title"
-      className="fixed inset-0 bg-product-library-background-overlay z-50 pt-[13vh]"
-    >
-      <div className="w-120 max-w-full mx-auto rounded-large bg-product-library-background-base-primary transition-all duration-500 ease-in-out">
+  return (
+      <CustomDialog role={"dialog"} labelTitle={"project-title"} className={"w-120"}>
         <header className="flex justify-between py-2 pr-2 pl-4">
           <div className="flex flex-wrap gap-xsmall">
             <h1
-              id="add-project-title"
-              className="font-medium text-product-library-display-primary-idle-tint"
+                id="project-title"
+                className="font-medium text-product-library-display-primary-idle-tint"
             >
               {title}
             </h1>
@@ -116,9 +111,9 @@ const MyProjectForm = ({
             </div>
           </div>
           <button
-            aria-label="Close dialog"
-            className="flex justify-center items-center"
-            onClick={onClose}
+              aria-label="Close dialog"
+              className="flex justify-center items-center"
+              onClick={onClose}
           >
             <LargeCloseIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
           </button>
@@ -140,9 +135,9 @@ const MyProjectForm = ({
             {/*add to favorites*/}
             <div className="flex items-center">
               <div
-                role="switch"
-                aria-checked="true"
-                className="mr-2 flex justify-center items-center"
+                  role="switch"
+                  aria-checked="true"
+                  className="mr-2 flex justify-center items-center"
               >
                 <CustomSwitch />
               </div>
@@ -159,21 +154,21 @@ const MyProjectForm = ({
               <div className="flex justify-center border-2 border-product-library-selectable-background gap-0.75 bg-product-library-selectable-background rounded-large text-product-library-display-secondary-idle-tint ">
                 {LAYOUT_ITEMS.map((layout) => {
                   return (
-                    <Fragment key={layout.key}>
-                      <label className={`${layoutItemClass(layout.key)}`}>
-                        <input
-                          type="radio"
-                          className="sr-only"
-                          value={layout.key}
-                          checked={values.layout === layout.key}
-                          onChange={() => handleSelectLayout(layout.key)}
-                        />
-                        <span className="flex flex-col gap-xsmall items-center justify-center text-xs">
+                      <Fragment key={layout.key}>
+                        <label className={`${layoutItemClass(layout.key)}`}>
+                          <input
+                              type="radio"
+                              className="sr-only"
+                              value={layout.key}
+                              checked={values.layout === layout.key}
+                              onChange={() => handleSelectLayout(layout.key)}
+                          />
+                          <span className="flex flex-col gap-xsmall items-center justify-center text-xs">
                           <layout.icon className={"text-product-library-actionable-quaternary-idle-tint"}/>
-                          {layout.label}
+                            {layout.label}
                         </span>
-                      </label>
-                    </Fragment>
+                        </label>
+                      </Fragment>
                   );
                 })}
               </div>
@@ -181,33 +176,33 @@ const MyProjectForm = ({
             <hr className="border-t border-t-product-library-divider-tertiary" />
           </div>
           {errorMessage && (
-            <div
-              className={
-                "text-sm text-product-library-actionable-destructive-idle-tint"
-              }
-              role={"alert"}
-            >
-              {errorMessage}
-            </div>
+              <div
+                  className={
+                    "text-sm text-product-library-actionable-destructive-idle-tint"
+                  }
+                  role={"alert"}
+              >
+                {errorMessage}
+              </div>
           )}
           <footer className="flex justify-end px-4 pb-4 gap-2.5">
             <button
-              type="button"
-              className="px-3 py-1.5 rounded-small bg-product-library-actionable-secondary-idle-fill flex justify-center items-center min-w-17"
-              onClick={onClose}
+                type="button"
+                className="px-3 py-1.5 rounded-small bg-product-library-actionable-secondary-idle-fill flex justify-center items-center min-w-17"
+                onClick={onClose}
             >
               <span className="text-sm font-medium text-product-library-actionable-secondary-on-idle-tint">
                 Cancel
               </span>
             </button>
             <button
-              type="submit"
-              className={`px-3 py-1.5 rounded-small  flex justify-center items-center min-w-17 ${
-                isAddButtonDisabled
-                  ? "bg-product-library-actionable-primary-disabled-fill cursor-not-allowed"
-                  : "bg-product-library-actionable-primary-idle-fill hover:bg-product-library-actionable-primary-hover-fill"
-              }`}
-              disabled={isAddButtonDisabled}
+                type="submit"
+                className={`px-3 py-1.5 rounded-small  flex justify-center items-center min-w-17 ${
+                    isAddButtonDisabled
+                        ? "bg-product-library-actionable-primary-disabled-fill cursor-not-allowed"
+                        : "bg-product-library-actionable-primary-idle-fill hover:bg-product-library-actionable-primary-hover-fill"
+                }`}
+                disabled={isAddButtonDisabled}
             >
               <span className="text-sm font-medium text-product-library-actionable-primary-on-idle-tint">
                 {isPending ? submittingLabel : submitLabel}
@@ -215,10 +210,8 @@ const MyProjectForm = ({
             </button>
           </footer>
         </form>
-      </div>
-    </div>,
-    document.body
-  );
+      </CustomDialog>
+  )
 };
 
 export default MyProjectForm;

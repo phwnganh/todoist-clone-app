@@ -6,7 +6,7 @@ type MyTasksMenuButtonProps={
     onClick: () => void;
     icon: ReactNode
 }
-const MyTasksMenuButton = ({label, danger, onClick, icon}: MyTasksMenuButtonProps) => {
+const MenuButton = ({label, danger, onClick, icon}: MyTasksMenuButtonProps) => {
 
     return (
         <button className={`flex items-center gap-small text-sm text-start px-3 py-1.5 hover:bg-product-library-selectable-secondary-hover-fill rounded-small ${danger ? "text-product-library-display-accent-primary-tint" : ""}`}
@@ -19,4 +19,4 @@ const MyTasksMenuButton = ({label, danger, onClick, icon}: MyTasksMenuButtonProp
     );
 };
 
-export default MyTasksMenuButton;
+export default MenuButton;

@@ -26,7 +26,7 @@ const MainLayout = () => {
             <main className="relative flex w-full h-screen">
                 <Sidebar open={openSidebar} onToggle={handleToggleSidebar} isMobile={isMobile}/>
                 {isMobile && openSidebar && (
-                    <div className="fixed inset-0 bg-product-library-display-tertiary-idle-tint z-40" onClick={handleToggleSidebar}></div>
+                    <div className="fixed inset-0 bg-product-library-background-overlay z-40" onClick={handleToggleSidebar}></div>
                 )}
                 <div className="flex flex-col px-3 flex-1 overflow-y-auto scrollbar-thin scrollbar-custom bg-product-library-background-base-primary text-product-library-display-primary-idle-tint">
                     <Outlet context={{

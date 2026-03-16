@@ -3,7 +3,7 @@ import type {SidebarHeaderMenuDropdown} from "@/types/menu-nav.type.ts";
 import UserStatisticIcon from "@/components/icons/UserStatisticIcon.tsx";
 import SettingIcon from "@/components/icons/SettingIcon.tsx";
 import LogoutIcon from "@/components/icons/LogoutIcon.tsx";
-import MyTasksMenuButton from "@/components/ui/MyTasksMenuButton.tsx";
+import MenuButton from "@/components/ui/MenuButton.tsx";
 import {useAuthStore} from "@/stores/auth.store.ts";
 import {useSidebarStore} from "@/stores/sidebar.store.ts";
 
@@ -47,7 +47,7 @@ const SidebarHeaderDropdown = ({userName}: SidebarHeaderDropdownProps) => {
                             <hr key={index} className={"border-t-product-library-divider-tertiary"}/>
                         )
                     }
-                    return <MyTasksMenuButton key={index} label={item.label} onClick={item.onClick} icon={item.icon}/>
+                    return <MenuButton key={index} label={item.label} onClick={item.onClick} icon={item.icon}/>
                 })}
             </CustomMenuDropdown>
         </>

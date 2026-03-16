@@ -3,6 +3,7 @@ import {type MouseEvent} from "react";
 import {useDeleteSection} from "@/hooks/useQueryHook/useSections.ts";
 import type {Section} from "@/types/section.type.ts";
 import {createPortal} from "react-dom";
+import CustomDialog from "@/components/ui/CustomDialog.tsx";
 
 const DeleteMyTaskSectionModalDialog = ({section}: {section: Section}) => {
     const {onCloseDeleteSection, deleteSectionId} = useSectionStore()
@@ -14,9 +15,8 @@ const DeleteMyTaskSectionModalDialog = ({section}: {section: Section}) => {
             sectionId: deleteSectionId
         })
     }
-    return createPortal(
-        <div role={"alertdialog"} aria-label={"delete-section"} className={"fixed inset-0 bg-product-library-background-overlay z-50 pt-[13vh]"}>
-            <div className={"w-md max-w-full mx-auto rounded-large bg-product-library-background-base-primary px-4"}>
+    return (
+        <CustomDialog role={"alertdialog"} labelTitle={"delete-section"} className={"w-md px-4"}>
                 <header className={"pt-4 pb-2"}>
                     <h1 id={"delete-task-title"} className={"font-medium text-product-library-display-primary-idle-tint"}>
                         Delete section?
@@ -49,9 +49,7 @@ const DeleteMyTaskSectionModalDialog = ({section}: {section: Section}) => {
             </span>
                     </button>
                 </footer>
-            </div>
-        </div>,
-        document.body
+        </CustomDialog>
     );
 };
 

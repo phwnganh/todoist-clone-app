@@ -3,6 +3,7 @@ import { useTaskStore } from "@/stores/task.store.ts";
 import { useDeleteMyTask } from "@/hooks/useQueryHook/useTasks.ts";
 import { type MouseEvent } from "react";
 import type { Task } from "@/types/task.type.ts";
+import CustomDialog from "@/components/ui/CustomDialog.tsx";
 
 const DeleteMyTaskModalDialog = ({ task }: { task: Task }) => {
   const { deleteTaskId, onCloseDeleteMyTask } = useTaskStore();
@@ -16,13 +17,8 @@ const DeleteMyTaskModalDialog = ({ task }: { task: Task }) => {
     });
     onCloseDeleteMyTask();
   };
-  return createPortal(
-    <div
-      role={"alertdialog"}
-      aria-label={"delete-task"}
-      className={"fixed inset-0 bg-product-library-background-overlay z-50 pt-[13vh]"}
-    >
-      <div className={"w-md max-w-full mx-auto rounded-large bg-product-library-background-base-primary px-4"}>
+  return (
+  <CustomDialog role={"alertdialog"} labelTitle={"delete-task"} className={"w-md px-4"}>
         <header className={"pt-4 pb-2"}>
           <h1
             id={"delete-task-title"}
@@ -61,9 +57,7 @@ const DeleteMyTaskModalDialog = ({ task }: { task: Task }) => {
             </span>
           </button>
         </footer>
-      </div>
-    </div>,
-    document.body,
+  </CustomDialog>
   );
 };
 
