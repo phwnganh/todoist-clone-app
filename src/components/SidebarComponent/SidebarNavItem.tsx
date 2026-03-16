@@ -14,11 +14,11 @@ const SidebarNavItem = ({ item, onClick }: SidebarNavItemProps) => {
           isActive ? "text-product-library-actionable-tertiary-idle-tint" : ""
         }`}
       >
-          <item.icon className={"text-product-library-actionable-quaternary-idle-tint"}/>
+          <item.icon className={`${isActive ? "text-product-library-actionable-tertiary-idle-tint" : "text-product-library-actionable-quaternary-idle-tint"}`}/>
       </div>
       <span
-        className={`text-sm wrap-break-word py-0.75 pl-1.25 text-product-library-display-primary-idle-tint ${
-          isActive ? "text-product-library-actionable-tertiary-idle-tint" : ""
+        className={`text-sm wrap-break-word py-0.75 pl-1.25 ${
+          isActive ? "text-product-library-actionable-tertiary-idle-tint" : "text-product-library-display-primary-idle-tint"
         }`}
       >
         {item.label}
