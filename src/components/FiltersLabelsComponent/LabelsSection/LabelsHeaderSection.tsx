@@ -9,7 +9,7 @@ type LabelsHeaderSectionProps = {
 const LabelsHeaderSection = ({isExpanded, onExpanded}: LabelsHeaderSectionProps) => {
     return (
         <div className={"border-b border-b-product-library-divider-primary"}>
-            <div className={"flex justify-between items-start px-4"}>
+            <div className={"flex justify-between items-start"}>
                 <div className={"flex items-center"}>
                     <button
                         type={"button"}
