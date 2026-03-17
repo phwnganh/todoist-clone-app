@@ -10,6 +10,7 @@ import {useLabelStore} from "@/stores/label.store.ts";
 import EditLabelModalDialog from "@/components/FiltersLabelsComponent/EditLabelsComponent/EditLabelModalDialog.tsx";
 import MyLabelsToolbarDropdown from "@/components/FiltersLabelsComponent/LabelsSection/MyLabelsToolbarDropdown.tsx";
 import {useRef} from "react";
+import {useClickOutside} from "@/hooks/useClickOutside.ts";
 
 type LabelsItemProps = {
     label: Label;
@@ -19,9 +20,15 @@ const LabelsItem = ({label}: LabelsItemProps) => {
     const tasksByLabel = getTasksByLabel(label.name, tasksData)
     const tasksByLabelLength = tasksByLabel?.length
     const labelsToolbarRef = useRef<HTMLDivElement | null>(null)
-    const {openEditLabelModalDialog, onOpenEditLabelModalDialog, openLabelToolbarDropdown, onOpenLabelToolbarDropdown} = useLabelStore()
+    const {openEditLabelModalDialog, onOpenEditLabelModalDialog, openLabelToolbarDropdown, onOpenLabelToolbarDropdown, onCloseLabelToolbarDropdown} = useLabelStore()
     const isOpenEditLabel = openEditLabelModalDialog === label.id
     const isOpenLabelToolbarDropdown = openLabelToolbarDropdown === label.id
+
+    useClickOutside({
+        ref: labelsToolbarRef,
+        handler: onCloseLabelToolbarDropdown,
+        enabled: isOpenLabelToolbarDropdown
+    })
     return (
         <li className={"border-b border-b-product-library-divider-primary cursor-pointer group"}>
             <div className={"flex justify-between w-full items-center p-1.5"}>
@@ -35,7 +42,7 @@ const LabelsItem = ({label}: LabelsItemProps) => {
                 </div>
                 <div className={"relative w-6 h-6 flex justify-end"}>
                     {tasksByLabelLength > 0 &&
-                        <p className={"absolute group-hover:opacity-0 group-hover:pointer-events-auto opacity-100 pointer-events-none text-sm text-product-library-actionable-quaternary-idle-tint"}>{tasksByLabelLength}</p>
+                        <p className={`absolute ${isOpenLabelToolbarDropdown ? "opacity-0 pointer-events-none" : "group-hover:opacity-0 group-hover:pointer-events-auto opacity-100 pointer-events-none"} text-sm text-product-library-actionable-quaternary-idle-tint`}>{tasksByLabelLength}</p>
                     }
                     <div className={`absolute ${isOpenLabelToolbarDropdown ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"} flex pl-4 gap-small`}>
                         <button type={"button"} aria-label={"add-to-favourite"} className={

@@ -39,7 +39,9 @@ const MyTaskListItem = ({
   level,
     sections,
 }: MyTaskListItemProps) => {
+    const taskToolbarRef = useRef<HTMLDivElement | null>(null)
   const { task, children } = taskNode;
+    const sectionName = sections?.find(s => s.id === task.section_id)?.name
   const { isExpanded, handleExpanded } = useExpanded(true);
   const { editingTaskId, deleteTaskId, onOpenEditTask, onCloseEditTask, taskDetailId, onOpenTaskDetail, onCloseTaskDetail, openTaskDetailToolbar, onOpenTaskDetailToolbar, onCloseTaskDetailToolbar } = useTaskStore();
   const {groupedBy} = useGroupingTaskStore()
@@ -54,14 +56,7 @@ const MyTaskListItem = ({
   const {setNodeRef, attributes, listeners, transition, transform} = useSortable({id: task.id, data: {
     type: "task"
   }})
-  const taskToolbarRef = useRef<HTMLDivElement | null>(null)
 
-  const sectionName = sections?.find(s => s.id === task.section_id)?.name
-  useClickOutside({
-    ref: taskToolbarRef,
-    handler: onCloseTaskDetailToolbar,
-    enabled: isOpenTaskDetailToolbar
-  })
   const style = {
     transition,
     transform: CSS.Transform.toString(transform)
@@ -77,6 +72,12 @@ const MyTaskListItem = ({
     e.stopPropagation()
     onOpenTaskDetailToolbar(taskId)
   }
+
+    useClickOutside({
+    ref: taskToolbarRef,
+    handler: onCloseTaskDetailToolbar,
+    enabled: isOpenTaskDetailToolbar
+  })
   return (
     <>
       {isEditing ? (
