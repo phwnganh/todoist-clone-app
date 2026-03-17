@@ -1,9 +1,15 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import type {Label, LabelPayload, LabelsResponse, UpdateLabelPayload} from "@/types/label.type.ts";
-import {apiCreateLabel, apiGetAllLabels, apiSearchLabels, apiUpdateLabel} from "@/services/label.service.ts";
+import {
+    apiCreateLabel,
+    apiDeleteLabel,
+    apiGetAllLabels,
+    apiSearchLabels,
+    apiUpdateLabel
+} from "@/services/label.service.ts";
 import type {ApiError, SyncResponse} from "@/types/api.type.ts";
 import {
-    optimisticCreateLabel, optimisticUpdateLabel,
+    optimisticCreateLabel, optimisticDeleteLabel, optimisticUpdateLabel,
     type OptimisticUpdatesContext,
 } from "@/helpers/optimisticUpdates.ts";
 import {commonLabelMutation} from "@/helpers/hookMutations.ts";
@@ -61,5 +67,19 @@ export const useUpdateLabels = () => {
             })
         },
         ...commonLabelMutation<SyncResponse, UpdateLabelPayload, OptimisticUpdatesContext>(queryClient)
+    })
+}
+
+export const useDeleteLabels = () => {
+    const queryClient = useQueryClient();
+    return useMutation<null, ApiError, {labelId: string}, OptimisticUpdatesContext>({
+        mutationFn: ({labelId}) => apiDeleteLabel(labelId),
+        onMutate: async ({labelId}) => {
+            return optimisticDeleteLabel({
+                queryClient,
+                labelId: labelId
+            })
+        },
+        ...commonLabelMutation<null, {labelId: string}, OptimisticUpdatesContext>(queryClient)
     })
 }
