@@ -1,4 +1,4 @@
-import type {FlattenTask, Task, TaskNode} from "@/types/task.type.ts";
+import type {Task, TaskNode} from "@/types/task.type.ts";
 import {useMemo} from "react";
 
 export const useTaskTreeMultiLevel = (tasks: Task[] | undefined, sectionId?: string | null): TaskNode[] => {
@@ -50,12 +50,16 @@ export const useTaskTreeMultiLevel = (tasks: Task[] | undefined, sectionId?: str
     }, [tasks, sectionId]);
 }
 
-export const flattenTaskMultiLevel = (nodes: TaskNode[], level = 0): FlattenTask[] => {
-    return nodes.flatMap(node => [
-        {
-            taskNode: node,
-            level
-        },
-        ...flattenTaskMultiLevel(node.children ?? [], level + 1)
-    ])
+export const useTaskTreeByLabel = (nodes: TaskNode[], label: string): TaskNode[] => {
+    return nodes.map(node => {
+        const filteredChildren = useTaskTreeByLabel(node.children, label)
+        const hasLabel = node.task.labels?.includes(label)
+        if(hasLabel || filteredChildren.length > 0){
+            return {
+                ...node,
+                children: filteredChildren
+            }
+        }
+        return null;
+    }).filter(Boolean) as TaskNode[]
 }

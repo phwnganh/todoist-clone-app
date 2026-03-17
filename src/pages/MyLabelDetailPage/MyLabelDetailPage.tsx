@@ -11,7 +11,6 @@ import {useQueryClient} from "@tanstack/react-query";
 import type {ViewMode, ViewOptionsPayload} from "@/types/viewOptions.type.ts";
 import type {HeaderLayoutType} from "@/types/headerLayout.type.ts";
 import {useViewOptions} from "@/hooks/useQueryHook/useViewOptions.ts";
-import type {Section} from "@/types/section.type.ts";
 import {useProjectStore} from "@/stores/project.store.ts";
 import {useGetALabel} from "@/hooks/useQueryHook/useLabels.ts";
 import MyTaskLabelTitle from "@/components/MyTasksComponent/TasksLabelComponent/MyTaskLabelTitle.tsx";
@@ -19,6 +18,8 @@ import MyTaskListLabelSection from "@/components/MyTasksComponent/TasksLabelComp
 import {useGetAllTasks} from "@/hooks/useQueryHook/useTasks.ts";
 import {useGetAllSections} from "@/hooks/useQueryHook/useSections.ts";
 import {useGetAllProjects} from "@/hooks/useQueryHook/useProjects.ts";
+import MyTaskBoardLabelSection
+    from "@/components/MyTasksComponent/TasksLabelComponent/MyTaskBoardLabelSection/MyTaskBoardLabelSection.tsx";
 
 const MyLabelDetailPage = () => {
     const {labelId} = useParams<{labelId: string}>()
@@ -28,17 +29,12 @@ const MyLabelDetailPage = () => {
     const {mutate: updateViewOptions} = useViewOptions()
     const {data: projectsData} = useGetAllProjects()
     const {data: labelData} = useGetALabel(labelId)
-    const {data: tasksData, isLoading} = useGetAllTasks({label: labelData?.name})
+    const {data: tasksData, isLoading} = useGetAllTasks({project_id: projectId, label: labelData?.name})
     const {data: sectionsData} = useGetAllSections({project_id: projectId})
     const queryClient = useQueryClient()
     const viewOptions = queryClient.getQueryData<ViewOptionsPayload>(["viewOptions", "LABEL", labelId])
     const layoutName = viewOptions?.view_mode ?? "LIST"
 
-    const NO_SECTION = {
-        id: null,
-        name: "(No section)",
-        project_id: projectId,
-    } as Section;
     useEffect(() => {
         setGroupedBy(viewOptions?.grouped_by ?? null)
     }, [viewOptions?.grouped_by, setGroupedBy]);
@@ -92,13 +88,14 @@ const MyLabelDetailPage = () => {
                 <section className={"max-w-200 mx-auto w-full relative z-10"}>
                     <div className={"flex flex-col gap-small"}>
                         <MyTaskLabelTitle labelData={labelData}/>
-                        <MyTaskListLabelSection tasksData={tasksData} sectionsData={sectionsData} isLoading={isLoading} isSortable={false} isTasksLabelView={true} projectsData={projectsData}/>
+                        <MyTaskListLabelSection tasks={tasksData?.results} sections={sectionsData?.results} isLoading={isLoading} isSortable={false} isTasksLabelView={true} projects={projectsData?.results}/>
                     </div>
                 </section>
                 ) : (
                     <section className={"px-10"}>
                         <div className={"flex flex-col gap-small"}>
                             <MyTaskLabelTitle labelData={labelData}/>
+                            <MyTaskBoardLabelSection tasks={tasksData?.results} sections={sectionsData?.results} isSortable={false} isTasksLabelView={true} projects={projectsData?.results}/>
                         </div>
                     </section>
             )}

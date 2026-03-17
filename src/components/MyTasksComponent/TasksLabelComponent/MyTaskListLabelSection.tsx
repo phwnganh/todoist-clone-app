@@ -1,25 +1,25 @@
-import type {TaskResponse} from "@/types/task.type.ts";
+import type {Task} from "@/types/task.type.ts";
 import MyTaskListItem from "@/components/MyTasksComponent/MyTaskListItem.tsx";
-import type {SectionResponse} from "@/types/section.type.ts";
+import type {Section} from "@/types/section.type.ts";
 import LoadingSpin from "@/components/ui/LoadingSpin.tsx";
-import type {ProjectResponse} from "@/types/project.type.ts";
+import type {Project} from "@/types/project.type.ts";
 
 type MyTaskListLabelSectionProps = {
-    tasksData?: TaskResponse
-    sectionsData?: SectionResponse
+    tasks?: Task[]
+    sections?: Section[]
     isLoading: boolean;
     isSortable?: boolean;
     isTasksLabelView?: boolean
-    projectsData?: ProjectResponse
+    projects?: Project[]
 }
-const MyTaskListLabelSection = ({tasksData, sectionsData, isLoading, isSortable, isTasksLabelView, projectsData}: MyTaskListLabelSectionProps) => {
+const MyTaskListLabelSection = ({tasks, sections, isLoading, isSortable, isTasksLabelView, projects}: MyTaskListLabelSectionProps) => {
     if(isLoading){
         return <LoadingSpin/>
     }
     return (
         <ul className={"mt-1.25 flex flex-col flex-wrap"}>
-            {tasksData?.results.map(task =>
-            <MyTaskListItem key={task.id} taskNode={{task, children: []}} level={0} sections={sectionsData?.results} isSortable={isSortable} isTasksLabelView={isTasksLabelView} projectsData={projectsData}/>)}
+            {tasks?.map(task =>
+            <MyTaskListItem key={task.id} taskNode={{task, children: []}} level={0} sections={sections} isSortable={isSortable} isTasksLabelView={isTasksLabelView} projects={projects}/>)}
         </ul>
     );
 };

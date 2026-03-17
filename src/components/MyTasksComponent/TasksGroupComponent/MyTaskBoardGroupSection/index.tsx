@@ -26,7 +26,7 @@ const MyTaskBoardGroupSection = ({title, tasks, sections}: MyTaskBoardGroupSecti
     return (
         <div className={"rounded-large ring ring-transparent hover:ring-border-hover py-2 px-4 shrink-0 w-70 flex flex-col gap-small"}>
             <MyTaskBoardGroupHeader title={title} tasks={tasks}/>
-            {tasks.map(task => <MyTaskBoardItem task={task} isOpenTaskDetailToolbar={openTaskDetailToolbar === task.id} onOpenTaskDetailToolbar={(e) => {
+            {tasks.map(task => <MyTaskBoardItem key={task.id} task={task} isOpenTaskDetailToolbar={openTaskDetailToolbar === task.id} onOpenTaskDetailToolbar={(e) => {
                 handleOpenTaskDetailToolbar(task.id, e);
             }} tasks={tasks} sections={sections}/>)}
         </div>

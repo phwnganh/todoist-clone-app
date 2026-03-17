@@ -21,6 +21,9 @@ import type {Section} from "@/types/section.type.ts";
 import SmallCalendarIcon from "@/components/icons/SmallCalendarIcon.tsx";
 import ChildrenIcon from "@/components/icons/ChildrenIcon.tsx";
 import {useClickOutside} from "@/hooks/useClickOutside.ts";
+import type {Project} from "@/types/project.type.ts";
+import HashtagIcon from "@/components/icons/HashtagIcon.tsx";
+import {getProjectColorClass} from "@/helpers/getProjectColorClass.ts";
 
 type MyTaskBoardItemProps = {
   task: Task;
@@ -28,13 +31,19 @@ type MyTaskBoardItemProps = {
   onOpenTaskDetailToolbar: (e: MouseEvent<HTMLButtonElement>) => void;
   tasks: Task[];
   sections?: Section[];
+  isSortable?: boolean;
+  isTasksLabelView?: boolean;
+  projects?: Project[];
 };
 const MyTaskBoardItem = ({
   task,
   isOpenTaskDetailToolbar,
   onOpenTaskDetailToolbar,
   tasks,
-    sections
+    sections,
+    isSortable = true,
+    isTasksLabelView = false,
+    projects,
 }: MyTaskBoardItemProps) => {
   const { editingTaskId, onCloseEditTask, deleteTaskId, taskDetailId, onOpenTaskDetail, onCloseTaskDetail, onCloseTaskDetailToolbar, openTaskDetailToolbar } = useTaskStore();
   const {groupedBy} = useGroupingTaskStore()
@@ -45,7 +54,10 @@ const MyTaskBoardItem = ({
   const isGrouping = groupedBy != null
   const {category, label} = getDueInfo(task?.due?.date)
   const taskToolbarRef = useRef<HTMLDivElement>(null);
-  const {setNodeRef, attributes, listeners, transition, transform} = useSortable({id: task.id})
+  const {setNodeRef, attributes, listeners, transition, transform} = useSortable({id: task.id,
+        disabled: !isSortable
+      },
+      )
   const style = {
     transition,
     transform: CSS.Transform.toString(transform)
@@ -61,6 +73,8 @@ const MyTaskBoardItem = ({
   }, [tasks, task.id]);
 
   const sectionName = sections?.find(s => s.id === task.section_id)?.name
+  const projectName = projects?.find(p => p.id === task.project_id)?.name
+  const projectColor = projects?.find(p => p.id === task.project_id)?.color
   const completedChildrenLength = childrenTasks.filter(task => task.checked || task.completed_at).length
 
   useClickOutside({
@@ -84,7 +98,7 @@ const MyTaskBoardItem = ({
             "flex items-start outline outline-product-library-divider-primary hover:outline-product-library-divider-on-dark shadow-sm rounded-large p-2.5 group relative"
           }
         >
-          {!isGrouping &&
+          {!isGrouping && isSortable &&
               <button type={"button"} {...attributes} {...listeners} className={"flex justify-center items-center w-6 h-6 cursor-grab active:cursor-grabbing hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}>
                 <DragDropIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
               </button>
@@ -152,6 +166,18 @@ const MyTaskBoardItem = ({
               <MyTaskBoardLabelsPreview labels={task.labels} />
 
               {sectionName && isGrouping && <p className={"text-xs text-product-library-display-secondary-idle-tint"}>/{sectionName}</p>}
+              {projectName && isTasksLabelView &&
+                  (
+                      <div className={"flex gap-0.5 justify-end items-center"}>
+                        <p className={"text-xs text-product-library-display-secondary-idle-tint"}>{projectName}</p>
+                        {sectionName && <span className={"text-xs text-product-library-display-secondary-idle-tint"}>/{sectionName}</span>}
+                        <div className={"flex items-center justify-center w-3 h-3"}>
+                          <HashtagIcon className={`${getProjectColorClass(projectColor)}`}/>
+                        </div>
+                      </div>
+
+                  )
+              }
             </div>
           </div>
           <button
