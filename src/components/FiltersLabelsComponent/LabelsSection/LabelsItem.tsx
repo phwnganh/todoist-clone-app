@@ -6,6 +6,8 @@ import HeartIcon from "@/components/icons/HeartIcon.tsx";
 import EditIcon from "@/components/icons/EditIcon.tsx";
 import MenuIcon from "@/components/icons/MenuIcon.tsx";
 import {getProjectColorClass} from "@/helpers/getProjectColorClass.ts";
+import {useLabelStore} from "@/stores/label.store.ts";
+import EditLabelModalDialog from "@/components/FiltersLabelsComponent/EditLabelsComponent/EditLabelModalDialog.tsx";
 
 type LabelsItemProps = {
     label: Label;
@@ -14,6 +16,7 @@ const LabelsItem = ({label}: LabelsItemProps) => {
     const {data: tasksData} = useGetAllTasks()
     const tasksByLabel = getTasksByLabel(label.name, tasksData)
     const tasksByLabelLength = tasksByLabel?.length
+    const {openEditLabelModalDialog, onOpenEditLabelModalDialog} = useLabelStore()
     return (
         <li className={"border-b border-b-product-library-divider-primary cursor-pointer group"}>
             <div className={"flex justify-between w-full items-center p-1.5"}>
@@ -35,7 +38,7 @@ const LabelsItem = ({label}: LabelsItemProps) => {
                         }>
                             <HeartIcon className={"text-product-library-display-secondary-idle-tint"}/>
                         </button>
-                        <button type={"button"} aria-label={"edit-label"} className={
+                        <button type={"button"} aria-label={"edit-label"} onClick={() => onOpenEditLabelModalDialog(label.id)} className={
                             "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
                         }>
                             <EditIcon className={"text-product-library-display-secondary-idle-tint"}/>
@@ -47,10 +50,8 @@ const LabelsItem = ({label}: LabelsItemProps) => {
                         </button>
                     </div>
                 </div>
-
-
             </div>
-
+            {openEditLabelModalDialog && <EditLabelModalDialog label={label}/>}
         </li>
     );
 };

@@ -1,12 +1,12 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import type {Label, LabelPayload, LabelsResponse} from "@/types/label.type.ts";
-import {apiCreateLabel, apiGetAllLabels, apiSearchLabels} from "@/services/label.service.ts";
+import type {Label, LabelPayload, LabelsResponse, UpdateLabelPayload} from "@/types/label.type.ts";
+import {apiCreateLabel, apiGetAllLabels, apiSearchLabels, apiUpdateLabel} from "@/services/label.service.ts";
 import type {ApiError, SyncResponse} from "@/types/api.type.ts";
 import {
-    optimisticCreateLabel,
+    optimisticCreateLabel, optimisticUpdateLabel,
     type OptimisticUpdatesContext,
-    rollbackOptimisticUpdates
 } from "@/helpers/optimisticUpdates.ts";
+import {commonLabelMutation} from "@/helpers/hookMutations.ts";
 
 export const useGetAllLabels = () => {
     return useQuery<LabelsResponse>({
@@ -41,29 +41,25 @@ export const useCreateLabels = () => {
             })
             return {...res, tempId, optimisticLabel}
         },
-        onSuccess: (res, _, context) => {
-            const realId = res.temp_id_mapping?.[context.tempId!]
-            if(!realId) return;
-            queryClient.setQueryData<LabelsResponse>(["labels"], old => {
-                if(!old) return old;
-                return {
-                    ...old,
-                    results: old.results.map(t => t.id === context.tempId ? {...t, id: realId}: t)
+        ...commonLabelMutation<SyncResponse, LabelPayload, OptimisticUpdatesContext>(queryClient)
+    })
+}
+
+export const useUpdateLabels = () => {
+    const queryClient = useQueryClient();
+    return useMutation<SyncResponse, ApiError, UpdateLabelPayload, OptimisticUpdatesContext>({
+        mutationFn: apiUpdateLabel,
+        onMutate: async (updatingLabel) => {
+            return optimisticUpdateLabel({
+                queryClient,
+                labelId: updatingLabel.id,
+                optimisticLabel: {
+                    id: updatingLabel.id,
+                    name: updatingLabel.name,
+                    color: updatingLabel.color ?? "",
                 }
             })
         },
-        onError: (_, __, context) => {
-            rollbackOptimisticUpdates({
-                queryClient,
-                context
-            })
-        },
-        onSettled: error => {
-            if(error){
-                void queryClient.invalidateQueries({
-                    queryKey: ["labels"]
-                })
-            }
-        }
+        ...commonLabelMutation<SyncResponse, UpdateLabelPayload, OptimisticUpdatesContext>(queryClient)
     })
 }

@@ -10,7 +10,7 @@ const AddLabelsModalDialog = () => {
         name: "",
         color: null
     })
-    const {onCloseLabelModalDialog} = useLabelStore()
+    const {onCloseAddLabelModalDialog} = useLabelStore()
     const {mutate, isPending, isError, error} = useCreateLabels()
     const formValuesPayload = (values: LabelsFormValues): LabelPayload => {
         return {
@@ -23,10 +23,10 @@ const AddLabelsModalDialog = () => {
         e.preventDefault();
         const payload = formValuesPayload(values)
         mutate(payload)
-        onCloseLabelModalDialog()
+        onCloseAddLabelModalDialog()
     }
     return (
-        <LabelsForm title={"Add Label"} onClose={onCloseLabelModalDialog} onSubmit={handleCreateLabel} submitLabel={"Add"} submittingLabel={"Adding"} values={values} onChange={setValues} isPending={isPending} errorMessage={isError ? error.message : null}/>
+        <LabelsForm title={"Add Label"} onClose={onCloseAddLabelModalDialog} onSubmit={handleCreateLabel} submitLabel={"Add"} submittingLabel={"Adding"} values={values} onChange={setValues} isPending={isPending} errorMessage={isError ? error.message : null}/>
     );
 };
 
