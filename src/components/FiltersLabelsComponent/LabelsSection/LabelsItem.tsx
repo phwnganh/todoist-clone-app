@@ -7,10 +7,12 @@ import EditIcon from "@/components/icons/EditIcon.tsx";
 import MenuIcon from "@/components/icons/MenuIcon.tsx";
 import {getProjectColorClass} from "@/helpers/getProjectColorClass.ts";
 import {useLabelStore} from "@/stores/label.store.ts";
-import EditLabelModalDialog from "@/components/FiltersLabelsComponent/EditLabelsComponent/EditLabelModalDialog.tsx";
+import EditLabelModalDialog from "@/components/FiltersLabelsComponent/EditLabelsComponent";
 import MyLabelsToolbarDropdown from "@/components/FiltersLabelsComponent/LabelsSection/MyLabelsToolbarDropdown.tsx";
 import {useRef} from "react";
 import {useClickOutside} from "@/hooks/useClickOutside.ts";
+import DeleteLabelModalDialog
+    from "@/components/FiltersLabelsComponent/DeleteLabelsComponent/DeleteLabelModalDialog.tsx";
 
 type LabelsItemProps = {
     label: Label;
@@ -20,8 +22,9 @@ const LabelsItem = ({label}: LabelsItemProps) => {
     const tasksByLabel = getTasksByLabel(label.name, tasksData)
     const tasksByLabelLength = tasksByLabel?.length
     const labelsToolbarRef = useRef<HTMLDivElement | null>(null)
-    const {openEditLabelModalDialog, onOpenEditLabelModalDialog, openLabelToolbarDropdown, onOpenLabelToolbarDropdown, onCloseLabelToolbarDropdown} = useLabelStore()
+    const {openEditLabelModalDialog, onOpenEditLabelModalDialog, openLabelToolbarDropdown, onOpenLabelToolbarDropdown, onCloseLabelToolbarDropdown, openDeleteLabelModalDialog, onOpenDeleteLabelModalDialog} = useLabelStore()
     const isOpenEditLabel = openEditLabelModalDialog === label.id
+    const isOpenDeleteLabel = openDeleteLabelModalDialog === label.id
     const isOpenLabelToolbarDropdown = openLabelToolbarDropdown === label.id
 
     useClickOutside({
@@ -69,6 +72,7 @@ const LabelsItem = ({label}: LabelsItemProps) => {
                 </div>
             </div>
             {isOpenEditLabel && <EditLabelModalDialog label={label}/>}
+            {isOpenDeleteLabel && <DeleteLabelModalDialog label={label}/>}
         </li>
     );
 };

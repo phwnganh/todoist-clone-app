@@ -11,7 +11,7 @@ type MyLabelsToolbarDropdownProps = {
     labelId: string;
 }
 const MyLabelsToolbarDropdown = ({labelId}: MyLabelsToolbarDropdownProps) => {
-    const {onCloseLabelToolbarDropdown, onOpenEditLabelModalDialog} = useLabelStore()
+    const {onCloseLabelToolbarDropdown, onOpenEditLabelModalDialog, onOpenDeleteLabelModalDialog} = useLabelStore()
     const MY_LABELS_MENU_TOOLBAR: MySectionMenuToolbar[] = [
         {
             label: "Edit",
@@ -40,7 +40,8 @@ const MyLabelsToolbarDropdown = ({labelId}: MyLabelsToolbarDropdownProps) => {
             label: "Delete",
             icon: <TrashIcon className={"text-product-library-actionable-destructive-idle-fill"}/>,
             onClick: () => {
-                console.log("trash")
+                onCloseLabelToolbarDropdown()
+                onOpenDeleteLabelModalDialog(labelId)
             }
         }
     ]
