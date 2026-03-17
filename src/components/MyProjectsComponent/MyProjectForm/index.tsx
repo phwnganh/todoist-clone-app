@@ -1,4 +1,3 @@
-import { createPortal } from "react-dom";
 import type { Color } from "@/types/color.type.ts";
 import CustomSwitch from "@/components/ui/CustomSwitch.tsx";
 import { LAYOUT_ITEMS } from "@/data/menuNav.data.ts";

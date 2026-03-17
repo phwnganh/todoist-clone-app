@@ -258,6 +258,33 @@ export async function optimisticCreateLabel({queryClient, optimisticLabel}: {que
   return { previousData };
 }
 
+export async function optimisticUpdateLabel({queryClient, labelId, optimisticLabel}: {queryClient: QueryClient, labelId: string; optimisticLabel: Partial<Label>}): Promise<OptimisticUpdatesContext>{
+  await queryClient.cancelQueries({queryKey: ['labels']})
+  const previousData = queryClient.getQueriesData<LabelsResponse>({queryKey: ['labels']})
+  queryClient.setQueriesData<LabelsResponse>({queryKey: ['labels']}, old => {
+    if(!old) return old;
+    return {
+      ...old,
+      results: old.results.map(label => label.id === labelId ? {...label, ...optimisticLabel}: label)
+    }
+  })
+  return {previousData}
+}
+
+export async function optimisticDeleteLabel({queryClient, labelId}: {queryClient: QueryClient; labelId: string}): Promise<OptimisticUpdatesContext>{
+  await queryClient.cancelQueries({queryKey: ['labels']})
+  const previousData = queryClient.getQueriesData<LabelsResponse>({queryKey: ['labels']})
+  queryClient.setQueriesData<LabelsResponse>({queryKey: ['labels']}, old => {
+    if(!old) return old;
+    return {
+      ...old,
+      results: old.results.filter(label => label.id !== labelId)
+    }
+  })
+
+  return {previousData}
+}
+
 export async function optimisticViewOptions({queryClient, optimisticViewOptions}: {queryClient: QueryClient, optimisticViewOptions: ViewOptionsPayload}): Promise<OptimisticUpdatesContext>{
   const key: QueryKey = [
       'viewOptions', optimisticViewOptions.view_type, optimisticViewOptions.object_id

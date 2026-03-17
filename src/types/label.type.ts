@@ -15,3 +15,9 @@ export type LabelPayload = {
     color?: string;
     item_order?: number;
 }
+
+export type UpdateLabelPayload = {
+    id: string;
+    name?: string;
+    color?: string;
+}

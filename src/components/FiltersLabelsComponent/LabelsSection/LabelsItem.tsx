@@ -5,6 +5,7 @@ import {useGetAllTasks} from "@/hooks/useQueryHook/useTasks.ts";
 import HeartIcon from "@/components/icons/HeartIcon.tsx";
 import EditIcon from "@/components/icons/EditIcon.tsx";
 import MenuIcon from "@/components/icons/MenuIcon.tsx";
+import {getProjectColorClass} from "@/helpers/getProjectColorClass.ts";
 
 type LabelsItemProps = {
     label: Label;
@@ -18,7 +19,7 @@ const LabelsItem = ({label}: LabelsItemProps) => {
             <div className={"flex justify-between w-full items-center p-1.5"}>
                 <div className={"flex items-center gap-1.5"}>
                     <div className={"flex justify-center items-center shrink-0"}>
-                        <LabelIcon className={"text-product-library-display-secondary-idle-tint"}/>
+                        <LabelIcon className={`${getProjectColorClass(label.color)}`}/>
                     </div>
                     <p className={"text-sm mb-0.75 text-product-library-display-primary-idle-tint"}>
                         {label.name}

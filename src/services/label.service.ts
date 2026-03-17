@@ -1,5 +1,5 @@
 import {api} from "./api.ts";
-import type {LabelPayload, LabelsResponse} from "@/types/label.type.ts";
+import type {LabelPayload, LabelsResponse, UpdateLabelPayload} from "@/types/label.type.ts";
 import type {SyncResponse} from "@/types/api.type.ts";
 
 export const apiGetAllLabels = () => {
@@ -21,4 +21,19 @@ export const apiCreateLabel = async (payload: LabelPayload): Promise<SyncRespons
             args: payload
         }
     ])
+}
+
+export const apiUpdateLabel = async (payload: UpdateLabelPayload): Promise<SyncResponse> => {
+    const uuid = crypto.randomUUID()
+    return api.sync<SyncResponse, UpdateLabelPayload>([
+        {
+            type: "label_update",
+            uuid,
+            args: payload
+        }
+    ])
+}
+
+export const apiDeleteLabel = async (labelId: string) => {
+    return api.delete<null>(`/labels/${labelId}`);
 }

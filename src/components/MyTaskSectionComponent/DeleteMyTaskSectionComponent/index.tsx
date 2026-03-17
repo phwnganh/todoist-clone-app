@@ -2,7 +2,6 @@ import {useSectionStore} from "@/stores/section.store.ts";
 import {type MouseEvent} from "react";
 import {useDeleteSection} from "@/hooks/useQueryHook/useSections.ts";
 import type {Section} from "@/types/section.type.ts";
-import {createPortal} from "react-dom";
 import CustomDialog from "@/components/ui/CustomDialog.tsx";
 
 const DeleteMyTaskSectionModalDialog = ({section}: {section: Section}) => {

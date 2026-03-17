@@ -7,6 +7,8 @@ import CustomDialog from "@/components/ui/CustomDialog.tsx";
 import QuestionIcon from "@/components/icons/QuestionIcon.tsx";
 import LargeCloseIcon from "@/components/icons/LargeCloseIcon.tsx";
 import CustomSwitch from "@/components/ui/CustomSwitch.tsx";
+import LabelNameSection from "@/components/FiltersLabelsComponent/EachLabelFieldSection/LabelNameSection.tsx";
+import LabelColorSection from "@/components/FiltersLabelsComponent/EachLabelFieldSection/LabelColorSection.tsx";
 export type LabelsFormValues = {
     name: string;
     color: Color | null;
