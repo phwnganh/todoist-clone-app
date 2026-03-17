@@ -28,20 +28,31 @@ import type {Section} from "@/types/section.type.ts";
 import SmallCalendarIcon from "@/components/icons/SmallCalendarIcon.tsx";
 import LabelIcon from "@/components/icons/LabelIcon.tsx";
 import ChildrenIcon from "@/components/icons/ChildrenIcon.tsx";
+import type {ProjectResponse} from "@/types/project.type.ts";
+import HashtagIcon from "@/components/icons/HashtagIcon.tsx";
+import {getProjectColorClass} from "@/helpers/getProjectColorClass.ts";
 
 type MyTaskListItemProps = {
   taskNode: TaskNode;
   level: number;
   sections?: Section[]
+  isSortable?: boolean;
+  isTasksLabelView?: boolean;
+  projectsData?: ProjectResponse
 };
 const MyTaskListItem = ({
   taskNode,
   level,
     sections,
+    isSortable = true, isTasksLabelView = false,
+    projectsData
 }: MyTaskListItemProps) => {
     const taskToolbarRef = useRef<HTMLDivElement | null>(null)
   const { task, children } = taskNode;
     const sectionName = sections?.find(s => s.id === task.section_id)?.name
+  const projectName = projectsData?.results?.find(p => p.id === task.project_id)?.name
+  const projectColor = projectsData?.results?.find(p => p.id === task.project_id)?.color
+
   const { isExpanded, handleExpanded } = useExpanded(true);
   const { editingTaskId, deleteTaskId, onOpenEditTask, onCloseEditTask, taskDetailId, onOpenTaskDetail, onCloseTaskDetail, openTaskDetailToolbar, onOpenTaskDetailToolbar, onCloseTaskDetailToolbar } = useTaskStore();
   const {groupedBy} = useGroupingTaskStore()
@@ -55,7 +66,8 @@ const MyTaskListItem = ({
   const {category, label} = getDueInfo(task?.due?.date)
   const {setNodeRef, attributes, listeners, transition, transform} = useSortable({id: task.id, data: {
     type: "task"
-  }})
+  },
+  disabled: !isSortable})
 
   const style = {
     transition,
@@ -88,7 +100,7 @@ const MyTaskListItem = ({
         />
       ) : (
           <div ref={setNodeRef} style={style} className={"flex items-start gap-5 px-2 border-b border-b-product-library-divider-primary"}>
-            {!isGrouping &&
+            {!isGrouping && isSortable &&
                 <button type={"button"} className={"flex justify-center items-center w-6 h-6 hover:bg-product-library-selectable-secondary-hover-fill rounded-small"} {...attributes} {...listeners}>
                   <DragDropIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                 </button>
@@ -239,7 +251,18 @@ const MyTaskListItem = ({
                 {sectionName && isGrouping &&
                     <p className={"self-end text-xs text-product-library-display-secondary-idle-tint"}>/{sectionName}</p>
                 }
+                {projectName && isTasksLabelView &&
+                    (
+                        <div className={"flex gap-0.5 justify-end items-center"}>
+                          <p className={"text-xs text-product-library-display-secondary-idle-tint"}>{projectName}</p>
+                          {sectionName && <span className={"text-xs text-product-library-display-secondary-idle-tint"}>/{sectionName}</span>}
+                          <div className={"flex items-center justify-center w-3 h-3"}>
+                            <HashtagIcon className={`${getProjectColorClass(projectColor)}`}/>
+                          </div>
+                        </div>
 
+                    )
+                }
               </div>
             </li>
           </div>
@@ -254,6 +277,8 @@ const MyTaskListItem = ({
                     taskNode={child}
                     level={level + 1}
                     sections={sections}
+                    isTasksLabelView={isTasksLabelView}
+                    projectsData={projectsData}
                 />
             ))}
           </SortableContext>

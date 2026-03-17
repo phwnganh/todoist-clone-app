@@ -3,24 +3,26 @@ import type {
     MoveTaskPayload, ReorderTaskPayload,
     SubTaskPayload,
     Task,
-    TaskPayload,
+    TaskPayload, TaskQuery,
     TaskResponse,
     UpdateTaskPayload
 } from "@/types/task.type.ts";
 import type {SyncResponse} from "@/types/api.type.ts";
-import type {SectionQuery} from "@/types/section.type.ts";
 
-const buildSectionQuery = (query?: SectionQuery): string => {
+const buildSectionQuery = (query?: TaskQuery): string => {
     if(!query) return "";
     const params = new URLSearchParams();
     if(query.project_id){
         params.append("project_id", query.project_id);
     }
+    if(query.label){
+        params.append("label", query.label);
+    }
     const queryString = params.toString();
     return queryString ? `?${queryString}` : "";
 }
 
-export const apiGetAllTasks = (query?: SectionQuery) => {
+export const apiGetAllTasks = (query?: TaskQuery) => {
     return api.get<TaskResponse>(`/tasks${buildSectionQuery(query)}`);
 }
 

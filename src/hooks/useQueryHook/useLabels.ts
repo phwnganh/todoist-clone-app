@@ -2,7 +2,7 @@ import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import type {Label, LabelPayload, LabelsResponse, UpdateLabelPayload} from "@/types/label.type.ts";
 import {
     apiCreateLabel,
-    apiDeleteLabel,
+    apiDeleteLabel, apiGetALabel,
     apiGetAllLabels,
     apiSearchLabels,
     apiUpdateLabel
@@ -18,6 +18,13 @@ export const useGetAllLabels = () => {
     return useQuery<LabelsResponse>({
         queryKey: ["labels"],
         queryFn: apiGetAllLabels,
+    })
+}
+
+export const useGetALabel = (labelId?: string) => {
+    return useQuery<Label>({
+        queryKey: ["label-detail", labelId],
+        queryFn: () => apiGetALabel(labelId),
     })
 }
 

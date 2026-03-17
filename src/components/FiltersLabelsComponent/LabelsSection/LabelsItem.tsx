@@ -1,6 +1,5 @@
 import type {Label} from "@/types/label.type.ts";
 import LabelIcon from "@/components/icons/LabelIcon.tsx";
-import {getTasksByLabel} from "@/helpers/getTasksByLabel.ts";
 import {useGetAllTasks} from "@/hooks/useQueryHook/useTasks.ts";
 import HeartIcon from "@/components/icons/HeartIcon.tsx";
 import EditIcon from "@/components/icons/EditIcon.tsx";
@@ -12,37 +11,39 @@ import MyLabelsToolbarDropdown from "@/components/FiltersLabelsComponent/LabelsS
 import {useRef} from "react";
 import {useClickOutside} from "@/hooks/useClickOutside.ts";
 import DeleteLabelModalDialog
-    from "@/components/FiltersLabelsComponent/DeleteLabelsComponent/DeleteLabelModalDialog.tsx";
+    from "@/components/FiltersLabelsComponent/DeleteLabelsComponent";
+import {useNavigate} from "react-router-dom";
+import {LABEL_DETAILS} from "@/constants/routes.constants.ts";
 
 type LabelsItemProps = {
     label: Label;
 }
 const LabelsItem = ({label}: LabelsItemProps) => {
-    const {data: tasksData} = useGetAllTasks()
-    const tasksByLabel = getTasksByLabel(label.name, tasksData)
-    const tasksByLabelLength = tasksByLabel?.length
+    const {data: tasksData} = useGetAllTasks({label: label.name})
+    const tasksByLabelLength = tasksData?.results?.length ?? 0
     const labelsToolbarRef = useRef<HTMLDivElement | null>(null)
-    const {openEditLabelModalDialog, onOpenEditLabelModalDialog, openLabelToolbarDropdown, onOpenLabelToolbarDropdown, onCloseLabelToolbarDropdown, openDeleteLabelModalDialog, onOpenDeleteLabelModalDialog} = useLabelStore()
+    const {openEditLabelModalDialog, onOpenEditLabelModalDialog, openLabelToolbarDropdown, onOpenLabelToolbarDropdown, onCloseLabelToolbarDropdown, openDeleteLabelModalDialog} = useLabelStore()
     const isOpenEditLabel = openEditLabelModalDialog === label.id
     const isOpenDeleteLabel = openDeleteLabelModalDialog === label.id
     const isOpenLabelToolbarDropdown = openLabelToolbarDropdown === label.id
-
+    const navigate = useNavigate()
     useClickOutside({
         ref: labelsToolbarRef,
         handler: onCloseLabelToolbarDropdown,
         enabled: isOpenLabelToolbarDropdown
     })
+
     return (
         <li className={"border-b border-b-product-library-divider-primary cursor-pointer group"}>
             <div className={"flex justify-between w-full items-center p-1.5"}>
-                <div className={"flex items-center gap-1.5"}>
+                <button type={"button"} onClick={() => navigate(`${LABEL_DETAILS}/${label.id}`)} className={"flex items-center gap-1.5 cursor-pointer"}>
                     <div className={"flex justify-center items-center shrink-0"}>
                         <LabelIcon className={`${getProjectColorClass(label.color)}`}/>
                     </div>
                     <p className={"text-sm mb-0.75 text-product-library-display-primary-idle-tint"}>
                         {label.name}
                     </p>
-                </div>
+                </button>
                 <div className={"relative w-6 h-6 flex justify-end"}>
                     {tasksByLabelLength > 0 &&
                         <p className={`absolute ${isOpenLabelToolbarDropdown ? "opacity-0 pointer-events-none" : "group-hover:opacity-0 group-hover:pointer-events-auto opacity-100 pointer-events-none"} text-sm text-product-library-actionable-quaternary-idle-tint`}>{tasksByLabelLength}</p>

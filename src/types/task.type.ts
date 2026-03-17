@@ -97,6 +97,7 @@ export type ReorderTaskPayload = {
 
 export type TaskQuery = {
     project_id?: string;
+    label?: string;
 }
 
 export type FlattenTask = {

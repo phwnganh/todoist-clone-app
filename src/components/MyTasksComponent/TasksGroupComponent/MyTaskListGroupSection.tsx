@@ -9,8 +9,9 @@ type MyTaskGroupSectionProps = {
     title: string;
     tasks: Task[];
     sections?: Section[]
+    isSortable?: boolean
 }
-const MyTaskListGroupSection = ({title, tasks, sections}: MyTaskGroupSectionProps) => {
+const MyTaskListGroupSection = ({title, tasks, sections, isSortable}: MyTaskGroupSectionProps) => {
     const { isExpanded, handleExpanded } = useExpanded(true);
     return (
         <section className={"pb-4.5 px-3 lg:px-0"}>
@@ -36,7 +37,7 @@ const MyTaskListGroupSection = ({title, tasks, sections}: MyTaskGroupSectionProp
                 <ul className={"mt-1.25 flex flex-col flex-wrap"}>
                     {tasks.map(task => (
                         <MyTaskListItem key={task.id} taskNode={{task, children: []}} level={0}
-                                        sections={sections}
+                                        sections={sections} isSortable={isSortable}
                         />
                     ))}
                 </ul>

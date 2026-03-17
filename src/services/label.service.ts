@@ -1,9 +1,13 @@
 import {api} from "./api.ts";
-import type {LabelPayload, LabelsResponse, UpdateLabelPayload} from "@/types/label.type.ts";
+import type {Label, LabelPayload, LabelsResponse, UpdateLabelPayload} from "@/types/label.type.ts";
 import type {SyncResponse} from "@/types/api.type.ts";
 
 export const apiGetAllLabels = () => {
     return api.get<LabelsResponse>(`/labels`);
+}
+
+export const apiGetALabel = async (labelId?: string) => {
+    return api.get<Label>(`/labels/${labelId}`);
 }
 
 export const apiSearchLabels = (query: string) => {

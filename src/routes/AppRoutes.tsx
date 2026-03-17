@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import {
     ACTIVITY,
     FILTERS_LABEL,
-    INBOX,
+    INBOX, LABEL_DETAILS,
     LOGIN,
     PROJECT_DETAILS,
     PROJECTS,
@@ -20,6 +20,7 @@ import ActivityPage from "@/pages/ActivityPage";
 import MyProjectDetailPage from "@/pages/MyProjectDetailPage";
 import GoogleRedirectPage from "@/pages/GoogleRedirectPage";
 import PublicRoute from "./PublicRoute.tsx";
+import MyLabelDetailPage from "@/pages/MyLabelDetailPage/MyLabelDetailPage.tsx";
 
 const AppRoutes = () => {
     return (
@@ -33,8 +34,9 @@ const AppRoutes = () => {
                    <Route path={TODAY} element={<TodayPage/>}/>
                    <Route path={UPCOMING} element={<UpcomingPage/>}/>
                    <Route path={FILTERS_LABEL} element={<FiltersPage/>}/>
+                   <Route path={`${LABEL_DETAILS}/:labelId`} element={<MyLabelDetailPage/>}/>
                    <Route path={ACTIVITY} element={<ActivityPage/>}/>
-                   <Route path="/" element={<MyProjectsPage/>} index/>
+                   <Route path="/" element={<InboxPage/>} index/>
                </Route>
                <Route path="/google-redirect" element={<GoogleRedirectPage/>}/>
             </Routes> 

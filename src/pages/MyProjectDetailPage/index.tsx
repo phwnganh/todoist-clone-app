@@ -149,10 +149,10 @@ const MyProjectDetailPage = () => {
                     </button>
                 </div>
             } left={<div className={"flex items-center mr-auto"}>
-                <button onClick={() => navigate(PROJECTS)} className={"flex sm:hidden justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small p-1.5"}>
+                <button onClick={() => navigate(PROJECTS)} className={"flex sm:hidden justify-center items-center hover:bg-product-library-selectable-secondary-hover-fill rounded-small p-1.5"}>
                     <HeaderThreeDotsIcon className={"text-product-library-display-secondary-idle-tint"}/>
                 </button>
-                <button className={"hidden sm:block px-1 text-product-library-actionable-quaternary-idle-tint text-sm font-medium hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small p-1.5"} onClick={() => navigate(PROJECTS)}>My Projects</button>
+                <button className={"hidden sm:block px-1 text-product-library-actionable-quaternary-idle-tint text-sm font-medium hover:bg-product-library-selectable-secondary-hover-fill rounded-small p-1.5"} onClick={() => navigate(PROJECTS)}>My Projects</button>
                 <div className={"text-sm text-product-library-display-secondary-idle-tint"}>/</div>
             </div>}></HeaderLayout>
             <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver} collisionDetection={customCollisionDetection}>
