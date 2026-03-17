@@ -8,6 +8,8 @@ import MenuIcon from "@/components/icons/MenuIcon.tsx";
 import {getProjectColorClass} from "@/helpers/getProjectColorClass.ts";
 import {useLabelStore} from "@/stores/label.store.ts";
 import EditLabelModalDialog from "@/components/FiltersLabelsComponent/EditLabelsComponent/EditLabelModalDialog.tsx";
+import MyLabelsToolbarDropdown from "@/components/FiltersLabelsComponent/LabelsSection/MyLabelsToolbarDropdown.tsx";
+import {useRef} from "react";
 
 type LabelsItemProps = {
     label: Label;
@@ -16,7 +18,10 @@ const LabelsItem = ({label}: LabelsItemProps) => {
     const {data: tasksData} = useGetAllTasks()
     const tasksByLabel = getTasksByLabel(label.name, tasksData)
     const tasksByLabelLength = tasksByLabel?.length
-    const {openEditLabelModalDialog, onOpenEditLabelModalDialog} = useLabelStore()
+    const labelsToolbarRef = useRef<HTMLDivElement | null>(null)
+    const {openEditLabelModalDialog, onOpenEditLabelModalDialog, openLabelToolbarDropdown, onOpenLabelToolbarDropdown} = useLabelStore()
+    const isOpenEditLabel = openEditLabelModalDialog === label.id
+    const isOpenLabelToolbarDropdown = openLabelToolbarDropdown === label.id
     return (
         <li className={"border-b border-b-product-library-divider-primary cursor-pointer group"}>
             <div className={"flex justify-between w-full items-center p-1.5"}>
@@ -32,7 +37,7 @@ const LabelsItem = ({label}: LabelsItemProps) => {
                     {tasksByLabelLength > 0 &&
                         <p className={"absolute group-hover:opacity-0 group-hover:pointer-events-auto opacity-100 pointer-events-none text-sm text-product-library-actionable-quaternary-idle-tint"}>{tasksByLabelLength}</p>
                     }
-                    <div className={"absolute opacity-0 group-hover:opacity-100 flex pl-4 gap-small"}>
+                    <div className={`absolute ${isOpenLabelToolbarDropdown ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto"} flex pl-4 gap-small`}>
                         <button type={"button"} aria-label={"add-to-favourite"} className={
                             "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
                         }>
@@ -43,15 +48,20 @@ const LabelsItem = ({label}: LabelsItemProps) => {
                         }>
                             <EditIcon className={"text-product-library-display-secondary-idle-tint"}/>
                         </button>
-                        <button type={"button"} aria-label={"menu"} className={
-                            "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
-                        }>
-                            <MenuIcon className={"text-product-library-display-secondary-idle-tint"}/>
-                        </button>
+                        <div className={"relative"} ref={labelsToolbarRef}>
+                            <button type={"button"} aria-label={"menu"} onClick={() => onOpenLabelToolbarDropdown(label.id)} className={
+                                "rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
+                            }>
+                                <MenuIcon className={"text-product-library-display-secondary-idle-tint"}/>
+                            </button>
+                            {isOpenLabelToolbarDropdown && <MyLabelsToolbarDropdown labelId={label.id}/>}
+
+                        </div>
+
                     </div>
                 </div>
             </div>
-            {openEditLabelModalDialog && <EditLabelModalDialog label={label}/>}
+            {isOpenEditLabel && <EditLabelModalDialog label={label}/>}
         </li>
     );
 };

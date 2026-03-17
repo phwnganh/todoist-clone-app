@@ -5,17 +5,20 @@ import CopyLinkIcon from "@/components/icons/CopyLinkIcon.tsx";
 import TrashIcon from "@/components/icons/TrashIcon.tsx";
 import CustomMenuDropdown from "@/components/ui/CustomMenuDropdown.tsx";
 import MenuButton from "@/components/ui/MenuButton.tsx";
+import {useLabelStore} from "@/stores/label.store.ts";
 
 type MyLabelsToolbarDropdownProps = {
-
+    labelId: string;
 }
-const MyLabelsToolbarDropdown = () => {
+const MyLabelsToolbarDropdown = ({labelId}: MyLabelsToolbarDropdownProps) => {
+    const {onCloseLabelToolbarDropdown, onOpenEditLabelModalDialog} = useLabelStore()
     const MY_LABELS_MENU_TOOLBAR: MySectionMenuToolbar[] = [
         {
             label: "Edit",
             icon: <EditIcon className={"text-product-library-display-secondary-idle-tint"}/>,
             onClick: () => {
-                console.log("edit")
+                onCloseLabelToolbarDropdown()
+                onOpenEditLabelModalDialog(labelId)
             }
         },
         {
