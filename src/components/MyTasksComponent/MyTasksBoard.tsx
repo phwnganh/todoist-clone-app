@@ -20,6 +20,7 @@ type MyTasksBoardProps = {
 };
 const MyTasksBoard = ({ filteredSectionsByProject, isGrouping, groupedTasks, tasks, noSection, isLoading }: MyTasksBoardProps) => {
   const {addFinalSectionId} = useSectionStore()
+  const hasNoSectionTasks = tasks.some(task => task.section_id === null && task.parent_id === null)
   return (
     <section
       className={
@@ -29,8 +30,12 @@ const MyTasksBoard = ({ filteredSectionsByProject, isGrouping, groupedTasks, tas
       {isGrouping ? (
           groupedTasks.map((group, index) => <MyTaskBoardGroupSection key={index} title={group.title} tasks={group.tasks} sections={filteredSectionsByProject}/>)
       ) : <>
-        <MyTaskBoardSection section={noSection} tasks={tasks} isLoading={isLoading}/>
-        <AddMyTaskBoardSectionSlot addedSectionId={noSection?.id} />
+        {hasNoSectionTasks && (
+            <>
+              <MyTaskBoardSection section={noSection} tasks={tasks} isLoading={isLoading}/>
+              <AddMyTaskBoardSectionSlot addedSectionId={noSection?.id} />
+            </>
+        )}
         <SortableContext items={(filteredSectionsByProject ?? []).map(s => s.id!)} strategy={horizontalListSortingStrategy}>
           {filteredSectionsByProject?.map((section) => {
             return (

@@ -169,14 +169,16 @@ const InboxPage = () => {
                             </h1>
                             {sections?.results && sections?.results.length > 0 ?
                                 <MyTasksBoard filteredSectionsByProject={sections?.results} isGrouping={isGrouping} groupedTasks={groupedTasks} tasks={allTasks?.results ?? []} noSection={NO_SECTION} isLoading={isLoading}/>
-                                : (<>
+                                : (<div className={
+                                    "flex items-start overflow-x-auto scrollbar-thin scrollbar-custom"
+                                }>
                                     {addFinalSectionId ? (
                                         <AddMyTaskSection
                                         />
                                     ) : (
                                         <AddMyTaskBoardSectionFinalButton/>
                                     )}
-                                </>)
+                                </div>)
                             }
 
                         </div>
