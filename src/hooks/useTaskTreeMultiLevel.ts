@@ -49,17 +49,3 @@ export const useTaskTreeMultiLevel = (tasks: Task[] | undefined, sectionId?: str
         return myTaskRoots;
     }, [tasks, sectionId]);
 }
-
-export const useTaskTreeByLabel = (nodes: TaskNode[], label: string): TaskNode[] => {
-    return nodes.map(node => {
-        const filteredChildren = useTaskTreeByLabel(node.children, label)
-        const hasLabel = node.task.labels?.includes(label)
-        if(hasLabel || filteredChildren.length > 0){
-            return {
-                ...node,
-                children: filteredChildren
-            }
-        }
-        return null;
-    }).filter(Boolean) as TaskNode[]
-}

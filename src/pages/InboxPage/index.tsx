@@ -132,7 +132,7 @@ const InboxPage = () => {
                             <span className="hidden md:block text-product-library-actionable-quaternary-idle-tint text-sm font-medium">Display</span>
 
                         </button>
-                        {openLayoutDropdown && (<MyTaskLayoutFiltersDropdown onSelectLayout={handleSelectLayout} layoutTitle={layoutName} onUpdateViewOption={handleUpdateViewOption}/>)}
+                        {openLayoutDropdown && (<MyTaskLayoutFiltersDropdown onSelectLayout={handleSelectLayout} layoutTitle={layoutName} onUpdateViewOption={handleUpdateViewOption} viewType={"PROJECT"} viewId={inboxProjectId}/>)}
                     </div>
                     <button type={"button"} className={"flex items-center justify-center w-9 h-9 shrink-0 p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"}>
                         <CommentIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
