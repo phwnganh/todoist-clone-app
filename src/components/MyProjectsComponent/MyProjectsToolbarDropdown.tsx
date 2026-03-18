@@ -1,14 +1,15 @@
 import MyProjectsMenuButton from "@/components/ui/MyProjectsMenuButton.tsx";
 import type { MyProjectMenuToolbar } from "@/types/menu-nav.type.ts";
+import {useProjectStore} from "@/stores/project.store.ts";
+import type {Project} from "@/types/project.type.ts";
 
 type MyProjectsToolbarDropdownProps = {
-  handleOpenEditProjectModalDialog: () => void;
-  handleOpenDeleteProjectDetail: () => void;
+  project: Project
 };
 const MyProjectsToolbarDropdown = ({
-  handleOpenEditProjectModalDialog,
-  handleOpenDeleteProjectDetail,
+  project
 }: MyProjectsToolbarDropdownProps) => {
+  const {onEditProjectDetail, onDeleteProjectDetail, onCloseProjectDetailToolbar} = useProjectStore()
   const MY_PROJECTS_MENU_TOOLBAR: MyProjectMenuToolbar[] = [
     {
       label: "Add project above",
@@ -23,7 +24,8 @@ const MyProjectsToolbarDropdown = ({
       label: "Edit",
       onClick: () => {
         console.log("edit");
-        handleOpenEditProjectModalDialog();
+        onCloseProjectDetailToolbar();
+        onEditProjectDetail(project);
       },
     },
     {
@@ -43,7 +45,8 @@ const MyProjectsToolbarDropdown = ({
       label: "Delete",
       danger: true,
       onClick: () => {
-        handleOpenDeleteProjectDetail();
+        onCloseProjectDetailToolbar();
+        onDeleteProjectDetail(project);
       },
     },
   ];

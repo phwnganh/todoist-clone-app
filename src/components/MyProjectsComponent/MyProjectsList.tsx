@@ -5,9 +5,6 @@ import ErrorDisplayed from "@/components/ui/ErrorDisplayed.tsx";
 import { useMemo } from "react";
 import EmptyList from "@/components/ui/EmptyList.tsx";
 import EditProjectModalDialog from "./EditProjectModalDialog";
-import { useNavigate } from "react-router-dom";
-import { PROJECT_DETAILS } from "@/constants/routes.constants.ts";
-import { type MouseEvent } from "react";
 import DeleteProjectsModalDialog from "./DeleteProjectsModalDialog";
 import {useProjectStore} from "@/stores/project.store.ts";
 
@@ -16,15 +13,7 @@ type MyProjectsListProps = {
 };
 const MyProjectsList = ({ search }: MyProjectsListProps) => {
   const { data: projects, isLoading, isError } = useGetAllProjects();
-  const navigate = useNavigate();
-  const {openProjectDetailToolbar, editProjectDetail, deleteProjectDetail, onOpenProjectDetailToolbar, onEditProjectDetail, onCloseEditProjectDetail, onCloseProjectDetailToolbar, onDeleteProjectDetail, onCloseDeleteProjectDetail} = useProjectStore()
-  const handleOpenProjectDetailToolbar = (
-    id: string,
-    e: MouseEvent<HTMLDivElement>
-  ) => {
-    e.stopPropagation();
-    onOpenProjectDetailToolbar(id);
-  };
+  const {editProjectDetail, deleteProjectDetail, onCloseEditProjectDetail, onCloseDeleteProjectDetail} = useProjectStore()
   const filteredProjects = useMemo(() => {
     if (!projects?.results) {
       return [];
@@ -61,24 +50,11 @@ const MyProjectsList = ({ search }: MyProjectsListProps) => {
       {filteredProjects?.length > 0 ? (
         filteredProjects.map((project) => (
           <div
-            role={"button"}
             key={project.id}
-            onClick={() => navigate(`${PROJECT_DETAILS}/${project.id}`)}
             className="group pt-3 flex justify-between pr-3 py-3 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"
           >
             <MyProjectsItem
               project={project}
-              isOpenProjectDetailToolbar={
-                openProjectDetailToolbar === project.id
-              }
-              onOpenProjectDetailToolbar={(e: MouseEvent<HTMLDivElement>) =>
-                handleOpenProjectDetailToolbar(project.id, e)
-              }
-              onCloseProjectDetailToolbar={onCloseProjectDetailToolbar}
-              onEditProjectDetail={() => onEditProjectDetail(project)}
-              onDeleteProjectDetail={() =>
-                onDeleteProjectDetail(project)
-              }
             />
           </div>
         ))

@@ -4,27 +4,22 @@ import { useRef, useState } from "react";
 import MyProjectsToolbarDropdown from "./MyProjectsToolbarDropdown.tsx";
 import type { Project } from "@/types/project.type.ts";
 import { useClickOutside } from "@/hooks/useClickOutside.ts";
-import { type MouseEvent } from "react";
 import { getProjectColorClass } from "@/helpers/getProjectColorClass.ts";
+import {useProjectStore} from "@/stores/project.store.ts";
+import {useNavigate} from "react-router-dom";
+import {PROJECT_DETAILS} from "@/constants/routes.constants.ts";
 
 type MyProjectsItemProps = {
   project: Project;
-  isOpenProjectDetailToolbar: boolean;
-  onCloseProjectDetailToolbar: () => void;
-  onOpenProjectDetailToolbar: (e: MouseEvent<HTMLDivElement>) => void;
-  onEditProjectDetail: () => void;
-  onDeleteProjectDetail: () => void;
 };
 const MyProjectsItem = ({
   project,
-  isOpenProjectDetailToolbar,
-  onCloseProjectDetailToolbar,
-  onOpenProjectDetailToolbar,
-  onEditProjectDetail,
-  onDeleteProjectDetail,
 }: MyProjectsItemProps) => {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
+  const {openProjectDetailToolbar, onOpenProjectDetailToolbar, onCloseProjectDetailToolbar} = useProjectStore()
+  const isOpenProjectDetailToolbar = openProjectDetailToolbar === project.id
   useClickOutside({
     ref: dropdownRef,
     handler: () => {
@@ -33,19 +28,9 @@ const MyProjectsItem = ({
     },
     enabled: isOpenProjectDetailToolbar,
   });
-
-  const handleOpenEditProjectDetailToolbar = () => {
-    onCloseProjectDetailToolbar();
-    onEditProjectDetail();
-  };
-
-  const handleOpenDeleteProjectDetail = () => {
-    onCloseProjectDetailToolbar();
-    onDeleteProjectDetail();
-  };
   return (
     <>
-      <div className="flex items-center">
+      <div role={"button"} onClick={() => navigate(`${PROJECT_DETAILS}/${project.id}`)} className="flex items-center cursor-pointer">
         <div className={`mr-small flex justify-center items-center`}>
           <HashtagIcon className={`${getProjectColorClass(project.color)}`} />
         </div>
@@ -66,7 +51,7 @@ const MyProjectsItem = ({
         {(isHovered || isOpenProjectDetailToolbar) && (
           <div
             role="button"
-            onClick={onOpenProjectDetailToolbar}
+            onClick={() => onOpenProjectDetailToolbar(project.id)}
             className={"flex justify-center items-center gap-1"}
           >
             <IndicatorDots />
@@ -77,11 +62,7 @@ const MyProjectsItem = ({
             className="absolute right-9"
             onClick={(e) => e.stopPropagation()}
           >
-            <MyProjectsToolbarDropdown
-              handleOpenEditProjectModalDialog={
-                handleOpenEditProjectDetailToolbar
-              }
-              handleOpenDeleteProjectDetail={handleOpenDeleteProjectDetail}
+            <MyProjectsToolbarDropdown project={project}
             />
           </div>
         )}
