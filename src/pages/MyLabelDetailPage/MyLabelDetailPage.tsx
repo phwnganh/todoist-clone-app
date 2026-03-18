@@ -6,30 +6,32 @@ import {FILTERS_LABEL} from "@/constants/routes.constants.ts";
 import HeaderThreeDotsIcon from "@/components/icons/HeaderThreeDotsIcon.tsx";
 import HeaderLayout from "@/layouts/HeaderLayout.tsx";
 import {useGroupingTaskStore} from "@/stores/groupingTask.store.ts";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {useQueryClient} from "@tanstack/react-query";
 import type {ViewMode, ViewOptionsPayload} from "@/types/viewOptions.type.ts";
 import type {HeaderLayoutType} from "@/types/headerLayout.type.ts";
-import {useViewOptions} from "@/hooks/useQueryHook/useViewOptions.ts";
+import {useTasksWithView, useViewOptions} from "@/hooks/useQueryHook/useViewOptions.ts";
 import {useProjectStore} from "@/stores/project.store.ts";
 import {useGetALabel} from "@/hooks/useQueryHook/useLabels.ts";
 import MyTaskLabelTitle from "@/components/MyTasksComponent/TasksLabelComponent/MyTaskLabelTitle.tsx";
 import MyTaskListLabelSection from "@/components/MyTasksComponent/TasksLabelComponent/MyTaskListLabelSection.tsx";
-import {useGetAllTasks} from "@/hooks/useQueryHook/useTasks.ts";
 import {useGetAllSections} from "@/hooks/useQueryHook/useSections.ts";
 import {useGetAllProjects} from "@/hooks/useQueryHook/useProjects.ts";
 import MyTaskBoardLabelSection
     from "@/components/MyTasksComponent/TasksLabelComponent/MyTaskBoardLabelSection/MyTaskBoardLabelSection.tsx";
+import MyTaskListGroupSection from "@/components/MyTasksComponent/TasksGroupComponent/MyTaskListGroupSection.tsx";
+import MyTaskBoardGroupSection from "@/components/MyTasksComponent/TasksGroupComponent/MyTaskBoardGroupSection";
 
 const MyLabelDetailPage = () => {
     const {labelId} = useParams<{labelId: string}>()
     const {projectId} = useProjectStore()
     const {groupedBy, setGroupedBy} = useGroupingTaskStore()
+    const isGrouping = groupedBy != null;
     const [openLayoutDropdown, setOpenLayoutDropdown] = useState(false);
     const {mutate: updateViewOptions} = useViewOptions()
     const {data: projectsData} = useGetAllProjects()
     const {data: labelData} = useGetALabel(labelId)
-    const {data: tasksData, isLoading} = useGetAllTasks({project_id: projectId, label: labelData?.name})
+    const {data: tasksData, isLoading} = useTasksWithView({label: labelData?.name}, "LABEL", labelId)
     const {data: sectionsData} = useGetAllSections({project_id: projectId})
     const queryClient = useQueryClient()
     const viewOptions = queryClient.getQueryData<ViewOptionsPayload>(["viewOptions", "LABEL", labelId])
@@ -39,6 +41,10 @@ const MyLabelDetailPage = () => {
         setGroupedBy(viewOptions?.grouped_by ?? null)
     }, [viewOptions?.grouped_by, setGroupedBy]);
 
+    const groupedTasks = useMemo(() => {
+        if(!isGrouping) return []
+        return tasksData?.grouped ?? []
+    }, [isGrouping, tasksData?.grouped])
     const handleUpdateViewOption = (payload: Partial<ViewOptionsPayload>) => {
         updateViewOptions({
             view_type: "LABEL",
@@ -70,7 +76,7 @@ const MyLabelDetailPage = () => {
                             <span className="hidden md:block text-product-library-actionable-quaternary-idle-tint text-sm font-medium">Display</span>
 
                         </button>
-                        {openLayoutDropdown && (<MyTaskLayoutFiltersDropdown onSelectLayout={handleSelectLayout} layoutTitle={layoutName} onUpdateViewOption={handleUpdateViewOption}/>)}
+                        {openLayoutDropdown && (<MyTaskLayoutFiltersDropdown onSelectLayout={handleSelectLayout} layoutTitle={layoutName} onUpdateViewOption={handleUpdateViewOption} viewType={"LABEL"} viewId={labelId}/>)}
                     </div>
                     <button type={"button"} className={"flex items-center justify-center w-9 h-9 shrink-0 p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"}>
                         <ThreeDotsIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
@@ -88,14 +94,24 @@ const MyLabelDetailPage = () => {
                 <section className={"max-w-200 mx-auto w-full relative z-10"}>
                     <div className={"flex flex-col gap-small"}>
                         <MyTaskLabelTitle labelData={labelData}/>
-                        <MyTaskListLabelSection tasks={tasksData?.results} sections={sectionsData?.results} isLoading={isLoading} isSortable={false} isTasksLabelView={true} projects={projectsData?.results}/>
+                        {isGrouping ? (
+                            groupedTasks.map((group, index) => <MyTaskListGroupSection key={index} title={group.title} tasks={group.tasks} sections={sectionsData?.results}/>)
+                        ) :
+                            <MyTaskListLabelSection tasks={tasksData?.results} sections={sectionsData?.results} isLoading={isLoading} isSortable={false} isTasksLabelView={true} projects={projectsData?.results}/>
+                        }
                     </div>
                 </section>
                 ) : (
                     <section className={"px-10"}>
                         <div className={"flex flex-col gap-small"}>
                             <MyTaskLabelTitle labelData={labelData}/>
-                            <MyTaskBoardLabelSection tasks={tasksData?.results} sections={sectionsData?.results} isSortable={false} isTasksLabelView={true} projects={projectsData?.results}/>
+                            <div className={"flex items-start overflow-x-auto scrollbar-thin scrollbar-custom"}>
+                                {isGrouping ? (
+                                        groupedTasks.map((group, index) => <MyTaskBoardGroupSection key={index} title={group.title} tasks={group.tasks} sections={sectionsData?.results}/> )
+                                    ) :
+                                    <MyTaskBoardLabelSection tasks={tasksData?.results} sections={sectionsData?.results} isSortable={false} isTasksLabelView={true} projects={projectsData?.results}/>
+                                }
+                            </div>
                         </div>
                     </section>
             )}

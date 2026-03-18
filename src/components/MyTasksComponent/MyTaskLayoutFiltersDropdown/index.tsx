@@ -8,9 +8,8 @@ import type {
   GroupedBy,
   SortedBy,
   SortOrder, ViewMode,
-  ViewOptionsPayload,
+  ViewOptionsPayload, ViewTypes,
 } from "@/types/viewOptions.type.ts";
-import { useProjectStore } from "@/stores/project.store.ts";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   dateFilterData,
@@ -45,11 +44,15 @@ type MyTaskLayoutFiltersDropdownProps = {
   onSelectLayout: (layout: ViewMode) => void;
   layoutTitle: string;
   onUpdateViewOption: (payload: Partial<ViewOptionsPayload>) => void;
+  viewType: ViewTypes
+  viewId?: string;
 };
 const MyTaskLayoutFiltersDropdown = ({
   onSelectLayout,
   layoutTitle,
     onUpdateViewOption,
+    viewType,
+    viewId,
 }: MyTaskLayoutFiltersDropdownProps) => {
   const [openDropdown, setOpenDropdown] =
     useState<OpenMyTaskFilterDropdown>(null);
@@ -62,13 +65,12 @@ const MyTaskLayoutFiltersDropdown = ({
   const dummyRef = useRef<HTMLDivElement | null>(null);
   const sortExpanded = useExpanded()
   const filterExpanded = useExpanded()
-  const { projectId } = useProjectStore();
 
   const queryClient = useQueryClient();
   const viewOptions = queryClient.getQueryData<ViewOptionsPayload>([
     "viewOptions",
-    "PROJECT",
-    projectId,
+    viewType,
+    viewId,
   ]);
 
   const hasActiveFilters = viewOptions?.grouped_by != null || viewOptions?.sorted_by != null || viewOptions?.sort_order != null || viewOptions?.filtered_by != null || viewOptions?.show_completed_tasks;
