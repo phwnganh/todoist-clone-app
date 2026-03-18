@@ -16,7 +16,7 @@ const MyProjectFormWorkspaceListDropdown = ({user}: MyProjectFormWorkspaceListDr
         <div
           role="option"
           tabIndex={-1}
-          className="flex items-center gap-1.5 py-1 px-1.5 w-full hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"
+          className="flex items-center gap-1.5 py-1 px-1.5 w-full hover:bg-product-library-selectable-secondary-hover-fill rounded-small"
         >
           <div className="flex justify-center items-center">
             <VerifiedIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
@@ -34,7 +34,7 @@ const MyProjectFormWorkspaceListDropdown = ({user}: MyProjectFormWorkspaceListDr
             </div>
           </span>
         </div>
-        <button className="text-center text-sm text-product-library-actionable-tertiary-idle-tint font-medium py-1 px-1.5 w-full hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+        <button className="text-center text-sm text-product-library-actionable-tertiary-idle-tint font-medium py-1 px-1.5 w-full hover:bg-product-library-selectable-secondary-hover-fill rounded-small">
           Add team workspace
         </button>
       </div>

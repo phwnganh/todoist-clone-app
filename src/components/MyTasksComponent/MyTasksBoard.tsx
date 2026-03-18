@@ -1,6 +1,6 @@
 import type { Section } from "@/types/section.type.ts";
 import MyTaskBoardSection from "../MyTaskSectionComponent/MyTaskBoardSectionComponent/MyTaskBoardSection.tsx";
-import {Fragment, useState} from "react";
+import {Fragment} from "react";
 import AddMyTaskBoardSectionFinalButton from "../MyTaskSectionComponent/MyTaskBoardSectionComponent/AddMyTaskBoardSectionFinalButton.tsx";
 import AddMyTaskSection from "../MyTaskSectionComponent/AddMyTaskSectionComponent";
 import AddMyTaskBoardSectionSlot from "../MyTaskSectionComponent/MyTaskBoardSectionComponent/AddMyTaskBoardSectionSlot";
@@ -8,6 +8,7 @@ import {horizontalListSortingStrategy, SortableContext} from "@dnd-kit/sortable"
 import MyTaskBoardGroupSection from "./TasksGroupComponent/MyTaskBoardGroupSection";
 import type {TaskGroup} from "@/types/viewOptions.type.ts";
 import type {Task} from "@/types/task.type.ts";
+import { useSectionStore } from "@/stores/section.store.ts";
 
 type MyTasksBoardProps = {
   filteredSectionsByProject: Section[] | undefined;
@@ -18,19 +19,7 @@ type MyTasksBoardProps = {
   isLoading: boolean;
 };
 const MyTasksBoard = ({ filteredSectionsByProject, isGrouping, groupedTasks, tasks, noSection, isLoading }: MyTasksBoardProps) => {
-
-  const [
-    openAddNewTaskSectionFormModalDialog,
-    setOpenAddNewTaskSectionFormModalDialog,
-  ] = useState(false);
-
-  const handleOpenAddNewTaskSectionFormModalDialog = () => {
-    setOpenAddNewTaskSectionFormModalDialog(true);
-  };
-
-  const handleCloseAddNewTaskSectionFormModalDialog = () => {
-    setOpenAddNewTaskSectionFormModalDialog(false);
-  };
+  const {addFinalSectionId} = useSectionStore()
   return (
     <section
       className={
@@ -53,16 +42,11 @@ const MyTasksBoard = ({ filteredSectionsByProject, isGrouping, groupedTasks, tas
           })}
 
         </SortableContext>
-        {openAddNewTaskSectionFormModalDialog ? (
+        {addFinalSectionId ? (
             <AddMyTaskSection
-                onCancelAddMyTaskSection={handleCloseAddNewTaskSectionFormModalDialog}
             />
         ) : (
-            <AddMyTaskBoardSectionFinalButton
-                onOpenAddNewTaskSectionForm={
-                  handleOpenAddNewTaskSectionFormModalDialog
-                }
-            />
+            <AddMyTaskBoardSectionFinalButton/>
         )}
       </>}
 

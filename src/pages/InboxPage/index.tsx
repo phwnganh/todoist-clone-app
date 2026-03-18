@@ -23,10 +23,15 @@ import {findTaskByIdToOrder, handleReorderTask} from "@/helpers/dragDropMyTasks.
 import {customCollisionDetection} from "@/helpers/customCollisionDetection.ts";
 import {useProjectStore} from "@/stores/project.store.ts";
 import EmptyInboxTasks from "@/components/ui/EmptyInboxTasks.tsx";
+import AddMyTaskBoardSectionFinalButton
+    from "@/components/MyTaskSectionComponent/MyTaskBoardSectionComponent/AddMyTaskBoardSectionFinalButton.tsx";
+import {useSectionStore} from "@/stores/section.store.ts";
+import AddMyTaskSection from "@/components/MyTaskSectionComponent/AddMyTaskSectionComponent";
 
 const InboxPage = () => {
     const {showCollapse, onToggleSidebar} = useOutletContext<HeaderLayoutType>()
     const {groupedBy, setGroupedBy} = useGroupingTaskStore()
+    const {addFinalSectionId} = useSectionStore()
     const [openLayoutDropdown, setOpenLayoutDropdown] = useState(false);
     const {mutate: updateViewOptions} = useViewOptions()
     const {mutateAsync: movingTaskMutate} = useMoveMyTask()
@@ -126,7 +131,7 @@ const InboxPage = () => {
             <HeaderLayout showCollapse={showCollapse} onToggleSidebar={onToggleSidebar} right={
                 <div className={"flex justify-end items-center"}>
                     <div className={"relative p-1 md:p-2.5"}>
-                        <button type={"button"} className={"flex items-center px-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"} onClick={handleOpenLayoutDropdown}>
+                        <button type={"button"} className={"flex items-center px-1.5 hover:bg-product-library-selectable-secondary-hover-fill rounded-small"} onClick={handleOpenLayoutDropdown}>
                             <div className={"flex items-center justify-center w-9 h-9 shrink-0"}>
                                 <SmallListIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                             </div>
@@ -135,10 +140,10 @@ const InboxPage = () => {
                         </button>
                         {openLayoutDropdown && (<MyTaskLayoutFiltersDropdown onSelectLayout={handleSelectLayout} layoutTitle={layoutName} onUpdateViewOption={handleUpdateViewOption} viewType={"PROJECT"} viewId={inboxProjectId}/>)}
                     </div>
-                    <button type={"button"} className={"flex items-center justify-center w-9 h-9 shrink-0 p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"}>
+                    <button type={"button"} className={"flex items-center justify-center w-9 h-9 shrink-0 p-1.5 hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}>
                         <CommentIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                     </button>
-                    <button type={"button"} className={"flex items-center justify-center w-9 h-9 shrink-0 p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"}>
+                    <button type={"button"} className={"flex items-center justify-center w-9 h-9 shrink-0 p-1.5 hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}>
                         <ThreeDotsIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                     </button>
                 </div>
@@ -162,7 +167,18 @@ const InboxPage = () => {
                             <h1 className="p-1 font-strong text-product-library-display-primary-idle-tint text-header-large">
                                 Inbox
                             </h1>
-                            <MyTasksBoard filteredSectionsByProject={sections?.results} isGrouping={isGrouping} groupedTasks={groupedTasks} tasks={allTasks?.results ?? []} noSection={NO_SECTION} isLoading={isLoading}/>
+                            {sections?.results && sections?.results.length > 0 ?
+                                <MyTasksBoard filteredSectionsByProject={sections?.results} isGrouping={isGrouping} groupedTasks={groupedTasks} tasks={allTasks?.results ?? []} noSection={NO_SECTION} isLoading={isLoading}/>
+                                : (<>
+                                    {addFinalSectionId ? (
+                                        <AddMyTaskSection
+                                        />
+                                    ) : (
+                                        <AddMyTaskBoardSectionFinalButton/>
+                                    )}
+                                </>)
+                            }
+
                         </div>
                     </section>
                 )}

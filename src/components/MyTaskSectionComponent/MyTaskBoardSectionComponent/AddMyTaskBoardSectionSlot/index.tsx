@@ -8,14 +8,14 @@ type AddMyTaskBoardSectionSlotProps = {
 const AddMyTaskBoardSectionSlot = ({
   addedSectionId,
 }: AddMyTaskBoardSectionSlotProps) => {
-  const { addSectionId, onOpenAddSectionForm, onCloseAddSectionForm } =
+  const { addSectionId, onOpenAddSectionForm } =
     useSectionStore();
 
   const isOpenAddMyTaskBoardSection = addSectionId === addedSectionId;
   return (
     <div className={"relative mr-2"}>
       {isOpenAddMyTaskBoardSection ? (
-        <AddMyTaskSection onCancelAddMyTaskSection={onCloseAddSectionForm} />
+        <AddMyTaskSection />
       ) : (
         <AddEachMyTaskBoardSectionButton
           onAddMyTaskSectionForm={() => onOpenAddSectionForm(addedSectionId)}

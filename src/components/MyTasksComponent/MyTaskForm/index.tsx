@@ -26,6 +26,7 @@ import TaskPrioritySection from "@/components/MyTasksComponent/MyTaskForm/EachTa
 import TaskReminderSection from "@/components/MyTasksComponent/MyTaskForm/EachTaskFieldSection/TaskReminderSection.tsx";
 import TaskLabelSection from "@/components/MyTasksComponent/MyTaskForm/EachTaskFieldSection/TaskLabelSection.tsx";
 import TaskProjectSection from "@/components/MyTasksComponent/MyTaskForm/EachTaskFieldSection/TaskProjectSection.tsx";
+import CustomButton from "@/components/ui/CustomButton.tsx";
 
 export type MyTaskFormValues = {
   content: string;
@@ -215,59 +216,51 @@ const MyTaskForm = ({
           </div>
         )}
         <div className={"flex gap-2.5"}>
-          <button
-            type="button"
-            className={`${variant === "list" ? "p-1 md:px-3 md:py-1.5 min-w-0 md:min-w-17" : "w-8 h-8"} flex justify-center items-center rounded-small bg-product-library-actionable-secondary-idle-fill`}
-            onClick={onCloseMyTaskForm}
-          >
+
+          <CustomButton type="button" onClick={onCloseMyTaskForm} className={`${variant === "list" ? "p-1 md:px-3 md:py-1.5 min-w-0 md:min-w-17" : "w-8 h-8"} bg-product-library-actionable-secondary-idle-fill`}>
             {variant === "list" ? (
-              <>
+                <>
                 <span
-                  className={
-                    "flex md:hidden w-6 h-6 justify-center items-center"
-                  }
+                    className={
+                      "flex md:hidden w-6 h-6 justify-center items-center"
+                    }
                 >
                   <CloseIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                 </span>
-                <span className="hidden md:inline text-sm font-medium text-product-library-actionable-secondary-on-idle-tint">
+                  <span className="hidden md:inline text-sm font-medium text-product-library-actionable-secondary-on-idle-tint">
                   Cancel
                 </span>
-              </>
+                </>
             ) : (
-              <span className={"w-6 h-6 flex justify-center items-center"}>
+                <span className={"w-6 h-6 flex justify-center items-center"}>
                 <CloseIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
               </span>
             )}
-          </button>
-          <button
-            type="submit"
-            className={`${variant === "list" ? "p-1 md:px-3 md:py-1.5 min-w-0 md:min-w-17" : "w-8 h-8"} rounded-small flex justify-center items-center  ${
+          </CustomButton>
+          <CustomButton type={"submit"} className={`${variant === "list" ? "p-1 md:px-3 md:py-1.5 min-w-0 md:min-w-17" : "w-8 h-8"} ${
               isAddButtonDisabled
-                ? "bg-product-library-actionable-primary-disabled-fill cursor-not-allowed"
-                : "bg-product-library-actionable-primary-idle-fill hover:bg-product-library-actionable-primary-hover-fill"
-            }
-                            `}
-            disabled={isAddButtonDisabled}
-          >
+                  ? "bg-product-library-actionable-primary-disabled-fill cursor-not-allowed"
+                  : "bg-product-library-actionable-primary-idle-fill hover:bg-product-library-actionable-primary-hover-fill"
+          }`} disabled={isAddButtonDisabled}>
             {variant === "list" ? (
-              <>
+                <>
                 <span
-                  className={
-                    "w-6 h-6 flex md:hidden justify-center items-center"
-                  }
+                    className={
+                      "w-6 h-6 flex md:hidden justify-center items-center"
+                    }
                 >
                   <SubmitIcon className={"text-product-library-background-base-primary"} />
                 </span>
-                <span className="hidden md:inline text-sm font-medium text-product-library-actionable-primary-on-idle-tint">
+                  <span className="hidden md:inline text-sm font-medium text-product-library-actionable-primary-on-idle-tint">
                   {isPending ? submittingLabel : submitLabel}
                 </span>
-              </>
+                </>
             ) : (
-              <span className={"w-6 h-6 flex justify-center items-center"}>
+                <span className={"w-6 h-6 flex justify-center items-center"}>
                 <SubmitIcon className={"text-product-library-background-base-primary"} />
               </span>
             )}
-          </button>
+          </CustomButton>
         </div>
       </div>
     </form>

@@ -19,7 +19,7 @@ const NoParentOption = ({
         e.preventDefault();
         onNoParentSelected();
       }}
-      className="group flex items-center gap-small py-1 px-1.5 w-full hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"
+      className="group flex items-center gap-small py-1 px-1.5 w-full hover:bg-product-library-selectable-secondary-hover-fill rounded-small"
     >
       <div className="flex justify-center items-center invisible group-data-[selected=true]:visible">
         <VerifiedIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>

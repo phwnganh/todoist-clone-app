@@ -4,18 +4,14 @@ import MyTaskListSectionForm, {
 } from "../MyTaskListSectionComponent/MyTaskListSectionForm.tsx";
 import {useAddSection} from "@/hooks/useQueryHook/useSections";
 import {useProjectStore} from "@/stores/project.store";
+import { useSectionStore } from "@/stores/section.store.ts";
 
-type AddMyTaskSectionProps = {
-  onCancelAddMyTaskSection: () => void;
-};
-const AddMyTaskSection = ({
-  onCancelAddMyTaskSection,
-}: AddMyTaskSectionProps) => {
+const AddMyTaskSection = () => {
   const [values, setValues] = useState<MyTaskSectionFormValues>({
     name: "",
   });
   const {projectId} = useProjectStore()
-
+  const {onCloseAddFinalSectionForm} = useSectionStore()
   const {mutate, isPending} = useAddSection()
 
   const handleAddMyTaskSection = (e: FormEvent<HTMLFormElement>) => {
@@ -24,13 +20,13 @@ const AddMyTaskSection = ({
       name: values.name,
       project_id: projectId
     })
-    onCancelAddMyTaskSection();
+    onCloseAddFinalSectionForm();
   };
   return (
     <div className={"mt-1"}>
       <MyTaskListSectionForm
         values={values}
-        onCancel={onCancelAddMyTaskSection}
+        onCancel={onCloseAddFinalSectionForm}
         onChange={setValues}
         onSubmit={handleAddMyTaskSection}
         submitLabel={"Add section"}

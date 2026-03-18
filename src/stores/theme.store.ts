@@ -9,7 +9,7 @@ type ThemeStore = {
 }
 
 export const useThemeStore = create<ThemeStore>()(
-    persist(set => ({
+    persist((set) => ({
         theme: "light",
         setTheme: mode => {
             document.documentElement.classList.toggle("dark", mode === "dark");
@@ -17,6 +17,13 @@ export const useThemeStore = create<ThemeStore>()(
         }
     }),
         {
-            name: "theme-storage"
+            name: "theme-storage",
+            onRehydrateStorage: () => state => {
+                if(state?.theme === "dark"){
+                    document.documentElement.classList.add("dark");
+                }else{
+                    document.documentElement.classList.remove("dark");
+                }
+            }
         })
 )

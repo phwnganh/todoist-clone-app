@@ -36,7 +36,7 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
         <SidebarHeader onToggle={onToggle} />
         <div className="mx-medium mb-small"></div>
         {/*add task modal*/}
-        <button className="flex items-center px-2.5 py-0.75 text-product-library-actionable-tertiary-idle-tint hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+        <button className="flex items-center px-2.5 py-0.75 text-product-library-actionable-tertiary-idle-tint hover:bg-product-library-selectable-secondary-hover-fill rounded-small">
           <div className="flex justify-center items-center mr-1.5 pl-1.5">
             <PlusAddIcon/>
           </div>
@@ -57,7 +57,7 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
           <NavLink
             to={PROJECTS}
             className={({ isActive }) =>
-              `group flex items-center hover:rounded-small py-0.75 ${
+              `group flex items-center rounded-small py-0.75 ${
                 isActive
                   ? "bg-product-library-display-accent-secondary-fill rounded-small hover:bg-product-library-display-accent-secondary-fill"
                   : "hover:bg-product-library-selectable-secondary-hover-fill"
@@ -102,7 +102,7 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
       </div>
 
       <div className="flex flex-col gap-small my-2 px-3 mt-auto">
-        <button className="px-2.5 py-0.75 flex items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+        <button className="px-2.5 py-0.75 flex items-center hover:bg-product-library-selectable-secondary-hover-fill rounded-small">
           <div className="w-6 h-6 flex justify-center items-center mr-1.5 ">
             <AddIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
           </div>
@@ -110,7 +110,7 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
             Add a team
           </span>
         </button>
-        <button className="px-2.5 py-0.75 flex items-center hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+        <button className="px-2.5 py-0.75 flex items-center hover:bg-product-library-selectable-secondary-hover-fill rounded-small">
           <div className="w-6 h-6 flex justify-center items-center mr-1.5">
             <QuestionIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
           </div>

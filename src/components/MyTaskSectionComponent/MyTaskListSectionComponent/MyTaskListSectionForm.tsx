@@ -1,5 +1,6 @@
 import { type ChangeEvent, type FormEvent } from "react";
 import { updateMyTaskSectionField } from "@/helpers/updateMyTaskField.ts";
+import CustomButton from "@/components/ui/CustomButton.tsx";
 
 export type MyTaskSectionFormValues = {
   name: string;
@@ -40,25 +41,16 @@ const MyTaskListSectionForm = ({
         }
       />
       <div className={"flex items-center gap-small"}>
-        <button
-          type={"submit"}
-          className={`px-3 py-1.5 text-xs ${
+        <CustomButton type={"submit"} className={`px-3 py-1.5  ${
             isAddButtonDisabled
-              ? "bg-product-library-actionable-primary-disabled-fill cursor-not-allowed"
-              : "bg-product-library-actionable-primary-idle-fill hover:bg-product-library-actionable-primary-hover-fill"
-          } text-product-library-actionable-primary-on-idle-tint font-medium rounded-small`}
-        >
-          {isPending ? submittingLabel : submitLabel}
-        </button>
-        <button
-          type={"button"}
-          className={
-            "px-3 py-1.5 text-xs text-product-library-actionable-secondary-on-idle-tint rounded-small hover:bg-product-library-selectable-secondary-hover-fill"
-          }
-          onClick={onCancel}
-        >
-          Cancel
-        </button>
+                ? "bg-product-library-actionable-primary-disabled-fill cursor-not-allowed"
+                : "bg-product-library-actionable-primary-idle-fill hover:bg-product-library-actionable-primary-hover-fill"
+        }`}>
+          <span className={"text-product-library-actionable-primary-on-idle-tint text-xs font-medium"}>{isPending ? submittingLabel : submitLabel}</span>
+        </CustomButton>
+        <CustomButton type={"button"} onClick={onCancel} className={`px-3 py-1.5 hover:bg-product-library-selectable-secondary-hover-fill`}>
+          <span className={"text-xs text-product-library-actionable-secondary-on-idle-tint"}>Cancel</span>
+        </CustomButton>
       </div>
     </form>
   );

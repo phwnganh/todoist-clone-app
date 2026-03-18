@@ -37,7 +37,7 @@ const MyProjectsPage = () => {
             My Projects
           </h1>
             <div className="w-full px-1">
-                <button role="button" className="inline-flex px-1 text-product-library-display-secondary-idle-tint hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+                <button role="button" className="inline-flex px-1 text-product-library-display-secondary-idle-tint hover:bg-product-library-selectable-secondary-hover-fill rounded-small">
             Free
           </button>
             </div>

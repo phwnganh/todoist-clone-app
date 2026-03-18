@@ -31,7 +31,7 @@ const DropdownFooter = ({
           Project not found
         </p>
       )}
-      <button onClick={(e) => handleAddProject(e)} className="text-center text-product-library-actionable-tertiary-idle-tint font-medium text-sm py-1 px-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small">
+      <button onClick={(e) => handleAddProject(e)} className="text-center text-product-library-actionable-tertiary-idle-tint font-medium text-sm py-1 px-1.5 hover:bg-product-library-selectable-secondary-hover-fill rounded-small">
         Create "{keyword}"
       </button>
     </>

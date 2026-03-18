@@ -69,7 +69,7 @@ const MyLabelDetailPage = () => {
             <HeaderLayout showCollapse={showCollapse} onToggleSidebar={onToggleSidebar} right={
                 <div className={"flex justify-end items-center"}>
                     <div className={"relative p-1 md:p-2.5"}>
-                        <button type={"button"} className={"flex items-center px-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"} onClick={handleOpenLayoutDropdown}>
+                        <button type={"button"} className={"flex items-center px-1.5 hover:bg-product-library-selectable-secondary-hover-fill rounded-small"} onClick={handleOpenLayoutDropdown}>
                             <div className={"flex items-center justify-center w-9 h-9 shrink-0"}>
                                 <SmallListIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                             </div>
@@ -78,7 +78,7 @@ const MyLabelDetailPage = () => {
                         </button>
                         {openLayoutDropdown && (<MyTaskLayoutFiltersDropdown onSelectLayout={handleSelectLayout} layoutTitle={layoutName} onUpdateViewOption={handleUpdateViewOption} viewType={"LABEL"} viewId={labelId}/>)}
                     </div>
-                    <button type={"button"} className={"flex items-center justify-center w-9 h-9 shrink-0 p-1.5 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"}>
+                    <button type={"button"} className={"flex items-center justify-center w-9 h-9 shrink-0 p-1.5 hover:bg-product-library-selectable-secondary-hover-fill rounded-small"}>
                         <ThreeDotsIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
                     </button>
                 </div>

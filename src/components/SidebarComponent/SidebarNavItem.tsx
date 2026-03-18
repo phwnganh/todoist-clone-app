@@ -32,7 +32,7 @@ const SidebarNavItem = ({ item, onClick }: SidebarNavItemProps) => {
       <button
         type="button"
         onClick={onClick}
-        className={`${commonClass} hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small`}
+        className={`${commonClass} hover:bg-product-library-selectable-secondary-hover-fill rounded-small`}
       >
         {renderContent(false)}
       </button>

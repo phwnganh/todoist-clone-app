@@ -30,7 +30,6 @@ const MyTaskListSection = ({ section, tasks, isLoading }: MyTaskSectionProps) =>
     onCloseEditSection,
     addSectionId,
     onOpenAddSectionForm,
-    onCloseAddSectionForm,
   } = useSectionStore();
   const {
     addingTaskId,
@@ -124,7 +123,6 @@ const MyTaskListSection = ({ section, tasks, isLoading }: MyTaskSectionProps) =>
 
             {isSectionAdding ? (
                 <AddMyTaskSectionComponent
-                    onCancelAddMyTaskSection={onCloseAddSectionForm}
                 />
 
             ) : (

@@ -31,7 +31,7 @@ const MyProjectsSearchAction = ({
       {value && (
         <button
           onClick={handleClearSearch}
-          className="flex items-center justify-center mr-1 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"
+          className="flex items-center justify-center mr-1 hover:bg-product-library-selectable-secondary-hover-fill rounded-small"
         >
           <CloseIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
         </button>

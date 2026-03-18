@@ -19,6 +19,7 @@ import ProjectWorkspaceSection
 import ParentProjectSection from "@/components/MyProjectsComponent/EachProjectFieldSection/ParentProjectSection.tsx";
 import LargeCloseIcon from "@/components/icons/LargeCloseIcon.tsx";
 import CustomDialog from "@/components/ui/CustomDialog.tsx";
+import CustomButton from "@/components/ui/CustomButton.tsx";
 
 export type MyProjectFormValues = {
   name: string;
@@ -185,28 +186,21 @@ const MyProjectForm = ({
               </div>
           )}
           <footer className="flex justify-end px-4 pb-4 gap-2.5">
-            <button
-                type="button"
-                className="px-3 py-1.5 rounded-small bg-product-library-actionable-secondary-idle-fill flex justify-center items-center min-w-17"
-                onClick={onClose}
-            >
+            <CustomButton type={"button"} className={`px-3 py-1.5 bg-product-library-actionable-secondary-idle-fill min-w-17`} onClick={onClose}>
               <span className="text-sm font-medium text-product-library-actionable-secondary-on-idle-tint">
                 Cancel
               </span>
-            </button>
-            <button
-                type="submit"
-                className={`px-3 py-1.5 rounded-small  flex justify-center items-center min-w-17 ${
-                    isAddButtonDisabled
-                        ? "bg-product-library-actionable-primary-disabled-fill cursor-not-allowed"
-                        : "bg-product-library-actionable-primary-idle-fill hover:bg-product-library-actionable-primary-hover-fill"
-                }`}
-                disabled={isAddButtonDisabled}
-            >
+            </CustomButton>
+
+            <CustomButton type={"submit"} className={`px-3 py-1.5 min-w-17 ${
+                isAddButtonDisabled
+                    ? "bg-product-library-actionable-primary-disabled-fill cursor-not-allowed"
+                    : "bg-product-library-actionable-primary-idle-fill hover:bg-product-library-actionable-primary-hover-fill"
+            }`} disabled={isAddButtonDisabled}>
               <span className="text-sm font-medium text-product-library-actionable-primary-on-idle-tint">
                 {isPending ? submittingLabel : submitLabel}
               </span>
-            </button>
+            </CustomButton>
           </footer>
         </form>
       </CustomDialog>
