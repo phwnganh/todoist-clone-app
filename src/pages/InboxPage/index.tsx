@@ -22,6 +22,7 @@ import {useMoveMyTask, useReorderTask} from "@/hooks/useQueryHook/useTasks.ts";
 import {findTaskByIdToOrder, handleReorderTask} from "@/helpers/dragDropMyTasks.ts";
 import {customCollisionDetection} from "@/helpers/customCollisionDetection.ts";
 import {useProjectStore} from "@/stores/project.store.ts";
+import EmptyInboxTasks from "@/components/ui/EmptyInboxTasks.tsx";
 
 const InboxPage = () => {
     const {showCollapse, onToggleSidebar} = useOutletContext<HeaderLayoutType>()
@@ -150,7 +151,9 @@ const InboxPage = () => {
                             <h1 className="p-1 font-strong text-product-library-display-primary-idle-tint text-header-large">
                                 Inbox
                             </h1>
-                            <MyTasksList filteredSectionsByProject={sections?.results} isGrouping={isGrouping} groupedTasks={groupedTasks} tasks={allTasks?.results ?? []} noSection={NO_SECTION} isLoading={isLoading}/>
+                            {allTasks?.results && allTasks?.results.length > 0 ?
+                                <MyTasksList filteredSectionsByProject={sections?.results} isGrouping={isGrouping} groupedTasks={groupedTasks} tasks={allTasks?.results ?? []} noSection={NO_SECTION} isLoading={isLoading}/>
+                            : <EmptyInboxTasks/>}
                         </div>
                     </section>
                 ) : (

@@ -2,6 +2,7 @@ import MyProjectsMenuButton from "@/components/ui/MyProjectsMenuButton.tsx";
 import type { MyProjectMenuToolbar } from "@/types/menu-nav.type.ts";
 import {useProjectStore} from "@/stores/project.store.ts";
 import type {Project} from "@/types/project.type.ts";
+import CustomMenuDropdown from "@/components/ui/CustomMenuDropdown.tsx";
 
 type MyProjectsToolbarDropdownProps = {
   project: Project
@@ -52,8 +53,7 @@ const MyProjectsToolbarDropdown = ({
   ];
 
   return (
-    <div className="border border-product-library-divider-primary rounded-large shadow-sm mt-1 min-w-70 py-1.5 bg-product-library-background-base-primary overflow-hidden">
-      <div className="flex flex-col gap-1">
+    <CustomMenuDropdown className={"min-w-70"}>
         {MY_PROJECTS_MENU_TOOLBAR.map((item, index) => {
           if (item === "divider") {
             return (
@@ -72,8 +72,7 @@ const MyProjectsToolbarDropdown = ({
             />
           );
         })}
-      </div>
-    </div>
+    </CustomMenuDropdown>
   );
 };
 

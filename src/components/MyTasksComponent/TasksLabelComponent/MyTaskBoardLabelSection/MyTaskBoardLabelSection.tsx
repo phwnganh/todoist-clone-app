@@ -6,6 +6,7 @@ import MyTaskBoardLabelHeader
 import MyTaskBoardItem from "@/components/MyTasksComponent/MyTaskBoardItem.tsx";
 import type {Section} from "@/types/section.type.ts";
 import type {Project} from "@/types/project.type.ts";
+import EmptyList from "@/components/ui/EmptyList.tsx";
 
 type MyTaskBoardLabelSectionProps = {
     tasks?: Task[];
@@ -22,12 +23,20 @@ const MyTaskBoardLabelSection = ({tasks, sections, isSortable, isTasksLabelView,
         onOpenTaskDetailToolbar(id)
     }
     return (
-        <div className={"rounded-large ring ring-transparent hover:ring-border-hover py-2 px-4 shrink-0 w-70 flex flex-col gap-small"}>
-            <MyTaskBoardLabelHeader tasks={tasks}/>
-            {tasks?.map(task => <MyTaskBoardItem key={task.id} task={task} isOpenTaskDetailToolbar={openTaskDetailToolbar === task.id} onOpenTaskDetailToolbar={e => {
-                handleOpenTaskDetailToolbar(task.id, e);
-            }} tasks={tasks} sections={sections} isSortable={isSortable} isTasksLabelView={isTasksLabelView} projects={projects}/>)}
-        </div>
+        <>
+            {tasks && tasks.length > 0 ?
+                <div className={"rounded-large ring ring-transparent hover:ring-border-hover py-2 px-4 shrink-0 w-70 flex flex-col gap-small"}>
+                <MyTaskBoardLabelHeader tasks={tasks}/>
+                {tasks?.map(task => <MyTaskBoardItem key={task.id} task={task} isOpenTaskDetailToolbar={openTaskDetailToolbar === task.id} onOpenTaskDetailToolbar={e => {
+                    handleOpenTaskDetailToolbar(task.id, e);
+                }} tasks={tasks} sections={sections} isSortable={isSortable} isTasksLabelView={isTasksLabelView} projects={projects}/>)}
+            </div> :
+                <div className={"mt-10"}>
+                    <EmptyList/>
+                </div>
+            }
+        </>
+
     );
 };
 

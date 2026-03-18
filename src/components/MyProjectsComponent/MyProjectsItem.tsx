@@ -1,6 +1,6 @@
 import HashtagIcon from "@/components/icons/HashtagIcon.tsx";
 import IndicatorDots from "@/components/ui/IndicatorDots.tsx";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import MyProjectsToolbarDropdown from "./MyProjectsToolbarDropdown.tsx";
 import type { Project } from "@/types/project.type.ts";
 import { useClickOutside } from "@/hooks/useClickOutside.ts";
@@ -16,7 +16,6 @@ const MyProjectsItem = ({
   project,
 }: MyProjectsItemProps) => {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
   const {openProjectDetailToolbar, onOpenProjectDetailToolbar, onCloseProjectDetailToolbar} = useProjectStore()
   const isOpenProjectDetailToolbar = openProjectDetailToolbar === project.id
@@ -24,7 +23,6 @@ const MyProjectsItem = ({
     ref: dropdownRef,
     handler: () => {
       onCloseProjectDetailToolbar();
-      setIsHovered(false);
     },
     enabled: isOpenProjectDetailToolbar,
   });
@@ -41,30 +39,17 @@ const MyProjectsItem = ({
       <div
         className="flex items-center relative w-6 h-6"
         ref={dropdownRef}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => {
-          if (!isOpenProjectDetailToolbar) {
-            setIsHovered(false);
-          }
-        }}
       >
-        {(isHovered || isOpenProjectDetailToolbar) && (
           <div
             role="button"
             onClick={() => onOpenProjectDetailToolbar(project.id)}
-            className={"flex justify-center items-center gap-1"}
+            className={`flex justify-center items-center gap-1 `}
           >
             <IndicatorDots />
           </div>
-        )}
         {isOpenProjectDetailToolbar && (
-          <div
-            className="absolute right-9"
-            onClick={(e) => e.stopPropagation()}
-          >
             <MyProjectsToolbarDropdown project={project}
             />
-          </div>
         )}
       </div>
     </>

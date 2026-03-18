@@ -105,13 +105,17 @@ const MyLabelDetailPage = () => {
                     <section className={"px-10"}>
                         <div className={"flex flex-col gap-small"}>
                             <MyTaskLabelTitle labelData={labelData}/>
-                            <div className={"flex items-start overflow-x-auto scrollbar-thin scrollbar-custom"}>
                                 {isGrouping ? (
-                                        groupedTasks.map((group, index) => <MyTaskBoardGroupSection key={index} title={group.title} tasks={group.tasks} sections={sectionsData?.results}/> )
+                                        <>
+                                            <div className={"flex items-start overflow-x-auto scrollbar-thin scrollbar-custom"}>
+                                            {
+                                                groupedTasks.map((group, index) => <MyTaskBoardGroupSection key={index} title={group.title} tasks={group.tasks} sections={sectionsData?.results}/> )
+                                            }
+                                        </div>
+                                    </>
                                     ) :
                                     <MyTaskBoardLabelSection tasks={tasksData?.results} sections={sectionsData?.results} isSortable={false} isTasksLabelView={true} projects={projectsData?.results}/>
                                 }
-                            </div>
                         </div>
                     </section>
             )}

@@ -51,7 +51,7 @@ const MyProjectsList = ({ search }: MyProjectsListProps) => {
         filteredProjects.map((project) => (
           <div
             key={project.id}
-            className="group pt-3 flex justify-between pr-3 py-3 hover:bg-product-library-selectable-secondary-hover-fill hover:rounded-small"
+            className="group pt-3 flex justify-between pr-3 py-3 hover:bg-product-library-selectable-secondary-hover-fill rounded-small"
           >
             <MyProjectsItem
               project={project}
