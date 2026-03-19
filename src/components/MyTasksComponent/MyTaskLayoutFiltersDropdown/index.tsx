@@ -10,7 +10,6 @@ import type {
   SortOrder, ViewMode,
   ViewOptionsPayload, ViewTypes,
 } from "@/types/viewOptions.type.ts";
-import { useQueryClient } from "@tanstack/react-query";
 import {
   dateFilterData,
   directionFilterData,
@@ -39,6 +38,8 @@ import FilteringLabelsSection from "./EachTaskLayoutFieldSection/FilteringLabels
 import {useExpanded} from "@/hooks/useExpanded.ts";
 import TaskSmallArrowRightIcon from "@/components/icons/TaskSmallArrowRightIcon.tsx";
 import QuestionIcon from "@/components/icons/QuestionIcon.tsx";
+import {useViewOptionsStore} from "@/stores/viewOptions.store.ts";
+import LoadingSpin from "@/components/ui/LoadingSpin.tsx";
 
 type MyTaskLayoutFiltersDropdownProps = {
   onSelectLayout: (layout: ViewMode) => void;
@@ -66,12 +67,8 @@ const MyTaskLayoutFiltersDropdown = ({
   const sortExpanded = useExpanded()
   const filterExpanded = useExpanded()
 
-  const queryClient = useQueryClient();
-  const viewOptions = queryClient.getQueryData<ViewOptionsPayload>([
-    "viewOptions",
-    viewType,
-    viewId,
-  ]);
+  const {hydrated} = useViewOptionsStore()
+  const viewOptions = useViewOptionsStore(state => viewId ? state.getViewOptions(viewType, viewId) : undefined)
 
   const hasActiveFilters = viewOptions?.grouped_by != null || viewOptions?.sorted_by != null || viewOptions?.sort_order != null || viewOptions?.filtered_by != null || viewOptions?.show_completed_tasks;
 
@@ -259,6 +256,10 @@ const MyTaskLayoutFiltersDropdown = ({
         ? "bg-product-library-background-base-primary rounded-large text-product-library-display-primary-idle-tint"
         : "hover:text-product-library-display-primary-idle-tint"
     }`;
+
+  if(!hydrated){
+    return <LoadingSpin/>
+  }
   return (
     <div
       className={

@@ -11,9 +11,11 @@ import {useGetAllTasks} from "./useTasks.ts";
 import type {TaskQuery} from "@/types/task.type.ts";
 import {useMemo} from "react";
 import {filterTasks, groupTasks, sortTasks} from "@/helpers/groupSortTasks.ts";
+import {useViewOptionsStore} from "@/stores/viewOptions.store.ts";
 
 export const useViewOptions = () => {
     const queryClient = useQueryClient();
+    const {setViewOptions} = useViewOptionsStore()
     return useMutation<SyncResponse, ApiError, ViewOptionsPayload, OptimisticUpdatesContext>({
         mutationFn: apiViewOptions,
         onMutate: async (payload) => {
@@ -21,6 +23,9 @@ export const useViewOptions = () => {
                 queryClient,
                 optimisticViewOptions: payload
             })
+        },
+        onSuccess: (_, variables) => {
+            setViewOptions(variables.view_type, variables.object_id, variables)
         },
         onError: (_, __, context) => {
             rollbackOptimisticUpdates({
@@ -32,13 +37,8 @@ export const useViewOptions = () => {
 }
 
 export const useTasksWithView = (query?: TaskQuery, viewType?: string, objectId?: string) => {
-    const queryClient = useQueryClient();
     const tasksQuery = useGetAllTasks(query)
-    const viewOptions = queryClient.getQueryData<ViewOptionsPayload>([
-        'viewOptions',
-        viewType,
-        objectId
-    ])
+    const viewOptions = useViewOptionsStore(state => viewType && objectId ? state.getViewOptions(viewType, objectId) : undefined)
 
     const derivedResults = useMemo(() => {
         const tasksData = tasksQuery.data?.results

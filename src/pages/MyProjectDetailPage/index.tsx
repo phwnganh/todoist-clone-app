@@ -17,7 +17,6 @@ import {findSectionByIdToOrder, handleReorderSection} from "@/helpers/dragDropMy
 import {customCollisionDetection} from "@/helpers/customCollisionDetection.ts";
 import {useDragStore} from "@/stores/dragDrop.store.ts";
 import {useTasksWithView, useViewOptions} from "@/hooks/useQueryHook/useViewOptions.ts";
-import {useQueryClient} from "@tanstack/react-query";
 import type {ViewMode, ViewOptionsPayload} from "@/types/viewOptions.type.ts";
 import {useGroupingTaskStore} from "@/stores/groupingTask.store.ts";
 import type {Section} from "@/types/section.type.ts";
@@ -25,6 +24,8 @@ import UserAddedIcon from "@/components/icons/UserAddedIcon.tsx";
 import SmallListIcon from "@/components/icons/SmallListIcon.tsx";
 import CommentIcon from "@/components/icons/CommentIcon.tsx";
 import ThreeDotsIcon from "@/components/icons/ThreeDotsIcon.tsx";
+import {useViewOptionsStore} from "@/stores/viewOptions.store.ts";
+import LoadingSpin from "@/components/ui/LoadingSpin.tsx";
 
 const MyProjectDetailPage = () => {
     const {projectId} = useParams<{projectId: string}>();
@@ -42,8 +43,9 @@ const MyProjectDetailPage = () => {
     const {mutate: reorderingSectionMutate} = useReorderSection()
     const {mutate: updateViewOptions} = useViewOptions()
     const [openLayoutDropdown, setOpenLayoutDropdown] = useState(false);
-    const queryClient = useQueryClient()
-    const viewOptions = queryClient.getQueryData<ViewOptionsPayload>(["viewOptions", "PROJECT", projectId])
+    const {hydrated} = useViewOptionsStore()
+    const viewOptions = useViewOptionsStore(state => projectId ? state.getViewOptions("PROJECT", projectId) : undefined)
+
     const isGrouping = groupedBy != null;
     useEffect(() => {
         setGroupedBy(viewOptions?.grouped_by ?? null)
@@ -67,6 +69,7 @@ const MyProjectDetailPage = () => {
             object_id: projectId!,
             ...payload,
         });
+        console.log("updateViewOption", payload);
     };
 
     const handleOpenLayoutDropdown = () => {
@@ -119,6 +122,10 @@ const MyProjectDetailPage = () => {
             overId: over.id as string,
             dropType
         })
+    }
+
+    if(!hydrated){
+        return <LoadingSpin/>
     }
 
     return (
