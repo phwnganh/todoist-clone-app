@@ -2,7 +2,7 @@ import { useSectionStore } from "@/stores/section.store.ts";
 import { useTaskStore } from "@/stores/task.store.ts";
 import type { Section } from "@/types/section.type.ts";
 import { Fragment, useMemo, type MouseEvent } from "react";
-import EditMyTaskSectionComponent from "../EditMyTaskSectionComponent";
+import EditMySection from "@/components/MyTaskSectionComponent/EditMySectionComponent";
 import MyTaskBoardSectionHeader from "./MyTaskBoardSectionHeader.tsx";
 import MyTaskBoardItem from "../../MyTasksComponent/MyTaskBoardItem.tsx";
 import AddMyTaskModalDialog from "../../MyTasksComponent/AddMyTaskComponent";
@@ -74,7 +74,7 @@ const MyTaskBoardSection = ({ section, tasks, isLoading }: MyTaskBoardSectionPro
             </button>
             {/*click to edit section here*/}
             {isEditing ? (
-              <EditMyTaskSectionComponent
+              <EditMySection
                 onCancelEditMyTaskSection={onCloseEditSection}
                 section={section}
               />

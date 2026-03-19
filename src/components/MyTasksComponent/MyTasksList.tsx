@@ -1,4 +1,4 @@
-import MyTaskListSection from "../MyTaskSectionComponent/MyTaskListSectionComponent/MyTaskListSection.tsx";
+import MyTaskListSection from "../MySectionComponent/MyTaskListSectionComponent/MyTaskListSection.tsx";
 import type { Section } from "@/types/section.type.ts";
 import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import MyTaskListGroupSection from "./TasksGroupComponent/MyTaskListGroupSection.tsx";

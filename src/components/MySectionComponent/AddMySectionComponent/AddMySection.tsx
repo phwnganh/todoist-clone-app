@@ -1,17 +1,17 @@
 import { type FormEvent, useState } from "react";
-import MyTaskListSectionForm, {
+import MySectionForm, {
   type MyTaskSectionFormValues,
-} from "../MyTaskListSectionComponent/MyTaskListSectionForm.tsx";
+} from "../MySectionForm";
 import {useAddSection} from "@/hooks/useQueryHook/useSections";
 import {useProjectStore} from "@/stores/project.store";
 import { useSectionStore } from "@/stores/section.store.ts";
 
-const AddMyTaskSection = () => {
+const AddMySection = () => {
   const [values, setValues] = useState<MyTaskSectionFormValues>({
     name: "",
   });
   const {projectId} = useProjectStore()
-  const {onCloseAddFinalSectionForm} = useSectionStore()
+  const {onCloseAddFinalSectionForm, onCloseAddSectionForm} = useSectionStore()
   const {mutate, isPending} = useAddSection()
 
   const handleAddMyTaskSection = (e: FormEvent<HTMLFormElement>) => {
@@ -20,11 +20,12 @@ const AddMyTaskSection = () => {
       name: values.name,
       project_id: projectId
     })
+    onCloseAddSectionForm()
     onCloseAddFinalSectionForm();
   };
   return (
     <div className={"mt-1"}>
-      <MyTaskListSectionForm
+      <MySectionForm
         values={values}
         onCancel={onCloseAddFinalSectionForm}
         onChange={setValues}
@@ -37,4 +38,4 @@ const AddMyTaskSection = () => {
   );
 };
 
-export default AddMyTaskSection;
+export default AddMySection;

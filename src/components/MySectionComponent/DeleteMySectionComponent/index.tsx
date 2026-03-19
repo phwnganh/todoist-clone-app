@@ -4,7 +4,7 @@ import {useDeleteSection} from "@/hooks/useQueryHook/useSections.ts";
 import type {Section} from "@/types/section.type.ts";
 import CustomDialog from "@/components/ui/CustomDialog.tsx";
 
-const DeleteMyTaskSectionModalDialog = ({section}: {section: Section}) => {
+const DeleteMySectionModalDialog = ({section}: {section: Section}) => {
     const {onCloseDeleteSection, deleteSectionId} = useSectionStore()
     const {mutate} = useDeleteSection()
     const handleDeleteMySection = (e: MouseEvent<HTMLButtonElement>) => {
@@ -52,4 +52,4 @@ const DeleteMyTaskSectionModalDialog = ({section}: {section: Section}) => {
     );
 };
 
-export default DeleteMyTaskSectionModalDialog;
+export default DeleteMySectionModalDialog;

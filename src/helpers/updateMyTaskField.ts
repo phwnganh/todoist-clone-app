@@ -1,5 +1,5 @@
 import {type MyTaskFormValues} from "@/components/MyTasksComponent/MyTaskForm";
-import {type MyTaskSectionFormValues} from '@/components/MyTaskSectionComponent/MyTaskListSectionComponent/MyTaskListSectionForm.tsx'
+import {type MyTaskSectionFormValues} from '@/components/MySectionComponent/MySectionForm'
 import type {Task} from "@/types/task.type.ts";
 import {priorityFilterData} from "@/data/myTaskFilter.data.ts";
 import type {Project} from "@/types/project.type.ts";

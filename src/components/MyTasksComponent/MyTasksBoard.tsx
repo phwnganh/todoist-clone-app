@@ -1,9 +1,9 @@
 import type { Section } from "@/types/section.type.ts";
-import MyTaskBoardSection from "../MyTaskSectionComponent/MyTaskBoardSectionComponent/MyTaskBoardSection.tsx";
+import MyTaskBoardSection from "../MySectionComponent/MyTaskBoardSectionComponent/MyTaskBoardSection.tsx";
 import {Fragment} from "react";
-import AddMyTaskBoardSectionFinalButton from "../MyTaskSectionComponent/MyTaskBoardSectionComponent/AddMyTaskBoardSectionFinalButton.tsx";
-import AddMyTaskSection from "../MyTaskSectionComponent/AddMyTaskSectionComponent";
-import AddMyTaskBoardSectionSlot from "../MyTaskSectionComponent/MyTaskBoardSectionComponent/AddMyTaskBoardSectionSlot";
+import AddMyTaskBoardSectionFinalButton from "../MySectionComponent/MyTaskBoardSectionComponent/AddMyTaskBoardSectionFinalButton.tsx";
+import AddMyTaskSection from "../MySectionComponent/AddMySectionComponent/AddMySection.tsx";
+import AddMyTaskBoardSectionSlot from "../MySectionComponent/MyTaskBoardSectionComponent/AddMyTaskBoardSectionSlot";
 import {horizontalListSortingStrategy, SortableContext} from "@dnd-kit/sortable";
 import MyTaskBoardGroupSection from "./TasksGroupComponent/MyTaskBoardGroupSection";
 import type {TaskGroup} from "@/types/viewOptions.type.ts";
@@ -33,7 +33,7 @@ const MyTasksBoard = ({ filteredSectionsByProject, isGrouping, groupedTasks, tas
         {hasNoSectionTasks && (
             <>
               <MyTaskBoardSection section={noSection} tasks={tasks} isLoading={isLoading}/>
-              <AddMyTaskBoardSectionSlot addedSectionId={noSection?.id} />
+              <AddMyTaskBoardSectionSlot sectionId={noSection?.id} />
             </>
         )}
         <SortableContext items={(filteredSectionsByProject ?? []).map(s => s.id!)} strategy={horizontalListSortingStrategy}>
@@ -41,7 +41,7 @@ const MyTasksBoard = ({ filteredSectionsByProject, isGrouping, groupedTasks, tas
             return (
                 <Fragment key={section.id}>
                   <MyTaskBoardSection section={section} tasks={tasks} isLoading={isLoading}/>
-                  <AddMyTaskBoardSectionSlot addedSectionId={section.id} />
+                  <AddMyTaskBoardSectionSlot sectionId={section.id} />
                 </Fragment>
             );
           })}

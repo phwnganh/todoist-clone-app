@@ -1,20 +1,20 @@
 import { type Section } from "@/types/section.type.ts";
 import {type FormEvent, useEffect, useState} from "react";
-import MyTaskListSectionForm, {
+import MySectionForm, {
   type MyTaskSectionFormValues,
-} from "../MyTaskListSectionComponent/MyTaskListSectionForm.tsx";
+} from "../MySectionForm";
 import {useSectionStore} from "@/stores/section.store.ts";
 import {useUpdateSection} from "@/hooks/useQueryHook/useSections.ts";
 import {useProjectStore} from "@/stores/project.store.ts";
 
-type EditMyTaskSectionProps = {
+type EditMySectionProps = {
   onCancelEditMyTaskSection: () => void;
   section: Section;
 };
-const EditMyTaskSection = ({
+const EditMySection = ({
   section,
   onCancelEditMyTaskSection,
-}: EditMyTaskSectionProps) => {
+}: EditMySectionProps) => {
   const [values, setValues] = useState<MyTaskSectionFormValues>({
     name: section.name,
   });
@@ -38,7 +38,7 @@ const EditMyTaskSection = ({
     onCancelEditMyTaskSection()
   };
   return (
-    <MyTaskListSectionForm
+    <MySectionForm
       values={values}
       onCancel={onCancelEditMyTaskSection}
       onSubmit={handleUpdateMyTaskSection}
@@ -50,4 +50,4 @@ const EditMyTaskSection = ({
   );
 };
 
-export default EditMyTaskSection;
+export default EditMySection;

@@ -24,9 +24,9 @@ import {customCollisionDetection} from "@/helpers/customCollisionDetection.ts";
 import {useProjectStore} from "@/stores/project.store.ts";
 import EmptyInboxTasks from "@/components/ui/EmptyInboxTasks.tsx";
 import AddMyTaskBoardSectionFinalButton
-    from "@/components/MyTaskSectionComponent/MyTaskBoardSectionComponent/AddMyTaskBoardSectionFinalButton.tsx";
+    from "@/components/MySectionComponent/MyTaskBoardSectionComponent/AddMyTaskBoardSectionFinalButton.tsx";
 import {useSectionStore} from "@/stores/section.store.ts";
-import AddMyTaskSection from "@/components/MyTaskSectionComponent/AddMyTaskSectionComponent";
+import AddMyTaskSection from "@/components/MySectionComponent/AddMySectionComponent/AddMySection.tsx";
 
 const InboxPage = () => {
     const {showCollapse, onToggleSidebar} = useOutletContext<HeaderLayoutType>()

@@ -14,7 +14,7 @@ type MyTaskSectionFormProps = {
   values: MyTaskSectionFormValues;
   onChange: (values: MyTaskSectionFormValues) => void;
 };
-const MyTaskListSectionForm = ({
+const MySectionForm = ({
   onCancel,
   values,
   onChange,
@@ -56,4 +56,4 @@ const MyTaskListSectionForm = ({
   );
 };
 
-export default MyTaskListSectionForm;
+export default MySectionForm;

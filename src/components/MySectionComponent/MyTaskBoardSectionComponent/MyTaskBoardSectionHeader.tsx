@@ -4,7 +4,7 @@ import {useRef} from "react";
 import {useSectionStore} from "@/stores/section.store.ts";
 import type {Section} from "@/types/section.type.ts";
 import MySectionsToolbarDropdown from "../MySectionsToolbarDropdown.tsx";
-import DeleteMyTaskSectionModalDialog from "../DeleteMyTaskSectionComponent";
+import DeleteMyTaskSectionModalDialog from "../DeleteMySectionComponent";
 import {useClickOutside} from "@/hooks/useClickOutside.ts";
 
 type MyTaskBoardSectionHeaderProps = {

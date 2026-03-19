@@ -5,8 +5,8 @@ import type { Task } from "@/types/task.type.ts";
 import {useSectionStore} from "@/stores/section.store";
 import {type Section} from "@/types/section.type";
 import MySectionsToolbarDropdown from "../MySectionsToolbarDropdown";
-import EditMyTaskSectionComponent from "../EditMyTaskSectionComponent";
-import DeleteMyTaskSectionModalDialog from "../DeleteMyTaskSectionComponent";
+import EditMyTaskSectionComponent from "../EditMySectionComponent";
+import DeleteMyTaskSectionModalDialog from "../DeleteMySectionComponent";
 import {useClickOutside} from "@/hooks/useClickOutside.ts";
 import {useRef} from "react";
 

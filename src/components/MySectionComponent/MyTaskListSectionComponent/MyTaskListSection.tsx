@@ -8,8 +8,8 @@ import { useExpanded } from "@/hooks/useExpanded.ts";
 import MyTaskListSectionHeader from "./MyTaskListSectionHeader.tsx";
 import MyTaskListSectionFooter from "./MyTaskListSectionFooter.tsx";
 import { useSectionStore } from "@/stores/section.store.ts";
-import AddMyTaskSectionComponent from "../AddMyTaskSectionComponent";
-import EditMyTaskSectionComponent from "../EditMyTaskSectionComponent";
+import AddMySection from "@/components/MyTaskSectionComponent/AddMySectionComponent/AddMySection.tsx";
+import EditMySection from "@/components/MyTaskSectionComponent/EditMySectionComponent";
 import { useTaskStore } from "@/stores/task.store.ts";
 import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import DragDropIcon from "@/components/icons/DragDropIcon.tsx";
@@ -77,7 +77,7 @@ const MyTaskListSection = ({ section, tasks, isLoading }: MyTaskSectionProps) =>
               {isEditing ? (
                 <>
                 
-                  <EditMyTaskSectionComponent
+                  <EditMySection
                       onCancelEditMyTaskSection={onCloseEditSection}
                       section={section}
                   /></>
@@ -122,7 +122,7 @@ const MyTaskListSection = ({ section, tasks, isLoading }: MyTaskSectionProps) =>
             )}
 
             {isSectionAdding ? (
-                <AddMyTaskSectionComponent
+                <AddMySection
                 />
 
             ) : (
