@@ -23,12 +23,12 @@ import {
   rollbackOptimisticUpdates,
   type OptimisticUpdatesContext,
 } from "@/helpers/optimisticUpdates.ts";
+import {queryClient} from "@/main.tsx";
 
 export const useGetAllSections = (query?: SectionQuery) => {
   return useQuery<SectionResponse>({
     queryKey: ["sections", query],
     queryFn: () => apiGetAllSections(query),
-    enabled: !!query?.project_id
   });
 };
 
@@ -36,6 +36,11 @@ export const useGetASection = (id: string | null | undefined) => {
   return useQuery<Section>({
     queryKey: ["section-detail", id],
     queryFn: () => apiGetASection(id),
+    enabled: !!id,
+    initialData: () => {
+      const sections = queryClient.getQueryData<SectionResponse>(["sections"])
+      return sections?.results.find((section) => section.id === id);
+    }
   });
 };
 

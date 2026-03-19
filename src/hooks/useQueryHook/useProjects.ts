@@ -11,6 +11,7 @@ import {
     optimisticAddProject, optimisticDeleteProject, optimisticUpdateProject, type OptimisticUpdatesProjectContext,
     rollbackOptimisticProjectUpdates,
 } from "@/helpers/optimisticUpdates.ts";
+import {queryClient} from "@/main.tsx";
 
 export const useGetAllProjects = () => {
     return useQuery<ProjectResponse>({
@@ -22,7 +23,12 @@ export const useGetAllProjects = () => {
 export const useGetAProject = (projectId: string) => {
     return useQuery<Project>({
         queryKey: ['project-detail', projectId],
-        queryFn: () => apiGetAProject(projectId)
+        queryFn: () => apiGetAProject(projectId),
+        enabled: !!projectId,
+        initialData: () => {
+            const projects = queryClient.getQueryData<ProjectResponse>(["projects"])
+            return projects?.results.find(project => project.id === projectId)
+        }
     })
 }
 
