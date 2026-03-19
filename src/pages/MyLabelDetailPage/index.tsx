@@ -7,7 +7,6 @@ import HeaderThreeDotsIcon from "@/components/icons/HeaderThreeDotsIcon.tsx";
 import HeaderLayout from "@/layouts/HeaderLayout.tsx";
 import {useGroupingTaskStore} from "@/stores/groupingTask.store.ts";
 import {useEffect, useMemo, useState} from "react";
-import {useQueryClient} from "@tanstack/react-query";
 import type {ViewMode, ViewOptionsPayload} from "@/types/viewOptions.type.ts";
 import type {HeaderLayoutType} from "@/types/headerLayout.type.ts";
 import {useTasksWithView, useViewOptions} from "@/hooks/useQueryHook/useViewOptions.ts";
@@ -21,6 +20,8 @@ import MyTaskBoardLabelSection
     from "@/components/MyTasksComponent/TasksLabelComponent/MyTaskBoardLabelSection/MyTaskBoardLabelSection.tsx";
 import MyTaskListGroupSection from "@/components/MyTasksComponent/TasksGroupComponent/MyTaskListGroupSection.tsx";
 import MyTaskBoardGroupSection from "@/components/MyTasksComponent/TasksGroupComponent/MyTaskBoardGroupSection";
+import {useViewOptionsStore} from "@/stores/viewOptions.store.ts";
+import LoadingSpin from "@/components/ui/LoadingSpin.tsx";
 
 const MyLabelDetailPage = () => {
     const {labelId} = useParams<{labelId: string}>()
@@ -33,8 +34,8 @@ const MyLabelDetailPage = () => {
     const {data: labelData} = useGetALabel(labelId)
     const {data: tasksData, isLoading} = useTasksWithView({label: labelData?.name}, "LABEL", labelId)
     const {data: sectionsData} = useGetAllSections({project_id: projectId})
-    const queryClient = useQueryClient()
-    const viewOptions = queryClient.getQueryData<ViewOptionsPayload>(["viewOptions", "LABEL", labelId])
+    const {hydrated} = useViewOptionsStore()
+    const viewOptions = useViewOptionsStore(state => labelId ? state.getViewOptions("LABEL", labelId): undefined)
     const layoutName = viewOptions?.view_mode ?? "LIST"
 
     useEffect(() => {
@@ -64,6 +65,9 @@ const MyLabelDetailPage = () => {
     const {showCollapse, onToggleSidebar} = useOutletContext<HeaderLayoutType>()
     const navigate = useNavigate()
 
+    if(!hydrated){
+        return <LoadingSpin/>
+    }
     return (
         <>
             <HeaderLayout showCollapse={showCollapse} onToggleSidebar={onToggleSidebar} right={

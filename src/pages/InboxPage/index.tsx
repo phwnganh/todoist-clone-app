@@ -11,7 +11,6 @@ import {
 } from "@/hooks/useQueryHook/useViewOptions.ts";
 import CommentIcon from "@/components/icons/CommentIcon.tsx";
 import ThreeDotsIcon from "@/components/icons/ThreeDotsIcon.tsx";
-import { queryClient } from "@/main.tsx";
 import MyTasksBoard from "@/components/MyTasksComponent/MyTasksBoard.tsx";
 import {
   useGetAllSections,
@@ -41,6 +40,8 @@ import {
 import { customCollisionDetection } from "@/helpers/customCollisionDetection.ts";
 import { useProjectStore } from "@/stores/project.store.ts";
 import InboxTaskList from "@/components/MyTasksComponent/InboxTasksComponent/InboxTaskList.tsx";
+import {useViewOptionsStore} from "@/stores/viewOptions.store.ts";
+import LoadingSpin from "@/components/ui/LoadingSpin.tsx";
 
 const InboxPage = () => {
   const { showCollapse, onToggleSidebar } =
@@ -66,11 +67,8 @@ const InboxPage = () => {
     inboxProjectId,
   );
   const setProjectId = useProjectStore((state) => state.setProjectId);
-  const viewOptions = queryClient.getQueryData<ViewOptionsPayload>([
-    "viewOptions",
-    "PROJECT",
-    inboxProjectId,
-  ]);
+  const {hydrated} = useViewOptionsStore()
+  const viewOptions = useViewOptionsStore(state => inboxProjectId ? state.getViewOptions("PROJECT", inboxProjectId) : undefined)
 
   const handleUpdateViewOption = (payload: Partial<ViewOptionsPayload>) => {
     updateViewOptions({
@@ -171,6 +169,10 @@ const InboxPage = () => {
       dropType,
     });
   };
+
+  if(!hydrated){
+    return <LoadingSpin/>
+  }
   return (
     <>
       <HeaderLayout
