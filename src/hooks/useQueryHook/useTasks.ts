@@ -22,19 +22,25 @@ import {
     type OptimisticUpdatesContext,
 } from "@/helpers/optimisticUpdates.ts";
 import {commonTaskMutation} from "@/helpers/hookMutations.ts";
+import {queryClient} from "@/main.tsx";
 
 export const useGetAllTasks = (query?: TaskQuery) => {
     return useQuery<TaskResponse>({
         queryKey: ['tasks', query],
         queryFn: () => apiGetAllTasks(query),
-        enabled: !!query?.project_id
+        enabled: !!query?.label || !!query?.project_id
     })
 }
 
 export const useGetATask = (taskId: string | null) => {
     return useQuery<Task>({
         queryKey: ['task-detail', taskId],
-        queryFn: () => apiGetATask(taskId)
+        queryFn: () => apiGetATask(taskId),
+        enabled: !!taskId,
+        initialData: () => {
+            const tasks = queryClient.getQueryData<TaskResponse>(["tasks"])
+            return tasks?.results.find((task) => task.id === taskId);
+        }
     })
 }
 

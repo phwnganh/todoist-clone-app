@@ -13,6 +13,7 @@ import {
     type OptimisticUpdatesContext,
 } from "@/helpers/optimisticUpdates.ts";
 import {commonLabelMutation} from "@/helpers/hookMutations.ts";
+import {queryClient} from "@/main.tsx";
 
 export const useGetAllLabels = () => {
     return useQuery<LabelsResponse>({
@@ -25,6 +26,11 @@ export const useGetALabel = (labelId?: string) => {
     return useQuery<Label>({
         queryKey: ["label-detail", labelId],
         queryFn: () => apiGetALabel(labelId),
+        enabled: !!labelId,
+        initialData: () => {
+            const labels = queryClient.getQueryData<LabelsResponse>(["labels"])
+            return labels?.results.find(l => l.id === labelId);
+        }
     })
 }
 

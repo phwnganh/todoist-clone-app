@@ -32,7 +32,9 @@ const MyLabelDetailPage = () => {
     const {mutate: updateViewOptions} = useViewOptions()
     const {data: projectsData} = useGetAllProjects()
     const {data: labelData} = useGetALabel(labelId)
-    const {data: tasksData, isLoading} = useTasksWithView({label: labelData?.name}, "LABEL", labelId)
+    const taskQuery = labelData?.name ? {label: labelData.name} : undefined
+    const {data: tasksData, isLoading} = useTasksWithView(taskQuery, "LABEL", labelId)
+    console.log("tasksData", tasksData)
     const {data: sectionsData} = useGetAllSections({project_id: projectId})
     const {hydrated} = useViewOptionsStore()
     const viewOptions = useViewOptionsStore(state => labelId ? state.getViewOptions("LABEL", labelId): undefined)
@@ -118,7 +120,7 @@ const MyLabelDetailPage = () => {
                                         </div>
                                     </>
                                     ) :
-                                    <MyTaskBoardLabelSection tasks={tasksData?.results} sections={sectionsData?.results} isSortable={false} isTasksLabelView={true} projects={projectsData?.results}/>
+                                    <MyTaskBoardLabelSection tasks={tasksData?.results} sections={sectionsData?.results} isSortable={false} isTasksLabelView={true} projects={projectsData?.results} isLoading={isLoading}/>
                                 }
                         </div>
                     </section>

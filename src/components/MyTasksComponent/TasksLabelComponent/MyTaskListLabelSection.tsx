@@ -17,19 +17,15 @@ const MyTaskListLabelSection = ({tasks, sections, isLoading, isSortable, isTasks
     if(isLoading){
         return <LoadingSpin/>
     }
-    return (
-        <>
-            {tasks && tasks.length > 0 ?
-                <ul className={"mt-1.25 flex flex-col flex-wrap"}>
-                {tasks?.map(task =>
-                    <MyTaskListItem key={task.id} taskNode={{task, children: []}} level={0} sections={sections} isSortable={isSortable} isTasksLabelView={isTasksLabelView} projects={projects}/>)}
-            </ul> :
-                <div className={"mt-10"}>
-                    <EmptyList/>
-                </div>
-            }
 
-        </>
+    if(tasks?.length === 0){
+        return <EmptyList/>
+    }
+    return (
+        <ul className={"mt-1.25 flex flex-col flex-wrap"}>
+            {tasks?.map(task =>
+                <MyTaskListItem key={task.id} taskNode={{task, children: []}} level={0} sections={sections} isSortable={isSortable} isTasksLabelView={isTasksLabelView} projects={projects}/>)}
+        </ul>
     );
 };
 
