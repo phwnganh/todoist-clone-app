@@ -192,7 +192,6 @@ const MyTaskBoardItem = ({
           </button>
           {isOpenTaskDetailToolbar && (
             <div ref={taskToolbarRef}
-              className={"absolute top-9 right-9 left-6 z-50"}
               onClick={(e) => e.stopPropagation()}
             >
               <MyTasksToolbarDropdown taskId={task.id} task={task}/>

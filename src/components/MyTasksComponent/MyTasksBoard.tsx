@@ -35,7 +35,7 @@ const MyTasksBoard = ({
   return (
     <section
       className={
-        "flex items-start overflow-x-auto scrollbar-thin scrollbar-custom"
+        "flex items-start h-full overflow-x-auto scrollbar-thin scrollbar-custom"
       }
     >
       {isGrouping ? (

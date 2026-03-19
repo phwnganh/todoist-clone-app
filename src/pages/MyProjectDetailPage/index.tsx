@@ -122,7 +122,7 @@ const MyProjectDetailPage = () => {
     }
 
     return (
-        <>
+        <div className={"flex flex-col h-full"}>
             <HeaderLayout showCollapse={showCollapse} onToggleSidebar={onToggleSidebar} right={
                 <div className={"flex justify-end items-center"}>
                     <button type={"button"} className="flex items-center justify-center p-1.5 hover:bg-product-library-selectable-secondary-hover-fill rounded-small">
@@ -155,25 +155,28 @@ const MyProjectDetailPage = () => {
                 <button className={"hidden sm:block px-1 text-product-library-actionable-quaternary-idle-tint text-sm font-medium hover:bg-product-library-selectable-secondary-hover-fill rounded-small p-1.5"} onClick={() => navigate(PROJECTS)}>My Projects</button>
                 <div className={"text-sm text-product-library-display-secondary-idle-tint"}>/</div>
             </div>}></HeaderLayout>
-            <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver} collisionDetection={customCollisionDetection}>
-                {layoutName === "LIST" ? (
-                    <section className={"max-w-200 mx-auto w-full relative z-10"}>
-                        <div className={"flex flex-col gap-small"}>
-                            <MyTaskTitle/>
-                            <MyTasksList filteredSectionsByProject={sections?.results} isGrouping={isGrouping} groupedTasks={groupedTasks} tasks={allTasks?.results ?? []} noSection={NO_SECTION} isLoading={isLoading}/>
-                        </div>
-                    </section>
-                ) : (
-                    <section className={"px-10"}>
-                        <div className={"flex flex-col gap-small"}>
-                            <MyTaskTitle/>
-                            <MyTasksBoard filteredSectionsByProject={sections?.results} isGrouping={isGrouping} groupedTasks={groupedTasks} tasks={allTasks?.results ?? []} noSection={NO_SECTION} isLoading={isLoading}/>
-                        </div>
-                    </section>
-                )}
-            </DndContext>
+            <div className={"flex-1 overflow-hidden"}>
+                <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver} collisionDetection={customCollisionDetection}>
+                    {layoutName === "LIST" ? (
+                        <section className={"max-w-200 mx-auto w-full relative z-10"}>
+                            <div className={"flex flex-col gap-small"}>
+                                <MyTaskTitle/>
+                                <MyTasksList filteredSectionsByProject={sections?.results} isGrouping={isGrouping} groupedTasks={groupedTasks} tasks={allTasks?.results ?? []} noSection={NO_SECTION} isLoading={isLoading}/>
+                            </div>
+                        </section>
+                    ) : (
+                        <section className={"px-10 h-full"}>
+                            <div className={"flex flex-col gap-small h-full"}>
+                                <MyTaskTitle/>
+                                <MyTasksBoard filteredSectionsByProject={sections?.results} isGrouping={isGrouping} groupedTasks={groupedTasks} tasks={allTasks?.results ?? []} noSection={NO_SECTION} isLoading={isLoading}/>
+                            </div>
+                        </section>
+                    )}
+                </DndContext>
 
-        </>
+            </div>
+
+        </div>
     );
 };
 
