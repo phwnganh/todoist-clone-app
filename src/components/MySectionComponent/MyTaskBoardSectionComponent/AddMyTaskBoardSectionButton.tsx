@@ -1,12 +1,12 @@
 import AddSectionIcon from "@/components/icons/AddSectionIcon.tsx";
 import { useSectionStore } from "@/stores/section.store";
 
-const AddMyTaskBoardSectionFinalButton = () => {
+const AddMyTaskBoardSectionButton = () => {
   const {onOpenAddFinalSectionForm} = useSectionStore()
   return (
     <button
       type={"button"}
-      onClick={onOpenAddFinalSectionForm}
+      onClick={() => onOpenAddFinalSectionForm()}
       className={
         "flex items-center gap-3 rounded-large border border-product-library-background-raised-secondary py-2 px-4 w-70 bg-product-library-background-raised-secondary"
       }
@@ -23,4 +23,4 @@ const AddMyTaskBoardSectionFinalButton = () => {
   );
 };
 
-export default AddMyTaskBoardSectionFinalButton;
+export default AddMyTaskBoardSectionButton;

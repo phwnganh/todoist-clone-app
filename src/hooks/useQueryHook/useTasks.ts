@@ -27,6 +27,7 @@ export const useGetAllTasks = (query?: TaskQuery) => {
     return useQuery<TaskResponse>({
         queryKey: ['tasks', query],
         queryFn: () => apiGetAllTasks(query),
+        enabled: !!query?.project_id
     })
 }
 

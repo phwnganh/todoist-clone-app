@@ -2,7 +2,7 @@ import { useSectionStore } from "@/stores/section.store.ts";
 import { useTaskStore } from "@/stores/task.store.ts";
 import type { Section } from "@/types/section.type.ts";
 import { Fragment, useMemo, type MouseEvent } from "react";
-import EditMySection from "@/components/MyTaskSectionComponent/EditMySectionComponent";
+import EditMySection from "@/components/MySectionComponent/EditMySectionComponent";
 import MyTaskBoardSectionHeader from "./MyTaskBoardSectionHeader.tsx";
 import MyTaskBoardItem from "../../MyTasksComponent/MyTaskBoardItem.tsx";
 import AddMyTaskModalDialog from "../../MyTasksComponent/AddMyTaskComponent";

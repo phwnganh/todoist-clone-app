@@ -11,23 +11,26 @@ const AddMySection = () => {
     name: "",
   });
   const {projectId} = useProjectStore()
-  const {onCloseAddFinalSectionForm, onCloseAddSectionForm} = useSectionStore()
+  const {onCloseAddSectionForm, onCloseAddFinalSectionForm} = useSectionStore()
   const {mutate, isPending} = useAddSection()
 
+  const handleCloseAddSectionForm = () => {
+    onCloseAddSectionForm()
+    onCloseAddFinalSectionForm()
+  }
   const handleAddMyTaskSection = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     mutate({
       name: values.name,
       project_id: projectId
     })
-    onCloseAddSectionForm()
-    onCloseAddFinalSectionForm();
+    handleCloseAddSectionForm()
   };
   return (
     <div className={"mt-1"}>
       <MySectionForm
         values={values}
-        onCancel={onCloseAddFinalSectionForm}
+        onCancel={handleCloseAddSectionForm}
         onChange={setValues}
         onSubmit={handleAddMyTaskSection}
         submitLabel={"Add section"}

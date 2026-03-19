@@ -28,6 +28,7 @@ export const useGetAllSections = (query?: SectionQuery) => {
   return useQuery<SectionResponse>({
     queryKey: ["sections", query],
     queryFn: () => apiGetAllSections(query),
+    enabled: !!query?.project_id
   });
 };
 

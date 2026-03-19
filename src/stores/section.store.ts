@@ -22,9 +22,9 @@ type SectionStore = {
 
 export const useSectionStore = create<SectionStore>((set) => ({
     sectionId: "",
-    addFinalSectionId: false,
     setSectionId: (sectionId: string) => set({sectionId}),
     addSectionId: undefined,
+    addFinalSectionId: false,
     editingSectionId: null,
     deleteSectionId: null,
     openSectionToolbarDropdown: null,
