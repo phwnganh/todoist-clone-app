@@ -48,7 +48,7 @@ const MyProjectsToolbarAction = () => {
           <span className="text-product-library-actionable-secondary-on-idle-tint overflow-hidden text-sm font-medium">
             Add
           </span>
-          <div className="ml-1.5 flex justify-center items-center">
+          <div aria-labelledby={"open the dropdown"} className="ml-1.5 flex justify-center items-center">
             <SmallArrowDownIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
           </div>
         </button>

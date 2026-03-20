@@ -32,7 +32,7 @@ const MyProjectsPage = () => {
         }
       ></HeaderLayout>
       <section className="max-w-200 mx-auto w-full">
-        <div className="flex flex-col gap-small">
+        <div aria-labelledby={"project-title"} className="flex flex-col gap-small">
           <h1 className="p-1 font-strong text-product-library-display-primary-idle-tint text-header-large">
             My Projects
           </h1>

@@ -16,7 +16,7 @@ const MyProjectsSearchAction = ({
     searchInputRef?.current?.focus();
   };
   return (
-    <div className="mt-2 flex items-center border border-product-library-border-idle-tint hover:border-product-library-border-focus-tint rounded-small">
+    <div role={"searchbox"} className="mt-2 flex items-center border border-product-library-border-idle-tint hover:border-product-library-border-focus-tint rounded-small">
       <div className="ml-xsmall">
         <SearchIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
       </div>
@@ -29,7 +29,7 @@ const MyProjectsSearchAction = ({
         placeholder="Search projects"
       />
       {value && (
-        <button
+        <button aria-labelledby={"Clear search"}
           onClick={handleClearSearch}
           className="flex items-center justify-center mr-1 hover:bg-product-library-selectable-secondary-hover-fill rounded-small"
         >
