@@ -3,25 +3,23 @@ import { useGetAProject } from "@/hooks/useQueryHook/useProjects.ts";
 import MyTaskDetailAside from "./MyTaskDetailAsideSection";
 import MyTaskDetailMainSection from "./MyTaskDetailMainSection";
 import MyTaskDetailTitleSection from "./MyTaskDetailTitleSection.tsx";
-import { useGetAllTasks } from "@/hooks/useQueryHook/useTasks.ts";
 import { useMemo } from "react";
-import { useTaskStore } from "@/stores/task.store.ts";
 import { useGetAllSections } from "@/hooks/useQueryHook/useSections.ts";
 import CustomDetailModalDialog from "@/components/ui/CustomDetailModalDialog.tsx";
+import type {Task} from "@/types/task.type.ts";
 
 type MyTaskDetailModalDialogProps = {
   onCloseTaskDetail: () => void;
+  taskDetail: Task;
+  tasks?: Task[]
 };
 const MyTaskDetailModalDialog = ({
   onCloseTaskDetail,
+    taskDetail,
+    tasks
 }: MyTaskDetailModalDialogProps) => {
   const projectId = useProjectStore((state) => state.projectId);
-  const { taskDetailId } = useTaskStore();
   const { data: projectDetail } = useGetAProject(projectId);
-  const { data: tasks } = useGetAllTasks({ project_id: projectId });
-  const taskDetail = useMemo(() => {
-    return tasks?.results?.find((task) => task.id === taskDetailId);
-  }, [taskDetailId, tasks?.results]);
   const { data: sections } = useGetAllSections({ project_id: projectId });
   const sectionDetail = useMemo(() => {
     if (!taskDetail?.section_id) return null;

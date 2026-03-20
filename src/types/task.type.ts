@@ -1,8 +1,8 @@
 export type Task = {
     id : string,
-    project_id?: string | undefined | null,
-    section_id?: string | undefined | null,
-    parent_id: string | null | undefined,
+    project_id?: string | null,
+    section_id?: string | null,
+    parent_id?: string | null,
     labels?: string[],
     deadline?: Deadline,
     duration?: Duration,
@@ -53,10 +53,10 @@ export type Priority = {
 export type TaskPayload = {
     content: string;
     description: string;
-    project_id: string | undefined;
-    section_id: string | undefined | null;
-    parent_id: string | undefined | null;
-    priority: number | undefined;
+    project_id?: string;
+    section_id?: string | null;
+    parent_id?: string | null;
+    priority?: number;
     labels: string[];
     due: Due | null;
 }
@@ -65,7 +65,7 @@ export type SubTaskPayload = {
     content: string;
     description: string;
     parent_id: string;
-    priority: number | undefined;
+    priority?: number;
     labels: string[];
     due: Due | null;
 }
@@ -82,8 +82,8 @@ export type UpdateTaskPayload = {
 
 export type MoveTaskPayload = {
     id: string;
-    project_id?: string | undefined | null;
-    section_id?: string | undefined | null;
+    project_id?: string | null;
+    section_id?: string | null;
     parent_id?: string | null
 }
 

@@ -2,12 +2,12 @@ import MyTaskDetailHeaderMainSection from "./MyTaskDetailHeaderMainSection";
 import MyTaskDetailSubTaskMainSection from "./MyTaskDetailSubTaskMainSection";
 import MyNoChildrenTaskDetailAddSubtaskButtonSection from "./MyNoChildrenTaskDetailAddSubtaskButtonSection.tsx";
 import { useTaskStore } from "@/stores/task.store.ts";
-import type { Task, TaskResponse } from "@/types/task.type.ts";
+import type { Task } from "@/types/task.type.ts";
 import AddMyTaskDetailMainSubChildrenForm from "./AddMyTaskDetailMainSubChildrenForm";
 
 type MyTaskDetailMainSectionProps = {
   taskDetail?: Task;
-  tasks?: TaskResponse;
+  tasks?: Task[];
 };
 const MyTaskDetailMainSection = ({
   taskDetail,
@@ -15,7 +15,7 @@ const MyTaskDetailMainSection = ({
 }: MyTaskDetailMainSectionProps) => {
   const { taskDetailId, addingSubTaskId, onCloseAddSubTask } = useTaskStore();
   const isTaskAdding = addingSubTaskId === taskDetailId;
-  const hasChildren = tasks?.results?.some(
+  const hasChildren = tasks?.some(
     (task) => task.parent_id === taskDetail?.id,
   );
   return (
@@ -25,7 +25,7 @@ const MyTaskDetailMainSection = ({
         {hasChildren ? (
           <MyTaskDetailSubTaskMainSection
             taskDetail={taskDetail}
-            tasks={tasks?.results}
+            tasks={tasks}
           />
         ) : (
           <div className={"pt-2"}>

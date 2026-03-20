@@ -104,6 +104,7 @@ const MyTaskListSection = ({ section, tasks, isLoading }: MyTaskSectionProps) =>
                   <MyTaskListItem
                       taskNode={taskNode}
                       level={0}
+                      tasks={tasks}
                   />
                 </Fragment>
             ))}

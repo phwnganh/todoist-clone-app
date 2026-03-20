@@ -203,7 +203,7 @@ const MyTaskBoardItem = ({
           <DeleteMyTaskModalDialog task={task}/>
       )}
       {isOpeningTaskDetail && (
-          <MyTaskDetailModalDialog onCloseTaskDetail={onCloseTaskDetail}/>
+          <MyTaskDetailModalDialog onCloseTaskDetail={onCloseTaskDetail} taskDetail={task} tasks={tasks}/>
       )}
     </>
   );

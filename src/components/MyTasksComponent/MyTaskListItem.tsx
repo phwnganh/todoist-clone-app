@@ -1,4 +1,4 @@
-import type { TaskNode } from "@/types/task.type.ts";
+import type {Task, TaskNode} from "@/types/task.type.ts";
 import EditIcon from "@/components/icons/EditIcon.tsx";
 import DueDateIcon from "@/components/icons/DueDateIcon.tsx";
 import CommentIcon from "@/components/icons/CommentIcon.tsx";
@@ -39,13 +39,15 @@ type MyTaskListItemProps = {
   isSortable?: boolean;
   isTasksLabelView?: boolean;
   projects?: Project[]
+  tasks?: Task[]
 };
 const MyTaskListItem = ({
   taskNode,
   level,
     sections,
     isSortable = true, isTasksLabelView = false,
-    projects
+    projects,
+    tasks
 }: MyTaskListItemProps) => {
     const taskToolbarRef = useRef<HTMLDivElement | null>(null)
   const { task, children } = taskNode;
@@ -279,13 +281,14 @@ const MyTaskListItem = ({
                     sections={sections}
                     isTasksLabelView={isTasksLabelView}
                     projects={projects}
+                    tasks={tasks}
                 />
             ))}
           </SortableContext>
         }
 
       {isOpenTaskDetail && (
-          <MyTaskDetailModalDialog onCloseTaskDetail={onCloseTaskDetail} />
+          <MyTaskDetailModalDialog onCloseTaskDetail={onCloseTaskDetail} taskDetail={task} tasks={tasks}/>
       )}
       {isDeleting && (
           <DeleteMyTaskModalDialog task={task}/>
