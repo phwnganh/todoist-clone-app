@@ -1,8 +1,6 @@
 import type { MenuNavItem } from "@/types/menu-nav.type.ts";
 import { PROJECTS } from "@/constants/routes.constants.ts";
 import SidebarNavItem from "./SidebarNavItem.tsx";
-import { useState } from "react";
-import SearchModalDialog from "../SearchModalDialog.tsx";
 import { NavLink } from "react-router-dom";
 import { MENU_NAV_ITEMS } from "@/data/menuNav.data.ts";
 import SidebarMyProjectList from "./SidebarMyProjectList.tsx";
@@ -19,10 +17,9 @@ type SidebarProps = {
   onToggle: () => void;
 };
 const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
-  const [openSearchModal, setOpenSearchModal] = useState(false);
   const {isExpanded, handleExpanded} = useExpanded()
   const handleSearchClick = () => {
-    setOpenSearchModal(true);
+    console.log("open search modal")
   };
 
   return (
@@ -119,9 +116,6 @@ const Sidebar = ({ open, onToggle, isMobile }: SidebarProps) => {
           </span>
         </button>
       </div>
-      {openSearchModal && (
-        <SearchModalDialog onOpenSearch={() => setOpenSearchModal(false)} />
-      )}
     </nav>
   );
 };
