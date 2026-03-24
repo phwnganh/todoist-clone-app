@@ -1,0 +1,8 @@
+
+const TaskClockReminderIcon = ({className}: {className: string}) => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" className={className} fill="none" viewBox="0 0 16 16"><path fill="currentColor" fillRule="evenodd" d="m2.414 4.706.094.093a.5.5 0 0 1-.707.708l-.094-.094a2 2 0 0 1 0-2.829l.379-.378a2 2 0 0 1 2.764-.062.5.5 0 0 1-.676.738 1 1 0 0 0-1.381.03l-.379.38a1 1 0 0 0 0 1.414m9.412-1.824a1 1 0 0 1 1.381.03l.379.38a1 1 0 0 1 0 1.414l-.094.093a.5.5 0 1 0 .707.708l.094-.094a2 2 0 0 0 0-2.829l-.379-.378a2 2 0 0 0-2.764-.062.5.5 0 1 0 .676.738m-.042 9.108A5.48 5.48 0 0 1 8 13.499a5.48 5.48 0 0 1-3.784-1.509l-1.362 1.362a.5.5 0 1 1-.708-.707l1.408-1.408a5.5 5.5 0 1 1 8.892 0l1.408 1.408a.5.5 0 0 1-.707.707zM8 12.499a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9M8 5v3h2a.5.5 0 1 1 0 1H7.5a.5.5 0 0 1-.5-.5V5a.5.5 0 1 1 1 0" clipRule="evenodd"/></svg>
+    );
+};
+
+export default TaskClockReminderIcon;

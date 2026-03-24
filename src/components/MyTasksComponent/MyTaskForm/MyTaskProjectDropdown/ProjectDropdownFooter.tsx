@@ -1,0 +1,31 @@
+import PlusIcon from "@/components/icons/PlusIcon.tsx";
+
+type ProjectDropdownFooterProps = {
+  hasKeyword: boolean;
+  keyword: string;
+  showNotFound: boolean;
+};
+const ProjectDropdownFooter = ({
+  hasKeyword,
+  keyword,
+  showNotFound,
+}: ProjectDropdownFooterProps) => {
+  if (!hasKeyword) return null;
+  return (
+    <>
+      {showNotFound && (
+        <p className="text-sm text-product-library-display-secondary-idle-tint px-2.5 py-1">
+          Project not found
+        </p>
+      )}
+      <button className={"flex items-center gap-1.5 py-1 px-2 hover:bg-product-library-display-accent-secondary-fill"}>
+        <div className={"flex items-center justify-center"}>
+          <PlusIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
+        </div>
+        <span className={"font-medium text-sm"}>Create "{keyword}"</span>
+      </button>
+    </>
+  );
+};
+
+export default ProjectDropdownFooter;

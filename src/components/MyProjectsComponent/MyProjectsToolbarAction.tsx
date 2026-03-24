@@ -1,0 +1,68 @@
+import MyProjectsDropdown from "./MyProjectsDropdown.tsx";
+import { useRef, useState } from "react";
+import CustomSwitch from "@/components/ui/CustomSwitch.tsx";
+import { useClickOutside } from "@/hooks/useClickOutside.ts";
+import AddProjectsModalDialog from "./AddProjectsModalDialog";
+import SmallArrowDownIcon from "@/components/icons/SmallArrowDownIcon.tsx";
+import PlusIcon from "@/components/icons/PlusIcon.tsx";
+
+const MyProjectsToolbarAction = () => {
+  const [isOpenAddProjectsDropdown, setOpenAddProjectsDropdown] =
+    useState(false);
+  const [isAddProjectsModalOpen, setIsAddProjectsModalOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const handleOpenAddProjectsDropdown = () => {
+    setOpenAddProjectsDropdown((prev) => !prev);
+  };
+
+  const handleOpenAddProjectsModal = () => {
+    setOpenAddProjectsDropdown(false);
+    setIsAddProjectsModalOpen(true);
+  };
+
+  const handleCloseAddProjectsModal = () => {
+    setIsAddProjectsModalOpen(false);
+  };
+
+  useClickOutside({
+    ref: dropdownRef,
+    handler: () => setOpenAddProjectsDropdown(false),
+    enabled: isOpenAddProjectsDropdown,
+  });
+  return (
+    <div className="flex justify-between flex-wrap gap-2 sm:gap-0">
+      <div className="flex items-center">
+        <p className="text-product-library-display-secondary-idle-tint text-sm pr-2">
+          Archived projects only
+        </p>
+        <CustomSwitch />
+      </div>
+      <div className="relative" ref={dropdownRef}>
+        <button
+          onClick={handleOpenAddProjectsDropdown}
+          className="px-3 h-8 flex items-center bg-product-library-actionable-secondary-idle-fill rounded-small hover:bg-product-library-border-hover-tint"
+        >
+          <div className="mr-1.5 flex justify-center items-center">
+            <PlusIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
+          </div>
+          <span className="text-product-library-actionable-secondary-on-idle-tint overflow-hidden text-sm font-medium">
+            Add
+          </span>
+          <div aria-labelledby={"open the dropdown"} className="ml-1.5 flex justify-center items-center">
+            <SmallArrowDownIcon className={"text-product-library-actionable-quaternary-idle-tint"}/>
+          </div>
+        </button>
+        {isOpenAddProjectsDropdown && (
+          <MyProjectsDropdown
+            onOpenAddProjectModal={handleOpenAddProjectsModal}
+          />
+        )}
+        {isAddProjectsModalOpen && (
+          <AddProjectsModalDialog onClose={handleCloseAddProjectsModal} />
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default MyProjectsToolbarAction;

@@ -1,0 +1,178 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type {
+  ReorderSectionPayload,
+  Section,
+  SectionPayload, SectionQuery,
+  SectionResponse,
+  UpdateSectionPayload,
+} from "@/types/section.type.ts";
+import {
+  apiAddNewSection,
+  apiDeleteSection,
+  apiGetAllSections,
+  apiGetASection,
+  apiReorderSection,
+  apiUpdateSection,
+} from "@/services/section.service.ts";
+import type { ApiError, SyncResponse } from "@/types/api.type.ts";
+import {
+  optimisticAddSection,
+  optimisticDeleteSection,
+  optimisticReorderSection,
+  optimisticUpdateSection,
+  rollbackOptimisticUpdates,
+  type OptimisticUpdatesContext,
+} from "@/helpers/optimisticUpdates.ts";
+import {queryClient} from "@/main.tsx";
+
+export const useGetAllSections = (query?: SectionQuery) => {
+  return useQuery<SectionResponse>({
+    queryKey: ["sections", query],
+    queryFn: () => apiGetAllSections(query),
+  });
+};
+
+export const useGetASection = (id: string | null | undefined) => {
+  return useQuery<Section>({
+    queryKey: ["section-detail", id],
+    queryFn: () => apiGetASection(id),
+    enabled: !!id,
+    initialData: () => {
+      const sections = queryClient.getQueryData<SectionResponse>(["sections"])
+      return sections?.results.find((section) => section.id === id);
+    }
+  });
+};
+
+export const useAddSection = () => {
+  const queryClient = useQueryClient();
+  return useMutation<
+    SyncResponse,
+    ApiError,
+    SectionPayload,
+    OptimisticUpdatesContext
+  >({
+    mutationFn: apiAddNewSection,
+    onMutate: async (newSection) => {
+      const tempId = `temp-section-${crypto.randomUUID()}`;
+      const optimisticSection: Section = {
+        id: tempId,
+        name: newSection.name,
+        project_id: newSection.project_id,
+      };
+      const res = optimisticAddSection({
+        queryClient,
+        optimisticSection,
+      });
+      return { ...res, tempId };
+    },
+    onSuccess: (res, _, context) => {
+      const realId = res.temp_id_mapping?.[context.tempId!];
+      if (!realId) return;
+      queryClient.setQueryData<SectionResponse>(["sections"], (old) => {
+        if (!old) return old;
+        return {
+          ...old,
+          results: old.results.map((section) =>
+            section.id === context.tempId
+              ? { ...section, id: realId }
+              : section,
+          ),
+        };
+      });
+    },
+    onError: (_, __, context) => {
+      rollbackOptimisticUpdates({
+        queryClient,
+        context,
+      });
+    },
+    onSettled: (error) => {
+      if (error) {
+        void queryClient.invalidateQueries({ queryKey: ["sections"] });
+      }
+    },
+  });
+};
+
+export const useUpdateSection = () => {
+  const queryClient = useQueryClient();
+  return useMutation<
+    SyncResponse,
+    ApiError,
+    UpdateSectionPayload,
+    OptimisticUpdatesContext
+  >({
+    mutationFn: apiUpdateSection,
+    onMutate: async (updatedSection) => {
+      return optimisticUpdateSection({
+        queryClient,
+        sectionId: updatedSection.id,
+        optimisticSection: {
+          name: updatedSection.name,
+          project_id: updatedSection.project_id,
+        },
+      });
+    },
+    onError: (_, __, context) => {
+      rollbackOptimisticUpdates({
+        queryClient,
+        context,
+      });
+    },
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: ["sections"] });
+    },
+  });
+};
+
+export const useDeleteSection = () => {
+  const queryClient = useQueryClient();
+  return useMutation<
+    null,
+    ApiError,
+    { sectionId: string },
+    OptimisticUpdatesContext
+  >({
+    mutationFn: ({ sectionId }) => apiDeleteSection(sectionId),
+    onMutate: async ({ sectionId }) => {
+      return optimisticDeleteSection({
+        queryClient,
+        sectionId,
+      });
+    },
+    onError: (_, __, context) => {
+      rollbackOptimisticUpdates({
+        queryClient,
+        context,
+      });
+    },
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: ["sections"] });
+    },
+  });
+};
+
+export const useReorderSection = () => {
+  const queryClient = useQueryClient();
+  return useMutation<SyncResponse, ApiError, ReorderSectionPayload, OptimisticUpdatesContext>({
+    mutationFn: apiReorderSection,
+    onMutate: async (reorderingSection) => {
+      return optimisticReorderSection({
+        queryClient,
+        payload: reorderingSection
+      })
+    },
+    onError: (_, __, context) => {
+      rollbackOptimisticUpdates({
+        queryClient,
+        context
+      })
+    },
+    onSettled: () => {
+      void queryClient.invalidateQueries({
+        queryKey: ["sections"]
+      })
+    }
+  })
+}

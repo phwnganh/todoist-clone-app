@@ -1,0 +1,8 @@
+
+const SmallCalendarIcon = ({className}: {className: string}) => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" className={className} viewBox="0 0 12 12"><path fill="currentColor" fillRule="evenodd" d="M9.5 1h-7A1.5 1.5 0 0 0 1 2.5v7A1.5 1.5 0 0 0 2.5 11h7A1.5 1.5 0 0 0 11 9.5v-7A1.5 1.5 0 0 0 9.5 1M2 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zM8.75 8a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0M3.5 4a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z" clipRule="evenodd"/></svg>
+    );
+};
+
+export default SmallCalendarIcon;
