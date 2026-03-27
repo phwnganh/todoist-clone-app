@@ -19,7 +19,7 @@ const GoogleRedirectPage = () => {
             return;
         }
 
-        fetch(`${API_BASE_URL}/api/oauth/access-token`, {
+        fetch(`/api/oauth/access-token`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
