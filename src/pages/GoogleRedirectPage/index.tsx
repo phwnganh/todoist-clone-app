@@ -6,6 +6,8 @@ import LoadingSpin from '@/components/ui/LoadingSpin.tsx';
 
 const GoogleRedirectPage = () => {
     const navigate = useNavigate()
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+
     const login = useAuthStore(state => state.login)
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
@@ -17,7 +19,7 @@ const GoogleRedirectPage = () => {
             return;
         }
 
-        fetch("http://localhost:9999/oauth/access-token", {
+        fetch(`${API_BASE_URL}/api/oauth/access-token`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

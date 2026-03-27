@@ -1,7 +1,7 @@
 import express, { type Request, type Response} from "express";
 import cors from "cors"
 const app = express();
-const PORT = 9999;
+// const PORT = 9999;
 
 type OauthTokenResponse = {
     access_token: string;
@@ -14,7 +14,7 @@ app.use(cors({
 
 app.use(express.json());
 
-app.post('/oauth/access-token', async (req: Request<{code: string}>, res: Response) => {
+app.post('/api/oauth/access-token', async (req: Request<{code: string}>, res: Response) => {
     const {code} = req.body;
 
     if(!code) {
@@ -62,6 +62,6 @@ app.post('/oauth/access-token', async (req: Request<{code: string}>, res: Respon
         }
 })
 
-app.listen(PORT, () => {
-    console.log(`Server running on port http://localhost:${PORT}`);
-})
+// app.listen(PORT, () => {
+//     console.log(`Server running on port http://localhost:${PORT}`);
+// })

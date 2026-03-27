@@ -8,9 +8,9 @@ import { Link } from "react-router-dom";
 import {type FormEvent, useState} from "react";
 const LoginFormSection = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const CLIENT_ID = "99176cc6e6af4dee9508f6422eb3216f";
+  const CLIENT_ID = import.meta.env.VITE_TODOIST_CLIENT_ID;
   const SCOPE = "data:read_write,data:delete";
-  const REDIRECT_URI = "http://localhost:5173/google-redirect";
+  const REDIRECT_URI = import.meta.env.VITE_TODOIST_REDIRECT_URI;
 
   const handleOAuthLogin = () => {
     const state = `${crypto.randomUUID()}`;
