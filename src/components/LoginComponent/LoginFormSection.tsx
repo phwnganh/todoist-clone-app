@@ -12,6 +12,8 @@ const LoginFormSection = () => {
   const SCOPE = "data:read_write,data:delete";
   const REDIRECT_URI = import.meta.env.VITE_TODOIST_REDIRECT_URI;
 
+  console.log(REDIRECT_URI)
+
   const handleOAuthLogin = () => {
     const state = `${crypto.randomUUID()}`;
     sessionStorage.setItem("oauth_state", state);

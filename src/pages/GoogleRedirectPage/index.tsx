@@ -35,7 +35,7 @@ const GoogleRedirectPage = () => {
         sessionStorage.removeItem("oauth_state");
     }
 
-    }, [login, navigate])
+    }, [login, navigate, API_BASE_URL])
     return (
         <LoadingSpin/>
     );
