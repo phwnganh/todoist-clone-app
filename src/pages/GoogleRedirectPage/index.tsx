@@ -1,8 +1,8 @@
 import {useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
-import {PROJECTS} from "@/constants/routes.constants.ts";
 import {useAuthStore} from "@/stores/auth.store.ts";
 import LoadingSpin from '@/components/ui/LoadingSpin.tsx';
+import {INBOX} from "../../constants/routes.constants";
 
 const GoogleRedirectPage = () => {
     const navigate = useNavigate()
@@ -29,7 +29,7 @@ const GoogleRedirectPage = () => {
             })
         }).then(res => res.json()).then(res => {
             login(res.access_token)
-            navigate(PROJECTS)
+            navigate(INBOX)
         })
     return () => {
         sessionStorage.removeItem("oauth_state");
