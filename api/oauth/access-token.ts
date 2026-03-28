@@ -24,9 +24,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse){
                 "Content-Type": "application/x-www-form-urlencoded",
             },
             body: new URLSearchParams({
-                client_id: process.env.TODOIST_CLIENT_ID!,
-                client_secret: process.env.TODOIST_CLIENT_SECRET!,
-                redirect_uri: process.env.TODOIST_REDIRECT_URI!,
+                client_id: "99176cc6e6af4dee9508f6422eb3216f",
+                client_secret: "f799765b62e344ac9b76b6438682e65c",
+                redirect_uri: "https://todoist-clone-app-five.vercel.app/google-redirect",
                 code: code
             })
         })
