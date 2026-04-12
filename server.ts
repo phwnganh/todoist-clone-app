@@ -29,8 +29,8 @@ app.post('/api/oauth/access-token', async (req: Request<{code: string}>, res: Re
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
                 body: new URLSearchParams({
-                    client_id: "99176cc6e6af4dee9508f6422eb3216f",
-                    client_secret: "129e347c26464b499ed05460016cc1ba",
+                    client_id: "575fbce93f004befa4e48a9f81016fdd",
+                    client_secret: "ba1d00746a16430dba4ed286263e2770",
                     redirect_uri: "http://localhost:5173/google-redirect",
                     code: code
                 }),

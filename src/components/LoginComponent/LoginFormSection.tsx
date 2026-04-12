@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import {type FormEvent, useState} from "react";
 const LoginFormSection = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const CLIENT_ID = "99176cc6e6af4dee9508f6422eb3216f";
+  const CLIENT_ID = "575fbce93f004befa4e48a9f81016fdd";
   const SCOPE = "data:read_write,data:delete";
   const REDIRECT_URI = "https://todoist-clone-app-five.vercel.app/google-redirect";
 
